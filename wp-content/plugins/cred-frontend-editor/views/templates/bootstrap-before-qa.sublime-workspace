@@ -1,0 +1,2235 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"text",
+				"text-indent"
+			],
+			[
+				"toolse",
+				"toolset-colorbox-css"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"wpv-di",
+				"wpv-dialog-content"
+			],
+			[
+				"bre",
+				"word-break"
+			],
+			[
+				"word-br",
+				"word-break:   (property)"
+			],
+			[
+				"textar",
+				"textarea"
+			],
+			[
+				"visi",
+				"visible"
+			],
+			[
+				"visib",
+				"visible"
+			],
+			[
+				"list",
+				"list-style"
+			],
+			[
+				"border-r",
+				"border-top-right-radius"
+			],
+			[
+				"margin-",
+				"margin-bottom"
+			],
+			[
+				"padding-",
+				"padding-bottom"
+			],
+			[
+				"scllT",
+				"scrollTargetDiv"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"apped",
+				"appendTo  (function)"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"WPV",
+				"WPV_VERSION"
+			],
+			[
+				"border-c",
+				"border-color"
+			],
+			[
+				"toggle",
+				"toggle()	jQueryDeprecated"
+			],
+			[
+				"button_",
+				"media_button_class"
+			],
+			[
+				"med",
+				"media_button_class"
+			],
+			[
+				"mat",
+				"margin-bottom"
+			],
+			[
+				"po",
+				"pointer"
+			],
+			[
+				"resize",
+				"resize()	jQuery"
+			],
+			[
+				"fo",
+				"focus"
+			],
+			[
+				"min-",
+				"min-height"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"wpv-dia",
+				"wpv-dialog-header"
+			],
+			[
+				"app",
+				"appendTo()	jQuery"
+			],
+			[
+				"overla",
+				"overlayElem  (variable)"
+			],
+			[
+				"table",
+				"tableHeight"
+			],
+			[
+				"pagination-",
+				"pagination-include-page-num"
+			],
+			[
+				"pagination",
+				"pagination-inlude-page-selector"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"vie",
+				"view_id"
+			],
+			[
+				"ov",
+				"overflow"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"aja",
+				"ajaxLoader"
+			],
+			[
+				"wpv-",
+				"wpv-views"
+			],
+			[
+				"remove",
+				"removeAttr"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"wpv",
+				"wpv-views"
+			],
+			[
+				"wp",
+				"wpv-popup-content"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"cbox",
+				"cboxWrapper"
+			],
+			[
+				"sor",
+				"sortby"
+			],
+			[
+				"tet",
+				"text-align"
+			],
+			[
+				"resp",
+				"responseData"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"lis",
+				"list-style"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"re",
+				"relative"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"las",
+				"last-of-type  (pseudo-class)"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "Searching 321 files for \"TODO\"\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/grid-options.php:\n   85  \n   86          // Register main JS\n   87:         // TODO: We should enqueue those scripts conditionally. Not for all pages, but only for posts edit.\n   88          wp_register_script('wpbootstrap-main', get_template_directory_uri() . '/theme-options/bootstrap-grid/js/bootstrap_editor.js', array('wpbootstrap-codemirror-script'));\n   89          wp_deregister_script( 'toolset-colorbox-js' );\n   ..\n  115      function wpbootstrap_css() {// register theme css\n  116  \n  117:         //TODO: We should enqueue those scripts conditionally. Not for all pages, but only for posts edit.\n  118          wp_enqueue_style('wp-pointer');\n  119          wp_register_style('wpbootstrap-main', get_template_directory_uri() . '/theme-options/bootstrap-grid/css/bootstrap_editor.css');\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/js/common-js/icl_editor_addon_plugin.js:\n   21      /*\n   22           *\n   23:          * TODO 1.3 Why we do not have saving cookie in common?\n   24           */\n   25      //        document.cookie = \"wpcfActiveEditor=\"+window.wpcfActiveEditor+\"; expires=Monday, 31-Dec-2020 23:59:59 GMT; path=\"+wpcf_cookiepath+\"; domain=\"+wpcf_cookiedomain+\";\";\n   ..\n   95          /*\n   96           *\n   97:          * TODO Check and document this\n   98           * SRDJAN I do not understand this one...\n   99           */\n  ...\n  143          /*\n  144           *\n  145:          * TODO Check and document this\n  146           * SRDJAN I do not understand this one...\n  147           */\n  ...\n  223  }\n  224  \n  225: // TODO Document this\n  226  jQuery.expr.filters.icl_offscreen = function(el) {\n  227      var t = jQuery(el).offset();\n  ...\n  236   * Toggles popups.\n  237   *\n  238:  * @todo We have multiple calls here.\n  239   */\n  240  function icl_editor_toggle(element) {\n  ...\n  447  \n  448  /**\n  449:  * @TODO Document this\n  450   */\n  451  function wpv_hide_top_groups(parent) {\n  ...\n  723                  });\n  724  \n  725:                 // TODO is resizing needed?\n  726                  // needed for scrolling\n  727  //                var height=Math.min(5000, Math.max(50, 200));\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/keymap/emacs.js:\n    1: // TODO number prefixes\n    2  (function() {\n    3    // Really primitive kill-ring implementation.\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/keymap/vim.js:\n   36   *   (Does not respect the special case for number registers when delete\n   37   *    operator is made with these commands: %, (, ),  , /, ?, n, N, {, } )\n   38:  *   TODO: Implement the remaining registers.\n   39   * Marks: a-z, A-Z, and 0-9\n   40:  *   TODO: Implement the remaining special marks. They have more complex\n   41   *       behavior.\n   42   *\n   ..\n  374      var vimApi= {\n  375        buildKeyMap: function() {\n  376:         // TODO: Convert keymap into dictionary format for fast lookup.\n  377        },\n  378        // Testing hook, though it might be useful to expose the register\n  ...\n  435          }\n  436          if (command.type == 'keyToKey') {\n  437:           // TODO: prevent infinite recursion.\n  438            for (var i = 0; i < command.toKeys.length; i++) {\n  439              this.handleKey(cm, command.toKeys[i]);\n  ...\n  893              curEnd = motionResult;\n  894            }\n  895:           // TODO: Handle null returns from motion commands better.\n  896            if (!curEnd) {\n  897              curEnd = { ch: curStart.ch, line: curStart.line };\n  ...\n 1197          var character = motionArgs.selectedCharacter;\n 1198          // Inclusive is the difference between a and i\n 1199:         // TODO: Instead of using the additional text object map to perform text\n 1200          //     object operations, merge the map into the defaultKeyMap and use\n 1201          //     motionArgs to define behavior. Define separate entries for 'aw',\n ....\n 1225            // indent should be whatever codemirror thinks is the right indent.\n 1226            // But cm.indentLine doesn't seem work on empty lines.\n 1227:           // TODO: Fix the above.\n 1228            curStart.ch =\n 1229                findFirstNonWhiteSpaceCharacter(cm.getLine(curStart.line));\n ....\n 1322          var curStart = cm.getCursor();\n 1323          var curEnd;\n 1324:         // TODO: The repeat should actually select number of characters/lines\n 1325          //     equal to the repeat times the size of the previous visual\n 1326          //     operation.\n ....\n 1511        },\n 1512        repeatLastEdit: function(cm, actionArgs, vim) {\n 1513:         // TODO: Make this repeat insert mode changes.\n 1514          var lastEdit = vim.lastEdit;\n 1515          if (lastEdit) {\n ....\n 1526  \n 1527      var textObjects = {\n 1528:       // TODO: lots of possible exceptions that can be thrown here. Try da(\n 1529        //     outside of a () block.\n 1530:       // TODO: implement text objects for the reverse like }. Should just be\n 1531        //     an additional mapping after moving to the defaultKeyMap.\n 1532        'w': function(cm, inclusive) {\n ....\n 1739        var wordStart = idx;\n 1740        var wordEnd = idx + wordAfterRegex[0].length - 1;\n 1741:       // TODO: Find a better way to do this. It will be slow on very long lines.\n 1742        var wordBeforeRegex = matchRegex.exec(reverse(textBeforeIdx));\n 1743        if (wordBeforeRegex) {\n ....\n 1768       *     the word, or null if there are no more words.\n 1769       */\n 1770:     // TODO: Treat empty lines (with no whitespace) as words.\n 1771      function findWord(cm, cur, forward, bigWord) {\n 1772        var lineNum = cur.line;\n ....\n 1960        // Simple search for closing paren--just count openings and closings till\n 1961        // we find our match\n 1962:       // TODO: use info from CodeMirror to ignore closing brackets in comments\n 1963        // and quotes, etc.\n 1964        while (nextCh && depth > 0) {\n ....\n 2012      // Takes in a symbol and a cursor and tries to simulate text objects that\n 2013      // have identical opening and closing symbols\n 2014:     // TODO support across multiple lines\n 2015      function findBeginningAndEnd(cm, symb, inclusive) {\n 2016        var cur = cm.getCursor();\n ....\n 2697         * modifers.\n 2698         */\n 2699:       // TODO: Figure out a way to catch capslock.\n 2700        function handleKeyEvent_(cm, key, modifier) {\n 2701          if (isUpperCase(key)) {\n ....\n 2762  \n 2763      CodeMirror.keyMap['vim-insert'] = {\n 2764:       // TODO: override navigation keys so that Esc will cancel automatic\n 2765        // indentation from o, O, i_<CR>\n 2766        'Esc': exitInsertMode,\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/diff/index.html:\n   62  +        else html.push(\"<div>\" + (options.lineNumbers ? i + options.firstLineNumber : \"\\u00a0\") + \"</div>\");\n   63         }\n   64:        gutter.style.display = \"none\"; // TODO test whether this actually helps\n   65         gutter.innerHTML = html.join(\"\");\n   66  @@ -1371,10 +1377,8 @@ var CodeMirror = (function() {\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/javascript/javascript.js:\n    1: // TODO actually recognize syntax of TypeScript constructs\n    2  \n    3  CodeMirror.defineMode(\"javascript\", function(config, parserConfig) {\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/markdown/test.js:\n  483       \"[link [[foo]]][string [[]]] hello\");\n  484  \n  485:   // @todo It would be nice if, at some point, the document was actually\n  486    // checked to see if the referenced link exists\n  487  \n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/python/python.js:\n  106                  // Decimal literals may be \"imaginary\"\n  107                  stream.eat(/J/i);\n  108:                 // TODO - Can you have imaginary longs?\n  109                  intLiteral = true;\n  110              }\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/rpm/spec/index.html:\n   73  %files\n   74  %defattr(-,root,root,-)\n   75: %doc ChangeLog NEWS README TODO\n   76  %{_libdir}/libixml.so.*\n   77  %{_libdir}/libthreadutil.so.*\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/rpm/spec/spec.js:\n   57        if (stream.match(/^%\\{\\??[\\w \\-]+\\}/)) { return \"macro\"; } // Macros like '%{defined fedora}'\n   58  \n   59:       //TODO: Include bash script sub-parser (CodeMirror supports that)\n   60        stream.next();\n   61        return null;\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/tiddlywiki/index.html:\n  103  * The {{{~}}} marker creates a \"rowspan\", causing the current cell to merge with the one above.\n  104  <<<\n  105: !!Images /% TODO %/\n  106  cf. [[TiddlyWiki.com|http://www.tiddlywiki.com/#EmbeddedImages]]\n  107  \n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/tiddlywiki/tiddlywiki.js:\n  149  			}\n  150  		}\n  151: 		if (ch == \"@\") {	// check for space link. TODO fix @@...@@ highlighting\n  152  			stream.eatWhile(isSpaceName);\n  153  			return ret(\"link\", \"link\");\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/mode/vb/vb.js:\n   83                  // Decimal literals may be \"imaginary\"\n   84                  stream.eat(/J/i);\n   85:                 // TODO - Can you have imaginary longs?\n   86                  intLiteral = true;\n   87              }\n\n/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/resources/codemirror/test/vim_test.js:\n  224  testMotion('G_repeat', ['3', 'G'], makeCursor(lines[2].line,\n  225      lines[2].textStart));\n  226: // TODO: Make the test code long enough to test Ctrl-F and Ctrl-B.\n  227  testMotion('0', '0', makeCursor(0, 0), makeCursor(0, 8));\n  228  testMotion('^', '^', makeCursor(0, lines[0].textStart), makeCursor(0, 8));\n  ...\n 1237    helpers.assertCursorAt(0, 11,'can\\'t resume search after clearing highlighting');\n 1238  }, { value: 'match nope match \\n nope Match' });\n 1239: // TODO: Reset key maps after each test.\n 1240  testVim('ex_map_key2key', function(cm, vim, helpers) {\n 1241    helpers.doEx('map a x');\n\n38 matches across 14 files\n",
+			"settings":
+			{
+				"buffer_size": 11151,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/grid-options.php",
+			"settings":
+			{
+				"buffer_size": 18690,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/style.css",
+			"settings":
+			{
+				"buffer_size": 1643,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/css/bootstrap_editor.css",
+			"settings":
+			{
+				"buffer_size": 7607,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"upgra",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"updage",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"svn",
+				"SVN: Checkout…"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"rem ove",
+				"Package Control: Remove Package"
+			],
+			[
+				"modific",
+				"Modific: Show diff"
+			],
+			[
+				"Snippet: ",
+				"Snippet: <a>"
+			],
+			[
+				"prefere",
+				"Preferences: Settings - User"
+			],
+			[
+				"linter",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"remove pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"prefe",
+				"Preferences: Settings - User"
+			],
+			[
+				"settings",
+				"Preferences: Settings - Default"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"packagr",
+				"Package Control: Remove Package"
+			],
+			[
+				"po",
+				"Package Control: Upgrade/Overwrite All Packages"
+			]
+		],
+		"width": 588.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/content.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/entry-meta.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/grid-options.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/js/bootstrap_editor.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/functions.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/sidebar.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/_navbar.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/options.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/page.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/page-fullwidth.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/embedded-modules-manager/library/Class_Modules_Library.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/css/bootstrap_rtl_admin.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/editor-style.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/css/bootstrap-alerts.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/woocommerce.php",
+		"/Users/czarek/Documents/sublime-projects/Views-redesign.sublime-project",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/views-redesign.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/insert-form-shortcode-button.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/visual-editor/res/css/pro_dropdown_2.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/insert-generic-field-shortcode-button.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/notification-body-codes.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/insert-form-shortcode-button-extra.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/notification-subject-codes.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/insert-field-shortcode-button.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/views/templates/scaffold-button.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/classes/CRED.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/assets/js/cred.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/plugin.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/assets/css/gfields.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/cred-svn/assets/css/cred.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/visual-editor/editor-addon.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_parent.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_author.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_post_relationship.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_status.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_section_filters.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/utils.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-custom-field.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-category.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-filters.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_parametric.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-author.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-id.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-parent.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-post-relationship.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-search.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-status.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-filter-taxonomy-term.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-post-relationship.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-author.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-conthhhent/plugins/views-svn/inc/redesign/wpv-filter-author.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-admin-ajax.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_layout_edit_wizard.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/dialogs.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/templates/wpv-parametric-form.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/types-svn/embedded/resources/js/basic.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/colorbox.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/wpv_content_template_listing.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-content-templates-listing-page.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_content_template.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-views-listing-page.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/views-templates/wpv-template-plugin.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-plugin.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-pagination.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/templates/wpv-layout-edit-wizard.tpl.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/dialogs.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/jscrollpane.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/visual-editor/editor-addon-parametric.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_section_layout_template.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-add-edit.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-content.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-filter-extra.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_section_pagination.js",
+		"/Users/czarek/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/czarek/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/czarek/Library/Application Support/Sublime Text 2/Packages/Modific/Modific.sublime-settings",
+		"/Users/czarek/Library/Application Support/Sublime Text 2/Packages/User/Modific.sublime-settings",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/functions.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-layout-extra.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_archive_editor.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-layout-template.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/notifications.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-admin-messages.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-descriptons.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/visual-editor/res/js/icl_editor_addon_plugin.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_archives_sections_update.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-admin-changes.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-archive-add-edit.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-order-by.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-taxonomy-order-by.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-taxonomy.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-post-types.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/locale/orig/views.po",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-ordering.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/functions-core.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-archive-listing-page.php",
+		"/Users/czarek/Downloads/downloads-template.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_category.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_custom_field.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_id.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_search.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_filter_taxonomy_term.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_editor.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_sections_update.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-layout-extra-js.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-limit-offset.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-loop-selection.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-query-options.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-query-type.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/inc/wpv-archive-loop.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/codemirror311/demo/search.html",
+		"/Applications/MAMP/htdocs/wpmlorg/wp-content/themes/wpml_org_theme/page-purchase.php",
+		"/Applications/MAMP/htdocs/wpmlorg/wp-content/themes/wpml_org_theme/style.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_listing_page.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/redesign/views_wordpress_archive_listing_page.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-add-filter.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/wpv-filter-controls.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/inc/wpv-import-export-embedded.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/visual-editor/editor-addon-generic.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/inc/wpv.class.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/redesign/wpv-section-media-manager.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/wp-views.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/inc/views-templates/functions-templates.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/res/js/wpv-wp-pointer.js",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/css/views_parametric.css",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/embedded/common/array2xml.php",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/codemirror311/demo/vim.html",
+		"/Applications/MAMP/htdocs/views-redesign/wp-content/plugins/views-svn/res/js/codemirror311/addon/search/search.js"
+	],
+	"find":
+	{
+		"height": 82.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+			"",
+			"<open folders>",
+			"",
+			"var spinnerContainer = jQuery('<div class=\"spinner ajax-loader\">').insertBefore",
+			"",
+			"jQuery('<div class=\"spinner ajax-loader\">').insertBefore(jQuery(this))",
+			"",
+			"<h6>",
+			"",
+			"*.js",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"TODO",
+			"ico-close",
+			"class=\"thumb",
+			"onclick",
+			"grid-select-header",
+			"colorbox",
+			"wpbootstrap_css",
+			"bootstrap_editor.css",
+			"colorbox",
+			"close",
+			"colorbox",
+			"boost",
+			"js-layout-wizard-body-template-text",
+			"cred-buttons-holder",
+			"h3",
+			"postbox",
+			"close",
+			".icon",
+			".cred-popup-box .cred-help-link",
+			"cred-popup-heading",
+			".editor_addon_dropdown",
+			"cred-popup-box",
+			"cred-popup-boz",
+			"stuffbox",
+			"cred-popup-box cred-form-shortcodes-box2 stuffbox",
+			"<div class=\"cred-popup-inner cred-form-shortcodes-box-inner2\">\n            <div class=\"cred-form-shortcode-types-select-container2\">\n                <table class=\"cred-table cred-table-choose-form\" cellpadding=\"0\" cellspacing=\"0\">\n                    <tbody><tr>\n                        <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-shortcode-container-radio cred-radio-10 cred-post-creation-container2\" name=\"cred-shortcode-container-3\" value=\"1\"><span class=\"cred-radio-replace\"></span>\n                            <span>New content form</span></label>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-shortcode-container-radio cred-radio-10 cred-post-edit-container2\" name=\"cred-shortcode-container-3\" value=\"2\"><span class=\"cred-radio-replace\"></span>\n                            <span>Edit content form</span></label>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-shortcode-container-radio cred-radio-10 cred-post-delete-link-container2\" name=\"cred-shortcode-container-3\" value=\"3\"><span class=\"cred-radio-replace\"></span>\n                            <span>Delete content link</span></label>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-shortcode-container-radio cred-radio-10 cred-post-child-link-container2\" name=\"cred-shortcode-container-3\" value=\"4\"><span class=\"cred-radio-replace\"></span>\n                            <span>Create Child Content link</span></label>\n                        </td>\n                    </tr>\n                </tbody></table>\n            </div>\n\n            <div class=\"cred-shortcodes-container _cred-post-creation-container2\" style=\"display: none;\">\n                <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                    <tbody><tr>\n                        <td>\n						<label for=\"cred_form-new-shortcode-select-3\">Select form</label>\n                        <select name=\"cred_form-new-shortcode-select-3\" class=\"cred_form-new-shortcode-select2\">\n                            <optgroup label=\"Select form\">\n                                <option value=\"\" disabled=\"\" selected=\"\" style=\"display:none;\">Select form</option>\n\n                                        <option value=\"601\">cv</option><option value=\"574\">vcbcvb</option>                            </optgroup>\n                        </select>\n						<a class=\"cred-help-link\" href=\"http://wp-types.com/documentation/user-guides/displaying-cred-forms/\" target=\"_blank\" title=\"Help\">\n							<i class=\"icon-question-sign\"></i>\n							<span>Help</span>\n						</a>\n                        </td>\n                    </tr>\n                </tbody></table>\n            </div>\n\n            <div class=\"cred-shortcodes-container _cred-post-child-link-container2\" style=\"display: none;\">\n                <fieldset class=\"cred-fieldset\">\n                <legend><b>Child Form Page</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                      <tbody><tr>\n                          <td colspan=\"2\"><div style=\"display: none;\" class=\"cred_ajax_loader_small cred-form-suggest-child-form-loader2\"></div><span class=\"cred-explain-text\">Type some characters from title of the page and a suggestion popup will appear..</span></td>\n                      </tr>\n                      <tr>\n                          <td>Page: &nbsp;</td>\n                          <td><input type=\"text\" class=\"cred-child-form-page2\" name=\"cred-child-form-page-3\" value=\"\" placeholder=\"Type some characters..\" autocomplete=\"off\"></td>\n                      </tr>\n                      <tr>\n                          <td>link text: &nbsp;</td>\n                          <td><input type=\"text\" class=\"cred-child-link-text2\" name=\"cred-child-link-text-3\" value=\"\"></td>\n                      </tr>\n                    </tbody></table>\n                </fieldset>\n                <fieldset class=\"cred-fieldset\">\n                <legend><b>How do you want to set the parent in child form?</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                        <tbody><tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" checked=\"checked\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-post-child-parent-action-3\" value=\"current\"><span class=\"cred-radio-replace\"></span>\n                            <span>Set the parent according to the currently displayed content</span></label>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-post-child-parent-action-3\" value=\"other\"><span class=\"cred-radio-replace\"></span>\n                            <span>Choose a specific parent</span></label>\n                            <input type=\"text\" class=\"cred_post_child_parent_id2\" name=\"cred_post_child_parent_id-3\" value=\"\" size=\"15\" placeholder=\"Type some characters..\" autocomplete=\"off\">\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-post-child-parent-action-3\" value=\"form\"><span class=\"cred-radio-replace\"></span>\n                            <span>The form includes the parent selector</span></label>\n                            </td>\n                        </tr>\n                    </tbody></table>\n                </fieldset>\n                <a href=\"javascript:;\" class=\"cred-show-hide-advanced\">Show advanced options</a>\n                <div class=\"cred-shortcodes-container-advanced cred-post-child-link-container-advanced2\" style=\"display: none;\">\n                    <fieldset class=\"cred-fieldset cred-edit-html-fieldset2\">\n                    <legend><b>HTML attributes for child content link (advanced)</b></legend>\n                            <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n								<tbody><tr>\n									<td>class:</td>\n									<td><input type=\"text\" class=\"cred-child-html-class2\" name=\"cred-child-html-class-3\" value=\"\"></td>\n								</tr>\n								<tr>\n									<td>style:</td>\n									<td><input type=\"text\" class=\"cred-child-html-style2\" name=\"cred-child-html-style-3\" value=\"\"></td>\n								</tr>\n								<tr>\n									<td>target:</td>\n									<td>\n									  <select class=\"cred-child-html-target2\" name=\"cred-child-html-target-3\">\n									  <option value=\"_self\" selected=\"selected\">Current Window</option>\n									  <option value=\"_top\">Parent Window</option>\n									  <option value=\"_blank\">New Window</option>\n									  </select>\n								  </td>\n								</tr>\n								<tr>\n									<td>more attributes:</td>\n									<td><input type=\"text\" class=\"cred-child-html-attributes2\" name=\"cred-child-html-attributes-3\" value=\"\"></td>\n								</tr>\n                          </tbody></table>\n                    </fieldset>\n                </div>\n            </div>\n\n            <div class=\"cred-shortcodes-container _cred-post-delete-link-container2\" style=\"display: none;\">\n                <fieldset class=\"cred-fieldset\">\n                <legend><b>HTML attributes for delete link</b></legend>\n                <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                  <tbody><tr>\n                      <td>text: &nbsp;</td>\n                      <td><input type=\"text\" class=\"cred-delete-html-text2\" name=\"cred-delete-html-text-3\" value=\"Delete %TITLE%\"></td>\n                  </tr>\n                </tbody></table>\n                </fieldset>\n				<p style=\"position: relative;\">\n					<a class=\"cred-help-link\" href=\"http://wp-types.com/documentation/user-guides/displaying-cred-forms/\" target=\"_blank\" title=\"Help\">\n						<i class=\"icon-question-sign\"></i>\n						<span>Help</span>\n					</a>\n                </p>\n                <a href=\"javascript:;\" class=\"cred-show-hide-advanced\">Show advanced options</a>\n                <div class=\"cred-shortcodes-container-advanced cred-post-delete-link-container-advanced2\" style=\"display: none;\">\n                    <fieldset class=\"cred-fieldset\">\n                    <legend><b>What to delete</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                        <tbody><tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" checked=\"checked\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-delete-what-to-delete-3\" value=\"delete-current-post\"><span class=\"cred-radio-replace\"></span>\n                            <span>Delete current post (in Loop)</span></label>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio  cred-radio-10\" name=\"cred-delete-what-to-delete-3\" value=\"delete-other-post\"><span class=\"cred-radio-replace\"></span>\n                            <span>Delete another post (post ID)</span></label>\n                            <input type=\"text\" class=\"cred_post_delete_id2\" name=\"cred_post_delete_id\" value=\"\" size=\"5\">\n                            </td>\n                        </tr>\n                    </tbody></table>\n                    </fieldset>\n                    <fieldset class=\"cred-fieldset\">\n                    <legend><b>Delete action</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                        <tbody><tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" checked=\"checked\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-delete-delete-action-3\" value=\"trash\"><span class=\"cred-radio-replace\"></span>\n                            <span>Trash post</span></label>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-delete-delete-action-3\" value=\"delete\"><span class=\"cred-radio-replace\"></span>\n                            <span>Delete post</span></label>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"checkbox\" class=\"cred-refresh-after-action cred-checkbox-10\" name=\"cred-refresh-after-action-3\" value=\"refresh\" checked=\"checked\"><span class=\"cred-checkbox-replace\"></span>\n                            <span>Refresh page after deletion</span></label>\n                            </td>\n                        </tr>\n                    </tbody></table>\n                    </fieldset>\n                    <fieldset class=\"cred-fieldset\">\n                    <legend><b>HTML attributes for delete link (advanced)</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                      <tbody><tr>\n                          <td>class: &nbsp;</td>\n                          <td><input type=\"text\" class=\"cred-delete-html-class2\" name=\"cred-delete-html-class-3\" value=\"\"></td>\n                      </tr>\n                      <tr>\n                          <td>style: &nbsp;</td>\n                          <td><input type=\"text\" class=\"cred-delete-html-style2\" name=\"cred-delete-html-style-3\" value=\"\"></td>\n                      </tr>\n                    </tbody></table>\n                    </fieldset>\n                </div>\n            </div>\n\n            <div class=\"cred-shortcodes-container _cred-post-edit-container2\" style=\"display: none;\">\n                <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                    <tbody><tr>\n                        <td>Select form                        <select style=\"position:relative;\" class=\"cred_form-edit-shortcode-select2\" name=\"cred_form-edit-shortcode-select-3\">\n                            <optgroup label=\"Select form\">\n                                <option value=\"\" disabled=\"\" selected=\"\" style=\"display:none;\">Select form</option>\n\n                                                                    </optgroup>\n                        </select>\n							<a class=\"cred-help-link\" href=\"http://wp-types.com/documentation/user-guides/displaying-cred-forms/\" target=\"_blank\" title=\"Help\">\n								<i class=\"icon-question-sign\"></i>\n								<span>Help</span>\n							</a>\n                        </td>\n                    </tr>\n                </tbody></table>\n                <a href=\"javascript:;\" class=\"cred-show-hide-advanced\">Show advanced options</a>\n                <div class=\"cred-shortcodes-container-advanced cred-post-edit-container-advanced2\" style=\"display: none;\">\n                    <fieldset class=\"cred-fieldset\">\n                    <legend><b>What to edit</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                        <tbody><tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" checked=\"checked\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-edit-what-to-edit-3\" value=\"edit-current-post\"><span class=\"cred-radio-replace\"></span>\n                            <span>Edit current post (in Loop)</span></label>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-edit-what-to-edit-3\" value=\"edit-other-post\"><span class=\"cred-radio-replace\"></span>\n                            <span>Edit another post</span></label>\n                            <div class=\"cred-edit-other-post-more2\" style=\"display:inline-block\">\n                            <div style=\"display: none;\" class=\"cred_ajax_loader_small cred-form-addtional-loader2\"></div>\n                            <select class=\"cred-edit-post-select2\" name=\"cred-edit-post-select-3\">\n                                <optgroup label=\"Select post\">\n                                    <option value=\"\" disabled=\"\" selected=\"\" style=\"display:none;\">Select post</option>\n                                </optgroup>\n                            </select>\n                            </div>\n                            </td>\n                        </tr>\n                    </tbody></table>\n                    </fieldset>\n                    <fieldset class=\"cred-fieldset\">\n                    <legend><b>How to display the form</b></legend>\n                    <table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n                        <tbody><tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" checked=\"checked\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-edit-how-to-display-3\" value=\"insert-link\"><span class=\"cred-radio-replace\"></span>\n                            <span>Insert a link to edit</span></label>\n                            <div class=\"cred-edit-link-text-container2\">\n                                (text:                                <input type=\"text\" class=\"cred-edit-html-text2\" name=\"cred-edit-html-text-3\" value=\"Edit %TITLE%\">)\n                            </div>\n                            </td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"2\">\n                            <label class=\"cred-label\"><input type=\"radio\" class=\"cred-advanced-options-radio cred-radio-10\" name=\"cred-edit-how-to-display-3\" value=\"insert-form\"><span class=\"cred-radio-replace\"></span>\n                            <span>Insert the form itself</span></label>\n                            </td>\n                        </tr>\n                    </tbody></table>\n                    </fieldset>\n                    <fieldset class=\"cred-fieldset cred-edit-html-fieldset2\">\n                    <legend><b>HTML attributes for edit link (advanced)</b></legend>\n\n						<table class=\"cred-table\" cellpadding=\"0\" cellspacing=\"0\">\n							<tbody><tr>\n								<td>class:</td>\n								<td><input type=\"text\" class=\"cred-edit-html-class2\" name=\"cred-edit-html-class-3\" value=\"\"></td>\n							</tr>\n							<tr>\n								<td>style:</td>\n								<td><input type=\"text\" class=\"cred-edit-html-style2\" name=\"cred-edit-html-style-3\" value=\"\"></td>\n							</tr>\n							<tr>\n								<td>target:</td>\n								<td>\n								  <select class=\"cred-edit-html-target2\" name=\"cred-edit-html-target-3\">\n								  <option value=\"_self\" selected=\"selected\">Current Window</option>\n								  <option value=\"_top\">Parent Window</option>\n								  <option value=\"_blank\">New Window</option>\n								  </select>\n							  </td>\n							</tr>\n                          <tr>\n                              <td>more attributes: &nbsp;</td>\n                              <td><input type=\"text\" class=\"cred-edit-html-attributes2\" name=\"cred-edit-html-attributes-3\" value=\"\"></td>\n                          </tr>\n						</tbody></table>\n                    </fieldset>\n                </div>\n\n            </div>\n\n        </div>",
+			".wpv-setting .code-editor-toolbar [class^=\"icon-\"]",
+			"cred-close-button",
+			"<a href='javascript:;' title='<?php echo esc_attr(__('Close','wp-cred')); ?>' class='cred-close-button cred-cred-cancel-close'></a>",
+			"defined('ABSPATH')",
+			"cred-close-button",
+			"red-close-button",
+			"cred-popup-heading h3",
+			"cred-popup-heading",
+			"debug",
+			"deebug",
+			"popup",
+			"credformtypediv",
+			"id=\"credformtypediv\"",
+			"additional_field_options_popup",
+			"id=\"container\"",
+			"wpv_close_filter_row",
+			"fade",
+			"fadeO",
+			"js-wpv-filter-author-edit-open",
+			"post",
+			"status",
+			"wpv_close_filter_row('.js-",
+			"status",
+			"fadeOut",
+			"js-filter-remove",
+			"edit_search_fi",
+			"mine",
+			"Add another filter",
+			"div",
+			"wpv-custom-field-edit-row",
+			"button-secondary js-wpv-custom-field-add-value",
+			"legend",
+			"js-row-custom-field",
+			"wpv-filter-custom-field-edit",
+			"wpv-taxonomy-edit-row",
+			"wpv-filter-edit js-filter-taxonomy-edit js-wpv-filter-edit",
+			"wpv-filter-row-multiple-element",
+			"wpv-taxonomy-edit-row",
+			"js-filter-row js-filter-row-multiple js-filter-for-posts js-filter-taxonomy js-filter-row-taxonomy",
+			"Relationship to use when querying with multiple taxono",
+			"edit-filter js-wpv-filter-taxonomy-controls",
+			"js-row-taxonomy",
+			"wpv-filter-taxonomy-edit",
+			"Taxonomy - Categories",
+			"legend",
+			"Querying and Displaying Child Posts",
+			"li",
+			"Querying and Displaying Child Post",
+			"legend",
+			"<legend",
+			"wpv-filter-post-relationship-edit",
+			"legend",
+			"wpv-filter-id-edit",
+			"Post sear",
+			"hr",
+			"wpv-filter-search-edit",
+			"Post Author",
+			"Post author",
+			"author",
+			"legend",
+			"wpv-filter-parent-edit",
+			"Post parent",
+			"Post parent:",
+			"span",
+			"filter-info-post-relationship",
+			"taxonomy relation",
+			"h3",
+			"span",
+			"span ",
+			"class",
+			"dupa",
+			"js-wpv-filter-edit-ok",
+			"span",
+			"input",
+			"js-wpv-filter-edit-ok",
+			"span",
+			"js-wpv-filter-edit-ok",
+			"update-button-wrap",
+			"js-wpv-filter-edit-open",
+			"class='js-wpv-filter-edit-open",
+			"button class='js-wpv-filter-edit-open",
+			"class=\"js-wpv-filter-edit-open",
+			"button class=\"js-wpv-filter-edit-open",
+			"js-wpv-filter-edit-open",
+			"js-wpv-filter-author-edit-ok",
+			"js-filter-status-list",
+			"id=\"wpv-filter-status-edit",
+			"wpv-filter-status-edit",
+			"js-wpv-filter-edit-ok js-wpv-filter-status-edit-ok",
+			"3px",
+			"js-wpv-filter-edit-controls",
+			"js-wpv-filter-edit-open js-wpv-filter-author-edit-open",
+			"</button>>",
+			"js-wpv-filter-edit-open",
+			"edit-trigger js-wpv-filter-edit-open",
+			"<span><a href='#' class='edit-trigger js-wpv-filter-edit-open'>Edit</a></span>",
+			"js-wpv-filter-edit-open",
+			"edit-trigger",
+			"edit-trigger ",
+			"js-wpv-filter-edit-controls",
+			"js-wpv-settings-content-filter",
+			"wpvHelpRemove"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"<i title='<?php echo esc_attr(__('Close','wp-cred')); ?>' class='icon-remove cred-close-button cred-cred-cancel-close'></i>",
+			"wpv-listing-page",
+			"editor_addon_dropdown",
+			"var spinnerContainer = jQuery('<div class=\"spinner ajax-loader\">').insertAfter(jQuery(this))",
+			"spinnerContainer = jQuery('<div class=\"spinner ajax-loader\">').insertBefore(jQuery(this)).show()",
+			"var spinnerContainer = jQuery('<div class=\"spinner ajax-loader\">').insertBefore",
+			"",
+			".wpv-settings-content-filter",
+			".js-wpv-settings-content-filter",
+			"padding: 2px 5px",
+			"padding: 0",
+			"class=\"js-code-editor code-editor",
+			"button-secondary js-code-editor-button",
+			"js-code-editor-button",
+			"class=\"js-code-editor code-editor",
+			"js-code-editor-button",
+			"toolset",
+			"<i class=\"icon-caret-down\"></i>",
+			"$",
+			".js-list-views-action",
+			"list-views-action",
+			"$",
+			"osx"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 11151,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										221,
+										225
+									],
+									[
+										654,
+										658
+									],
+									[
+										1143,
+										1147
+									],
+									[
+										1461,
+										1465
+									],
+									[
+										1626,
+										1630
+									],
+									[
+										1764,
+										1768
+									],
+									[
+										1934,
+										1938
+									],
+									[
+										2060,
+										2064
+									],
+									[
+										2203,
+										2207
+									],
+									[
+										2505,
+										2509
+									],
+									[
+										2923,
+										2927
+									],
+									[
+										3011,
+										3015
+									],
+									[
+										3203,
+										3207
+									],
+									[
+										3451,
+										3455
+									],
+									[
+										3697,
+										3701
+									],
+									[
+										4001,
+										4005
+									],
+									[
+										4427,
+										4431
+									],
+									[
+										4657,
+										4661
+									],
+									[
+										4938,
+										4942
+									],
+									[
+										5118,
+										5122
+									],
+									[
+										5244,
+										5248
+									],
+									[
+										5552,
+										5556
+									],
+									[
+										5835,
+										5839
+									],
+									[
+										6128,
+										6132
+									],
+									[
+										6436,
+										6440
+									],
+									[
+										6638,
+										6642
+									],
+									[
+										6855,
+										6859
+									],
+									[
+										7337,
+										7341
+									],
+									[
+										7657,
+										7661
+									],
+									[
+										8023,
+										8027
+									],
+									[
+										8439,
+										8443
+									],
+									[
+										8776,
+										8780
+									],
+									[
+										9134,
+										9138
+									],
+									[
+										9545,
+										9549
+									],
+									[
+										9870,
+										9874
+									],
+									[
+										10254,
+										10258
+									],
+									[
+										10615,
+										10619
+									],
+									[
+										10989,
+										10993
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								62,
+								62
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/grid-options.php",
+					"settings":
+					{
+						"buffer_size": 18690,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"is_xml": false,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublime_auto_complete": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1274.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/style.css",
+					"settings":
+					{
+						"buffer_size": 1643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublime_auto_complete": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 199.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Applications/MAMP/htdocs/views-redesign/wp-content/themes/bootstrap-theme-trunk/theme-options/bootstrap-grid/css/bootstrap_editor.css",
+					"settings":
+					{
+						"buffer_size": 7607,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3598,
+								3568
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublime_auto_complete": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1625.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.712745609641,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"bootstrap-editor",
+				"theme-options/bootstrap-grid/css/bootstrap_editor.css"
+			],
+			[
+				"func",
+				"functions.php"
+			],
+			[
+				"dialogs",
+				"views-svn/res/css/dialogs.css"
+			],
+			[
+				"edior-add",
+				"views-svn/embedded/common/visual-editor/editor-addon.class.php"
+			],
+			[
+				"views-para",
+				"views-svn/res/js/redesign/views_parametric.js"
+			],
+			[
+				"wpv-filter-author.php",
+				"views-svn/inc/wpv-filter-author.php"
+			],
+			[
+				"util",
+				"views-svn/res/js/redesign/utils.js"
+			],
+			[
+				"views-re",
+				"views-svn/res/css/views-redesign.css"
+			],
+			[
+				"dialo",
+				"views-svn/res/css/dialogs.css"
+			],
+			[
+				"views-rede",
+				"views-svn/res/css/views-redesign.css"
+			],
+			[
+				"edit_wiz",
+				"res/js/redesign/views_layout_edit_wizard.js"
+			],
+			[
+				"_param",
+				"res/js/redesign/views_parametric.js"
+			],
+			[
+				"colo",
+				"res/css/colorbox.css"
+			],
+			[
+				"utils",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"dia",
+				"res/css/dialogs.css"
+			],
+			[
+				"scrollpa",
+				"res/css/jscrollpane.css"
+			],
+			[
+				"u",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"utils.js",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"lyout-extra.p",
+				"inc/redesign/wpv-section-layout-extra.php"
+			],
+			[
+				".css",
+				"res/css/notifications.css"
+			],
+			[
+				"drop",
+				"embedded/common/visual-editor/res/css/pro_dropdown_2.css"
+			],
+			[
+				"icl_editor_addon_plugin.js",
+				"embedded/common/visual-editor/res/js/icl_editor_addon_plugin.js"
+			],
+			[
+				"color",
+				"res/css/colorbox.css"
+			],
+			[
+				"pro_dr",
+				"embedded/common/visual-editor/res/css/pro_dropdown_2.css"
+			],
+			[
+				"editor_add",
+				"embedded/common/visual-editor/res/js/icl_editor_addon_plugin.js"
+			],
+			[
+				"wpv-filter-order-by.php",
+				"inc/wpv-filter-order-by.php"
+			],
+			[
+				"wpv-filter-post-types.php",
+				"inc/wpv-filter-post-types.php"
+			],
+			[
+				"wpv-admin-changes.php",
+				"inc/wpv-admin-changes.php"
+			],
+			[
+				"dtopdown",
+				"views-svn/embedded/common/visual-editor/res/css/pro_dropdown_2.css"
+			],
+			[
+				"editor-addon.class.php",
+				"views-svn/embedded/common/visual-editor/editor-addon.class.php"
+			],
+			[
+				"functions.php",
+				"embedded/common/functions.php"
+			],
+			[
+				"redes",
+				"res/css/views-redesign.css"
+			],
+			[
+				"purch",
+				"wpml_org_theme/page-purchase.php"
+			],
+			[
+				"style.css",
+				"wpml_org_theme/style.css"
+			],
+			[
+				"views_wordpress_archive_listing_page.js",
+				"res/js/redesign/views_wordpress_archive_listing_page.js"
+			],
+			[
+				"archive-lisi",
+				"inc/redesign/wpv-archive-listing-page.php"
+			],
+			[
+				"s",
+				"res/js/codemirror311/demo/search.html"
+			],
+			[
+				"utils.",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"wpv-add-edit.php",
+				"inc/wpv-add-edit.php"
+			],
+			[
+				"editor-addon-parametric.class.php",
+				"embedded/common/visual-editor/editor-addon-parametric.class.php"
+			],
+			[
+				"parametr",
+				"embedded/common/visual-editor/editor-addon-parametric.class.php"
+			],
+			[
+				"alert-",
+				"embedded/common/visual-editor/editor-addon-parametric.class.php"
+			],
+			[
+				"views_archives",
+				"res/js/redesign/views_archives_sections_update.js"
+			],
+			[
+				"parametric",
+				"res/js/redesign/views_parametric.js"
+			],
+			[
+				"editor-addon-para",
+				"embedded/common/visual-editor/editor-addon-parametric.class.php"
+			],
+			[
+				"wpv-section-filter",
+				"inc/redesign/wpv-section-filters.php"
+			],
+			[
+				"fun",
+				"inc/functions-core.php"
+			],
+			[
+				"functions-core",
+				"inc/functions-core.php"
+			],
+			[
+				"functions",
+				"inc/views-templates/functions-templates.php"
+			],
+			[
+				"wizard",
+				"res/js/redesign/views_layout_edit_wizard.js"
+			],
+			[
+				"views_pare",
+				"res/js/redesign/views_parametric.js"
+			],
+			[
+				"",
+				"embedded/common/array2xml.php"
+			],
+			[
+				"uti",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"functions-co",
+				"inc/functions-core.php"
+			],
+			[
+				"wpv-parametric-form.tpl.php",
+				"inc/redesign/templates/wpv-parametric-form.tpl.php"
+			],
+			[
+				"views_listing",
+				"res/js/redesign/views_listing_page.js"
+			],
+			[
+				"views_lis",
+				"res/js/redesign/views_listing_page.js"
+			],
+			[
+				"editor-addon",
+				"embedded/common/visual-editor/editor-addon-generic.class.php"
+			],
+			[
+				"utils.s",
+				"res/js/redesign/utils.js"
+			],
+			[
+				"wpv-section-layout-template.php",
+				"inc/redesign/wpv-section-layout-template.php"
+			],
+			[
+				"core",
+				"inc/functions-core.php"
+			],
+			[
+				"p",
+				"embedded/common/views/promote.php"
+			],
+			[
+				"views_section_layout_template.js",
+				"res/js/redesign/views_section_layout_template.js"
+			],
+			[
+				"wpv-plu",
+				"inc/wpv-plugin.class.php"
+			],
+			[
+				"wpv-content-tepl",
+				"inc/redesign/wpv-content-templates-listing-page.php"
+			],
+			[
+				"wpv-template",
+				"inc/views-templates/wpv-template-plugin.class.php"
+			],
+			[
+				"view_conte",
+				"res/js/redesign/views_content_template.js"
+			],
+			[
+				"template",
+				"res/js/redesign/views_content_template.js"
+			],
+			[
+				"dial",
+				"res/js/redesign/dialogs.js"
+			],
+			[
+				"archive",
+				"inc/redesign/wpv-archive-listing-page.php"
+			],
+			[
+				"listing",
+				"inc/redesign/wpv-views-listing-page.php"
+			],
+			[
+				"view-templates.php",
+				"inc/views-templates/functions-templates.php"
+			],
+			[
+				"content_template.css",
+				"res/css/content_template.css"
+			],
+			[
+				"wpv-views-listing-page.php",
+				"inc/redesign/wpv-views-listing-page.php"
+			],
+			[
+				"wpv-views-lis",
+				"inc/redesign/wpv-views-listing-page.php"
+			],
+			[
+				"wpv-plugin.class.p",
+				"inc/wpv-plugin.class.php"
+			],
+			[
+				"wpv-admin",
+				"inc/wpv-admin-changes.php"
+			],
+			[
+				"322",
+				"res/js/codemirror234/mode/jinja2/jinja2.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"wpml",
+				"/Users/czarek/Documents/sublime-projects/wpmlorg.sublime-project"
+			],
+			[
+				"",
+				"/Users/czarek/Documents/sublime-projects/wp-types.com.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 240.0,
+	"status_bar_visible": true
+}
