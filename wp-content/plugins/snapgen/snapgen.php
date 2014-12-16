@@ -145,8 +145,8 @@ public function sg_options_page() {
             //header("Content-Type:text/xml");
             $boberdoo="https://leads.metrixinteractive.com/genericPostlead.php";
             //$boberdoo="http://requestb.in/1k0ngp41";
-            if(isset($_REQUEST['phone']) && $_REQUEST['phone'] !=""){
-                $response = reverse_lookup($_REQUEST['phone']);
+            if(isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] !=""){
+                $response = reverse_lookup($_REQUEST['Primary_Phone']);
                 
                 $number="";
                 $zip = "";
@@ -166,10 +166,10 @@ public function sg_options_page() {
                 }
                     $address = $number ." ".$response->street_name." ".$response->street_type;
                 
-            $_REQUEST['address']=$address;
-            $_REQUEST['city'] = $response->city;
-            $_REQUEST['state'] = $response->state_code;
-            $_REQUEST['zipcode'] = $zip;
+            $_REQUEST['Address']=$address;
+            $_REQUEST['City'] = $response->city;
+            $_REQUEST['State'] = $response->state_code;
+            $_REQUEST['ZipCode'] = $zip;
             }
              $post_args = array(
             'timeout' => self::DEFAULT_TIMEOUT , 'body' => $_REQUEST,'method'=> 'POST');
