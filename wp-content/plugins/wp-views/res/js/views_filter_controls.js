@@ -18,7 +18,8 @@ function wpv_filter_controls_edit_ok() {
 
     //changed to work with CodeMirror
     // var c = jQuery('textarea#wpv_filter_meta_html_content').val();
-    var c = HTMLEditor['wpv_filter_meta_html_content'].getValue();
+    var codemirror_views = icl_editor.codemirrorGet('wpv_filter_meta_html_content');
+    var c = codemirror_views.getValue();
     
     if (!check_if_previous_filter_has_changed(c)) {
 		jQuery('#wpv_filter_control_meta_html_content_error').show();
@@ -115,7 +116,7 @@ function wpv_filter_controls_code() {
 		}
 	}
 	
-	controls = '[wpv-filter-controls]' + controls + '[/wpv-filter-controls]\n';
+	controls = controls;
     
     return controls;
 }
@@ -184,7 +185,7 @@ function wpv_insert_filter_control(selector) {
                     
                     if (values['auto_fill'] == '1') {
                         control += ' auto_fill="' + field_name + '" ';
-                        control += ' auto_fill_default="' + values['auto_fill_default'] + '" ';
+			control += ' auto_fill_default="' + values['auto_fill_default'].replace(",", "\\\\,") + '" ';
                     } else {
                         control += ' values="';
                         
@@ -194,7 +195,7 @@ function wpv_insert_filter_control(selector) {
                             if (!first) {
                                 data += ',';
                             }
-                            data += values['values'][i][0];
+                            data += values['values'][i][0].replace(",", "\\\\,");
                             first = false;
                         }
                         control += data;
@@ -207,7 +208,7 @@ function wpv_insert_filter_control(selector) {
                             if (!first) {
                                 data += ',';
                             }
-                            data += values['values'][i][1];
+                            data += values['values'][i][1].replace(",", "\\\\,");
                             first = false;
                         }
                         control += data;

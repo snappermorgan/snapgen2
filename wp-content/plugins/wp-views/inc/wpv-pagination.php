@@ -15,7 +15,7 @@ if (isset($_GET['wpv-pagination-spinner-media-insert'])) {
  * get the pagination display returned by ajax.
  */
 
-function wpv_ajax_pagination() {
+function wpv_ajax_pagination() { // DEPRECATED
     if (wp_verify_nonce($_POST['wpv_nonce'], 'wpv_pagination_nonce')
             && !empty($_POST['_wpv_settings'])) {
         $settings['posts_per_page'] = $_POST['_wpv_settings']['posts_per_page'];
@@ -46,12 +46,12 @@ function wpv_ajax_pagination() {
     
 */
 
-function wpv_pagination_admin($view_settings) {
+function wpv_pagination_admin($view_settings) { // DEPRECATED
     global $post;
     $rollover_effects = array(
         'fade' => __('Fade', 'wpv-views'),
-        'fadefast' => __('Fade fast', 'wpv-views'),
-        'fadeslow' => __('Fade slow', 'wpv-views'),
+     //   'fadefast' => __('Fade fast', 'wpv-views'),
+     //   'fadeslow' => __('Fade slow', 'wpv-views'),
         'slideleft' => __('Slide Left', 'wpv-views'),
         'slideright' => __('Slide Right', 'wpv-views'),
         'slideup' => __('Slide Up', 'wpv-views'),
@@ -202,13 +202,22 @@ function wpv_pagination_admin($view_settings) {
                                 <li><label><input type="radio"  value="disable" name="_wpv_settings[ajax_pagination][]" onclick="jQuery('.wpv_pagination_ajax_toggle').slideUp();"<?php echo $checked; ?> />&nbsp;<?php _e('Pagination updates the entire page', 'wpv-views'); ?></label></li>
                                 <?php $checked = $view_settings['ajax_pagination'][0] == 'enable' ? ' checked="checked"' : ''; ?>
                                 <li><label><input type="radio"  value="enable" name="_wpv_settings[ajax_pagination][]" onclick="jQuery('.wpv_pagination_ajax_toggle').slideDown();"<?php echo $checked; ?> />&nbsp;<?php _e('Pagination updates only the view (use AJAX)', 'wpv-views'); ?></label></li>
-                                <li class="wpv_pagination_ajax_toggle"<?php if ($view_settings['ajax_pagination'][0] == 'disable') { echo ' style="display:none;"'; } ?>><label><select name="_wpv_settings[ajax_pagination][style]">
-                                                <option value="fade"<?php if ($view_settings['ajax_pagination']['style'] == 'fade') { echo ' selected="selected"'; } ?>><?php _e('Fade',  'wpv-views'); ?></option>
-                                                <option value="fadefast"<?php if ($view_settings['ajax_pagination']['style'] == 'fadefast') { echo ' selected="selected"'; } ?>><?php _e('Fade fast',  'wpv-views'); ?></option>
-                                                <option value="fadeslow"<?php if ($view_settings['ajax_pagination']['style'] == 'fadeslow') { echo ' selected="selected"'; } ?>><?php _e('Fade slow',  'wpv-views'); ?></option>
+                                <li class="wpv_pagination_ajax_toggle"<?php if ($view_settings['ajax_pagination'][0] == 'disable') { echo ' style="display:none;"'; } ?>>
+					<label><?php _e('Transition effect:',  'wpv-views'); ?><select name="_wpv_settings[ajax_pagination][style]">
+                                                <option value="fade"<?php if ($view_settings['ajax_pagination']['style'] == 'fade' || $view_settings['ajax_pagination']['style'] == 'fadefast' || $view_settings['ajax_pagination']['style'] == 'fadeslow') { echo ' selected="selected"'; } ?>><?php _e('Fade',  'wpv-views'); ?></option>
                                                 <option value="slideh"<?php if ($view_settings['ajax_pagination']['style'] == 'slideh') { echo ' selected="selected"'; } ?>><?php _e('Slide horizontally',  'wpv-views'); ?></option>
                                                 <option value="slidev"<?php if ($view_settings['ajax_pagination']['style'] == 'slidev') { echo ' selected="selected"'; } ?>><?php _e('Slide vertically',  'wpv-views'); ?></option>
-                                            </select><?php _e('Transition effect',  'wpv-views'); ?></label></li>
+                                        </select></label>
+                                        <label><?php _e('with duration',  'wpv-views'); ?>
+                                                <?php if ( !isset( $view_settings['ajax_pagination']['duration'] ) ) $view_settings['ajax_pagination']['duration'] = 500;
+							if ($view_settings['ajax_pagination']['style'] == 'fadefast') $view_settings['ajax_pagination']['duration'] = 1;
+							if ($view_settings['ajax_pagination']['style'] == 'fadeslow') $view_settings['ajax_pagination']['duration'] = 1500;
+						?>
+						<input type="text" class="transition-duration" name="_wpv_settings[ajax_pagination][duration]" value="<?php echo $view_settings['ajax_pagination']['duration']; ?>" size="5">
+                                        <?php _e('miliseconds', 'wpv-views'); ?>
+                                        <span class="duration-error" style="color:red;display:none;"><?php _e(' <- Please add a numeric value', 'wpv-views'); ?></span>
+                                        </label>
+                                </li>
                                             <li class="wpv_pagination_ajax_toggle"<?php if ($view_settings['ajax_pagination'][0] == 'disable') { echo ' style="display:none;"'; } ?>>
                                                 <label><input type="checkbox" name="_wpv_settings[pagination][preload_images]" value="1"<?php if ($view_settings['pagination']['preload_images']) { echo ' checked="checked"'; } ?> />&nbsp;<?php _e('Preload images before transition',  'wpv-views'); ?></label>
                                             </li>
@@ -247,6 +256,13 @@ function wpv_pagination_admin($view_settings) {
                                     }
                                 ?>
                             </select>
+                            <label><?php _e('with duration',  'wpv-views'); ?>
+                                <?php if ( !isset( $view_settings['rollover']['duration'] ) ) $view_settings['rollover']['duration'] = 500;
+				?>
+				<input type="text" class="transition-duration" name="_wpv_settings[rollover][duration]" value="<?php echo $view_settings['rollover']['duration']; ?>" size="5">
+                             <?php _e('miliseconds', 'wpv-views'); ?>
+                             <span class="duration-error" style="color:red;display:none;"><?php _e(' <- Please add a numeric value', 'wpv-views'); ?></span>
+                             </label>
                         <br /><br />
                         <label><input type="checkbox" name="_wpv_settings[rollover][include_page_selector]" value="1"<?php if ($view_settings['rollover']['include_page_selector']) { echo ' checked="checked"'; } ?> />&nbsp;<?php _e('Include page selector links',  'wpv-views'); ?></label>
                         <br />
@@ -258,6 +274,14 @@ function wpv_pagination_admin($view_settings) {
                     <div style="margin:0 0 20px 20px;<?php echo ($view_settings['pagination'][0] == 'disable' || $view_settings['ajax_pagination'][0] == 'disable') && $view_settings['pagination']['mode'] != 'rollover' ? 'display:none;' : ''; ?>" class="wpv_pagination_enabled wpv_pagination_ajax_toggle">
                         <label><input type="checkbox" name="_wpv_settings[pagination][cache_pages]" value="1"<?php if ($view_settings['pagination']['cache_pages']) { echo ' checked="checked"'; } ?> />&nbsp;<?php _e('Cache pages',  'wpv-views'); ?></label><br />
                         <label><input type="checkbox" name="_wpv_settings[pagination][preload_pages]" value="1"<?php if ($view_settings['pagination']['preload_pages']) { echo ' checked="checked"'; } ?> />&nbsp;<?php _e('Pre-load the next and previous pages - avoids loading delays when users move between pages',  'wpv-views'); ?></label>
+                        - <label><?php _e('pages to pre-load: ',  'wpv-views'); ?><select name="_wpv_settings[pagination][pre_reach]">
+                        <?php if ( !isset( $view_settings['pagination']['pre_reach'] ) ) $view_settings['pagination']['pre_reach'] = 1;
+                                    for($i = 1; $i < 20; $i++) {
+                                        $selected = $view_settings['pagination']['pre_reach']== $i ? ' selected="selected"' : '';
+                                        echo '<option value="' . $i . '"' . $selected . '>'. $i . '</option>';
+                                    }
+                                ?>
+                        </select></label>
                         <br /><br />
                         <label><input type="radio" onclick="jQuery('.wpv-spinner-selection').hide();jQuery('#wpv-spinner-default').show();" name="_wpv_settings[pagination][spinner]" value="default"<?php if ($view_settings['pagination']['spinner'] == 'default') { echo ' checked="checked"'; } ?> />&nbsp;<?php _e('Spinner graphics from Views', 'wpv-views'); ?></label>
                         <div id="wpv-spinner-default" class="wpv-spinner-selection" style="margin-left: 20px;<?php if ($view_settings['pagination']['spinner'] != 'default'){ echo ' display:none;"'; } ?>">
@@ -283,7 +307,7 @@ function wpv_pagination_admin($view_settings) {
                         <input type="text" name="_wpv_settings[pagination][callback_next]" value="<?php if (!empty($view_settings['pagination']['callback_next'])) { echo $view_settings['pagination']['callback_next']; } ?>" />
                         </label>
                     </div>-->
-                    <input class="button-primary" type="button" value="<?php echo __('OK', 'wpv-views'); ?>" name="<?php echo __('OK', 'wpv-views'); ?>" onclick="jQuery('html,body').animate({scrollTop:jQuery('#wpv_settings').offset().top-25}, 1500); wpv_pagination_edit_ok();"/>
+                    <input class="button-primary" type="button" value="<?php echo __('OK', 'wpv-views'); ?>" name="<?php echo __('OK', 'wpv-views'); ?>" onclick="wpv_pagination_edit_ok();"/>
                     <input class="button-secondary" type="button" value="<?php echo __('Cancel', 'wpv-views'); ?>" name="<?php echo __('Cancel', 'wpv-views'); ?>" onclick="jQuery('html,body').animate({scrollTop:jQuery('#wpv_settings').offset().top-25}, 1500); wpv_pagination_edit_cancel()"/>
                     <br />
                 </div>
@@ -312,7 +336,7 @@ function wpv_pagination_admin($view_settings) {
 /**
  * Media popup JS.
  */
-function wpv_pagination_spinner_media_admin_head() {
+function wpv_pagination_spinner_media_admin_head() { // DEPRECATED
 
     ?>
     <script type="text/javascript">
@@ -335,7 +359,7 @@ function wpv_pagination_spinner_media_admin_head() {
  * @param type $post
  * @return type 
  */
-function wpv_pagination_spinner_attachment_fields_to_edit_filter($form_fields, $post) {
+function wpv_pagination_spinner_attachment_fields_to_edit_filter($form_fields, $post) {// DEPRECATED
     $type = (strpos($post->post_mime_type, 'image/') !== false) ? 'image' : 'file';
     $form_fields['wpcf_fields_file'] = array(
         'label' => __('Views Pagination', 'wpv-views'),
@@ -355,7 +379,7 @@ function wpv_pagination_spinner_attachment_fields_to_edit_filter($form_fields, $
  * @param type $tabs
  * @return type 
  */
-function wpv_pagination_spinner_media_upload_tabs_filter($tabs) {
+function wpv_pagination_spinner_media_upload_tabs_filter($tabs) { // DEPRECATED
     unset($tabs['type_url']);
     return $tabs;
 }

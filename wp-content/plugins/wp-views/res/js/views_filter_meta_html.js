@@ -2,13 +2,15 @@ function wpv_view_filter_meta_html() {
     jQuery('#wpv_filter_meta_html_admin_show').hide();
     jQuery('#wpv_filter_meta_html_admin_edit').show();
     jQuery('#wpv_filter_meta_html_state').val('on');
+    
+    var codemirror_views = icl_editor.codemirrorGet('wpv_filter_meta_html_content');
 
-    HTMLEditor['wpv_filter_meta_html_content'].refresh();
-    HTMLEditor['wpv_filter_meta_html_content'].focus();
+    codemirror_views.refresh();
+    codemirror_views.focus();
 	// See if there are user controls and submit button is hidden.
     // change to work with CodeMirror
     // var c = jQuery('textarea#wpv_filter_meta_html_content').val();
-    var c = HTMLEditor['wpv_filter_meta_html_content'].getValue();
+    var c = codemirror_views.getValue();
 	if (c.search(/\[wpv-control.*?\]/g) != -1) {
 		if (c.search(/\[wpv-filter-submit[^\]]*?hide="true"/) != -1) {
  	
@@ -58,15 +60,8 @@ jQuery(document).ready(function($){
        	show_view_changed_message();
     });
     
-    HTMLEditor['wpv_filter_meta_html_content'] = CodeMirror.fromTextArea(document.getElementById("wpv_filter_meta_html_content"), {mode: "myshortcodes", tabMode: "indent", lineWrapping: true, lineNumbers: true, autofocus:true});
-    HTMLEditor['wpv_filter_meta_html_content'].refresh();
-    HTMLEditor['wpv_filter_meta_html_content'].focus();
-    
-    jQuery('#wpv_filter_meta_html_content').bind('paste', function(e){
-        if(HTMLCodeMirrorActive){
-            InsertAtCursor(this.value, 'wpv_filter_meta_html_content');
-        }
-    });
+    // Since 1.3 we're using icl_editor to handle codemirror
+    var codemirror_views = icl_editor.codemirror('wpv_filter_meta_html_content', true);
     
     if ('on' == jQuery('#wpv_filter_meta_html_state').val()) {
       wpv_view_filter_meta_html();

@@ -37,21 +37,22 @@ jQuery(document).ready(function($){
     });
 	
     jQuery('input[name=_wpv_settings\\[view-query-mode\\]]').change(function(event) {
-        var mode = jQuery('input[name=_wpv_settings\\[view-query-mode\\]]:checked').val()
+        var mode = jQuery('input[name=_wpv_settings\\[view-query-mode\\]]:checked').val();
+        var cm = icl_editor.codemirrorGet('wpv_layout_meta_html_content');
         if(mode=='normal'){
             if(old_content_normal!=''){
                 // changed for correct work with CodeMirror
                 //old_content_normal = jQuery('#wpv_layout_meta_html_content').val();
-                old_content_normal = HTMLEditor['wpv_layout_meta_html_content'].getValue();
+                old_content_normal = cm.getValue();
                 //jQuery('#wpv_layout_meta_html_content').val(old_content_normal);
-                HTMLEditor['wpv_layout_meta_html_content'].setValue(old_content_normal);
-                HTMLEditor['wpv_layout_meta_html_content'].refresh();
-                HTMLEditor['wpv_layout_meta_html_content'].focus();
+                cm.setValue(old_content_normal);
+                cm.refresh();
+                cm.focus();
                 
             }else{
                 // changed for correct work with CodeMirror
                 //old_content_normal = jQuery('#wpv_layout_meta_html_content').val();
-                old_content_normal = HTMLEditor['wpv_layout_meta_html_content'].getValue();
+                old_content_normal = cm.getValue();
                 on_generate_wpv_layout(true);
             }
         };
@@ -59,15 +60,15 @@ jQuery(document).ready(function($){
             if(old_content_archive!=''){
                 // changed for correct work with CodeMirror
                 //old_content_archive = jQuery('#wpv_layout_meta_html_content').val();
-                old_content_normal = HTMLEditor['wpv_layout_meta_html_content'].getValue();
+                old_content_archive = cm.getValue();
                 //jQuery('#wpv_layout_meta_html_content').val(old_content_archive);
-                HTMLEditor['wpv_layout_meta_html_content'].setValue(old_content_normal);
-                HTMLEditor['wpv_layout_meta_html_content'].refresh();
-                HTMLEditor['wpv_layout_meta_html_content'].focus();
+                cm.setValue(old_content_archive);
+                cm.refresh();
+                cm.focus();
             }else{
                 // changed for correct work with CodeMirror
                 //old_content_archive = jQuery('#wpv_layout_meta_html_content').val();
-                old_content_normal = HTMLEditor['wpv_layout_meta_html_content'].getValue();
+                old_content_archive = cm.getValue();
                 on_generate_wpv_layout(true);
             }
         };
@@ -91,17 +92,18 @@ function on_generate_wpv_filter(force) {
     jQuery('#wpv_generating_filter').show();
     
     var data = wpv_get_filter_code();
+    var codemirror_views = icl_editor.codemirrorGet('wpv_filter_meta_html_content');
 
     // changed for correct work with CodeMirror
     // var c = jQuery('textarea#wpv_filter_meta_html_content').val();
-    c = HTMLEditor['wpv_filter_meta_html_content'].getValue(); 
+    c = codemirror_views.getValue(); 
     
     if (force || check_if_previous_filter_has_changed(c)) {
     
         c = add_wpv_filter_data_to_content(c, data);
-	// changed for correct work with CodeMirror
-	// jQuery('textarea#wpv_filter_meta_html_content').val(c);
-	HTMLEditor['wpv_filter_meta_html_content'].setValue(c);
+        // changed for correct work with CodeMirror
+        // jQuery('textarea#wpv_filter_meta_html_content').val(c);
+        codemirror_views.setValue(c);
     }
     
     // save the generated value so we can compare later.

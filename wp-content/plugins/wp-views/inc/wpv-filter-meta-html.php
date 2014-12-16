@@ -204,7 +204,7 @@ function wpv_filter_meta_html_admin($view_settings) {
     
     ?>
     <span class="wpv-filter-control-help"><i>
-        <?php echo sprintf(__('Learn more about adding %sfilter controls%s', 'wpv-views'),
+        <?php echo sprintf(esc_js(__('Learn more about adding %sfilter controls%s', 'wpv-views')),
            '<a href="' . WPV_ADD_FILTER_CONTROLS_LINK . '" target="_blank">',
            ' &raquo;</a>'
            ); ?>
@@ -247,7 +247,7 @@ function wpv_filter_meta_html_admin($view_settings) {
         
         wpv_insert_control_html += '<h3><?php echo esc_js(__('Custom field controls', 'wpv-views')); ?></h3>'
         wpv_insert_control_html += '<table class="widefat fixed">';
-        wpv_insert_control_html += '<thead><tr><th><?php echo __('Custom field', 'wpv-views'); ?></th><th><?php echo __('URL_PARAM', 'wpv-views'); ?></th><th><?php echo __('Type of control', 'wpv-views'); ?></th><th></th></tr></thead>';
+        wpv_insert_control_html += '<thead><tr><th><?php echo esc_js(__('Custom field', 'wpv-views')); ?></th><th><?php echo esc_js(__('URL_PARAM', 'wpv-views')); ?></th><th><?php echo esc_js(__('Type of control', 'wpv-views')); ?></th><th></th></tr></thead>';
         wpv_insert_control_html += '<tbody>';
 
         var wpv_types_auto_style = '<?php echo esc_js(__('Types auto style', 'wpv-views')); ?>';
@@ -261,7 +261,7 @@ function wpv_filter_meta_html_admin($view_settings) {
         
         var wpv_insert_taxonomy_control_html = '<h3><?php echo esc_js(__('Taxonomy controls', 'wpv-views')); ?></h3>'
         wpv_insert_taxonomy_control_html += '<table class="widefat fixed">';
-        wpv_insert_taxonomy_control_html += '<thead><tr><th><?php echo __('Taxonomy', 'wpv-views'); ?></th><th><?php echo __('URL_PARAM', 'wpv-views'); ?></th><th><?php echo __('Type of control', 'wpv-views'); ?></th><th></th></tr></thead>';
+        wpv_insert_taxonomy_control_html += '<thead><tr><th><?php echo esc_js(__('Taxonomy', 'wpv-views')); ?></th><th><?php echo esc_js(__('URL_PARAM', 'wpv-views')); ?></th><th><?php echo esc_js(__('Type of control', 'wpv-views')); ?></th><th></th></tr></thead>';
         wpv_insert_taxonomy_control_html += '<tbody>';
         
 		var wpv_no_custom_fields_url_param = '<br /><div class="wpv_form_notice" style="width:98%;">';

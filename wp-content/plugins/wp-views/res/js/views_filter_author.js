@@ -22,6 +22,8 @@ jQuery(document).ready(function($){
     jQuery('input[name=author_url]').change(wpv_add_author_help);
     jQuery('select[name=wpv_author_shortcode_type_add]').change(wpv_add_author_help);
     jQuery('input[name=author_shortcode]').change(wpv_add_author_help);
+    
+    wpv_author_suggest();
 });
 
 function wpv_add_author_help() {
@@ -104,7 +106,8 @@ function wpv_post_author_add_filter(data) {
     var author_shortcode_type = '';
     if (jQuery('input[name=author_mode\\[\\]]').length) {
         author_mode = jQuery('input[name=author_mode\\[\\]]:checked').val();
-        author_id = jQuery('select[name=wpv_author_id_add]').val();
+	author_name = jQuery('input[name=wpv_author_name_add]').val();
+	author_id = jQuery('input[name=wpv_author_id_add]').val();
 	author_url = jQuery('input[name=author_url]').val();
 	author_url_type = jQuery('select[name=wpv_author_url_type_add]').val();
 	author_shortcode = jQuery('input[name=author_shortcode]').val();
@@ -113,6 +116,7 @@ function wpv_post_author_add_filter(data) {
     
     if (author_mode != '') {
         data['author_mode'] = author_mode;
+	data['author_name'] = author_name;
         data['author_id'] = author_id;
 	data['author_url'] = author_url;
 	data['author_url_type'] = author_url_type;
@@ -124,6 +128,7 @@ function wpv_post_author_add_filter(data) {
 }
 
 var previous_author_mode;
+var previous_author_name;
 var previous_author_id;
 var previous_author_url;
 var previous_author_url_type;
@@ -134,8 +139,12 @@ var previous_author_shortcode_type;
 
 function wpv_show_filter_author_edit() {
 
+    wpv_edit_author_help();
+    wpv_author_suggest();
+
     previous_author_mode = jQuery('input[name=_wpv_settings\\[author_mode\\]\\[\\]]:checked');
-    previous_author_id = jQuery('select[name=_wpv_settings\\[author_id\\]]').val();
+    previous_author_name = jQuery('input[name=_wpv_settings\\[author_name\\]]').val();
+    previous_author_id = jQuery('input[name=_wpv_settings\\[author_id\\]]').val();
     previous_author_url = jQuery('input[name=_wpv_settings\\[author_url\\]]').val();
     previous_author_url_type = jQuery('select[name=_wpv_settings\\[author_url_type\\]]').val();
     previous_author_shortcode = jQuery('input[name=_wpv_settings\\[author_shortcode\\]]').val();
@@ -147,12 +156,6 @@ function wpv_show_filter_author_edit() {
 
     jQuery('#wpv-filter-author-edit').show();
     jQuery('#wpv-filter-author-show').hide();
-    
-    if (jQuery('input[name=_wpv_settings\\[author_mode\\]\\[\\]]:checked').val() == 'by_url') {
-      wpv_edit_author_help();
-    } else if (jQuery('input[name=_wpv_settings\\[author_mode\\]\\[\\]]:checked').val() == 'shortcode') {
-      wpv_edit_author_help();
-    }
     
     jQuery('input[name=_wpv_settings\\[author_mode\\]\\[\\]]').change(function() {
       jQuery('.wpv_author_url_param_missing').hide();
@@ -187,7 +190,8 @@ function wpv_show_filter_author_edit_ok() {
         type_data : 'post_author',
         row : row,
         author_mode : jQuery('input[name=_wpv_settings\\[author_mode\\]\\[\\]]:checked').val(),
-        author_id : jQuery('select[name=_wpv_settings\\[author_id\\]]').val(),
+        author_name : jQuery('input[name=_wpv_settings\\[author_name\\]]').val(),
+        author_id : jQuery('input[name=_wpv_settings\\[author_id\\]]').val(),
         author_url : jQuery('input[name=_wpv_settings\\[author_url\\]]').val(),
         author_url_type : jQuery('select[name=_wpv_settings\\[author_url_type\\]]').val(),
         author_shortcode : jQuery('input[name=_wpv_settings\\[author_shortcode\\]]').val(),
@@ -297,7 +301,8 @@ function wpv_show_filter_author_edit_cancel() {
         jQuery(this).attr('checked', false); 
     });
     previous_author_mode.attr('checked', true);
-    jQuery('select[name=_wpv_settings\\[author_id\\]]').val(previous_author_id);
+    jQuery('input[name=_wpv_settings\\[author_name\\]]').val(previous_author_name);
+    jQuery('input[name=_wpv_settings\\[author_id\\]]').val(previous_author_id);
     jQuery('input[name=_wpv_settings\\[author_url\\]]').val(previous_author_url);
     jQuery('select[name=_wpv_settings\\[author_url_type\\]]').val(previous_author_url_type);
     jQuery('input[name=_wpv_settings\\[author_shortcode\\]]').val(previous_author_shortcode);
@@ -306,4 +311,15 @@ function wpv_show_filter_author_edit_cancel() {
     jQuery('#wpv-filter-author-edit').parent().parent().css('background-color', '');
     jQuery('#wpv-filter-author-edit').hide();
     jQuery('#wpv-filter-author-show').show();
+}
+
+function wpv_author_suggest() {
+	jQuery('.author_suggest').suggest(ajaxurl + '?action=wpv_suggest_author', {
+		onSelect: function() {
+			thevalue = this.value;
+			thevalue = thevalue.split(' #');
+			jQuery('.author_suggest').val(thevalue[0]);
+			jQuery('.author_suggest_id').val(thevalue[1].substring(8).trim());
+		}
+	});
 }

@@ -3,8 +3,9 @@ function wpv_view_layout_meta_html() {
     jQuery('#wpv_layout_meta_html_admin_edit').show();
     jQuery('#wpv_layout_meta_html_state').val('on');
     
-    HTMLEditor['wpv_layout_meta_html_content'].refresh();
-    HTMLEditor['wpv_layout_meta_html_content'].focus();
+    var codemirror_views = icl_editor.codemirrorGet('wpv_layout_meta_html_content');
+    codemirror_views.refresh();
+    codemirror_views.focus();
     
     // scroll the edit into view.
     jQuery('html, body').animate({
@@ -57,8 +58,10 @@ jQuery(document).ready(function($){
     if ('on' == jQuery('#wpv_layout_meta_html_state').val()) {
 	    jQuery('#wpv_layout_meta_html_admin_show').hide();
 	    jQuery('#wpv_layout_meta_html_admin_edit').show();
-	    HTMLEditor['wpv_layout_meta_html_content'].refresh();
-	    HTMLEditor['wpv_layout_meta_html_content'].focus();
+        
+        var codemirror_views = icl_editor.codemirrorGet('wpv_layout_meta_html_content');
+	    codemirror_views.refresh();
+	    codemirror_views.focus();
     }
     
     jQuery('#wpv_layout_meta_html_extra_css_edit').css({'height': '0', 'overflow': 'hidden', 'padding': '0'});
@@ -93,7 +96,8 @@ jQuery(document).ready(function($){
 function wpv_layout_meta_html_generate_new() {
     // changed for correct work with CodeMirror
     //jQuery('#wpv_layout_meta_html_content_old').val(jQuery('#wpv_layout_meta_html_content').val());
-    jQuery('#wpv_layout_meta_html_content_old').val(HTMLEditor['wpv_layout_meta_html_content'].getValue());
+    var codemirror_views = icl_editor.codemirrorGet('wpv_layout_meta_html_content');
+    jQuery('#wpv_layout_meta_html_content_old').val(codemirror_views.getValue());
     jQuery('#wpv_layout_meta_html_content_old_div').show();
     jQuery('#wpv_layout_meta_html_content_error').hide();
     on_generate_wpv_layout(true);

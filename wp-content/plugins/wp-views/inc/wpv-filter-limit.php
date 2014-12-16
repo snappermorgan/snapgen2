@@ -2,6 +2,9 @@
 /*
  * Limit and offset filter.
  */
+ 
+ // DEPRECATED
+// Only used in the old wpv-filter-types.php file
 
 function wpv_filter_limit_admin_summary($view_settings, $query_type = 'post') {
     $view_settings = wpv_limit_default_settings($view_settings);
@@ -43,6 +46,9 @@ function wpv_filter_limit_admin_summary($view_settings, $query_type = 'post') {
     }
     echo $output;
 }
+
+// DEPRECATED
+// Only used in the old wpv-filter-types.php file
 
 function wpv_filter_limit_admin($view_settings, $query_type = 'post') {
 
@@ -137,7 +143,10 @@ function wpv_filter_limit_admin($view_settings, $query_type = 'post') {
     <?php
 }
 
-add_filter('wpv-view-get-content-summary', 'wpv_limit_summary_filter', 5, 3);
+// DEPRECATED
+// New filter in the redesign/ folder
+
+// add_filter('wpv-view-get-content-summary', 'wpv_limit_summary_filter', 5, 3);
 
 function wpv_limit_summary_filter($summary, $post_id, $view_settings) {
     ob_start();

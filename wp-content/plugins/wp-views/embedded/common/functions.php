@@ -91,29 +91,43 @@ function wpv_add_time_functions( $value ) {
  * 
  * 
  */
-function wpv_condition( $atts ) {
+function wpv_condition( $atts, $post_to_check = null ) {
     extract(
             shortcode_atts( array('evaluate' => FALSE), $atts )
     );
 
-    global $post;
+    // Do not overwrite global post
+//    global $post;
 
     // if in admin, get the post from the URL
     if ( is_admin() ) {
-        // Get post
-        if ( isset( $_GET['post'] ) ) {
-            $post_id = (int) $_GET['post'];
-        } else if ( isset( $_POST['post_ID'] ) ) {
-            $post_id = (int) $_POST['post_ID'];
+        if ( empty($post_to_check->ID) ) {
+            // Get post
+            if ( isset( $_GET['post'] ) ) {
+                $post_id = (int) $_GET['post'];
+            } else if ( isset( $_POST['post_ID'] ) ) {
+                $post_id = (int) $_POST['post_ID'];
+            } else {
+                $post_id = 0;
+            }
+            if ( $post_id ) {
+                $post = get_post( $post_id );
+            }
         } else {
-            $post_id = 0;
+            $post = $post_to_check;
         }
-        if ( $post_id ) {
-            $post = get_post( $post_id );
-        }
+    }
+    if ( empty($post->ID) ) {
+        global $post;
+    }
+    if ( empty($post->ID) ) {
+        // Will trigger errors if $post->ID is empty
+        return false;
     }
 
     global $wplogger;
+    
+    do_action( 'wpv_condition', $post );
 
     $logging_string = "Original expression: " . $evaluate;
 
@@ -129,14 +143,17 @@ function wpv_condition( $atts ) {
             $is_empty = '1=0';
 
             // mark as empty only nulls and ""  
-            if ( is_null( $match_var ) || strlen( $match_var ) == 0 ) {
+//            if ( is_null( $match_var ) || strlen( $match_var ) == 0 ) {
+            if ( is_null( $match_var )
+                    || ( is_string( $match_var ) && strlen( $match_var ) == 0 )
+                    || ( is_array( $match_var ) && empty( $match_var ) ) ) {
                 $is_empty = '1=1';
             }
 
             $evaluate = str_replace( $matches[0][$i], $is_empty, $evaluate );
         }
     }
-
+    
     // find variables that are to be used as strings.
     // eg '$f1'
     // will replace $f1 with the actual field value
@@ -263,6 +280,8 @@ function wpv_condition( $atts ) {
     $wplogger->log( $logging_string, WPLOG_DEBUG );
     // evaluate the prepared expression using the custom eval script
     $result = wpv_evaluate_expression( $evaluate );
+    
+    do_action( 'wpv_condition_end', $post );
 
     // return true, false or error string to the conditional caller
     return $result;
@@ -495,7 +514,7 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
     global $post, $WPV_wpcf_post_relationship;
     static $related = array();
 
-    if ( isset( $post ) && function_exists( 'wpcf_pr_get_belongs' ) ) {
+    if ( !empty( $post->ID ) && function_exists( 'wpcf_pr_get_belongs' ) ) {
 
         if ( !isset( $related[$post->post_type] ) ) {
             $related[$post->post_type] = wpcf_pr_get_belongs( $post->post_type );
@@ -505,7 +524,9 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
                 $related_id = wpcf_pr_post_get_belongs( $post->ID, $post_type );
                 if ( $related_id ) {
                     $WPV_wpcf_post_relationship['$' . $post_type . '_id'] = $related_id;
-                }
+                } else {
+					$WPV_wpcf_post_relationship['$' . $post_type . '_id'] = 0;
+				}
             }
         }
     }
@@ -516,7 +537,7 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
 
 /**
  * Form for Enlimbo calls for wpv-control shortcode calls
-
+ *
  * @param unknown_type $elements
  */
 function wpv_form_control( $elements ) {
@@ -564,7 +585,8 @@ function wpv_dismiss_message_ajax() {
     if ( isset( $_GET['message_id'] ) && isset( $_GET['_wpnonce'] )
             && wp_verify_nonce( $_GET['_wpnonce'], 'dismiss_message' ) ) {
         $dismissed_messages = get_option( 'wpv-dismissed-messages', array() );
-        $dismissed_messages[strval( $_GET['message_id'] )] = 1;
+		$dismissed_image_val = isset( $_GET['timestamp'] ) ? $_GET['timestamp'] : 1;
+        $dismissed_messages[strval( $_GET['message_id'] )] = $dismissed_image_val;
         update_option( 'wpv-dismissed-messages', $dismissed_messages );
     }
     die( 'ajax' );
