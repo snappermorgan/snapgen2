@@ -234,7 +234,7 @@ public function sg_options_page() {
 
     public function post_filter($service,$submission = false) {
         
-        _log("ALTER SUBMISSION TRIGGERED");
+        //_log("ALTER SUBMISSION TRIGGERED");
         if(isset($service['whitepages']) && !empty($service['whitepages'])){
             if((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field'])) 
                     && (isset($service['whitepages-state-field']) && !empty($service['whitepages-state-field'])) && (isset($service['whitepages-zip-field']) && !empty($service['whitepages-zip-field']))
@@ -252,7 +252,7 @@ public function sg_options_page() {
 //                $zip = "30076";
                  _log("submission passed: " . print_r($submission, true));      
                 foreach($submission as $field => &$value) {
- _log("field: " . print_r($field, true));      
+ //_log("field: " . print_r($field, true));      
                      if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
                          if($response->house){
                            $number=$response->house;
