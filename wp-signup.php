@@ -46,6 +46,7 @@ $wp_query->is_404 = false;
  * @since MU
  */
 function wpmu_signup_stylesheet() {
+    
 	?>
 	<style type="text/css">
 		.mu_register { width: 90%; margin:0 auto; }
