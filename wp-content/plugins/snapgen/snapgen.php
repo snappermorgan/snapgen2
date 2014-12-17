@@ -280,7 +280,7 @@ public function sg_options_page() {
                                  $zip = $response->postal_code;
                             }
                            $value=$zip;
-                           _log("zip=".$zip."\n");
+                           //_log("zip=".$zip."\n");
                      }
                      
                 }
