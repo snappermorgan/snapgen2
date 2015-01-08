@@ -59,7 +59,7 @@ class Vc_Vendor_Layerslider implements Vc_Vendor_Interface {
 			) );
 			// Load layer slider shortcode && change id
 			if(vc_is_frontend_ajax() || vc_is_frontend_editor()) {
-				include LS_ROOT_PATH.'/wp/shortcodes.php';
+				include_once LS_ROOT_PATH.'/wp/shortcodes.php';
 				add_filter('vc_layerslider_shortcode', array(&$this, 'setId'));
 			}
 		} // if layer slider plugin active

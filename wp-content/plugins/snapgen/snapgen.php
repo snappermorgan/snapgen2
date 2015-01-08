@@ -137,35 +137,45 @@ settings_fields('pluginPage');
 			//            exit(0);
 			//header("Content-Type:text/xml");
 			$boberdoo = "https://leads.metrixinteractive.com/genericPostlead.php";
-			//$boberdoo="http://requestb.in/1k0ngp41";
+			//$boberdoo = "http://requestb.in/1hhyvit1";
+
 			if (isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] != "") {
 				$response = reverse_lookup($_REQUEST['Primary_Phone']);
-
+				_log("Incoming REQUEST:" . print_r($_REQUEST, true));
 				$number = "";
 				$zip = "";
-				if ($response->house) {
-					$number = $response->house;
+
+				if ($response) {
+
+					if ($response->house) {
+						$number = $response->house;
+					}
+
+					if ($response->apt_number) {
+						$number = $response->apt_number;
+					}
+
+					if ($response->zip4) {
+						$zip = $response->postal_code . "-" . $response->zip4;
+
+					} else {
+						$zip = $response->postal_code;
+					}
+					$address = $number . " " . $response->street_name . " " . $response->street_type;
+					$test_address = str_replace(' ', '', $address);
+					if ($test_address != "") {
+
+						$_REQUEST['Address'] = $address;
+						$_REQUEST['SRC'] = $_REQUEST['SRC'] . "match";
+						$_REQUEST['City'] = $response->city;
+						$_REQUEST['State'] = $response->state_code;
+						$_REQUEST['ZipCode'] = $zip;
+					}
 				}
-
-				if ($response->apt_number) {
-					$number = $response->apt_number;
-				}
-
-				if ($response->zip4) {
-					$zip = $response->postal_code . "-" . $response->zip4;
-
-				} else {
-					$zip = $response->postal_code;
-				}
-				$address = $number . " " . $response->street_name . " " . $response->street_type;
-
-				$_REQUEST['Address'] = $address;
-				$_REQUEST['City'] = $response->city;
-				$_REQUEST['State'] = $response->state_code;
-				$_REQUEST['ZipCode'] = $zip;
 			}
 			$post_args = array(
 				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
+			_log("Post Args to boberdoo" . print_r($post_args, true));
 			$response = wp_remote_post($boberdoo, $post_args);
 			//echo "<pre>".print_r($response,true)."</pre>";
 
