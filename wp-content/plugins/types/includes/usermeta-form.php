@@ -2,10 +2,10 @@
 /*
  * Fields and groups form functions.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/includes/usermeta-form.php $
- * $LastChangedDate: 2014-08-14 10:10:16 +0800 (Thu, 14 Aug 2014) $
- * $LastChangedRevision: 25956 $
- * $LastChangedBy: bruce $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/usermeta-form.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once WPCF_EMBEDDED_ABSPATH . '/classes/validate.php';
@@ -297,7 +297,8 @@ function wpcf_admin_usermeta_form() {
                         . '&amp;wpcf_action=usermeta_insert_existing'
                         . '&amp;field=' . $field['id'] ) . '&amp;_wpnonce='
                 . wp_create_nonce( 'usermeta_insert_existing' ) . '" '
-                . 'class="wpcf-fields-add-ajax-link button-secondary" onclick="jQuery(this).parent().fadeOut();">'
+                . 'class="wpcf-fields-add-ajax-link button-secondary" onclick="jQuery(this).parent().fadeOut();" '
+                . 'data-slug="' . $field['id'] . '">'
                 . htmlspecialchars( stripslashes( $field['name'] ) ) . '</a>'
                 . '<a href="' . admin_url( 'admin-ajax.php'
                         . '?action=wpcf_ajax'

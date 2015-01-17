@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.checkbox.php $
- * $LastChangedDate: 2014-09-18 09:37:16 +0000 (Thu, 18 Sep 2014) $
- * $LastChangedRevision: 992466 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.checkbox.php $
+ * $LastChangedDate: 2014-10-23 10:33:39 +0000 (Thu, 23 Oct 2014) $
+ * $LastChangedRevision: 1012677 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once 'class.field_factory.php';
@@ -35,10 +35,16 @@ class WPToolset_Field_Checkbox extends FieldFactory
         if ( isset($data['options']) && array_key_exists( 'checked', $data['options'] ) ) {
             $checked = $data['options']['checked'];
         }
-        if ( array_key_exists('default_value', $data) && $value == $data['default_value'] ) {
+        /**
+         * if is a default value, there value is 1 or default_value
+         */
+        if (
+            array_key_exists('default_value', $data)
+            && ( '1' === $value || $value == $data['default_value'] )
+        ) {
             $checked = true;
         }
-        
+
         // Comment out broken code. This tries to set the previous state after validation fails
         //if (!$checked&&$this->getValue()==1) {
         //    $checked=true;

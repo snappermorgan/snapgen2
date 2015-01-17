@@ -5,10 +5,10 @@ Tags: contact form,database,contact form database,save contact form,form databas
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 3.2.1
-Tested up to: 4.0
-Stable tag: 2.8.15
+Tested up to: 4.1
+Stable tag: 2.8.22
 
-Saves submitted form data to the database and allow you to export the data to a file and use short codes to display it.
+Saves submitted form data to the database. Export the data to a file or use short codes to display it.
 
 == Description ==
 
@@ -80,6 +80,28 @@ You can always deactivate the plugin without loosing data.
 1. Admin Panel view of submitted form data
 
 == Changelog ==
+
+= 2.8.23 =
+* Bug fix for Gravity Form integration. Sometimes field value was not captured where there are multiple fields of the same name but only one shown based on conditional field definition.
+
+= 2.8.22 =
+* Changed icon in admin panel
+* Dutch translation update
+
+= 2.8.21 =
+* Added icons to admin panel
+
+= 2.8.20 =
+* Additional XSS protection for admin panels
+
+= 2.8.19 =
+* Swedish translation update
+
+= 2.8.18 =
+* Better XSS protection for admin panels
+
+= 2.8.17 =
+* Bug fix in [cfdb-html] variable substitution when data for column is not present.
 
 = 2.8.16 =
 * Generating the [submit_time] tag for Contact Form 7 is now an option in the Options page and is off by default to avoid the post being flagged as spam

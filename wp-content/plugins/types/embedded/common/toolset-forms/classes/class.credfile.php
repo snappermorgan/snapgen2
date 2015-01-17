@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/classes/class.credfile.php $
- * $LastChangedDate: 2014-08-09 05:11:46 +0800 (Sat, 09 Aug 2014) $
- * $LastChangedRevision: 25806 $
- * $LastChangedBy: francesco $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.credfile.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once 'class.textfield.php';
@@ -111,7 +111,7 @@ class WPToolset_Field_Credfile extends WPToolset_Field_Textfield
         );
         $form[] = array(
                 '#type' => 'markup',
-                '#markup' => '<input type="button"' . $delete_input_showhide . ' data-action="delete" class="js-wpt-credfile-delete wpt-credfile-delete' . $button_extra_classnames . '" value="' . esc_attr( __( 'Delete', 'wpv-views' ) ) . '" />',
+                '#markup' => '<input type="button"' . $delete_input_showhide . ' data-action="delete" class="js-wpt-credfile-delete wpt-credfile-delete' . $button_extra_classnames . '" value="' . esc_attr( __( 'Clear', 'wpv-views' ) ) . '" />',
         );
         $form[] = array(
             '#type' => 'hidden',

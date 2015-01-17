@@ -6,8 +6,8 @@ Plugin URI: wordpress.org/plugins/custom-content-shortcode/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T3H8XVEMEA73Y
 Tags: loop, query, content, shortcode, post type, field, taxonomy
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 1.4.5
+Tested up to: 4.1
+Stable tag: 1.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,12 +30,12 @@ There is a reference section under Settings -> Custom Content.
 <br />
 Here are some of the included features:
 
-* View your site's **content structure**
 * **Dynamic templates** with shortcodes
-* Simple **gallery field** for any post type
+* View your site's **content structure**
 * Display **comments** and **attachments**
 * **User info** and content based on user status
 * **Relative URLs** for links and images
+* Simple **gallery field** for any post type
 * **Cache** the result of query loops
 
 Support for other plugins:
@@ -83,6 +83,66 @@ Support for other plugins:
 
 == Changelog ==
 
+= 1.5.9 =
+
+* Try the new add-on under development: [Paginator](http://eliotakira.com/plugin/paginator)
+* [loop] - If *parent="this"* and no current post, return empty
+* [loop] - Exclude child posts by default, unless *include="children"*
+
+= 1.5.8 =
+
+* [comments id] - Return nothing if post/ID is empty
+* [content] - Make sure current post exists
+* [field thumbnail] - Enable *size* parameter to resize thumbnail; thanks @kurakin_alexander!
+* [repeater num] - Display specific repeater field
+* [repeater num sub] - Quick way to display a single sub-field
+* Starting to add hooks and filters for extensibility
+* Improve code organization
+
+= 1.5.6 =
+
+* [loop] - Support up to 3 taxonomy queries
+* [array] - Return ACF field array correctly when it's not a sub-field
+* [content] - Return translated result if qTranslate Plus is active
+
+= 1.5.4 =
+
+* [array] - Support ACF fields stored as array
+
+= 1.5.3 =
+
+* [array] - Use with [field] to display key-value pairs stored in a field
+* [array] - Enable looping through multiple arrays: *each="true"*
+
+= 1.5.1 =
+
+* [attached] - Keep loop contained; don't interfere with parent loop
+
+= 1.5.0 =
+
+* [loop] - Enable multiple categories or tags with *compare="and"*
+* [related] - Enable posts related by multiple taxonomies
+
+= 1.4.9 =
+
+* [if taxonomy] - If no term is specified, check if any term exists for the taxonomy
+* [each url] - URL of taxonomy term archive
+* [each name-link] - Taxonomy term name with link to archive
+
+= 1.4.8 =
+
+* [loop author] - Display posts from current user: *author="this"*
+
+= 1.4.7 =
+
+* [if user_field] - If user field is not empty or has specific value
+
+= 1.4.6 =
+
+* [field meta] - Return author meta field correctly
+* [related] - By default, loop posts related by category
+* [related] - Add parameter *trim* to remove trailing space or comma
+
 = 1.4.5 =
 
 * [comments] - Show only approved comments if set in Settings -> Discussion
@@ -96,8 +156,7 @@ Support for other plugins:
 * [related taxonomy] - Show posts related to current post by taxonomy
 * [repeater] - Support nested repeater fields (ACF)
 
-* Thanks to *adwrt* and *kurakin_alexander* for the code contribution.
-* I'd also like to thank everyone who has donated to this plugin's development, and for all the user feedback.
+* I'd like to thank everyone who has donated to this plugin's development, and for all the user feedback. Thanks also to *adwrt* and *kurakin_alexander* for the code contribution.
 
 = 1.4.3 =
 

@@ -2,10 +2,10 @@
 /*
  * Custom Fields Control Screen
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/includes/usermeta-control.php $
- * $LastChangedDate: 2014-06-26 18:57:18 +0800 (Thu, 26 Jun 2014) $
- * $LastChangedRevision: 24376 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/usermeta-control.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 /**

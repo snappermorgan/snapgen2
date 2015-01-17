@@ -2,10 +2,10 @@
 
 /**
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.field_factory.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.field_factory.php $
+ * $LastChangedDate: 2014-10-23 10:33:39 +0000 (Thu, 23 Oct 2014) $
+ * $LastChangedRevision: 1012677 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -72,7 +72,14 @@ abstract class FieldFactory extends FieldAbstract
 
     public function getValue()
     {
-        return $this->_value;
+        global $post;
+        $value = $this->_value;
+        $value = apply_filters( 'wpcf_fields_value_get', $value, $post );
+        if ( array_key_exists('slug', $this->_data ) ) {
+            $value = apply_filters( 'wpcf_fields_slug_' . $this->_data['slug'] . '_value_get', $value, $post );
+        }
+        $value = apply_filters( 'wpcf_fields_type_' . $this->_data['type'] . '_value_get', $value, $post );
+        return $value;
     }
 
     public function getTitle()
@@ -120,6 +127,14 @@ abstract class FieldFactory extends FieldAbstract
             return $this->_data['attribute'];
         }
         return array();
+    }
+
+    public function getWPMLAction()
+    {
+        if ( array_key_exists( 'wpml_action', $this->_data ) ) {
+            return $this->_data['wpml_action'];
+        }
+        return 0;
     }
 
     public static function registerScripts() {}

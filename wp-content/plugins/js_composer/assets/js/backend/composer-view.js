@@ -535,7 +535,7 @@
                 scrollSensitivity: 70,
                 cursor: 'move',
                 cursorAt: {top: 20, left: 16},
-                tolerance:'pointer',
+                tolerance: 'intersect',
                 start:function () {
                     $('#visual_composer_content').addClass('vc_sorting-started');
                     $('.vc_not_inner_content').addClass('dragging_in');
@@ -567,7 +567,7 @@
                         ui.placeholder.addClass('vc_hidden-placeholder');
                         return false;
                     }
-                    if(ui.sender.length && !ui.sender.find('[data-element_type]:visible').length) {
+                    if( !_.isNull(ui.sender) && ui.sender.length && !ui.sender.find('[data-element_type]:visible').length) {
                       ui.sender.addClass('vc_sorting-empty-container');
                     }
                     ui.placeholder.removeClass('vc_hidden-placeholder'); // .parent().removeClass('vc_empty-container');

@@ -2,10 +2,10 @@
 /*
  * Field class.
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/classes/field.php $
- * $LastChangedDate: 2014-08-27 08:49:51 +0000 (Wed, 27 Aug 2014) $
- * $LastChangedRevision: 973824 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/classes/field.php $
+ * $LastChangedDate: 2014-10-23 10:33:39 +0000 (Thu, 23 Oct 2014) $
+ * $LastChangedRevision: 1012677 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -301,10 +301,8 @@ class WPCF_Field
          * Apply filters
          */
         $meta = apply_filters( 'wpcf_fields_value_get', $meta, $this );
-        $meta = apply_filters( 'wpcf_fields_slug_' . $this->cf['slug']
-                . '_value_get', $meta, $this );
-        $meta = apply_filters( 'wpcf_fields_type_' . $this->cf['type']
-                . '_value_get', $meta, $this );
+        $meta = apply_filters( 'wpcf_fields_slug_' . $this->cf['slug'] . '_value_get', $meta, $this );
+        $meta = apply_filters( 'wpcf_fields_type_' . $this->cf['type'] . '_value_get', $meta, $this );
 
         return $meta;
     }
@@ -400,14 +398,12 @@ class WPCF_Field
      * @param type $value
      * @return type 
      */
-    function _filter_save_value( $value ) {
+    function _filter_save_value( $value )
+    {
         // Apply filters
-        $value = apply_filters( 'wpcf_fields_value_save', $value,
-                $this->cf['type'], $this->cf['slug'], $this->cf, $this );
-        $value = apply_filters( 'wpcf_fields_slug_' . $this->cf['slug']
-                . '_value_save', $value, $this->cf, $this );
-        $value = apply_filters( 'wpcf_fields_type_' . $this->cf['type']
-                . '_value_save', $value, $this->cf, $this );
+        $value = apply_filters( 'wpcf_fields_value_save', $value, $this->cf['type'], $this->cf['slug'], $this->cf, $this );
+        $value = apply_filters( 'wpcf_fields_slug_' . $this->cf['slug'] . '_value_save', $value, $this->cf, $this );
+        $value = apply_filters( 'wpcf_fields_type_' . $this->cf['type'] . '_value_save', $value, $this->cf, $this );
 
         return $value;
     }
@@ -420,13 +416,11 @@ class WPCF_Field
      * @param type $value
      * @param type $meta_id
      */
-    function _action_save( $field, $value, $meta_id, $meta_value_original ) {
-        do_action( 'wpcf_fields_save', $value, $field, $this, $meta_id,
-                $meta_value_original );
-        do_action( 'wpcf_fields_slug_' . $field['slug'] . '_save', $value,
-                $field, $this, $meta_id, $meta_value_original );
-        do_action( 'wpcf_fields_type_' . $field['type'] . '_save', $value,
-                $field, $this, $meta_id, $meta_value_original );
+    function _action_save( $field, $value, $meta_id, $meta_value_original )
+    {
+        do_action( 'wpcf_fields_save', $value, $field, $this, $meta_id, $meta_value_original );
+        do_action( 'wpcf_fields_slug_' . $field['slug'] . '_save', $value, $field, $this, $meta_id, $meta_value_original );
+        do_action( 'wpcf_fields_type_' . $field['type'] . '_save', $value, $field, $this, $meta_id, $meta_value_original );
     }
 
     /**
@@ -620,8 +614,7 @@ class WPCF_Field
                 }
 
                 // Set form element
-                $form[$element_key] = apply_filters( 'wpcf_post_edit_field',
-                        $element, $this->cf, $this->post, $this->context );
+                $form[$element_key] = apply_filters( 'wpcf_post_edit_field', $element, $this->cf, $this->post, $this->context );
             }
 
             // Add to editor

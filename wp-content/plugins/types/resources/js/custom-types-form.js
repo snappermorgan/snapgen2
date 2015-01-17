@@ -2,10 +2,10 @@
  *
  * Custom Types form JS
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/resources/js/custom-types-form.js $
- * $LastChangedDate: 2014-05-13 18:49:25 +0800 (Tue, 13 May 2014) $
- * $LastChangedRevision: 22267 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/resources/js/custom-types-form.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 

@@ -2,10 +2,10 @@
 /*
  * Import/export data.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/includes/import-export.php $
- * $LastChangedDate: 2014-08-01 12:46:07 +0800 (Fri, 01 Aug 2014) $
- * $LastChangedRevision: 25533 $
- * $LastChangedBy: bruce $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/import-export.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once WPCF_EMBEDDED_INC_ABSPATH . '/import-export.php';

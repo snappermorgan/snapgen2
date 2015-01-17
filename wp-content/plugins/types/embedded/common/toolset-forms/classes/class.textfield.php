@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/classes/class.textfield.php $
- * $LastChangedDate: 2014-07-09 16:26:51 +0800 (Wed, 09 Jul 2014) $
- * $LastChangedRevision: 24777 $
- * $LastChangedBy: juan $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.textfield.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once "class.field_factory.php";
@@ -34,6 +34,7 @@ class WPToolset_Field_Textfield extends FieldFactory
             '#validate' => $this->getValidationData(),
             '#repetitive' => $this->isRepetitive(),
             '#attributes' => $attributes,
+            'wpml_action' => $this->getWPMLAction(),
         );
         return $metaform;
     }

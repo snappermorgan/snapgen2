@@ -3,10 +3,10 @@
 /**
  * produce debug information
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/debug/debug-information.php $
- * $LastChangedDate: 2014-08-13 09:38:06 +0800 (Wed, 13 Aug 2014) $
- * $LastChangedRevision: 25892 $
- * $LastChangedBy: bruce $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/debug/debug-information.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 

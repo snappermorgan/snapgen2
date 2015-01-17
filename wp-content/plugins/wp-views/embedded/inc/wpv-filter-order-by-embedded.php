@@ -1,69 +1,23 @@
 <?php
 
-add_filter( 'wpv_view_settings', 'wpv_order_by_default_settings' );
-add_filter( 'wpv_view_settings', 'wpv_taxonomy_order_by_default_settings' );
-add_filter( 'wpv_view_settings', 'wpv_users_order_by_default_settings' );
+add_filter('wpv_view_settings', 'wpv_order_by_default_settings', 10, 2);
+function wpv_order_by_default_settings($view_settings) {
 
-/**
-* wpv_order_by_default_settings
-*
-* Sets the default sorting settings for Views listing posts
-*
-* @since unknown
-*/
-
-function wpv_order_by_default_settings( $view_settings ) {
-	if (!isset($view_settings['orderby'])) {
-		$view_settings['orderby'] = 'post_date';
-	}
-	if (!isset($view_settings['order'])) {
-		$view_settings['order'] = 'DESC';
-	}
-	return $view_settings;
-}
-
-/**
-* wpv_taxonomy_order_by_default_settings
-*
-* Sets the default sorting settings for Views listing taxonomy terms
-*
-* @since unknown
-*/
-
-function wpv_taxonomy_order_by_default_settings( $view_settings ) {
-	if ( !isset( $view_settings['taxonomy_orderby'] ) ) {
-		$view_settings['taxonomy_orderby'] = 'name';
-	}
-	if ( !isset( $view_settings['taxonomy_order'] ) ) {
-		$view_settings['taxonomy_order'] = 'DESC';
-	}
-	return $view_settings;
-}
-
-/**
-* wpv_users_order_by_default_settings
-*
-* Sets the default sorting settings for Views listing users
-*
-* @since unknown
-*/
-
-function wpv_users_order_by_default_settings( $view_settings ) {
-	if ( !isset( $view_settings['users_orderby'] ) ) {
-		$view_settings['users_orderby'] = 'user_login';
-	}
-	if ( !isset( $view_settings['users_order'] ) ) {
-		$view_settings['users_order'] = 'DESC';
-	}
-	return $view_settings;
+    if (!isset($view_settings['orderby'])) {
+        $view_settings['orderby'] = 'post_date';
+    }
+    if (!isset($view_settings['order'])) {
+        $view_settings['order'] = 'DESC';
+    }
+    
+    return $view_settings;
 }
 
 $orderby_meta = '';
 add_filter('wpv_filter_query', 'wpv_filter_get_order_arg', 100, 2); // Make this happens after custom fields
 function wpv_filter_get_order_arg($query, $view_settings) {
-	global $WP_Views;
     $orderby = $view_settings['orderby'];
-    if (isset($_GET['wpv_column_sort_id']) && esc_attr($_GET['wpv_column_sort_id']) != 'undefined' && esc_attr($_GET['wpv_column_sort_id']) != '' && esc_attr($_GET['wpv_view_count']) == $WP_Views->get_view_count() ) {
+    if (isset($_GET['wpv_column_sort_id']) && esc_attr($_GET['wpv_column_sort_id']) != 'undefined') {
         $orderby = esc_attr($_GET['wpv_column_sort_id']);
     }
     
@@ -77,9 +31,9 @@ function wpv_filter_get_order_arg($query, $view_settings) {
         $orderby_set = true;
         
         // Fix for numeric custom field , need to user meta_value_num
-        if (_wpv_is_numeric_field($view_settings['orderby']) || _wpv_is_numeric_field('field-wpcf-' . $query['meta_key'])) { // This OR will ensure that numeric fields created outside Types but under Types control can sort properly
+        if (_wpv_is_numeric_field($view_settings['orderby'])) {
             $orderby= 'meta_value_num';
-        }
+        }        
     }
     $query['orderby'] = $orderby;
     
@@ -89,14 +43,11 @@ function wpv_filter_get_order_arg($query, $view_settings) {
     
     // check for column sorting GET parameters.
     
-    if (!$orderby_set && isset($_GET['wpv_column_sort_id']) && esc_attr($_GET['wpv_column_sort_id']) != 'undefined' && esc_attr($_GET['wpv_column_sort_id']) != '' && esc_attr($_GET['wpv_view_count']) == $WP_Views->get_view_count()) {
+    if (!$orderby_set && isset($_GET['wpv_column_sort_id']) && esc_attr($_GET['wpv_column_sort_id']) != 'undefined') {
         $field = esc_attr($_GET['wpv_column_sort_id']);
         if (strpos($field, 'post-field') === 0) {
             $query['meta_key'] = substr($field, 11);
             $query['orderby'] = 'meta_value';
-            if (_wpv_is_numeric_field('field-wpcf-' . $query['meta_key'])) {// This will ensure that numeric fields created outside Types but under Types control can sort properly
-                $query['orderby'] = 'meta_value_num';
-            }
         } elseif (strpos($field, 'types-field') === 0) {
             $query['meta_key'] = strtolower(substr($field, 12));
             if (function_exists('wpcf_types_get_meta_prefix')) {
@@ -112,7 +63,7 @@ function wpv_filter_get_order_arg($query, $view_settings) {
         }
     }
     
-    if (isset($_GET['wpv_column_sort_dir']) && esc_attr($_GET['wpv_column_sort_dir']) != 'undefined' && esc_attr($_GET['wpv_column_sort_dir']) != '' && esc_attr($_GET['wpv_view_count']) == $WP_Views->get_view_count()) {
+    if (isset($_GET['wpv_column_sort_dir']) && esc_attr($_GET['wpv_column_sort_dir']) != 'undefined') {
         $query['order'] = strtoupper(esc_attr($_GET['wpv_column_sort_dir']));
     }    
 
@@ -122,12 +73,6 @@ function wpv_filter_get_order_arg($query, $view_settings) {
     if ($query['orderby'] == 'post_body') {
         $query['orderby'] = 'post_content';
     }
-    if ( $query['orderby'] == 'post_slug' ) {
-        $query['orderby'] = 'name';
-    }
-    if ( $query['orderby'] == 'post_id' ) {
-        $query['orderby'] = 'ID';
-    }
 
     if (strpos($query['orderby'], 'post_') === 0) {
         $query['orderby'] = substr($query['orderby'], 5);
@@ -136,15 +81,12 @@ function wpv_filter_get_order_arg($query, $view_settings) {
     global $orderby_meta;
     
     $orderby_meta = array();
-    // See if filtering by custom fields and sorting by custom field too
+    // See if the orderby is the same as a custom field filter
     if (isset($query['meta_key']) && isset($query['meta_query'])) {
-	$thirdsorting = true; // flag to know if sorting by one of the filtering custom fields or by another custom field
-	// See if the orderby is the same as a custom field filter
         foreach($query['meta_query'] as $index => $meta) {
             if (isset($meta['key']) && ($meta['key'] == $query['meta_key'])) {
                 // Found it.
                 // We need to add a post_orderby filter directly to sort by the same field.
-                $thirdsorting = false;
                 $orderby_meta['order_by'] = $query['orderby'];
                 $orderby_meta['meta_key'] = $query['meta_key'];
                 $orderby_meta['order'] = $query['order'];
@@ -153,27 +95,6 @@ function wpv_filter_get_order_arg($query, $view_settings) {
                 add_filter('posts_orderby', 'wpv_post_order_by_meta', 10, 2);
                 break;
             }
-        }
-        if ($thirdsorting) { // if filtering by custom fields and sorting by another custom field
-		$refinedquery = $query;
-		unset($refinedquery['orderby']);
-		unset($refinedquery['meta_key']);
-		$refinedquery['posts_per_page'] = -1; // remove the limit in the main query to get all the relevant IDs
-		// first query only for filtering
-		$filtered_query = new WP_Query( $refinedquery );
-		$filtered_ids = array();
-		while ( $filtered_query->have_posts() ) :
-			$filtered_query->next_post();
-			$filtered_ids[] = $filtered_query->post->ID;
-		endwhile;
-		// remove the fields filter from the original query and add the filtered IDs
-		unset($query['meta_query']);
-		// we can replace the $query['post__in'] argument because it was applied on the auxiliar query before
-		if ( count( $filtered_ids ) ) {
-			$query['post__in'] = $filtered_ids;
-		} else {
-			$query['post__in'] = array(-1);
-		}
         }
         
     }

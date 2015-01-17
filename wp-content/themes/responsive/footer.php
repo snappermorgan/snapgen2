@@ -27,21 +27,16 @@ global $responsive_options;
 $responsive_options = responsive_get_options();
 ?>
 <?php responsive_wrapper_bottom(); // after wrapper content hook ?>
-<?php if(!is_singular('landing_page')): //if is not landing page?>
 </div><!-- end of #wrapper -->
-<?php endif;?>
 <?php responsive_wrapper_end(); // after wrapper hook ?>
-<?php if(!is_singular('landing_page')): //if is not landing page?>
 </div><!-- end of #container -->
-<?php endif;?>
 <?php responsive_container_end(); // after container hook ?>
-<?php if(!is_singular('landing_page')): //if is not landing page?>
+
 <div id="footer" class="clearfix">
-<?php endif;?>
 	<?php responsive_footer_top(); ?>
-<?php if(!is_singular('landing_page')): //if is not landing page?>
+
 	<div id="footer-wrapper">
-<?php endif;?>
+
 		<?php get_sidebar( 'footer' ); ?>
 
 		<div class="grid col-940">
@@ -65,21 +60,24 @@ $responsive_options = responsive_get_options();
 		<?php get_sidebar( 'colophon' ); ?>
 
 		<div class="grid col-300 copyright">
-			
+			<?php esc_attr_e( '&copy;', 'responsive' ); ?> <?php echo date( 'Y' ); ?><a href="<?php echo home_url( '/' ) ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
+				<?php bloginfo( 'name' ); ?>
+			</a>
 		</div><!-- end of .copyright -->
 
 		<div class="grid col-300 scroll-top"><a href="#scroll-top" title="<?php esc_attr_e( 'scroll to top', 'responsive' ); ?>"><?php _e( '&uarr;', 'responsive' ); ?></a></div>
 
 		<div class="grid col-300 fit powered">
-			
+			<a href="<?php echo esc_url( 'http://cyberchimps.com/responsive-theme/' ); ?>" title="<?php esc_attr_e( 'Responsive Theme', 'responsive' ); ?>">
+				Responsive Theme</a>
+			<?php esc_attr_e( 'powered by', 'responsive' ); ?> <a href="<?php echo esc_url( 'http://wordpress.org/' ); ?>" title="<?php esc_attr_e( 'WordPress', 'responsive' ); ?>">
+				WordPress</a>
 		</div><!-- end .powered -->
 
 	</div><!-- end #footer-wrapper -->
 
 	<?php responsive_footer_bottom(); ?>
-<?php if(!is_singular('landing_page')): //if is not landing page?>
 </div><!-- end #footer -->
-<?php endif;?>
 <?php responsive_footer_after(); ?>
 
 <?php wp_footer(); ?>

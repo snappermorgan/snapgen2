@@ -31,12 +31,6 @@ function wpv_apply_user_function_url_param($value) {
 				}
             } else {
                 $url_param = $no_parameter_found;
-				 if ( isset( $_GET[$match[1] . '_fakezero'] ) ) {
-					$url_param_fakezero = $_GET[$match[1] . '_fakezero'];
-					if ( $url_param_fakezero == 'yes' ) {
-						$url_param = 0;
-					}
-				 }
             }
             $search = $match[0];
             $value = str_replace($search, $url_param, $value);

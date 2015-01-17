@@ -9,10 +9,10 @@
  * @since Types 1.1.5
  * @autor srdjan
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/embedded/resources/js/fields-form.js $
- * $LastChangedDate: 2014-07-11 12:20:46 +0800 (Fri, 11 Jul 2014) $
- * $LastChangedRevision: 24859 $
- * $LastChangedBy: bruce $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/resources/js/fields-form.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 

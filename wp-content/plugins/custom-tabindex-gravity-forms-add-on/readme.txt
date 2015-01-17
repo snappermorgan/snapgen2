@@ -1,9 +1,18 @@
 === Gravity Forms - Tab Index ===
-Tags: tabindex, tab, index, gravityforms, gravity, forms
+Contributors: bap22
+Tags: developer, dev, tools, profile, profiler, toolbar, debug, debugger
+Requires at least: 3.8
+Tested up to: 4.0
+Stable tag: 1.0.1
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl.html
 
+Gravity Forms Add On.  Adds custom tabindex field to the "Advanced" tab for form fields.
 
 == Description ==
-Gravity Forms Add On.  Adds custom tabindex field to the "Advanced" tab for form fields. Javascript & jQuery are required.
+Every once in awhile you want the tabindex to follow a different pattern than the default order. This plugin allows you to set the tabindex for each field, so you can control the tabbing behavior of your forms.
+
+Javascript & jQuery are required.
 
 
 == Installation ==

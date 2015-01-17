@@ -4,7 +4,7 @@
  * Add a filter to add the query by author to the $query
  */
 
-add_filter('wpv_filter_query', 'wpv_filter_post_author', 13, 2); // we need to set a higher priority than the limit filter has because we use $query['post__in'] = array('0') on failure
+add_filter('wpv_filter_query', 'wpv_filter_post_author', 10, 2);
 function wpv_filter_post_author($query, $view_settings) {
 
 	global $WP_Views;
@@ -27,13 +27,6 @@ function wpv_filter_post_author($query, $view_settings) {
 		if ($view_settings['author_mode'][0] == 'this_user') {
 			if (isset($view_settings['author_id']) && $view_settings['author_id'] > 0) {
 				$show_author_array[] = $view_settings['author_id']; // set the array to only the selected user ID
-			}
-		}
-		
-		if ($view_settings['author_mode'][0] == 'parent_view') {
-			$parent_user_id = $WP_Views->get_parent_view_user();
-			if ( $parent_user_id ) {
-				$show_author_array[] = $parent_user_id;
 			}
 		}
         
@@ -64,7 +57,7 @@ function wpv_filter_post_author($query, $view_settings) {
 							case 'username':
 								foreach ($authors_to_load as $username_author_to_load) {
 									$username_author_to_load = strip_tags($username_author_to_load);
-									$author_username_id = username_exists( $username_author_to_load );
+									$author_username_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login='{$username_author_to_load}'");
 									if ($author_username_id) {
 										$show_author_array[] = $author_username_id; // if user exists, add it to the array
 									}
@@ -101,7 +94,7 @@ function wpv_filter_post_author($query, $view_settings) {
 						case 'username':
 							foreach ($author_candidates as $username_candid) {
 								$username_candid = trim(strip_tags($username_candid));
-								$username_candid_id = username_exists( $username_candid );
+								$username_candid_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login='{$username_candid}'");
 								if ($username_candid_id) {
 									$show_author_array[] = $username_candid_id; // if user exists, add it to the array
 								}

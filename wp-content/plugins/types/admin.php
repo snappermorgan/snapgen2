@@ -3,10 +3,10 @@
  *
  * Admin functions
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.3/admin.php $
- * $LastChangedDate: 2014-09-04 19:20:30 +0800 (Thu, 04 Sep 2014) $
- * $LastChangedRevision: 26710 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/admin.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once WPCF_ABSPATH . '/marketing.php';
@@ -336,20 +336,20 @@ function wpcf_admin_menu_edit_fields() {
     ?>
     <script type="text/javascript">
         function wpcf_group_submit() {
-            if (jQuery('#wpcf-group-name').val() == 'Enter group title') {
+        if (jQuery('#wpcf-group-name').val() == '<?php _e('Enter group title', 'wpcf'); ?>') {
                 jQuery('#wpcf-group-name').val('');
             }
-            if (jQuery('#wpcf-group-description').val() == 'Enter a description for this group') {
+            if (jQuery('#wpcf-group-description').val() == '<?php _e('Enter a description for this group', 'wpcf'); ?>') {
                 jQuery('#wpcf-group-description').val('');
             }
             jQuery('.wpcf-forms-set-legend').each(function(){
-                if (jQuery(this).val() == 'Enter field name') {
+                if (jQuery(this).val() == '<?php _e('Enter field name', 'wpcf'); ?>') {
                     jQuery(this).val('');
                 }
-                if (jQuery(this).next().val() == 'Enter field slug') {
+                if (jQuery(this).next().val() == '<?php _e('Enter field slug', 'wpcf'); ?>') {
                     jQuery(this).next().val('');
                 }
-                if (jQuery(this).next().next().val() == 'Describe this field') {
+                if (jQuery(this).next().next().val() == '<?php _e('Describe this field', 'wpcf'); ?>') {
                     jQuery(this).next().next().val('');
                 }
             });

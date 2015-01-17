@@ -1,14 +1,15 @@
 <?php 
 /**
+ * @author: Leadgenix
  * Plugin Name: Gravity Forms Tab Index
- * Set a custom tabindex for each field in your gravity form
- * Plugin URI: <a href="http://www.leadgenix.com/plugins/" rel="nofollow">Gravity Form TabIndex</a>
+ * Author URI: http://www.leadgenix.com/
  * Description: Ability to set a custom tabindex for each field in your gravity form.  Gravity Forms, JavaScript, and JQuery are required.
- * Version: 1.0 beta
+ * Version: 1.0.1
  * Author: Brett Peterson
  * Credits:  WPSmith, for their tutorial:  http://wpsmith.net/2011/plugins/how-to-create-a-custom-form-field-in-gravity-forms-with-a-terms-of-service-form-field-example/
  * Instructions: On the "Advanced" tab of a field, set the Tab Index.
- * License: GPLv2
+ * License: GPLv3
+ * Last Change: 12/1/2014
 */
 
 

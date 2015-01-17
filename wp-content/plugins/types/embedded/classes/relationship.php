@@ -2,10 +2,10 @@
 /*
  * Post relationship class.
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/classes/relationship.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/classes/relationship.php $
+ * $LastChangedDate: 2014-10-23 10:33:39 +0000 (Thu, 23 Oct 2014) $
+ * $LastChangedRevision: 1012677 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -254,6 +254,7 @@ class WPCF_Relationship
             $post_title = $save_fields['_wp_title'];
         }
 
+
         $post_data['post_title'] = $post_title;
         $post_data['post_content'] = isset( $save_fields['_wp_body'] ) ? $save_fields['_wp_body'] : $child->post_content;
         $post_data['post_type'] = $child->post_type;
@@ -274,6 +275,19 @@ class WPCF_Relationship
          *
          * UPDATE POST
          */
+
+        $cf = new WPCF_Field;
+        if (
+            isset( $_POST['wpcf_post_relationship'][$parent_id])
+            && isset( $_POST['wpcf_post_relationship'][$parent_id][$child_id] )
+        ) {
+            $_POST['wpcf'] = array();
+            foreach( $_POST['wpcf_post_relationship'][$parent_id][$child_id] as $slug => $value ) {
+                $_POST['wpcf'][$cf->__get_slug_no_prefix( $slug )] = $value;
+                $_POST['wpcf'][$slug] = $value;
+            }
+        }
+        unset($cf);
 
         $updated_id = wp_update_post( $post_data );
         if ( empty( $updated_id ) ) {
