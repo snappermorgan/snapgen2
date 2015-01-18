@@ -163,9 +163,9 @@ settings_fields('pluginPage');
 					}
 					$address = $number . " " . $response->street_name . " " . $response->street_type;
 					$test_address = str_replace(' ', '', $address);
-					_log("Test Address: {" .$test_address."}");
+					_log("Test Address: {" . $test_address . "}");
 					if ($test_address != "") {
-						_log("SRC: {".$_REQUEST['SRC']."}");
+						_log("SRC: {" . $_REQUEST['SRC'] . "}");
 						$_REQUEST['Address'] = $address;
 						$_REQUEST['SRC'] .= "match";
 						$_REQUEST['City'] = $response->city;
@@ -252,58 +252,58 @@ settings_fields('pluginPage');
 				//                $state = "GA";
 				//                $zip = "30076";
 				_log("submission passed: " . print_r($submission, true));
-			$address="";
-			$number = "";
+				$address = "";
+				$number = "";
 				$zip = "";
 
-			$input = "";
-			if(isset($service['mapping'])){
-				$mapping = $service['mapping'];
-				foreach($mapping as $map){
-					if($map['3rd']=='SRC'){
-						$input = $map['src'];
+				$input = "";
+				if (isset($service['mapping'])) {
+					$mapping = $service['mapping'];
+					foreach ($mapping as $map) {
+						if ($map['3rd'] == 'SRC') {
+							$input = $map['src'];
+						}
 					}
 				}
-			}
 
 				if ($response) {
-				foreach ($submission as $field => &$value) {
-					//_log("field: " . print_r($field, true));
-					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
-						if ($response->house) {
-							$number = $response->house;
+					foreach ($submission as $field => &$value) {
+						//_log("field: " . print_r($field, true));
+						if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
+							if ($response->house) {
+								$number = $response->house;
+							}
+
+							if ($response->apt_number) {
+								$number = $response->apt_number;
+							}
+							$value = $number . " " . $response->street_name . " " . $response->street_type;
+							_log("address=" . $address . "\n");
+						}
+						if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
+							$value = $response->city;
+							_log("city=" . $city . "\n");
+						}
+						if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
+							$value = $response->state_code;
+							_log("state=" . $state . "\n");
+						}
+						if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
+							if ($response->zip4) {
+								$zip = $response->postal_code . "-" . $response->zip4;
+
+							} else {
+								$zip = $response->postal_code;
+							}
+							$value = $zip;
+							//_log("zip=".$zip."\n");
+						}
+						if (trim(strtolower($input)) == trim(strtolower($field))) {
+							$value .= 'match';
 						}
 
-						if ($response->apt_number) {
-							$number = $response->apt_number;
-						}
-						$value = $number . " " . $response->street_name . " " . $response->street_type;
-						_log("address=" . $address . "\n");
 					}
-					if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
-						$value = $response->city;
-						_log("city=" . $city . "\n");
-					}
-					if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
-						$value = $response->state_code;
-						_log("state=" . $state . "\n");
-					}
-					if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
-						if ($response->zip4) {
-							$zip = $response->postal_code . "-" . $response->zip4;
-
-						} else {
-							$zip = $response->postal_code;
-						}
-						$value = $zip;
-						//_log("zip=".$zip."\n");
-					}
-					if(trim(strtolower($input)) == trim(strtolower($field))) {
-						$value .='match'; 
-					}
-
 				}
-}
 			}
 		}
 		_log("post transformed and returned: " . print_r($post, true));
@@ -433,7 +433,7 @@ foreach ($services as $sid => $s) {
 					$triggered = array();
 				}
 				?>
-                                <option <?php if ($entity && in_array($sid, $triggered)):?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
+                                <option <?php if ($entity && in_array($sid, $triggered)): ?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
 <?php
 }
 		}//	foreach
@@ -554,9 +554,9 @@ foreach ($services as $sid => $s) {
 <?php $field = 'success-parsed-format';?>
                     <label for="<?php echo $field, '-', $eid?>"><?php _e('Response Format', $P);?></label>
                     <select class="single" id="<?php echo $field, '-', $eid?>" name="<?php echo $P;?>[<?php echo $eid?>][success-parsed-format][]">
-                        <option <?php if ($entity && $entity[$field] == 'XML'):?>selected="selected" <?php endif;?>value="XML">XML</option>
-                        <option <?php if ($entity && $entity[$field] == 'JSON'):?>selected="selected" <?php endif;?>value="JSON">JSON</option>
-                        <option <?php if ($entity && $entity[$field] == 'RAW'):?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
+                        <option <?php if ($entity && $entity[$field] == 'XML'): ?>selected="selected" <?php endif;?>value="XML">XML</option>
+                        <option <?php if ($entity && $entity[$field] == 'JSON'): ?>selected="selected" <?php endif;?>value="JSON">JSON</option>
+                        <option <?php if ($entity && $entity[$field] == 'RAW'): ?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
                     </select>
                 </div>
             </div>
@@ -724,7 +724,7 @@ foreach ($services as $sid => $s) {
 			foreach ($callback_results as $k => &$v) {
 				$param_ref[$k] = &$v;
 			}
-			$form = apply_filters(self::N. '_remote_success', $form, $callback_results, $service, $submission, false);
+			$form = apply_filters(self::N . '_remote_success', $form, $callback_results, $service, $submission, false);
 			$can_hook = false;
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
@@ -732,7 +732,7 @@ foreach ($services as $sid => $s) {
 			$response = wp_remote_post($service['url'], $post_args);
 		}
 
-		_log('response from '.$service['url']. print_r($response,true));
+		_log('response from ' . $service['url'] . print_r($response, true));
 		//if something went wrong with the remote-request "physically", warn
 		if (!is_array($response)) {
 			//new occurrence of WP_Error?????
@@ -1058,14 +1058,3 @@ function address_validate_shortcode($atts) {
 	return ob_get_clean();
 
 }
-function enqueue_select2_jquery() {
-        $plugins_url = plugins_url();
-        wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
-        wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
-        wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
-        wp_enqueue_style('select2css');
-        wp_enqueue_script('select2');
-        // wp_enqueue_script('snapgen2');
-}
-
-add_action('admin_enqueue_scripts', 'enqueue_select2_jquery');
