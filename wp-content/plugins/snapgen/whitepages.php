@@ -182,10 +182,10 @@ function remote_call($data, $test = false) {
 		$payload = $data['payload'];
 
 		$query = build_query($payload);
-		_log("payload: " . print_r($data, true));
+		//_log("payload: " . print_r($data, true));
 		$options = get_option('sg_settings');
 		$key = $options['sg_api_string'];
-		_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
+		//_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
 		$response = wp_remote_get($url . $path . "?" . $query . "&api_key=" . $key);
 		//_log("whitepages response: ".print_r($response,true));
 		// echo "<pre>whitepages response: ".print_r($response,true)."</pre>";
