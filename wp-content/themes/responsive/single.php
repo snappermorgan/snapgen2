@@ -59,7 +59,8 @@ get_header(); ?>
 					<div class="next"><?php next_post_link( '%link &#8250;' ); ?></div>
 				</div><!-- end of .navigation -->
 
-				
+				<?php get_template_part( 'post-data', get_post_type() ); ?>
+
 				<?php responsive_entry_bottom(); ?>
 			</div><!-- end of #post-<?php the_ID(); ?> -->
 			<?php responsive_entry_after(); ?>

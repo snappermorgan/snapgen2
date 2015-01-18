@@ -39,3 +39,4 @@ function responsive_free_get_option( $option, $default = false ) {
 
 	return $default;
 }
+add_filter('gform_confirmation_anchor', '__return_false');

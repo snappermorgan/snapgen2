@@ -28,9 +28,7 @@ $more = 0;
 	<div id="content-blog" class="<?php echo esc_attr( implode( ' ', responsive_get_content_classes() ) ); ?>">
 
 		<!-- Blog page title -->
-		<?php if ( responsive_free_get_option( 'blog_post_title_toggle' ) ) { ?>
-			<h1> <?php echo responsive_free_get_option( 'blog_post_title_text' ); ?> </h1>
-		<?php } ?>
+		
 
 		<?php get_template_part( 'loop-header', get_post_type() ); ?>
 

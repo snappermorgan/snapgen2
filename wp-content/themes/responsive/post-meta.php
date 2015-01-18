@@ -20,14 +20,10 @@ if ( !defined( 'ABSPATH' ) ) {
  */
 ?>
 
-<?php if ( is_single() ): ?>
-	
-<?php else: ?>
-	<h2 class="entry-title post-title"><a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-<?php endif; ?>
+
 
 <div class="post-meta">
-	
+	<?php //responsive_post_meta_data(); ?>
 
 	<?php if ( comments_open() ) : ?>
 		<span class="comments-link">
