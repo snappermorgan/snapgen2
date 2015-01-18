@@ -522,9 +522,9 @@ foreach ($forms as $f) {
 
 			} else {
 				//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
-				//_log("Let's Post! posting: " . print_r($post_args,true));
+				_log("Let's Post! posting: " . print_r($post_args, true));
 				$response = wp_remote_post($service['url'], $post_args);
-//_log("response: ".print_r($response,true));
+				_log("response: " . print_r($response, true));
 			}
 
 			###pbug(__LINE__.':'.__FILE__, '	response from '.$service['url'], $response);
