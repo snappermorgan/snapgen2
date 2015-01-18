@@ -137,16 +137,26 @@ settings_fields('pluginPage');
 			//            exit(0);
 			//header("Content-Type:text/xml");
 			$boberdoo = "https://leads.metrixinteractive.com/genericPostlead.php";
+<<<<<<< HEAD
+			//$boberdoo="http://requestb.in/1k0ngp41";
+			if (isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] != "") {
+				$response = reverse_lookup($_REQUEST['Primary_Phone']);
+
+				$number = "";
+				$zip = "";
+				if ($response) {
+=======
 			//$boberdoo = "http://requestb.in/1hhyvit1";
 
 			if (isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] != "") {
 				$response = reverse_lookup($_REQUEST['Primary_Phone']);
-				//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
+				_log("Incoming REQUEST:" . print_r($_REQUEST, true));
 				$number = "";
 				$zip = "";
 
 				if ($response) {
 
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
 					if ($response->house) {
 						$number = $response->house;
 					}
@@ -163,22 +173,28 @@ settings_fields('pluginPage');
 					}
 					$address = $number . " " . $response->street_name . " " . $response->street_type;
 					$test_address = str_replace(' ', '', $address);
-					//_log("Test Address: {" . $test_address . "}");
 					if ($test_address != "") {
-						//_log("SRC: {" . $_REQUEST['SRC'] . "}");
+
 						$_REQUEST['Address'] = $address;
-						$_REQUEST['SRC'] .= "match";
+						$_REQUEST['SRC'] = $_REQUEST['SRC'] . "match";
 						$_REQUEST['City'] = $response->city;
 						$_REQUEST['State'] = $response->state_code;
 						$_REQUEST['ZipCode'] = $zip;
 					}
+<<<<<<< HEAD
+
+=======
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
 				}
 			}
 			$post_args = array(
 				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
-			_log("Post Args to Boberdoo" . print_r($post_args, true));
+<<<<<<< HEAD
+=======
+			_log("Post Args to boberdoo" . print_r($post_args, true));
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
 			$response = wp_remote_post($boberdoo, $post_args);
-			_log("Post Response from Boberdoo" . print_r($response, true));
+			//echo "<pre>".print_r($response,true)."</pre>";
 
 			//exit(0);
 
@@ -237,7 +253,11 @@ settings_fields('pluginPage');
 
 	public function post_filter($service, $submission = false) {
 
-		////_log("ALTER SUBMISSION TRIGGERED");
+<<<<<<< HEAD
+		_log("ALTER SUBMISSION TRIGGERED");
+=======
+		//_log("ALTER SUBMISSION TRIGGERED");
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
 				&& (isset($service['whitepages-state-field']) && !empty($service['whitepages-state-field'])) && (isset($service['whitepages-zip-field']) && !empty($service['whitepages-zip-field']))
@@ -251,62 +271,51 @@ settings_fields('pluginPage');
 				//                $city = "Roswell";
 				//                $state = "GA";
 				//                $zip = "30076";
-				//_log("submission passed: " . print_r($submission, true));
-				$address = "";
-				$number = "";
-				$zip = "";
-
-				$input = "";
-				if (isset($service['mapping'])) {
-					$mapping = $service['mapping'];
-					foreach ($mapping as $map) {
-						if ($map['3rd'] == 'SRC') {
-							$input = $map['src'];
+				_log("submission passed: " . print_r($submission, true));
+				foreach ($submission as $field => &$value) {
+<<<<<<< HEAD
+					_log("field: " . print_r($field, true));
+=======
+					//_log("field: " . print_r($field, true));
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
+					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
+						if ($response->house) {
+							$number = $response->house;
 						}
+
+						if ($response->apt_number) {
+							$number = $response->apt_number;
+						}
+						$value = $number . " " . $response->street_name . " " . $response->street_type;
+						_log("address=" . $address . "\n");
 					}
-				}
-
-				if ($response) {
-					foreach ($submission as $field => &$value) {
-						////_log("field: " . print_r($field, true));
-						if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
-							if ($response->house) {
-								$number = $response->house;
-							}
-
-							if ($response->apt_number) {
-								$number = $response->apt_number;
-							}
-							$value = $number . " " . $response->street_name . " " . $response->street_type;
-							//_log("address=" . $address . "\n");
-						}
-						if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
-							$value = $response->city;
-							//_log("city=" . $city . "\n");
-						}
-						if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
-							$value = $response->state_code;
-							//_log("state=" . $state . "\n");
-						}
-						if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
-							if ($response->zip4) {
-								$zip = $response->postal_code . "-" . $response->zip4;
-
-							} else {
-								$zip = $response->postal_code;
-							}
-							$value = $zip;
-							////_log("zip=".$zip."\n");
-						}
-						if (trim(strtolower($input)) == trim(strtolower($field))) {
-							$value .= 'match';
-						}
-
+					if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
+						$value = $response->city;
+						_log("city=" . $city . "\n");
 					}
+					if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
+						$value = $response->state_code;
+						_log("state=" . $state . "\n");
+					}
+					if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
+						if ($response->zip4) {
+							$zip = $response->postal_code . "-" . $response->zip4;
+
+						} else {
+							$zip = $response->postal_code;
+						}
+						$value = $zip;
+<<<<<<< HEAD
+						_log("zip=" . $zip . "\n");
+=======
+						//_log("zip=".$zip."\n");
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
+					}
+
 				}
 			}
 		}
-		//_log("post transformed and returned: " . print_r($post, true));
+		_log("post transformed and returned: " . print_r($post, true));
 		return $submission;
 	}
 
@@ -318,7 +327,7 @@ settings_fields('pluginPage');
 	}
 	public function adjust_response($body, $refs, $sid, $submission, $service) {
 
-		//_log("refs that are passed: " . print_r($refs, true));
+		_log("refs that are passed: " . print_r($refs, true));
 
 		//$refs['attach'] = 'custom message in email';
 		if (isset($service['confirmation']) && !empty($service['confirmation'])) {
@@ -328,17 +337,17 @@ settings_fields('pluginPage');
 			}
 			$submission_str .= "</div>";
 			$_response_message[] = $submission_str;
-			//_log("showing submission");
+			_log("showing submission");
 		}
 		if (isset($service['success-results']) && !empty($service['success-results'])) {
 			$str = "<div class='service-title'>Service: " . $service['name'] . "</div><div class='submissions'>";
 
-			//_log("parse format: " . print_r($service['success-parsed-format'], true));
+			_log("parse format: " . print_r($service['success-parsed-format'], true));
 
 			switch ($service['success-parsed-format'][0]) {
 				case 'XML':
 
-					//_log("parsing xml response");
+					_log("parsing xml response");
 					$xmldoc = new DOMDocument();
 					$xmldoc->loadXML($body);
 
@@ -358,12 +367,12 @@ settings_fields('pluginPage');
 
 			$str .= "</div>";
 			$_response_message[] = $str;
-			//_log("showing results");
+			_log("showing results");
 		}
 		$new_message = implode("\n", $_response_message);
 		$combined_message = $refs['message'] . $new_message;
 		$refs['message'] = $combined_message;
-		//_log("refs are now: " . print_r($refs, true));
+		_log("refs are now: " . print_r($refs, true));
 	}
 
 	public function use_form($result, $form, $service_id, $service_forms) {
@@ -383,20 +392,20 @@ settings_fields('pluginPage');
 			'timeout' => empty($service['timeout']) ? self::DEFAULT_TIMEOUT : $service['timeout']
 			, 'body' => $args['body']);
 
-		//_log("bypass_args" . print_r($args['body'], true));
+		_log("bypass_args" . print_r($args['body'], true));
 		if (isset($service['conditional']) && !empty($service['conditional'])) {
-			//_log("conditional triggered");
+			_log("conditional triggered");
 			if (isset($service['conditional-field']) && !empty($service['conditional-field'])) {
-				//_log("conditional field present: " . $service['conditional-field'] . " " . $submission[$service['conditional-field']]);
+				_log("conditional field present: " . $service['conditional-field'] . " " . $submission[$service['conditional-field']]);
 				if (isset($service['conditional-match']) && !empty($service['conditional-match'])) {
-					//_log("conditional match present:" . $service['conditional-match']);
-					//_log("submission: " . print_r($submission, true));
+					_log("conditional match present:" . $service['conditional-match']);
+					_log("submission: " . print_r($submission, true));
 					if (trim(strtolower($service['conditional-match'])) !== trim(strtolower($submission[$service['conditional-field']]))) {
-						//_log("NO MATCH");
+						_log("NO MATCH");
 						$response = array('headers' => array(), 'body' => '', 'response' => array('code' => 200, 'message' => 'OK'), 'cookies' => array(), 'response_bypass' => 'Conditional Rule not triggered. %s = %s ');
 						return $response;
 					} else {
-						//_log("MATCH");
+						_log("MATCH");
 
 						return $post_args;
 					}
@@ -433,7 +442,7 @@ foreach ($services as $sid => $s) {
 					$triggered = array();
 				}
 				?>
-                                <option <?php if ($entity && in_array($sid, $triggered)): ?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
+                                <option <?php if ($entity && in_array($sid, $triggered)):?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
 <?php
 }
 		}//	foreach
@@ -554,9 +563,9 @@ foreach ($services as $sid => $s) {
 <?php $field = 'success-parsed-format';?>
                     <label for="<?php echo $field, '-', $eid?>"><?php _e('Response Format', $P);?></label>
                     <select class="single" id="<?php echo $field, '-', $eid?>" name="<?php echo $P;?>[<?php echo $eid?>][success-parsed-format][]">
-                        <option <?php if ($entity && $entity[$field] == 'XML'): ?>selected="selected" <?php endif;?>value="XML">XML</option>
-                        <option <?php if ($entity && $entity[$field] == 'JSON'): ?>selected="selected" <?php endif;?>value="JSON">JSON</option>
-                        <option <?php if ($entity && $entity[$field] == 'RAW'): ?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
+                        <option <?php if ($entity && $entity[$field] == 'XML'):?>selected="selected" <?php endif;?>value="XML">XML</option>
+                        <option <?php if ($entity && $entity[$field] == 'JSON'):?>selected="selected" <?php endif;?>value="JSON">JSON</option>
+                        <option <?php if ($entity && $entity[$field] == 'RAW'):?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
                     </select>
                 </div>
             </div>
@@ -574,7 +583,7 @@ foreach ($services as $sid => $s) {
 
 	function remote_success($form, $callback_results, $service, $submission) {
 
-		//_log("let's check for triggered services: " . print_r($service, true));
+		_log("let's check for triggered services: " . print_r($service, true));
 		$first_form = $form;
 		if (isset($service['conditional']) && !empty($service['conditional'])) {
 			return $form;
@@ -583,22 +592,22 @@ foreach ($services as $sid => $s) {
 			if (isset($service['trigger']) && !empty($service['trigger'])) {
 				if (isset($service['triggered-services']) && is_array($service['triggered-services'])) {
 					$services = $this->get_services();
-					//_log("all services" . print_r($services, true));
+					_log("all services" . print_r($services, true));
 					foreach ($service['triggered-services'] as $t => $sid) {
-						//_log("let's send the triggered post");
+						_log("let's send the triggered post");
 						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
 
-						//_log("calling send submission with " . print_r($submission, true));
+						_log("calling send submission with " . print_r($submission, true));
 					}
 
-					//_log("Success Received. Triggering service for post: " . print_r($submission, true));
+					_log("Success Received. Triggering service for post: " . print_r($submission, true));
 
 					return $form;
 				} else {
 					return $form;
 				}
 			} else {
-				//_log("callback results: " . print_r($callback_results, true) . "bam");
+				_log("callback results: " . print_r($callback_results, true) . "bam");
 
 				return $first_form;
 			}
@@ -638,12 +647,12 @@ foreach ($services as $sid => $s) {
 //---	get_settings
 
 	private function send_submission($service, $form, $submission, $sid, $callback_results) {
-		//_log("hey");
+		_log("hey");
 		$debug = $this->get_settings();
 		$post = array();
 
 		$service['separator'] = $debug['separator']; // alias here for reporting
-		//_log("mapping for service: " . print_r($service, true));
+		_log("mapping for service: " . print_r($service, true));
 		//find mapping
 		foreach ($service['mapping'] as $mid => $mapping) {
 			$third = $mapping[self::PARAM_3RD];
@@ -672,7 +681,7 @@ foreach ($services as $sid => $s) {
 				$post[$third] = $input;
 			}
 		}// foreach mapping
-		//_log("submission-:" . print_r($submission, true));
+		_log("submission-:" . print_r($submission, true));
 		//extract special tags;
 		$post = apply_filters(self::N . '_service_filter_post_' . $sid, $post, $service, $form);
 		$post = apply_filters(self::N . '_service_filter_post', $post, $service, $form, $sid, $submission);
@@ -690,7 +699,7 @@ foreach ($services as $sid => $s) {
 			default:
 				// otherwise, find the arrays and implode
 				foreach ($post as $f => &$v) {
-					###//_log('checking array', $f, $v, is_array($v) ? 'array' : 'notarray');
+					###_log('checking array', $f, $v, is_array($v) ? 'array' : 'notarray');
 
 					if (is_array($v)) {
 						$v = implode($service['separator'], $v);
@@ -724,20 +733,20 @@ foreach ($services as $sid => $s) {
 			foreach ($callback_results as $k => &$v) {
 				$param_ref[$k] = &$v;
 			}
-			$form = apply_filters(self::N . '_remote_success', $form, $callback_results, $service, $submission, false);
+			$form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
 			$can_hook = false;
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
-			_log("Sending Triggered post to " . $service['url'] . print_r($post_args, true));
+			_log("sending triggered" . print_r($post_args, true));
 			$response = wp_remote_post($service['url'], $post_args);
 		}
 
-		_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+		//_log(__LINE__.':'.__FILE__. '	response from '.$service['url']. print_r($response,true));
 		//if something went wrong with the remote-request "physically", warn
 		if (!is_array($response)) {
 			//new occurrence of WP_Error?????
 			$response_array = array('safe_message' => 'error object', 'object' => $response);
-			//$form = $Forms3rdPartyIntegration::on_response_failure($form, $debug, $service, $post_args, $response_array);
+			$form = $Forms3rdPartyIntegration::on_response_failure($form, $debug, $service, $post_args, $response_array);
 			$can_hook = false;
 		} elseif (!$response || !isset($response['response']) || !isset($response['response']['code']) || 200 != $response['response']['code']) {
 			$response['safe_message'] = 'physical request failure';
@@ -773,7 +782,7 @@ foreach ($services as $sid => $s) {
 		}
 
 		if ($can_hook && isset($service['hook']) && $service['hook']) {
-			////_log('performing hooks for:', self::N.'_service_'.$sid);
+			//_log('performing hooks for:', self::N.'_service_'.$sid);
 			//hack for pass-by-reference
 			//holder for callback return results
 			//$callback_results = array('success'=>false, 'errors'=>false, 'attach'=>'', 'message' => '');
@@ -793,7 +802,7 @@ foreach ($services as $sid => $s) {
 			do_action(self::N . '_service_a' . $sid, $response['body'], $param_ref);
 			do_action(self::N . '_service', $response['body'], $param_ref, $sid, $post, $service, $submission);
 
-			###//_log('after success', $form);
+			###_log('after success', $form);
 			//check for callback errors; if none, then attach stuff to message if requested
 			if (!empty($callback_results['errors'])) {
 				$failMessage = array(
@@ -802,7 +811,7 @@ foreach ($services as $sid => $s) {
 					, 'errors' => $callback_results['errors']);
 				$form = apply_filters(self::N . '_remote_failure', $form, $debug, $service, $post_args, $failMessage);
 			} else {
-				//_log('checking for attachments on triggered submit' . print_r($callback_results, true));
+				_log('checking for attachments on triggered submit' . print_r($callback_results, true));
 				$form = apply_filters(self::N . '_remote_success', $form, $callback_results, $service, $submission, true);
 			}
 		}// can hook
@@ -853,31 +862,19 @@ if (!function_exists('_log')) {
 }
 new Forms3rdpartySnapGen();
 
-function enqueue_select2_jquery() {
-	$plugins_url = plugins_url();
-	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
-	wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
-	wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
-	wp_enqueue_style('select2css');
-	wp_enqueue_script('select2');
-	// wp_enqueue_script('snapgen2');
-}
-
-add_action('admin_enqueue_scripts', 'enqueue_select2_jquery');
 add_action('wp_ajax_validate_address', 'validate_address_callback');
 add_action('wp_ajax_nopriv_validate_address', 'validate_address_callback');
 add_action('wp_ajax_validate_email', 'validate_email_callback');
 add_action('wp_ajax_nopriv_validate_email', 'validate_email_callback');
-add_shortcode('email_validate', 'email_validate_shortcode');
-add_shortcode('address_validate', 'address_validate_shortcode');
+add_shortcode('email_validate','email_validate_shortcode');
 
 function validate_email_callback() {
 
 	$email = (isset($_REQUEST['email']) ? $_REQUEST['email'] : false);
-
-	$url = "https://bpi.briteverify.com/emails.json?";
-	$qs = "address=" . urlencode($email) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833";
-
+	
+	$url = "https://bpi.briteverify.com/emails.json";
+  	$qs = "address=". urlencode($email)."&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833";
+		
 	$response = wp_remote_get($url . $qs);
 
 	if ($response['response']['code'] != "200") {
@@ -894,6 +891,7 @@ function validate_address_callback() {
 	$street = (isset($_REQUEST['street']) ? $_REQUEST['street'] : false);
 	$unit = (isset($_REQUEST['unit']) ? $_REQUEST['unit'] : false);
 	$zip = (isset($_REQUEST['zip']) ? $_REQUEST['zip'] : false);
+<<<<<<< HEAD
 
 	$url = "https://bpi.briteverify.com/addresses.json?";
 	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
@@ -909,152 +907,173 @@ function validate_address_callback() {
 	echo die();
 }
 
-function email_validate_shortcode($atts) {
-	$a = shortcode_atts(array(
-		'field_selector' => '#email',
-		'form_selector' => '.gform_wrapper form',
-		'submit_selector' => 'input[type=submit]',
-		'prevent_submit' => true,
-		'submit_text' => 'Submit',
-		'disabled_text' => 'Invalid Email',
-	), $atts);
-	ob_start();
-	?>
+function email_validate_shortcode(){
+	 $a = shortcode_atts( array(
+        'field_selector' => '#email',
+        'form_selector' =>'.gform_wrapper form',
+        'submit_selector' =>'input[type=submit]',
+        'prevent_submit' => true,
+        'submit_text' => 'Submit',
+        'disabled_text' => 'Invalid Email'        
+    ), $atts );
+ob_start();
+?>
 	<script>
-		jQuery("document").ready(function($){
+jQuery("document").ready(function($){
 
-			jQuery("<?php echo $a['field_selector'];?>").bind("blur",  function( e ) {
-				e.preventDefault();
-				validateEmailAddress(e);
+jQuery(<?php echo $a['field_selector'];?>).bind("blur",  function( e ) {
+e.preventDefault();
+validateEmailAddress(e);
 
-			});
+});
 
-		});
-		function validateEmailAddress(e){
-				email=jQuery("<?php echo $a['field_selector'];?>").val();
+});
 
 
-		email_data = {
-			'action':'validate_email',
-			'email':email
-		}
-
-		jQuery.ajax({
-					url: "/wp-admin/admin-ajax.php",
-					data: email_data,
-					dataType: "JSON",
-					type: "GET",
-					success: function(response){
+function validateEmailAddress(e){
+		email=jQuery(<?php echo $a['field_selector'];?>).val();
 
 
-					if(response.status == "invalid"){
-						alert("Email Address Error: "+response.error);
-<?php
-if ($a['prevent_submit']) {
-		?>
-							jQuery("<?php echo $a['submit_selector'];?>").prop("disabled",true);
-							jQuery("<?php echo $a['submit_selector'];?>").val("<?php echo $a['disabled_text'];?>");
-							jQuery("<?php echo $a['submit_selector'];?>").addClass("hover");
-<?php
-}?>
-}else{
-<?php
-
-	if ($a['prevent_submit']) {
-		?>
-							jQuery("<?php echo $a['submit_selector'];?>").prop("disabled",false);
-							jQuery("<?php echo $a['submit_selector'];?>").val("<?php echo $a['submit_text'];?>");
-							jQuery("<?php echo $a['submit_selector'];?>").removeClass("hover");
-<?php
-}?>
+email_data = { 
+	'action':'validate_email',
+	'email':email
 }
+
+jQuery.ajax({
+			url: "/wp-admin/admin-ajax.php",
+			data: email_data,
+			dataType: "JSON",
+			type: "GET",
+			success: function(response){
+			
+			
+			if(response.status == "invalid"){
+				alert("Email Address Error: "+response.error);
+				<?php
+				if($a['prevent_submit']){
+					?>
+					jQuery(<?php echo $a['submit_selector'];?>).prop("disabled",true);
+					jQuery(<?php echo $a['submit_selector'];?>).val(<?php echo $a['disabled_text'];?>);
+					jQuery(<?php echo $a['submit_selector'];?>).addClass("hover");
 				}
+			}else{
+				<?php
 
-
-
-				});
-
-
+				if($a['prevent_submit']){
+					?>
+					jQuery(<?php echo $a['submit_selector'];?>).prop("disabled",false);
+					jQuery(<?php echo $a['submit_selector'];?>).val(<?php echo $a['submit_text'];?>);
+					jQuery(<?php echo $a['submit_selector'];?>).removeClass("hover");
+				}
 			}
- 	</script>
-<?php
+		}
 
-	return ob_get_clean();
 
-}
-
-function address_validate_shortcode($atts) {
-	$a = shortcode_atts(array(
-		'form_selector' => '.gform_wrapper form',
-		'submit_selector' => 'input[type=submit]',
-		'prevent_submit' => true,
-		'submit_text' => 'Submit',
-		'disabled_text' => 'Invalid Address',
-		'address_selector' => '#address',
-		'address2_selector' => '#address2',
-		'zip_selector' => '#zip',
-		'city_selector' => '#city',
-		'state_selector' => '#state',
-	), $atts);
-	ob_start();
-	?>
-<script>
-		jQuery("document").ready(function($){
-
-			jQuery(".gform_wrapper form").bind("submit.address",  function( e ) {
-				e.preventDefault();
-				validateAddress(e);
-
-			});
 
 		});
 
-
-		function validateAddress(e){
-			form_id = jQuery("<?php echo $a['form_selector'];?>").attr("id").replace("gform_","");
-			address=jQuery("<?php echo $a['address_selector'];?>").val();
-			address2=jQuery("<?php echo $a['address2_selector'];?>").val();
-			zip = jQuery("<?php echo $a['zip_selector'];?>").val();
-
-
-			address_data = {
-				'action':'validate_address',
-				'street':address,
-				'unit':address2,
-				'zip':zip
-			}
-
-			jQuery.ajax({
-						url: "/wp-admin/admin-ajax.php",
-						data: address_data,
-						dataType: "JSON",
-						type: "GET",
-						success: function(response){
-
-
-						if(response.status == "invalid"){
-							alert("Address was not found. Message: "+response.error);
-							 submitting = "gf_submitting_"+form_id;
-							 eval(submitting + "=false");
-							e.preventDefault();
-							return false;
-						}else{
-							jQuery("<?php echo $a['city_selector'];?>").val(response.city);
-							jQuery("<?php echo $a['state_selector'];?>").val(response.state);
-							jQuery("<?php echo $a['form_selector'];?>")[0].submit();
-							return true;
-						}}
-
-
-
-			});
-
-
-		}
+		
+	}
  </script>
+<?php 
 
-<?php
+return ob_get_clean();
 
-	return ob_get_clean();
+=======
+
+	$url = "https://bpi.briteverify.com/addresses.json?";
+	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
+
+	$response = wp_remote_get($url . $qs);
+
+	if ($response['response']['code'] != "200") {
+		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
+	} else {
+
+		echo $response['body'];
+	}
+	echo die();
+>>>>>>> f49b009edb53f07775886b89ce3993bd95bee611
+}
+
+function address_validate_shortcode(){
+ 	$a = shortcode_atts( array(
+        'field_selector' => '#email',
+        'form_selector' =>'.gform_wrapper form',
+        'submit_selector' =>'input[type=submit]',
+        'prevent_submit' => true,
+        'submit_text' => 'Submit',
+        'disabled_text' => 'Invalid Email'        
+    ), $atts );
+ob_start();
+?>
+	<script>
+jQuery("document").ready(function($){
+
+jQuery(".gform_wrapper form").bind("submit.address",  function( e ) {
+e.preventDefault();
+validateAddress(e);
+
+});
+
+});
+
+
+function validateAddress(e){
+form_id = jQuery(".gform_wrapper form").attr("id").replace("gform_","");
+		address=jQuery("input[name=input_3]").val();
+		address2=jQuery("input[name=input_4]").val();
+zip = jQuery("input[name=input_5]").val();
+
+
+address_data = { 
+	'action':'validate_address',
+	'street':address,
+	'unit':address2,
+	'zip':zip
+}
+
+jQuery.ajax({
+			url: "/wp-admin/admin-ajax.php",
+			data: address_data,
+			dataType: "JSON",
+			type: "GET",
+			success: function(response){
+			
+			
+			if(response.status == "invalid"){
+				alert("Address was not found. Message: "+response.error);
+				 submitting = "gf_submitting_"+form_id;
+				 eval(submitting + "=false");
+				e.preventDefault();
+				return false;
+			}else{
+				jQuery("input[name=input_15]").val(response.city);
+				jQuery("input[name=input_16]").val(response.state);
+				jQuery(".gform_wrapper form")[0].submit();
+				return true;
+			}}
+
+
+
+		});
+
+		
+	}
+ </script>
+<?php 
+
+return ob_get_clean();
 
 }
+function enqueue_select2_jquery() {
+	$plugins_url = plugins_url();
+	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
+	wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
+	wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
+	wp_enqueue_style('select2css');
+	wp_enqueue_script('select2');
+	// wp_enqueue_script('snapgen2');
+}
+
+add_action('admin_enqueue_scripts', 'enqueue_select2_jquery');
