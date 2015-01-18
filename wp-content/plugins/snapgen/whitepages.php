@@ -11,37 +11,41 @@
 function reverse_lookup($phone = "7704145683", $test = false) {
 
 	$lookup = remote_call(array("type" => "phone", "payload" => array("phone" => $phone)), $test);
+	if (is_array($lookup) && isset($lookup['body'])) {
 
-	$lookup_array = json_decode($lookup['body']);
-	if (isset($lookup_array->results)) {
-		foreach ($lookup_array->results as $results_val) {
-			$results_phone[] = $results_val;
-		}
-
-		//echo "<h2>Results parsed</h2>";
-		$dictionaryData = $lookup_array->dictionary;
-		$count_obj = count($dictionaryData);
-
-		//let's see if best location is really best
-
-		$results = best_location($results_phone, $dictionaryData);
-
-		if ($results) {
-			//echo "<h2>returning best location</h2>";
-			return $results;
-		} else {
-			$backup_results = belongs_to($results_phone, $dictionaryData);
-			if ($backup_results) {
-				//echo "<h2>returning backup results</h2>";
-				return $backup_results;
-			} else {
-				//echo "<h2>returning nothing</h2>";
-				return false;
+		$lookup_array = json_decode($lookup['body']);
+		if (isset($lookup_array->results)) {
+			foreach ($lookup_array->results as $results_val) {
+				$results_phone[] = $results_val;
 			}
-		}
 
+			//echo "<h2>Results parsed</h2>";
+			$dictionaryData = $lookup_array->dictionary;
+			$count_obj = count($dictionaryData);
+
+			//let's see if best location is really best
+
+			$results = best_location($results_phone, $dictionaryData);
+
+			if ($results) {
+				//echo "<h2>returning best location</h2>";
+				return $results;
+			} else {
+				$backup_results = belongs_to($results_phone, $dictionaryData);
+				if ($backup_results) {
+					//echo "<h2>returning backup results</h2>";
+					return $backup_results;
+				} else {
+					//echo "<h2>returning nothing</h2>";
+					return false;
+				}
+			}
+
+		} else {
+			//echo "<h2>returning nothing</h2>";
+			return false;
+		}
 	} else {
-		//echo "<h2>returning nothing</h2>";
 		return false;
 	}
 
