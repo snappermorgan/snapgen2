@@ -416,9 +416,18 @@ settings_fields('pluginPage');
             <div class="inside">
 <?php $field = 'trigger';?>
                 <div class="field">
-                    <label for="<?php echo $field, '-', $eid?>"><?php _e('Trigger remote posting on Success?', $P);?></label>
+                    <label for="<?php echo $field . '-', $eid?>"><?php _e('Trigger remote posting on Success?', $P);?></label>
                     <input id="<?php echo $field, '-', $eid?>" type="checkbox" class="checkbox" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="yes"<?php echo isset($entity[$field]) ? ' checked="checked"' : ''?> />
                     <em class="description"><?php _e('If the success string validates, do you want to trigger another 3rd Party service posting? If checked, please select the service(s) you wish to trigger.', $P);?></em>
+                </div>
+<?php $field = 'trigger-method';?>
+                <div class="field">
+                    <label for="<?php echo $field, '-', $eid?>"><?php _e('Trigger Method', $P);?></label>
+                    <select id="<?php echo $field, '-', $eid?>" name="<?php echo $P, '[', $eid, '][', $field, ']">';?>
+                    <option value="GET" <?php if ($entity && $entity['trigger-method'] == 'GET'): ?>selected="selected" <?php endif;?>>GET</option>
+                    <option value="POST" <?php if ($entity && $entity['trigger-method'] == 'POST'): ?>selected="selected" <?php endif;?>>POST</option>
+                    </select
+                    <em class="description"><?php _e('Select the posting method, either GET or POST.', $P);?></em>
                 </div>
 <?php $field = 'triggered-services';?>
                 <div class="field">
@@ -729,7 +738,19 @@ foreach ($services as $sid => $s) {
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
 			_log("Sending Triggered post to " . $service['url'] . print_r($post_args, true));
-			$response = wp_remote_post($service['url'], $post_args);
+			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
+				if ($service['trigger-method'] == 'GET') {
+					$trigger_querystring = http_build_query($post_args['body']);
+					$response = wp_remote_get($service['url'] . "?" . $trigger_querystring);
+					_log("Sending Triggered post using GET to " . $service['url'] . "?" . $trigger_querystring);
+				} else {
+					$response = wp_remote_post($service['url'], $post_args);
+					_log("Sending Triggered post using POST to " . $service['url'] . print_r($post_args, true));
+				}
+			} else {
+				$response = wp_remote_post($service['url'], $post_args);
+			}
+
 		}
 
 		_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
