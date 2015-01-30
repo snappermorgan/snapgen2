@@ -67,7 +67,19 @@ class Forms3rdpartySnapGen {
 		add_filter('init', array($this, 'vendor_post'));
 
 		$_response_message = array();
-
+		add_filter( 'http_response_timeout', 'snapgen_http_response_timeout' );
+	}
+	
+	
+	/**
+	 * Extend http timeout duration to 30 seconds
+	 * 
+	 * @param int $timeout The timeout duration in seconds. Default is 5.
+	 *
+	 * @return int The filtered timeout duration in seconds.
+	 */
+	function snapgen_http_response_timeout( $timeout ) {
+		return 30; // seconds
 	}
 
 	public function sg_add_admin_menu() {
