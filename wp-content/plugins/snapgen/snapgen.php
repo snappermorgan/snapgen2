@@ -287,7 +287,7 @@ settings_fields('pluginPage');
 
 	public function post_filter($service, $submission = false) {
 
-		////_log("ALTER SUBMISSION TRIGGERED");
+		_log("ALTER SUBMISSION TRIGGERED");
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
 				&& (isset($service['whitepages-state-field']) && !empty($service['whitepages-state-field'])) && (isset($service['whitepages-zip-field']) && !empty($service['whitepages-zip-field']))
