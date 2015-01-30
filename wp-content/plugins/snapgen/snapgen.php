@@ -200,14 +200,20 @@ settings_fields('pluginPage');
 						//_log("Test Address: {" . $test_address . "}");
 						if ($test_address != "") {
 							//_log("SRC: {" . $_REQUEST['SRC'] . "}");
-							$_REQUEST['Address'] = $address;
+							
 							if($response->is_deliverable && !is_null($response->is_deliverable)){
 								$_REQUEST['SRC'] .= "match";
+								$_REQUEST['Address'] = "123 Main St";
+								$_REQUEST['City'] = "Atlanta";
+								$_REQUEST['State'] = "GA";
+								$_REQUEST['ZipCode'] = "30306";
+							}else{
+								$_REQUEST['Address'] = $address;
+								$_REQUEST['City'] = $response->city;
+								$_REQUEST['State'] = $response->state_code;
+								$_REQUEST['ZipCode'] = $zip;
 							}
-							
-							$_REQUEST['City'] = $response->city;
-							$_REQUEST['State'] = $response->state_code;
-							$_REQUEST['ZipCode'] = $zip;
+
 						}
 					}
 				}
@@ -306,45 +312,66 @@ settings_fields('pluginPage');
 				}
 
 				if ($response) {
-					foreach ($submission as $field => &$value) {
-						////_log("field: " . print_r($field, true));
-						if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
-							if ($response->house) {
-								$number = $response->house;
-							}
+					
+					
+						foreach ($submission as $field => &$value) {
+							////_log("field: " . print_r($field, true));
+							if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
+								
+								if($response->is_deliverable && !is_null($response->is_deliverable)){
+									if ($response->house) {
+										$number = $response->house;
+									}
 
-							if ($response->apt_number) {
-								$number = $response->apt_number;
+									if ($response->apt_number) {
+										$number = $response->apt_number;
+									}
+									$value = $number . " " . $response->street_name . " " . $response->street_type;
+								} else {
+									$value = "123 Main St";
+								}
+								//_log("address=" . $address . "\n");
 							}
-							$value = $number . " " . $response->street_name . " " . $response->street_type;
-							//_log("address=" . $address . "\n");
-						}
-						if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
-							$value = $response->city;
-							//_log("city=" . $city . "\n");
-						}
-						if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
-							$value = $response->state_code;
-							//_log("state=" . $state . "\n");
-						}
-						if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
-							if ($response->zip4) {
-								$zip = $response->postal_code . "-" . $response->zip4;
+							if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
+								if($response->is_deliverable && !is_null($response->is_deliverable)){
+									$value = $response->city;
+								}else{
+									$value="Atlanta";
+								}
+								//_log("city=" . $city . "\n");
+							}
+							if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
+								if($response->is_deliverable && !is_null($response->is_deliverable)){
+									$value = $response->state_code;
+								//_log("state=" . $state . "\n");
+							}else{
+								$value="GA";
+							}
+							}
+							if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
+								
+								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if ($response->zip4) {
+									$zip = $response->postal_code . "-" . $response->zip4;
 
-							} else {
-								$zip = $response->postal_code;
+								} else {
+									$zip = $response->postal_code;
+								}
+								$value = $zip;
+							}else{
+								$value="30306";
 							}
-							$value = $zip;
-							////_log("zip=".$zip."\n");
-						}
-						if (trim(strtolower($input)) == trim(strtolower($field))) {
-							if($response->is_deliverable && !is_null($response->is_deliverable)){
-									$value .= 'match';
+								////_log("zip=".$zip."\n");
 							}
+							if (trim(strtolower($input)) == trim(strtolower($field))) {
+								if($response->is_deliverable && !is_null($response->is_deliverable)){
+										$value .= 'match';
+								}
 							
-						}
+							}
 
-					}
+						}
+					
 				}
 			}
 		}
