@@ -140,37 +140,63 @@ settings_fields('pluginPage');
 			//$boberdoo = "http://requestb.in/1hhyvit1";
 
 			if (isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] != "") {
-				$response = reverse_lookup($_REQUEST['Primary_Phone']);
-				//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
-				$number = "";
-				$zip = "";
-
-				if ($response) {
-
-					if ($response->house) {
-						$number = $response->house;
-					}
-
-					if ($response->apt_number) {
-						$number = $response->apt_number;
-					}
-
-					if ($response->zip4) {
-						$zip = $response->postal_code . "-" . $response->zip4;
-
+				
+				//let's first see if they passed an address
+				$whitepages = true;
+				if(  (isset($_REQUEST['Address']) && $_REQUEST['Address'] !="") && (isset($_REQUEST['City']) && $_REQUEST['City'] !="") (isset($_REQUEST['State']) && $_REQUEST['State'] !="") (isset($_REQUEST['Zip']) && $_REQUEST['Zip'] !="") ){
+					
+					$response=validate_address($_REQUEST['Address'],$_REQUEST['Address_2'],$_REQUEST['ZipCode']);
+					
+					
+					
+					if ($response['response']['code'] != "200") {
+						_log("Submitted Address was not valid,using whitepages pro ");
+						
+						$whitepages = true;
 					} else {
-						$zip = $response->postal_code;
-					}
-					$address = $number . " " . $response->street_name . " " . $response->street_type;
-					$test_address = str_replace(' ', '', $address);
-					//_log("Test Address: {" . $test_address . "}");
-					if ($test_address != "") {
-						//_log("SRC: {" . $_REQUEST['SRC'] . "}");
-						$_REQUEST['Address'] = $address;
+						$whitepages = false;
 						$_REQUEST['SRC'] .= "match";
-						$_REQUEST['City'] = $response->city;
-						$_REQUEST['State'] = $response->state_code;
-						$_REQUEST['ZipCode'] = $zip;
+						_log("Submitted Address was valid, skipping Whitepages");
+					}
+										
+				}
+				
+				if($whitepages){
+					$response = reverse_lookup($_REQUEST['Primary_Phone']);
+					//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
+					$number = "";
+					$zip = "";
+
+					if ($response) {
+
+						if ($response->house) {
+							$number = $response->house;
+						}
+
+						if ($response->apt_number) {
+							$number = $response->apt_number;
+						}
+
+						if ($response->zip4) {
+							$zip = $response->postal_code . "-" . $response->zip4;
+
+						} else {
+							$zip = $response->postal_code;
+						}
+						$address = $number . " " . $response->street_name . " " . $response->street_type;
+						$test_address = str_replace(' ', '', $address);
+						//_log("Test Address: {" . $test_address . "}");
+						if ($test_address != "") {
+							//_log("SRC: {" . $_REQUEST['SRC'] . "}");
+							$_REQUEST['Address'] = $address;
+							if($response->is_deliverable && !is_null($response->is_deliverable)){
+								$_REQUEST['SRC'] .= "match";
+							}
+							
+							$_REQUEST['City'] = $response->city;
+							$_REQUEST['State'] = $response->state_code;
+							$_REQUEST['ZipCode'] = $zip;
+						}
 					}
 				}
 			}
@@ -245,6 +271,7 @@ settings_fields('pluginPage');
 
 				$phone = $submission[trim(strtolower($service['whitepages-phone-field']))];
 
+				
 				$response = reverse_lookup($phone);
 
 //                $address = "150 Sweetwood Way";
@@ -299,7 +326,10 @@ settings_fields('pluginPage');
 							////_log("zip=".$zip."\n");
 						}
 						if (trim(strtolower($input)) == trim(strtolower($field))) {
-							$value .= 'match';
+							if($response->is_deliverable && !is_null($response->is_deliverable)){
+									$value .= 'match';
+							}
+							
 						}
 
 					}
@@ -579,7 +609,7 @@ foreach ($services as $sid => $s) {
 
         </fieldset>
 <?php
-}
+} 
 
 	function remote_success($form, $callback_results, $service, $submission) {
 
@@ -905,7 +935,7 @@ function validate_email_callback() {
 		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
 	} else {
 
-		echo $response['body'];
+		echo $response['body'];?>").
 	}
 	echo die();
 }
@@ -916,10 +946,9 @@ function validate_address_callback() {
 	$unit = (isset($_REQUEST['unit']) ? $_REQUEST['unit'] : false);
 	$zip = (isset($_REQUEST['zip']) ? $_REQUEST['zip'] : false);
 
-	$url = "https://bpi.briteverify.com/addresses.json?";
-	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
+	
 
-	$response = wp_remote_get($url . $qs);
+	$response = validate_address($street,$unit,$zip);
 
 	if ($response['response']['code'] != "200") {
 		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
@@ -928,6 +957,16 @@ function validate_address_callback() {
 		echo $response['body'];
 	}
 	echo die();
+}
+
+function validate_address($street,$unit,$zip){
+	$url = "https://bpi.briteverify.com/addresses.json?";
+	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
+
+	$response = wp_remote_get($url . $qs);
+	
+	return $response;
+
 }
 
 function email_validate_shortcode($atts) {
