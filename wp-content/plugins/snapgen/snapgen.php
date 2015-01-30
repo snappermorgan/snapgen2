@@ -143,7 +143,7 @@ settings_fields('pluginPage');
 	public function vendor_post() {
 
 		if (isset($_REQUEST['external']) && ($_REQUEST['external'] == 'yes')) {
-
+			_log("External Vendor Posting...");
 //            echo "<pre>".print_r($_REQUEST,true)."</pre>";
 			//            exit(0);
 			//header("Content-Type:text/xml");
@@ -157,7 +157,7 @@ settings_fields('pluginPage');
 				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['Zip']) && $_REQUEST['Zip'] != "")) {
 
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
-
+					_log("Response from whitepages." . print_r($response,true));
 					if ($response['response']['code'] != "200") {
 						_log("Submitted Address was not valid,using whitepages pro ");
 
