@@ -318,7 +318,7 @@ settings_fields('pluginPage');
 				}
 
 				
-				
+				_log("Response from Reverse Lookup: ".print_r($response,true));
 					
 					
 						foreach ($submission as $field => &$value) {
