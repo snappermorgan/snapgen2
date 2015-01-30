@@ -95,6 +95,8 @@ function belongs_to($results_phone, $dictionaryData) {
 				}
 			}
 		}
+	} else {
+		return false;
 	}
 }
 
