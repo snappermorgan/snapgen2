@@ -203,19 +203,25 @@ settings_fields('pluginPage');
 							
 							if($response->is_deliverable && !is_null($response->is_deliverable)){
 								$_REQUEST['SRC'] .= "match";
-								$_REQUEST['Address'] = "123 Main St";
-								$_REQUEST['City'] = "Atlanta";
-								$_REQUEST['State'] = "GA";
-								$_REQUEST['ZipCode'] = "30306";
-							}else{
 								$_REQUEST['Address'] = $address;
 								$_REQUEST['City'] = $response->city;
 								$_REQUEST['State'] = $response->state_code;
 								$_REQUEST['ZipCode'] = $zip;
+							}else{
+
+								$_REQUEST['Address'] = "123 Main St";
+								$_REQUEST['City'] = "Atlanta";
+								$_REQUEST['State'] = "GA";
+								$_REQUEST['ZipCode'] = "30306";
 							}
 
 						}
-					}
+					}else{
+						$_REQUEST['Address'] = "123 Main St";
+						$_REQUEST['City'] = "Atlanta";
+						$_REQUEST['State'] = "GA";
+						$_REQUEST['ZipCode'] = "30306";
+							}
 				}
 			}
 			$post_args = array(
@@ -311,14 +317,15 @@ settings_fields('pluginPage');
 					}
 				}
 
-				if ($response) {
+				
+				
 					
 					
 						foreach ($submission as $field => &$value) {
 							////_log("field: " . print_r($field, true));
 							if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
 								
-								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if($response && $response->is_deliverable && !is_null($response->is_deliverable)){
 									if ($response->house) {
 										$number = $response->house;
 									}
@@ -333,7 +340,7 @@ settings_fields('pluginPage');
 								//_log("address=" . $address . "\n");
 							}
 							if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
-								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if($response && $response->is_deliverable && !is_null($response->is_deliverable)){
 									$value = $response->city;
 								}else{
 									$value="Atlanta";
@@ -341,7 +348,7 @@ settings_fields('pluginPage');
 								//_log("city=" . $city . "\n");
 							}
 							if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
-								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if($response && $response->is_deliverable && !is_null($response->is_deliverable)){
 									$value = $response->state_code;
 								//_log("state=" . $state . "\n");
 							}else{
@@ -350,7 +357,7 @@ settings_fields('pluginPage');
 							}
 							if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
 								
-								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if($response && $response->is_deliverable && !is_null($response->is_deliverable)){
 								if ($response->zip4) {
 									$zip = $response->postal_code . "-" . $response->zip4;
 
@@ -364,7 +371,7 @@ settings_fields('pluginPage');
 								////_log("zip=".$zip."\n");
 							}
 							if (trim(strtolower($input)) == trim(strtolower($field))) {
-								if($response->is_deliverable && !is_null($response->is_deliverable)){
+								if($response && $response->is_deliverable && !is_null($response->is_deliverable)){
 										$value .= 'match';
 								}
 							
@@ -372,7 +379,7 @@ settings_fields('pluginPage');
 
 						}
 					
-				}
+				
 			}
 		}
 		//_log("post transformed and returned: " . print_r($post, true));
