@@ -41,6 +41,7 @@ function reverse_lookup($phone = "7704145683", $test = false) {
 						echo "<h2>returning backup results</h2>";
 						return $last_ditch_results;
 					} else {
+
 						echo "<h2>returning nothing</h2>";
 						return false;
 					}
@@ -207,6 +208,7 @@ function remote_call($data, $test = false) {
 		$curl = curl_init($service_url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$curl_response = curl_exec($curl);
+		echo "<pre>whitepages response: " . print_r($response, true) . "</pre>";
 		return $curl_response;
 	} else {
 		$payload = $data['payload'];
