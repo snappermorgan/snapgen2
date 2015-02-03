@@ -28,21 +28,21 @@ function reverse_lookup($phone = "7704145683", $test = false) {
 			$results = best_location($results_phone, $dictionaryData);
 
 			if ($results) {
-				echo "<h2>returning best location</h2>";
+				//echo "<h2>returning best location</h2>";
 				return $results;
 			} else {
 				$backup_results = belongs_to($results_phone, $dictionaryData);
 				if ($backup_results) {
-					echo "<h2>returning backup results</h2>";
+					//echo "<h2>returning backup results</h2>";
 					return $backup_results;
 				} else {
 					$last_ditch_results = last_ditch($results_phone, $dictionaryData);
 					if ($last_ditch_results) {
-						echo "<h2>returning backup results</h2>";
+						//echo "<h2>returning backup results</h2>";
 						return $last_ditch_results;
 					} else {
 
-						echo "<h2>returning nothing</h2>";
+						//echo "<h2>returning nothing</h2>";
 						return false;
 					}
 				}
@@ -202,14 +202,14 @@ function remote_call($data, $test = false) {
 	}
 
 	if ($test) {
-//		$api_key = $_SERVER['SNAPGEN_WP_WHITEPAGES_KEY'];
-		$api_key = "c9ba47b440aaa1968dc4bd74aa435904";
+		$api_key = $_SERVER['SNAPGEN_WP_WHITEPAGES_KEY'];
+
 		$service_url = 'http://proapi.whitepages.com/2.0/phone.json?phone=' . urlencode($data['payload']['phone']) . '&api_key=' . $api_key;
 		$curl = curl_init($service_url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$curl_response = curl_exec($curl);
 		echo "<pre>whitepages response: " . print_r($response, true) . "</pre>";
-		return $curl_response;
+		return array("body" => $curl_response);
 	} else {
 		$payload = $data['payload'];
 
