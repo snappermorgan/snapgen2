@@ -201,8 +201,8 @@ function remote_call($data, $test = false) {
 	}
 
 	if ($test) {
-		$api_key = $_SERVER['SNAPGEN_WP_WHITEPAGES_KEY'];
-
+//		$api_key = $_SERVER['SNAPGEN_WP_WHITEPAGES_KEY'];
+		$api_key = "c9ba47b440aaa1968dc4bd74aa435904";
 		$service_url = 'http://proapi.whitepages.com/2.0/phone.json?phone=' . urlencode($data['payload']['phone']) . '&api_key=' . $api_key;
 		$curl = curl_init($service_url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
