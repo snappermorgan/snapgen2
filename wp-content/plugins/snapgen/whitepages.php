@@ -28,20 +28,20 @@ function reverse_lookup($phone = "7704145683", $test = false) {
 			$results = best_location($results_phone, $dictionaryData);
 
 			if ($results) {
-				//echo "<h2>returning best location</h2>";
+				echo "<h2>returning best location</h2>";
 				return $results;
 			} else {
 				$backup_results = belongs_to($results_phone, $dictionaryData);
 				if ($backup_results) {
-					//echo "<h2>returning backup results</h2>";
+					echo "<h2>returning backup results</h2>";
 					return $backup_results;
 				} else {
 					$last_ditch_results = last_ditch($results_phone, $dictionaryData);
 					if ($last_ditch_results) {
-						//echo "<h2>returning backup results</h2>";
+						echo "<h2>returning backup results</h2>";
 						return $last_ditch_results;
 					} else {
-						//echo "<h2>returning nothing</h2>";
+						echo "<h2>returning nothing</h2>";
 						return false;
 					}
 				}
