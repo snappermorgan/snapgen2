@@ -36,8 +36,14 @@ function reverse_lookup($phone = "7704145683", $test = false) {
 					//echo "<h2>returning backup results</h2>";
 					return $backup_results;
 				} else {
-					//echo "<h2>returning nothing</h2>";
-					return false;
+					$last_ditch_results = last_ditch($results_phone, $dictionaryData);
+					if ($last_ditch_results) {
+						//echo "<h2>returning backup results</h2>";
+						return $last_ditch_results;
+					} else {
+						//echo "<h2>returning nothing</h2>";
+						return false;
+					}
 				}
 			}
 
@@ -51,6 +57,25 @@ function reverse_lookup($phone = "7704145683", $test = false) {
 
 }
 
+function last_ditch($results_phone, $dictionaryData) {
+	if (count($results_phone) > 0) {
+
+		foreach ($dictionaryData as $dictionaryKey_d => $dictionaryVal_d) {
+			$arr = explode(".", $dictionaryKey_d, 2);
+			$first = $arr[0];
+			if ($first == "Location") {
+				foreach ($dictionaryVal_d as $sub_dict_keys_d => $sub_dict_vales_d) {
+
+					if ($sub_dict_keys_d == "is_deliverable" && $sub_dict_vales_d == true) {
+						return $dictionaryData[$dictionaryKey_d];
+					}
+				}
+			}
+
+		}
+
+	}
+}
 function belongs_to($results_phone, $dictionaryData) {
 	if (count($results_phone) > 0) {
 		foreach ($results_phone as $resultKey => $resultVal) {
@@ -88,16 +113,15 @@ function belongs_to($results_phone, $dictionaryData) {
 			if ($location == $dictionaryKey_c) {
 				$location_obj = $dictionaryVal_c;
 
-				if ($location_obj->standard_address_line1 != "") {
+				if ($location_obj->is_deliverable) {
 					return $location_obj;
 				} else {
 					return false;
 				}
 			}
 		}
-	} else {
-		return false;
 	}
+
 }
 
 function best_location($results_phone, $dictionaryData) {
@@ -124,7 +148,7 @@ function best_location($results_phone, $dictionaryData) {
 			if ($best == $dictionaryKey_c) {
 				$location_obj = $dictionaryVal_c;
 
-				if ($location_obj->standard_address_line1 != "") {
+				if ($location_obj->is_deliverable) {
 					return $location_obj;
 				} else {
 					return false;
