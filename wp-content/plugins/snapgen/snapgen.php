@@ -287,6 +287,7 @@ settings_fields('pluginPage');
 			if ((isset($service['validation-address-field']) && !empty($service['validation-address-field'])) && (isset($service['validation-city-field']) && !empty($service['validation-city-field']))
 				&& (isset($service['validation-state-field']) && !empty($service['validation-state-field'])) && (isset($service['validation-zip-field']) && !empty($service['validation-zip-field']))) {
 
+				_log("Address Validation with Briteverify!");
 				$address = $submission[trim(strtolower($service['validation-address-field']))];
 				$address2 = $submission[trim(strtolower($service['validation-address2-field']))];
 				$zipcode = $submission[trim(strtolower($service['validation-zip-field']))];
@@ -294,7 +295,7 @@ settings_fields('pluginPage');
 				$state = $submission[trim(strtolower($service['validation-state-field']))];
 
 				$validated = validate_address($address, $address2, $zipcode);
-
+				_log("Returned from Briteverify" . print_r($validated, true));
 				$response = json_decode($validated);
 				if ($response && $response->status == "valid") {
 					if ($response->corrected == true) {
@@ -331,6 +332,8 @@ settings_fields('pluginPage');
 
 					}
 				}
+
+				_log("New Submission after validation: " . print_r($submission, true));
 
 			}
 		}
