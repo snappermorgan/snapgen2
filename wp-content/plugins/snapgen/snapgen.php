@@ -157,7 +157,7 @@ settings_fields('pluginPage');
 				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['Zip']) && $_REQUEST['Zip'] != "")) {
 
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
-					_log("Response from whitepages." . print_r($response,true));
+					_log("Response from whitepages." . print_r($response, true));
 					if ($response['response']['code'] != "200") {
 						_log("Submitted Address was not valid,using whitepages pro ");
 
@@ -283,8 +283,62 @@ settings_fields('pluginPage');
 	}
 
 	public function post_filter($service, $submission = false) {
+		if (isset($service['address_validation']) && !empty($service['address_validation'])) {
+			if ((isset($service['validation-address-field']) && !empty($service['validation-address-field'])) && (isset($service['validation-city-field']) && !empty($service['validation-city-field']))
+				&& (isset($service['validation-state-field']) && !empty($service['validation-state-field'])) && (isset($service['validation-zip-field']) && !empty($service['validation-zip-field']))) {
 
-		_log("ALTER SUBMISSION TRIGGERED");
+				_log("Address Validation with Briteverify!");
+				$address = $submission[trim(strtolower($service['validation-address-field']))];
+				$address2 = $submission[trim(strtolower($service['validation-address2-field']))];
+				$zipcode = $submission[trim(strtolower($service['validation-zip-field']))];
+				$city = $submission[trim(strtolower($service['validation-city-field']))];
+				$state = $submission[trim(strtolower($service['validation-state-field']))];
+
+				$validated = validate_address($address, $address2, $zipcode);
+				_log("Returned from Briteverify" . print_r($validated, true));
+				$response = json_decode($validated['body']);
+				if ($response && $response->status == "valid") {
+					if ($response->corrected == true) {
+						$address = $response->street;
+						if ($response->unit) {
+							$address2 = $response->unit;
+						}
+						$city = $response->city;
+						$state = $response->state;
+						$zip = $response->zip;
+					}
+				}
+
+				foreach ($submission as $field => &$value) {
+					////_log("field: " . print_r($field, true));
+					if (trim(strtolower($service['validation-address-field'])) == trim(strtolower($field))) {
+						$value = $address;
+
+					}
+					if (trim(strtolower($service['validation-address2-field'])) == trim(strtolower($field))) {
+						$value = $address2;
+
+					}
+					if (trim(strtolower($service['validation-city-field'])) == trim(strtolower($field))) {
+						$value = $city;
+
+					}
+					if (trim(strtolower($service['validation-state-field'])) == trim(strtolower($field))) {
+						$value = $state;
+
+					}
+					if (trim(strtolower($service['validation-zip-field'])) == trim(strtolower($field))) {
+						$value = $zip;
+
+					}
+				}
+
+				_log("New Submission after validation: " . print_r($submission, true));
+
+			}
+		}
+
+		//_log("ALTER SUBMISSION TRIGGERED");
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
 				&& (isset($service['whitepages-state-field']) && !empty($service['whitepages-state-field'])) && (isset($service['whitepages-zip-field']) && !empty($service['whitepages-zip-field']))
@@ -602,6 +656,67 @@ foreach ($services as $sid => $s) {
                 <div class="inside">
                     <div class="field">
 <?php $field = 'whitepages-zip-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Zip Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset><legend><span><?php _e('Address Validation', $P);?></span></legend>
+            <div class="field">
+<?php $field = 'address_validation';?>
+                <label for="<?php echo $field, '-', $eid?>"><?php _e('Validate Address?', $P);?></label>
+                <input id="<?php echo $field, '-', $eid?>" type="checkbox" data-actn="toggle-sibling" data-after=".conditional-field-match" data-rel=".postbox" class="checkbox " name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="yes"<?php echo isset($entity[$field]) ? ' checked="checked"' : ''?> />
+                <em class="description"><?php _e('Submit address for validation', $P);?></em>
+            </div>
+
+             <div class="validation-address-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-address-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Address Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+          <div class="validation-address2-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-address2-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Address2 Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+             <div class="validation-city-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-city-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('City Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+            <div class="validation-state-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-state-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('State Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+
+             <div class="validation-zip-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-zip-field';?>
                         <label for="<?php echo $field, '-', $eid?>"><?php _e('Zip Field Name', $P);?></label>
                         <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
                     </div>
