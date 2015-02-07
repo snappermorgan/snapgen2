@@ -1938,7 +1938,7 @@ class GFFormDisplay{
                         if(!isset($default_values[$field["id"]]))
                             $default_values[$field["id"]] = array();
 
-                        $default_values[$field["id"]][] = "choice_{$field["id"]}_{$choice_index}";
+                        $default_values[$field["id"]][] = "choice_{$field["formId"]}_{$field["id"]}_{$choice_index}";
                     }
                     $choice_index++;
                 }

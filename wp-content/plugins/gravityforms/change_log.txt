@@ -1,4 +1,32 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 1.8.22
+	- Added logging statements.
+	- Fixed issue when displaying new form modal.
+
+-------------------------------------------------------------------------------------------------------------------
+Version 1.8.21
+	- Added logging statements around post creation.
+	- Updated translation in Finnish PO file to fix a javascript error thrown on the entry detail page.
+	- Updated notification validation so that it allows a comma separate list of emails in Reply-To (compliant with RFC 5322).
+	- Fixed issue where total was displayed as -$0.00 instead of $0.00 in certain scenarios.
+	- Fixed issue where {admin_email} could not be used in notification "To" fields.
+	- Fixed conflict with Jetpack by removing unneccessary call to wp_print_scripts().
+	- Fixed an issue with the AJAX spinner and the multi-file uploader.
+	- Fixed signup URL for reCAPTCHA in error messages.
+	- Fixed issue with input-based fields with over 100 inputs.
+	- Fixed duplicate choice label causing issues on checkbox and radio button fields when there are multiple forms on one page.
+	- Fixed an issue with the results page for forms with a lot of fields on servers with limited resources.
+	- Fixed issue with exporting/importing some post field settings.
+	- Fixed notice when filter entries with empty filter value.
+	- Fixed issue with password field on multi-page forms.
+	- Fixed an issue with list field shim when RTL was enabled.
+	- Fixed an issue with the results page where the 'show more' link retrieves duplicate values if some values of that field are empty.
+	- Fixed issue with section breaks getting displayed on {all_fields_display_empty} even when hidden by conditional logic.
+	- Fixed an issue where exporting lead data for checkbox fields did not work when the choice label included quotes.
+	- AF: Fixed issue with Sales results incorrectly calculating refunds.
+	- AF: Fixed issue with the billing cycle length drop down not showing appropriate numbers in some instances in the Payment Add-On.
+
+-------------------------------------------------------------------------------------------------------------------
 Version 1.8.20
 	- Added extra logging statements.
 	- Added South African Rand currency.
@@ -232,7 +260,7 @@ Version 1.8.9
 
     - Added "password" to the list of fields which allow HTML input.
     - Added 'gform_field_container' filter to allow modifying the field container markup.
-        add_action( 'gform_field_container', 'my_field_container', 10, 6 );
+        add_filter( 'gform_field_container', 'my_field_container', 10, 6 );
         function my_field_container( $field_container, $field, $form, $class_attr, $style, $field_content ) {
             return '<li style="border: 1px solid #f00;">{FIELD_CONTENT}</li>';
         }

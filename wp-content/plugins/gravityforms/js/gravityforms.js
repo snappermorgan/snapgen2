@@ -48,6 +48,10 @@ function Currency(currency){
         }
         money = this.numberFormat(number, this.currency["decimals"], this.currency["decimal_separator"], this.currency["thousand_separator"]);
 
+		if ( money == '0.00' ){
+			negative = '';
+		}
+
         var symbol_left = this.currency["symbol_left"] ? this.currency["symbol_left"] + this.currency["symbol_padding"] : "";
         var symbol_right = this.currency["symbol_right"] ? this.currency["symbol_padding"] + this.currency["symbol_right"] : "";
         money =  negative + this.htmlDecode(symbol_left) + money + this.htmlDecode(symbol_right);
@@ -331,9 +335,10 @@ function gformCalculateProductPrice(form_id, productFieldId){
     jQuery(".gfield_option" + suffix).find(".gfield_checkbox").find("input").each(function(){
         var checkbox_item = jQuery(this);
         var id = checkbox_item.attr("id");
-        var field_id = id.split("_")[2];
+        var field_id = id.split("_")[3];
         var label_id = id.replace("choice_", "#label_");
-        var label_element = jQuery(label_id);
+		var label_element = jQuery(label_id);
+
         var label = gformGetOptionLabel(label_element, checkbox_item.val(), 0, form_id, field_id);
         label_element.html(label);
     });
@@ -344,7 +349,7 @@ function gformCalculateProductPrice(form_id, productFieldId){
         var selected_price = 0;
         var radio_field = jQuery(this);
         var id = radio_field.attr("id");
-        var fieldId = id.split("_")[2];
+        var fieldId = id.split("_")[3];
         var selected_value = radio_field.find("input:checked").val();
 
         if(selected_value)
@@ -1131,6 +1136,7 @@ var gform = {
                     if(pendingUploads){
                         alert(strings.currently_uploading);
                         window["gf_submitting_" + formID] = false;
+                        $('#gform_ajax_spinner_' + formID).remove();
                         return false;
                     }
                     });

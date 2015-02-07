@@ -1263,10 +1263,17 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
     public function settings_billing_cycle( $field, $echo = true ) {
 
         $intervals = $this->supported_billing_intervals();
+		//get unit so the length drop down is populated with the appropriate numbers for initial load
+		$unit = $this->get_setting( $field['name'] . '_unit' );
 
         //Length drop down
         $interval_keys = array_keys($intervals);
-        $first_interval = $intervals[$interval_keys[0]];
+		if ( ! $unit ){
+			$first_interval = $intervals[ $interval_keys[0] ];
+		}
+		else{
+			$first_interval = $intervals[ $unit ];
+		}
         $length_field = array(
             "name" => $field["name"] . "_length",
             "type" => "select",
@@ -1720,7 +1727,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
 
                                 LEFT OUTER JOIN(
                                   SELECT  {$select_inner2},
-                                          sum(t.amount) as revenue,
+                                          sum( if(t.transaction_type = 'refund', abs(t.amount) * -1, t.amount) ) as revenue,
                                           sum( if(t.transaction_type = 'refund', 1, 0) ) as refunds,
                                           sum( if(t.transaction_type = 'payment' AND t.is_recurring = 1, 1, 0) ) as recurring_payments
                                   FROM {$wpdb->prefix}gf_addon_payment_transaction t
@@ -1789,7 +1796,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
 
                      LEFT OUTER JOIN(
                        SELECT  date( CONVERT_TZ(t.date_created, '+00:00', '" . $tz_offset . "') ) as date,
-                               sum(t.amount) as revenue
+                               sum( if(t.transaction_type = 'refund', abs(t.amount) * -1, t.amount) ) as revenue
                        FROM {$wpdb->prefix}gf_addon_payment_transaction t
                          INNER JOIN {$wpdb->prefix}rg_lead l ON l.id = t.lead_id
                        WHERE l.form_id=%d
@@ -1808,7 +1815,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
 
         $total_revenue = $wpdb->get_var(
             $wpdb->prepare("
-                    SELECT sum(t.amount) as revenue
+                    SELECT sum( if(t.transaction_type = 'refund', abs(t.amount) * -1, t.amount) ) as revenue
                     FROM {$wpdb->prefix}gf_addon_payment_transaction t
                     INNER JOIN {$wpdb->prefix}rg_lead l ON l.id = t.lead_id
                     WHERE l.form_id=%d", $form_id));
@@ -2115,6 +2122,10 @@ class GFPaymentStatsTable extends WP_List_Table {
     function column_default($item, $column){
         return rgar($item, $column);
     }
+
+	function column_revenue( $item ){
+		return GFCommon::to_money( $item['revenue'] );
+	}
 
     function pagination( $which ) {
         if ( empty( $this->_pagination_args ) )
