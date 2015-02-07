@@ -296,7 +296,7 @@ settings_fields('pluginPage');
 
 				$validated = validate_address($address, $address2, $zipcode);
 				_log("Returned from Briteverify" . print_r($validated, true));
-				$response = json_decode($validated);
+				$response = json_decode($validated['body']);
 				if ($response && $response->status == "valid") {
 					if ($response->corrected == true) {
 						$address = $response->street;
