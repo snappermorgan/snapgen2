@@ -67,7 +67,7 @@ class Forms3rdpartySnapGen {
 		add_filter('init', array($this, 'vendor_post'));
 
 		$_response_message = array();
-		add_filter('http_request_timeout', 'snapgen_http_response_timeout');
+		add_filter('http_request_timeout', array(&$this, 'snapgen_http_response_timeout'), 10, 5);
 	}
 
 	/**
