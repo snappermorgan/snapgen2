@@ -204,22 +204,22 @@ settings_fields('pluginPage');
 								$_REQUEST['City'] = $response->city;
 								$_REQUEST['State'] = $response->state_code;
 								$_REQUEST['ZipCode'] = $zip;
-							} else {
+							// } else {
 
-								$_REQUEST['Address'] = "123 Main St";
-								$_REQUEST['City'] = "Atlanta";
-								$_REQUEST['State'] = "GA";
-								$_REQUEST['ZipCode'] = "30306";
-							}
+							// 	$_REQUEST['Address'] = "123 Main St";
+							// 	$_REQUEST['City'] = "Atlanta";
+							// 	$_REQUEST['State'] = "GA";
+							// 	$_REQUEST['ZipCode'] = "30306";
+							// }
 
 						}
-					} else {
-						$_REQUEST['Address'] = "123 Main St";
-						$_REQUEST['City'] = "Atlanta";
-						$_REQUEST['State'] = "GA";
-						$_REQUEST['ZipCode'] = "30306";
+						// } else {
+						// 	$_REQUEST['Address'] = "123 Main St";
+						// 	$_REQUEST['City'] = "Atlanta";
+						// 	$_REQUEST['State'] = "GA";
+						// 	$_REQUEST['ZipCode'] = "30306";
+						// }
 					}
-				}
 			}
 			$post_args = array(
 				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
