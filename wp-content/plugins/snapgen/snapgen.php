@@ -154,7 +154,7 @@ settings_fields('pluginPage');
 
 				//let's first see if they passed an address
 				$whitepages = true;
-				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['Zip']) && $_REQUEST['Zip'] != "")) {
+				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['ZipCode']) && $_REQUEST['ZipCode'] != "")) {
 
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
 					_log("Response from whitepages." . print_r($response, true));
