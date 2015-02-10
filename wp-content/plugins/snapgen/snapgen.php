@@ -262,10 +262,10 @@ settings_fields('pluginPage');
 			}
 			$post_args = array(
 				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
-			//_log("Post Args to Boberdoo" . print_r($post_args, true));
+			_log("Post Args to Boberdoo" . print_r($post_args, true));
 			$response = wp_remote_post($boberdoo, $post_args);
 
-			//_log("Post Response from Boberdoo" . print_r($response, true));
+			_log("Post Response from Boberdoo" . print_r($response, true));
 			/* $response = array('body' => '<?xml version="1.0" encoding="UTF-8"?><response><status>Matched</status></response>'); */
 			//exit(0);
 
