@@ -267,8 +267,14 @@ settings_fields('pluginPage');
 			_log("Post Response from Boberdoo" . print_r($response, true));
 
 			//exit(0);
+			$xml = simplexml_load_string(trim($response['body']));
 			if (!$match) {
-				$echo_str = '<?xml version="1.0" encoding="UTF-8"?><response><status>Unmatched</status></response>';
+				if ($xml->status != "Error") {
+					$echo_str = '<?xml version="1.0" encoding="UTF-8"?><response><status>Unmatched</status></response>';
+				} else {
+					$echo_str = trim($response['body']);
+				}
+
 			} else {
 				$echo_str = trim($response['body']);
 			}
