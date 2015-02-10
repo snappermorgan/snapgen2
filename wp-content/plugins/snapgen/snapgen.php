@@ -172,6 +172,7 @@ settings_fields('pluginPage');
 							_log("Submitted Address was valid, skipping Whitepages");
 						} else {
 							_log("Submitted Address was invalid: " . $body->error);
+							$whitepages = true;
 						}
 
 					}
