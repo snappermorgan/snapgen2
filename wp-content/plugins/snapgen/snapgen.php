@@ -237,7 +237,7 @@ settings_fields('pluginPage');
 							//_log("SRC: {" . $_REQUEST['SRC'] . "}");
 
 							if ($response->is_deliverable && !is_null($response->is_deliverable)) {
-								$match = true;
+								$matched = true;
 								$_REQUEST['SRC'] .= "match";
 								$_REQUEST['Address'] = $address;
 								$_REQUEST['City'] = $city;
@@ -270,7 +270,7 @@ settings_fields('pluginPage');
 			//exit(0);
 
 			$xml = simplexml_load_string(trim($response['body']));
-			if (!$match) {
+			if (!$matched) {
 				if ($xml->status != "Error") {
 					$echo_str = '<?xml version="1.0" encoding="UTF-8"?><response><status>Unmatched</status></response>';
 				} else {
