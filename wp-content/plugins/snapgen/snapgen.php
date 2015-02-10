@@ -157,7 +157,7 @@ settings_fields('pluginPage');
 				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['ZipCode']) && $_REQUEST['ZipCode'] != "")) {
 
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
-					_log("Response from briteverify." . print_r($response, true));
+					//_log("Response from briteverify." . print_r($response, true));
 					if ($response['response']['code'] != "200") {
 						_log("Submitted Address was not valid,using whitepages pro ");
 
@@ -181,18 +181,35 @@ settings_fields('pluginPage');
 
 				if ($whitepages) {
 					$response = reverse_lookup($_REQUEST['Primary_Phone']);
-					_log("Response from whitepages." . print_r($response, true));
+					//_log("Response from whitepages." . print_r($response, true));
 					//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
 					$number = "";
 					$zip = "";
 
 					if ($response) {
-						if(isset($response->standard_address_line1)){
+						if(isset($response->standard_address_line1) && $response->standard_address_line1 !=""){
 							$address = $response->standard_address_line1;
 							$rest = explode(" ",$response->standard_address_location);
-							$city = $rest[0];
-							$state = $rest[1];
-							$zip = $rest[2];
+							$response = validate_address($address, end($rest);
+							if ($response['response']['code'] == "200") {
+								$body = json_decode($response['body']);
+								if ($body->status == "valid") {
+									$city = $body->city;
+									$state =$body->state;
+									$zip = $body->zip;
+								}else {
+									$city = "Atlanta";
+									$state = "GA";
+									$zip = "30309";
+								}
+								
+
+							}else{
+									$city = "Atlanta";
+									$state = "GA";
+									$zip = "30309";		
+							}
+							
 						}else{
 						if ($response->house) {
 							$number = $response->house;
@@ -388,6 +405,8 @@ settings_fields('pluginPage');
 					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
 
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+						
+						
 							if ($response->house) {
 								$number = $response->house;
 							}
@@ -1134,6 +1153,7 @@ function validate_address($street, $unit, $zip) {
 	return $response;
 
 }
+
 
 function email_validate_shortcode($atts) {
 	$a = shortcode_atts(array(
