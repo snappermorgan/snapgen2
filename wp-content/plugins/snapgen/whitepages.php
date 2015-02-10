@@ -223,7 +223,7 @@ function remote_call($data, $test = false) {
 		$key = $options['sg_api_string'];
 		//_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
 		$response = wp_remote_get($url . $path . "?" . $query . "&api_key=" . $key);
-		_log("full whitepages response: ".print_r($response,true));
+		//_log("full whitepages response: ".print_r($response,true));
 		// echo "<pre>whitepages response: ".print_r($response,true)."</pre>";
 		return $response;
 	}

@@ -190,12 +190,12 @@ settings_fields('pluginPage');
 						if(isset($response->standard_address_line1) && $response->standard_address_line1 !=""){
 							$address = $response->standard_address_line1;
 							$rest = explode(" ",$response->standard_address_location);
-							$response = validate_address($address, end($rest);
-							if ($response['response']['code'] == "200") {
-								$body = json_decode($response['body']);
+							$response_brite = validate_address($address, "",end($rest));
+							if ($response_brite['response']['code'] == "200") {
+								$body = json_decode($response_brite['body']);
 								if ($body->status == "valid") {
 									$city = $body->city;
-									$state =$body->state;
+									$state =$body->state_code;
 									$zip = $body->zip;
 								}else {
 									$city = "Atlanta";
