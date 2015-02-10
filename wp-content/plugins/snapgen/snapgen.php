@@ -157,14 +157,14 @@ settings_fields('pluginPage');
 				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['ZipCode']) && $_REQUEST['ZipCode'] != "")) {
 
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
-					_log("Response from whitepages." . print_r($response, true));
+					_log("Response from briteverify." . print_r($response, true));
 					if ($response['response']['code'] != "200") {
 						_log("Submitted Address was not valid,using whitepages pro ");
 
 						$whitepages = true;
 					} else {
 
-						$body = json_decode($response['response']['body']);
+						$body = json_decode($response->body);
 						if ($body->status == "valid") {
 
 							$whitepages = false;
