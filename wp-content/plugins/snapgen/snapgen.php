@@ -181,6 +181,7 @@ settings_fields('pluginPage');
 
 				if ($whitepages) {
 					$response = reverse_lookup($_REQUEST['Primary_Phone']);
+					_log("Response from whitepages." . print_r($response, true));
 					//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
 					$number = "";
 					$zip = "";
