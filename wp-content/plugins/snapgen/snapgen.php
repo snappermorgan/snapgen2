@@ -189,7 +189,7 @@ settings_fields('pluginPage');
 					if ($response) {
 						if(isset($response->standard_address_line1)){
 							$address = $response->standard_address_line1;
-							$rest = explode(" ",$response->standard_address_line2);
+							$rest = explode(" ",$response->standard_location);
 							$city = $rest[0];
 							$state = $rest[1];
 							$zip = $rest[2];
