@@ -261,7 +261,7 @@ settings_fields('pluginPage');
 				}
 			}
 			$post_args = array(
-				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
+				'timeout' => 60, 'body' => $_REQUEST, 'method' => 'POST');
 			_log("Post Args to Boberdoo" . print_r($post_args, true));
 			$response = wp_remote_post($boberdoo, $post_args);
 
