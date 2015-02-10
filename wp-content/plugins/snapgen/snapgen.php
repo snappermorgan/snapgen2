@@ -143,6 +143,8 @@ settings_fields('pluginPage');
 	public function vendor_post() {
 
 		if (isset($_REQUEST['external']) && ($_REQUEST['external'] == 'yes')) {
+
+			$matched = false;
 			_log("External Vendor Posting...");
 //            echo "<pre>".print_r($_REQUEST,true)."</pre>";
 			//            exit(0);
@@ -169,6 +171,7 @@ settings_fields('pluginPage');
 
 							$whitepages = false;
 							$_REQUEST['SRC'] .= "match";
+							$matched = true;
 							_log("Submitted Address was valid, skipping Whitepages");
 						} else {
 							_log("Submitted Address was invalid: " . $body->error);
@@ -187,47 +190,46 @@ settings_fields('pluginPage');
 					$zip = "";
 
 					if ($response) {
-						if(isset($response->standard_address_line1) && $response->standard_address_line1 !=""){
+						if (isset($response->standard_address_line1) && $response->standard_address_line1 != "") {
 							$address = $response->standard_address_line1;
-							$rest = explode(" ",$response->standard_address_location);
-							$response_brite = validate_address($address, "",end($rest));
+							$rest = explode(" ", $response->standard_address_location);
+							$response_brite = validate_address($address, "", end($rest));
 							if ($response_brite['response']['code'] == "200") {
 								$body = json_decode($response_brite['body']);
 								if ($body->status == "valid") {
 									$city = $body->city;
-									$state =$body->state_code;
+									$state = $body->state_code;
 									$zip = $body->zip;
-								}else {
+								} else {
 									$city = "Atlanta";
 									$state = "GA";
 									$zip = "30309";
 								}
-								
 
-							}else{
-									$city = "Atlanta";
-									$state = "GA";
-									$zip = "30309";		
+							} else {
+								$city = "Atlanta";
+								$state = "GA";
+								$zip = "30309";
 							}
-							
-						}else{
-						if ($response->house) {
-							$number = $response->house;
-						}
-
-						if ($response->apt_number) {
-							$number = $response->apt_number;
-						}
-
-						if ($response->zip4) {
-							$zip = $response->postal_code . "-" . $response->zip4;
 
 						} else {
-							$zip = $response->postal_code;
-						}
-						$address = $number . " " . $response->street_name . " " . $response->street_type;
-						$city = $response->city;
-						$state= $response->state_code;
+							if ($response->house) {
+								$number = $response->house;
+							}
+
+							if ($response->apt_number) {
+								$number = $response->apt_number;
+							}
+
+							if ($response->zip4) {
+								$zip = $response->postal_code . "-" . $response->zip4;
+
+							} else {
+								$zip = $response->postal_code;
+							}
+							$address = $number . " " . $response->street_name . " " . $response->street_type;
+							$city = $response->city;
+							$state = $response->state_code;
 						}
 						$test_address = str_replace(' ', '', $address);
 						//_log("Test Address: {" . $test_address . "}");
@@ -235,6 +237,7 @@ settings_fields('pluginPage');
 							//_log("SRC: {" . $_REQUEST['SRC'] . "}");
 
 							if ($response->is_deliverable && !is_null($response->is_deliverable)) {
+								$match = true;
 								$_REQUEST['SRC'] .= "match";
 								$_REQUEST['Address'] = $address;
 								$_REQUEST['City'] = $city;
@@ -264,9 +267,13 @@ settings_fields('pluginPage');
 			_log("Post Response from Boberdoo" . print_r($response, true));
 
 			//exit(0);
-
+			if (!$match) {
+				$echo_str = '<?xml version="1.0" encoding="UTF-8"?><response><status>Unmatched</status></response>';
+			} else {
+				$echo_str = trim($response['body']);
+			}
 			ob_start();
-			echo trim($response['body']);
+			echo $echo_str;
 			//echo print_r($_REQUEST,true);
 			ob_end_flush();
 			exit(0);
@@ -405,8 +412,7 @@ settings_fields('pluginPage');
 					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
 
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
-						
-						
+
 							if ($response->house) {
 								$number = $response->house;
 							}
@@ -1153,7 +1159,6 @@ function validate_address($street, $unit, $zip) {
 	return $response;
 
 }
-
 
 function email_validate_shortcode($atts) {
 	$a = shortcode_atts(array(
