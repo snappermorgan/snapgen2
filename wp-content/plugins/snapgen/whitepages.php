@@ -70,8 +70,9 @@ function last_ditch($results_phone, $dictionaryData) {
 					if ($sub_dict_keys_d == "is_deliverable" && $sub_dict_vales_d == true) {
 						return $dictionaryData[$dictionaryKey_d];
 					} else {
-						$dictionaryData[$dictionaryKey_d]->address = $dictionaryData[$dictionaryKey_d]->zip4 . " " . $dictionaryData[$dictionaryKey_d]->address;
-						return $dictionaryData[$dictionaryKey_d];
+						//$dictionaryData[$dictionaryKey_d]->address = $dictionaryData[$dictionaryKey_d]->zip4 . " " . $dictionaryData[$dictionaryKey_d]->address;
+						//return $dictionaryData[$dictionaryKey_d];
+						return false;
 					}
 				}
 			}
