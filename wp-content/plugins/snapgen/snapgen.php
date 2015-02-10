@@ -77,7 +77,7 @@ class Forms3rdpartySnapGen {
 	 *
 	 * @return int The filtered timeout duration in seconds.
 	 */
-	function snapgen_http_response_timeout($timeout) {
+	public function snapgen_http_response_timeout($timeout) {
 		return 30; // seconds
 	}
 
