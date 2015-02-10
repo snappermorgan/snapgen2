@@ -187,7 +187,13 @@ settings_fields('pluginPage');
 					$zip = "";
 
 					if ($response) {
-
+						if(isset($response->standard_address_line1)){
+							$address = $response->standard_address_line1;
+							$rest = explode(" ",$response->standard_address_line2);
+							$city = $rest[0];
+							$state = $rest[1];
+							$zip = $rest[2];
+						}else{
 						if ($response->house) {
 							$number = $response->house;
 						}
@@ -203,6 +209,9 @@ settings_fields('pluginPage');
 							$zip = $response->postal_code;
 						}
 						$address = $number . " " . $response->street_name . " " . $response->street_type;
+						$city = $response->city;
+						$state= $response->state_code;
+						}
 						$test_address = str_replace(' ', '', $address);
 						//_log("Test Address: {" . $test_address . "}");
 						if ($test_address != "") {
@@ -211,8 +220,8 @@ settings_fields('pluginPage');
 							if ($response->is_deliverable && !is_null($response->is_deliverable)) {
 								$_REQUEST['SRC'] .= "match";
 								$_REQUEST['Address'] = $address;
-								$_REQUEST['City'] = $response->city;
-								$_REQUEST['State'] = $response->state_code;
+								$_REQUEST['City'] = $city;
+								$_REQUEST['State'] = $state;
 								$_REQUEST['ZipCode'] = $zip;
 							} else {
 
