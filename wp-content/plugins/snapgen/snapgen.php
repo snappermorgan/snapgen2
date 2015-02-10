@@ -164,7 +164,7 @@ settings_fields('pluginPage');
 						$whitepages = true;
 					} else {
 
-						$body = json_decode($response->body);
+						$body = json_decode($response['body']);
 						if ($body->status == "valid") {
 
 							$whitepages = false;
