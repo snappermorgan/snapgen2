@@ -200,16 +200,8 @@ settings_fields('pluginPage');
 									$city = $body->city;
 									$state = $body->state_code;
 									$zip = $body->zip;
-								} else {
-									$city = "Atlanta";
-									$state = "GA";
-									$zip = "30309";
 								}
 
-							} else {
-								$city = "Atlanta";
-								$state = "GA";
-								$zip = "30309";
 							}
 
 						} else {
