@@ -347,7 +347,7 @@ settings_fields('pluginPage');
 							$address2 = $response->unit;
 						}
 						$city = $response->city;
-						$state = $response->state;
+						$state = $response->state_code;
 						$zip = $response->zip;
 					}
 				}
@@ -380,7 +380,7 @@ settings_fields('pluginPage');
 
 			}
 		}
-
+                    
 		//_log("ALTER SUBMISSION TRIGGERED");
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
