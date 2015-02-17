@@ -487,6 +487,7 @@ settings_fields('pluginPage');
 		
 		if($matched){
 		    $submission[$input] .= "match";
+		    $submission['matchonly']=true;
 		}
 		//_log("post transformed and returned: " . print_r($post, true));
 		return $submission;
@@ -840,7 +841,7 @@ foreach ($services as $sid => $s) {
     					foreach ($service['triggered-services'] as $t => $sid) {
     						_log("let's send the triggered post");
     						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
-    
+                            
     						//_log("calling send submission with " . print_r($submission, true));
     					}
                     }
@@ -982,6 +983,8 @@ foreach ($services as $sid => $s) {
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
 			_log("Sending Triggered post to " . $service['url'] . print_r($post_args, true));
+			
+			if(isset($post['SRC']) && substr($post['SRC'],-5)=='match' && isset($submission['matchonly']) && $submission['matchonly']==true){
 			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
 				if ($service['trigger-method'] == 'GET') {
 					$trigger_querystring = http_build_query($post_args['body']);
@@ -993,6 +996,8 @@ foreach ($services as $sid => $s) {
 				}
 			} else {
 				$response = wp_remote_post($service['url'], $post_args);
+			}
+			    
 			}
 
 		}
