@@ -326,6 +326,16 @@ settings_fields('pluginPage');
 	}
 
 	public function post_filter($service, $submission = false) {
+	    $matched=false;
+	    $input = "";
+        if (isset($service['mapping'])) {
+            $mapping = $service['mapping'];
+            foreach ($mapping as $map) {
+                if ($map['3rd'] == 'SRC') {
+                    $input = $map['src'];
+                }
+            }
+        }
 		if (isset($service['address_validation']) && !empty($service['address_validation'])) {
 			if ((isset($service['validation-address-field']) && !empty($service['validation-address-field'])) && (isset($service['validation-city-field']) && !empty($service['validation-city-field']))
 				&& (isset($service['validation-state-field']) && !empty($service['validation-state-field'])) && (isset($service['validation-zip-field']) && !empty($service['validation-zip-field']))) {
@@ -342,6 +352,7 @@ settings_fields('pluginPage');
 				$response = json_decode($validated['body']);
 				if ($response && $response->status == "valid") {
 					if ($response->corrected == true) {
+					    $matched=true;
 						$address = $response->street;
 						if ($response->unit) {
 							$address2 = $response->unit;
@@ -395,24 +406,16 @@ settings_fields('pluginPage');
 				$number = "";
 				$zip = "";
 
-				$input = "";
-				if (isset($service['mapping'])) {
-					$mapping = $service['mapping'];
-					foreach ($mapping as $map) {
-						if ($map['3rd'] == 'SRC') {
-							$input = $map['src'];
-						}
-					}
-				}
-
+				
+                
 				_log("Response from Reverse Lookup: " . print_r($response, true));
-
+                
 				foreach ($submission as $field => &$value) {
 					////_log("field: " . print_r($field, true));
 					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
 
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
-
+                            $matched=true;
 							if ($response->house) {
 								$number = $response->house;
 							}
@@ -459,7 +462,7 @@ settings_fields('pluginPage');
 					}
 					if (trim(strtolower($input)) == trim(strtolower($field))) {
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
-							$value .= 'match';
+						    $matched=true;
 						}
 
 					}
@@ -467,6 +470,10 @@ settings_fields('pluginPage');
 				}
 
 			}
+		}
+		
+		if($matched){
+		    $submission[$input] .= "match";
 		}
 		//_log("post transformed and returned: " . print_r($post, true));
 		return $submission;
