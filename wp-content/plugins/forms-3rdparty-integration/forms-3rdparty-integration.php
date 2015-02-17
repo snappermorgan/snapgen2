@@ -544,6 +544,7 @@ foreach ($forms as $f) {
 			}
 			//otherwise, check for a success "condition" if given
 			elseif (!empty($service['success'])) {
+			    _log("Checking for success string: " . $service['success'] . " in ".print_r($response['body'],true));
 				if (strpos($response['body'], $service['success']) === false) {
 					//$failMessage = array(
 					//	'reason'=>'Could not locate success clause within response'
