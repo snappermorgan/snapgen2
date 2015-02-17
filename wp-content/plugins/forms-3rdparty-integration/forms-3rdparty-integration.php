@@ -563,7 +563,8 @@ foreach ($forms as $f) {
 					}
 					$param_ref = array();foreach ($callback_results as $k => &$v) {$param_ref[$k] = &$v;}
 					do_action($this->N('service'), $response['body'], $param_ref, $sid, $post, $service);
-					$form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
+_log("There was not a success match but we hit remote success routine anyway");
+				    $form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
 					$can_hook = false;
 				}
 			}
@@ -604,7 +605,8 @@ foreach ($forms as $f) {
 					$form = $this->on_response_failure($form, $debug, $service, $post_args, $failMessage);
 				} else {
 					//_log('show form before remote_success'. print_r($form, true));
-					$form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
+					_log("There was a success match and now we hit remote success routine to trigger other submissions");
+					$form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, true);
 					//_log('show form after remote_success'. print_r($form, true));
 				}
 			}// can hook

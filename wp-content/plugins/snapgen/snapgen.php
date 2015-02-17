@@ -811,7 +811,7 @@ foreach ($services as $sid => $s) {
 <?php
 }
 
-	function remote_success($form, $callback_results, $service, $submission) {
+	function remote_success($form, $callback_results, $service, $submission,$success=true) {
 
 		//_log("let's check for triggered services: " . print_r($service, true));
 		$first_form = $form;
@@ -823,13 +823,14 @@ foreach ($services as $sid => $s) {
 				if (isset($service['triggered-services']) && is_array($service['triggered-services'])) {
 					$services = $this->get_services();
 					//_log("all services" . print_r($services, true));
-					foreach ($service['triggered-services'] as $t => $sid) {
-						//_log("let's send the triggered post");
-						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
-
-						//_log("calling send submission with " . print_r($submission, true));
-					}
-
+                    if($success){
+    					foreach ($service['triggered-services'] as $t => $sid) {
+    						_log("let's send the triggered post");
+    						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
+    
+    						//_log("calling send submission with " . print_r($submission, true));
+    					}
+                    }
 					//_log("Success Received. Triggering service for post: " . print_r($submission, true));
 
 					return $form;
