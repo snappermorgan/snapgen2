@@ -1,2 +1,8 @@
 git1422.php
-/nbproject/private/
+/nbproject
+/nbproject/*/**
+/wp-content/debug.log
+/wp-content/debug*.log
+/wp-content/debug.log*
+/wp-content/uploads
+
