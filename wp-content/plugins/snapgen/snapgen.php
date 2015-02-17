@@ -983,22 +983,23 @@ foreach ($services as $sid => $s) {
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
 			
-			
+			_log("Submission before triggered post: ".print_r($submission,true));
+			_log("$post var dump: ".print_r($post,true));
 			if(isset($post['SRC']) && substr($post['SRC'],-5)=='match' && isset($submission['matchonly']) && $submission['matchonly']==true){
-			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
-				if ($service['trigger-method'] == 'GET') {
-					$trigger_querystring = http_build_query($post_args['body']);
-					$response = wp_remote_get($service['url'] . "?" . $trigger_querystring);
-					_log("Sending Triggered post using GET to " . $service['url'] . "?" . $trigger_querystring);
-					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
-				} else {
-					$response = wp_remote_post($service['url'], $post_args);
-					_log("Sending Triggered post using POST to " . $service['url'] . print_r($post_args, true));
-					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
-				}
-			} else {
-				$response = wp_remote_post($service['url'], $post_args);
-			}
+    			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
+    				if ($service['trigger-method'] == 'GET') {
+    					$trigger_querystring = http_build_query($post_args['body']);
+    					$response = wp_remote_get($service['url'] . "?" . $trigger_querystring);
+    					_log("Sending Triggered post using GET to " . $service['url'] . "?" . $trigger_querystring);
+    					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+    				} else {
+    					$response = wp_remote_post($service['url'], $post_args);
+    					_log("Sending Triggered post using POST to " . $service['url'] . print_r($post_args, true));
+    					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+    				}
+    			} else {
+    				$response = wp_remote_post($service['url'], $post_args);
+    			}
 			    
 			}else{
 			    _log("Address Validation failure prevented from triggering second posting");
