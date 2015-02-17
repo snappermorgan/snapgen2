@@ -359,8 +359,21 @@ settings_fields('pluginPage');
 						}
 						$city = $response->city;
 						$state = $response->state_code;
-						$zip = $response->zip;
+						$zipcode = $response->zip;
 					}
+				}else{
+				    if($city==""){
+				        $city = "Atlanta";
+				    }
+				    if($address==""){
+				        $address="123 Main St";
+				    }
+				    if($zipcode==""){
+				        $zipcode="30309";
+				    }
+				    if($state==""){
+				        $state="GA";
+				    }
 				}
 
 				foreach ($submission as $field => &$value) {
@@ -382,7 +395,7 @@ settings_fields('pluginPage');
 
 					}
 					if (trim(strtolower($service['validation-zip-field'])) == trim(strtolower($field))) {
-						$value = $zip;
+						$value = $zipcode;
 
 					}
 				}
