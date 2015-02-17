@@ -983,9 +983,9 @@ foreach ($services as $sid => $s) {
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
 			
-			_log("Submission before triggered post: ".print_r($submission,true));
-			_log("$post var dump: ".print_r($post,true));
-			if(isset($post['SRC']) && substr($post['SRC'],-5)=='match' && isset($submission['matchonly']) && $submission['matchonly']==true){
+			//_log("Submission before triggered post: ".print_r($submission,true));
+			
+			if(isset($submission['matchonly']) && $submission['matchonly']==1){
     			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
     				if ($service['trigger-method'] == 'GET') {
     					$trigger_querystring = http_build_query($post_args['body']);
