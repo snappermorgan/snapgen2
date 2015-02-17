@@ -21,7 +21,7 @@ class Forms3rdpartySnapGen {
 	/**
 	 * How long (seconds) before considering timeout
 	 */
-	const DEFAULT_TIMEOUT = 10;
+	const DEFAULT_TIMEOUT = 60;
 
 	/**
 	 * Parameter index for mapping - administrative label (reminder)
