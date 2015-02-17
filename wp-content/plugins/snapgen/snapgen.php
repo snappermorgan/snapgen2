@@ -982,7 +982,7 @@ foreach ($services as $sid => $s) {
 			$can_hook = false;
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
-			_log("Sending Triggered post to " . $service['url'] . print_r($post_args, true));
+			
 			
 			if(isset($post['SRC']) && substr($post['SRC'],-5)=='match' && isset($submission['matchonly']) && $submission['matchonly']==true){
 			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
@@ -990,19 +990,23 @@ foreach ($services as $sid => $s) {
 					$trigger_querystring = http_build_query($post_args['body']);
 					$response = wp_remote_get($service['url'] . "?" . $trigger_querystring);
 					_log("Sending Triggered post using GET to " . $service['url'] . "?" . $trigger_querystring);
+					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
 				} else {
 					$response = wp_remote_post($service['url'], $post_args);
 					_log("Sending Triggered post using POST to " . $service['url'] . print_r($post_args, true));
+					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
 				}
 			} else {
 				$response = wp_remote_post($service['url'], $post_args);
 			}
 			    
+			}else{
+			    _log("Address Validation failure prevented from triggering second posting");
 			}
 
 		}
 
-		_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+		
 		//if something went wrong with the remote-request "physically", warn
 		if (!is_array($response)) {
 			//new occurrence of WP_Error?????
