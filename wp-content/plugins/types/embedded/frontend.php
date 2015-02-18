@@ -2,10 +2,10 @@
 /*
  * Frontend functions.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.3/embedded/frontend.php $
- * $LastChangedDate: 2014-09-09 12:34:09 +0800 (Tue, 09 Sep 2014) $
- * $LastChangedRevision: 26853 $
- * $LastChangedBy: bruce $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/frontend.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -236,14 +236,11 @@ function types_render_field_single( $field, $params, $content = null, $code = ''
     $params = apply_filters( 'types_field_shortcode_parameters', $params,
         $field, $post, $meta_id );
 
-    $params['field_value'] = apply_filters( 'wpcf_fields_value_display',
-        $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
+    $params['field_value'] = apply_filters( 'wpcf_fields_value_display', $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
 
-    $params['field_value'] = apply_filters( 'wpcf_fields_slug_' . $field['slug'] . '_value_display',
-        $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
+    $params['field_value'] = apply_filters( 'wpcf_fields_slug_' . $field['slug'] . '_value_display', $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
 
-    $params['field_value'] = apply_filters( 'wpcf_fields_type_' . $field['type'] . '_value_display',
-        $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
+    $params['field_value'] = apply_filters( 'wpcf_fields_type_' . $field['type'] . '_value_display', $params['field_value'], $params, $post->ID, $field['id'], $meta_id );
     // To make sure
     if ( is_string( $params['field_value'] ) ) {
         $params['field_value'] = addslashes( stripslashes( strval( $params['field_value'] ) ) );
@@ -535,7 +532,17 @@ function wpcf_views_query( $query, $view_settings ) {
                     $meta_filter_required = true;
                     $meta['compare'] = '=';
 
-                    $values = explode( ',', $meta['value'] );
+                    /* According to http://codex.wordpress.org/Class_Reference/WP_Meta_Query#Accepted_Arguments,
+					 * $meta['value'] can be an array or a string. In case of a string we additionally allow
+					 * multiple comma-separated values. */
+					if( is_array( $meta['value'] ) ) {
+						$values = $meta['value'];
+					} elseif( is_string( $meta['value'] ) ) {
+						$values = explode( ',', $meta['value'] );
+					} else {
+						// This can happen if $meta['value'] is a number, for example.
+						$values = array( $meta['value'] );
+					}
 
                     $meta['value'] = ' REGEXP(';
 

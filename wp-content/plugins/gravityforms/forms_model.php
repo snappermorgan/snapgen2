@@ -321,6 +321,8 @@ class GFFormsModel {
         //load notifications to legacy structure to maintain backward compatibility with legacy hooks and functions
         $form = self::load_notifications_to_legacy($form);
 
+		$form = apply_filters('gform_form_post_get_meta', $form);
+
         // cached form meta for cheaper retrieval on subsequent requests
         self::$_current_forms[$form_id] = $form;
 
@@ -921,7 +923,7 @@ class GFFormsModel {
         // update lead field value - simulate form submission
 
         $lead_detail_table = self::get_lead_details_table_name();
-        $sql = $wpdb->prepare("SELECT id FROM $lead_detail_table WHERE lead_id=%d AND field_number BETWEEN %s AND %s", $entry_id, doubleval($field_id) - 0.001, doubleval($field_id) + 0.001);
+        $sql = $wpdb->prepare("SELECT id FROM $lead_detail_table WHERE lead_id=%d AND field_number BETWEEN %s AND %s", $entry_id, doubleval($field_id) - 0.0001, doubleval($field_id) + 0.0001);
         $entry_detail_id = $wpdb->get_var($sql);
 
         self::update_lead_field_value($form, $entry, $field, $entry_detail_id, $field_id, $field_value);
@@ -1170,7 +1172,6 @@ class GFFormsModel {
         }
 
         $current_fields = $wpdb->get_results($wpdb->prepare("SELECT id, field_number FROM $lead_detail_table WHERE lead_id=%d", $lead["id"]));
-        $original_post_id = rgget("post_id", $lead);
 
         $total_fields = array();
         $calculation_fields = array();
@@ -1197,8 +1198,12 @@ class GFFormsModel {
                 continue;
             }
 
+			$is_entry_update = RG_CURRENT_VIEW == 'entry' || ! $is_new_lead;
+
+			$read_value_from_post = $is_new_lead || ! isset( $lead[ 'date_created' ] );
+
             //only save fields that are not hidden (except on entry screen)
-            if( RG_CURRENT_VIEW == 'entry' || ! GFFormsModel::is_field_hidden( $form, $field, array(), $is_new_lead ? null : $lead ) ) {
+            if( $is_entry_update || ! GFFormsModel::is_field_hidden( $form, $field, array(), $read_value_from_post ? null : $lead ) ) {
 
                 // process calculation fields after all fields have been saved (moved after the is hidden check)
                 if( GFCommon::has_field_calculation($field) ) {
@@ -1247,6 +1252,7 @@ class GFFormsModel {
             foreach($total_fields as $total_field){
                 GFCommon::log_debug("Saving total field.");
                 self::save_input($form, $total_field, $lead, $current_fields, $total_field["id"]);
+				self::refresh_lead_field_value($lead["id"], $total_field["id"]);
             }
         }
     }
@@ -1759,7 +1765,7 @@ class GFFormsModel {
             }
         }
 
-        return apply_filters("gform_field_value_$name", apply_filters("gform_field_value", $value, $field), $field);
+        return apply_filters( "gform_field_value_$name", apply_filters( 'gform_field_value', $value, $field, $name ), $field, $name );
     }
 
     public static function get_default_value($field, $input_id){
@@ -1776,7 +1782,7 @@ class GFFormsModel {
             for($i=0, $count=sizeof($field["inputs"]); $i<$count; $i++){
                 $input = $field["inputs"][$i];
                 $choice = $field["choices"][$i];
-                if($input["id"] == $input_id && $choice["isSelected"]){
+                if($input["id"] == $input_id && rgar($choice, "isSelected")){
                     return $choice["value"];
                 }
             }
@@ -1868,8 +1874,10 @@ class GFFormsModel {
                 break;
 
                 case "post_category" :
+					GFCommon::log_debug('post category:' . $value);
                     foreach(explode(',', $value) as $cat_string) {
                         list($cat_name, $cat_id) = rgexplode(":", $cat_string, 2);
+						GFCommon::log_debug("adding cat:{$cat_name}({$cat_id})");
                         array_push($categories, $cat_id);
                     }
                 break;
@@ -2027,30 +2035,38 @@ class GFFormsModel {
 
             case "fileupload" :
                 if(rgar($field, "multipleFiles")){
-                    if(isset(GFFormsModel::$uploaded_files[$form_id][$input_name])){
-                        $uploaded_temp_files = GFFormsModel::$uploaded_files[$form_id][$input_name];
-                        $uploaded_files = array();
-                        foreach($uploaded_temp_files as $i => $file_info){
-                            $temp_filepath = self::get_upload_path($form_id) . "/tmp/" . $file_info["temp_filename"];
-                            if($file_info && file_exists($temp_filepath)){
-                                $uploaded_files[$i] = self::move_temp_file($form_id, $file_info);
-                            }
-                        }
 
-                        if(!empty($value)){ // merge with existing files (admin edit entry)
-                            $value = json_decode($value, true);
-                            $value = array_merge($value, $uploaded_files);
-                            $value = json_encode($value);
-                        } else {
-                            $value = json_encode($uploaded_files);
-                        }
+	                global $_gf_uploaded_files;
 
-                    } else {
-                        $value = "";
-                    }
+	                if ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
+		                $value = $_gf_uploaded_files[ $input_name ];
+	                } else {
+		                if ( isset( GFFormsModel::$uploaded_files[ $form_id ][ $input_name ] ) ) {
+			                $uploaded_temp_files = GFFormsModel::$uploaded_files[ $form_id ][ $input_name ];
+			                $uploaded_files      = array();
+			                foreach ( $uploaded_temp_files as $i => $file_info ) {
+				                $temp_filepath = self::get_upload_path( $form_id ) . '/tmp/' . $file_info['temp_filename'];
+				                if ( $file_info && file_exists( $temp_filepath ) ) {
+					                $uploaded_files[ $i ] = self::move_temp_file( $form_id, $file_info );
+				                }
+			                }
 
-                } else
+			                if ( ! empty( $value ) ) { // merge with existing files (admin edit entry)
+				                $value = json_decode( $value, true );
+				                $value = array_merge( $value, $uploaded_files );
+				                $value = json_encode( $value );
+			                } else {
+				                $value = json_encode( $uploaded_files );
+			                }
+		                } else {
+			                $value = '';
+		                }
+		                $_gf_uploaded_files[ $input_name ] = $value;
+	                }
+
+                } else {
                     $value = self::get_fileupload_value($form_id, $input_name);
+                }
             break;
 
             case "number" :
@@ -2076,22 +2092,34 @@ class GFFormsModel {
                 if(rgar($field, "adminOnly") && rgar($field, "allowsPrepopulate"))
                     $value = json_decode($value);
 
-                if(GFCommon::is_empty_array($value))
+                if(GFCommon::is_empty_array($value)){
                     $value = "";
+				}
                 else{
+
+					foreach( $value as &$val ){
+						$val = self::sanitize_entry_value( $field, $val, $input_type, $form_id );
+					}
+
                     $value = self::create_list_array($field, $value);
                     $value = serialize($value);
                 }
             break;
 
             case "radio" :
-                if(rgar($field, 'enableOtherChoice') && $value == 'gf_other_choice')
+                if(rgar($field, 'enableOtherChoice') && $value == 'gf_other_choice'){
                     $value = rgpost("input_{$field['id']}_other");
+				}
+				$value = self::sanitize_entry_value( $field, $value, $input_type, $form_id);
+
                 break;
 
             case "multiselect" :
                 $value = empty($value) ? "" : is_array($value) ? implode(",", $value) : $value;
-                break;
+
+				$value = self::sanitize_entry_value( $field, $value, $input_type, $form_id );
+
+				break;
 
             case "creditcard" :
                 //saving last 4 digits of credit card
@@ -2133,15 +2161,8 @@ class GFFormsModel {
 
                 // only filter HTML on non-array based values
                 if( ! is_array( $value ) ) {
-
-                    //allow HTML for certain field types
-                    $allow_html = in_array($field["type"], array("post_custom_field", "post_title", "post_content", "post_excerpt", "post_tags" )) || in_array($input_type, array("checkbox", "radio")) ? true : false;
-                    $allowable_tags = apply_filters("gform_allowable_tags_{$form_id}", apply_filters("gform_allowable_tags", $allow_html, $field, $form_id), $field, $form_id);
-
-                    if($allowable_tags !== true)
-                        $value = strip_tags($value, $allowable_tags);
-
-                }
+					$value = self::sanitize_entry_value( $field, $value, $input_type, $form_id );
+				}
 
             break;
         }
@@ -2175,6 +2196,20 @@ class GFFormsModel {
 
         return $value;
     }
+
+	public static function strip_script_tag( $string ){
+
+		$do_strip = apply_filters("gform_strip_script_tag", true, $string);
+		if ( ! $do_strip ){
+			return $string;
+		}
+
+		$allowable_tags = '<a><abbr><acronym><address><area><area /><b><base><base /><bdo><big><blockquote><body><br><br /><button><caption><cite><code><col><col /><colgroup><command><command /><dd><del><dfn><div><dl><DOCTYPE><dt><em><fieldset><form><h1><h2><h3><h4><h5><h6><head><html><hr><hr /><i><img><img /><input><input /><ins><kbd><label><legend><li><link><map><meta><meta /><noscript><ol><optgroup><option><p><param><param /><pre><q><samp><select><small><span><strong><style><sub><sup><table><tbody><td><textarea><tfoot><th><thead><title><tr><tt><ul><var><wbr><wbr /><3>';
+
+		$string = strip_tags( $string, $allowable_tags );
+
+		return $string;
+	}
 
     public static function is_checkbox_checked($field_id, $field_label, $lead, $form){
 
@@ -2369,6 +2404,8 @@ class GFFormsModel {
         GFCommon::log_debug("Getting post fields.");
         $post_data = self::get_post_fields($form, $lead);
 
+		GFCommon::log_debug("Post fields: " . print_r( $post_data, true ) );
+
         //allowing users to change post fields before post gets created
         $post_data = apply_filters("gform_post_data_{$form["id"]}", apply_filters("gform_post_data", $post_data , $form, $lead), $form, $lead);
 
@@ -2384,7 +2421,7 @@ class GFFormsModel {
         $post_data['post_status'] = 'draft';
 
         // inserting post
-        GFCommon::log_debug("Inserting post");
+        GFCommon::log_debug("Inserting post: " . print_r( $post_data, true ) );
         $post_id = wp_insert_post( $post_data );
         GFCommon::log_debug("Done inserting post");
 
@@ -2675,7 +2712,7 @@ class GFFormsModel {
         $input_name = "input_" . str_replace('.', '_', $input_id);
         $value = rgpost($input_name);
 
-        $value = self::maybe_trim_input($value, $form["id"], $field);
+		$value = self::maybe_trim_input($value, $form["id"], $field);
 
         //ignore file upload when nothing was sent in the admin
         //ignore post fields in the admin
@@ -2696,7 +2733,7 @@ class GFFormsModel {
         $value = self::prepare_value($form, $field, $value, $input_name, rgar($lead, "id"));
 
         //ignore fields that have not changed
-        if( $lead != null && $value === rgget( (string) $input_id, $lead ) ){
+        if( $lead != null && isset( $lead[ $input_id ] ) && $value === rgget( (string) $input_id, $lead ) ){
             return;
 		}
 
@@ -2771,13 +2808,13 @@ class GFFormsModel {
                                     WHERE lead_detail_id IN(
                                         SELECT id FROM $lead_detail_table WHERE lead_id=%d AND field_number BETWEEN %s AND %s
                                     )",
-                $lead_id, doubleval($input_id) - 0.001, doubleval($input_id) + 0.001);
+                $lead_id, doubleval($input_id) - 0.0001, doubleval($input_id) + 0.0001);
             $result = $wpdb->query($sql);
             if(false === $result)
                 return false ;
 
             //Deleting details for this field
-            $sql = $wpdb->prepare("DELETE FROM $lead_detail_table WHERE lead_id=%d AND field_number BETWEEN %s AND %s ", $lead_id, doubleval($input_id) - 0.001, doubleval($input_id) + 0.001);
+            $sql = $wpdb->prepare("DELETE FROM $lead_detail_table WHERE lead_id=%d AND field_number BETWEEN %s AND %s ", $lead_id, doubleval($input_id) - 0.0001, doubleval($input_id) + 0.0001);
             $result = $wpdb->query($sql);
             if(false === $result)
                 return false ;
@@ -3009,11 +3046,11 @@ class GFFormsModel {
             $input_count = sizeof($field["inputs"]);
             foreach($field["inputs"] as $input){
                 $union = empty($inner_sql) ? "" : " UNION ALL ";
-                $inner_sql .= $union . $wpdb->prepare($inner_sql_template, $input["id"], $form_id, $form_id, $input["id"] - 0.001, $input["id"] + 0.001, $value[ $input['id'] ], $value[ $input['id'] ] );
+                $inner_sql .= $union . $wpdb->prepare($inner_sql_template, $input["id"], $form_id, $form_id, $input["id"] - 0.0001, $input["id"] + 0.0001, $value[ $input['id'] ], $value[ $input['id'] ] );
             }
         }
         else{
-            $inner_sql = $wpdb->prepare($inner_sql_template, $field["id"], $form_id, $form_id, doubleval($field["id"]) - 0.001, doubleval($field["id"]) + 0.001, $value, $value );
+            $inner_sql = $wpdb->prepare($inner_sql_template, $field["id"], $form_id, $form_id, doubleval($field["id"]) - 0.0001, doubleval($field["id"]) + 0.0001, $value, $value );
         }
 
         $sql .= $inner_sql . "
@@ -3120,7 +3157,7 @@ class GFFormsModel {
 
         $sql = $wpdb->prepare(" SELECT l.value FROM $detail_table_name d
                                 INNER JOIN $long_table_name l ON l.lead_detail_id = d.id
-                                WHERE lead_id=%d AND field_number BETWEEN %s AND %s", $lead["id"], doubleval($field_number) - 0.001, doubleval($field_number) + 0.001);
+                                WHERE lead_id=%d AND field_number BETWEEN %s AND %s", $lead["id"], doubleval($field_number) - 0.0001, doubleval($field_number) + 0.0001);
 
          $val = $wpdb->get_var($sql);
 
@@ -3187,8 +3224,8 @@ class GFFormsModel {
 
         $search_sql = self::get_leads_where_sql(compact('form_id', 'search', 'status', 'star', 'read', 'start_date', 'end_date', 'payment_status', 'is_default'));
 
-        $field_number_min = $sort_field_number - 0.001;
-        $field_number_max = $sort_field_number + 0.001;
+        $field_number_min = $sort_field_number - 0.0001;
+        $field_number_max = $sort_field_number + 0.0001;
 
         $sql = "
             SELECT filtered.sort, l.*, d.field_number, d.value
@@ -3344,13 +3381,14 @@ class GFFormsModel {
 
                 $field_value = $result->value;
                 //using long values if specified
-                if($use_long_values && strlen($field_value) >= (GFORMS_MAX_FIELD_LENGTH-10)){
-                    $field = RGFormsModel::get_field($form, $result->field_number);
-                    $long_text = RGFormsModel::get_field_value_long($lead, $result->field_number, $form, false);
+				$field_number = (string)$result->field_number;
+				if($use_long_values && strlen($field_value) >= (GFORMS_MAX_FIELD_LENGTH-10)){
+                    $field = RGFormsModel::get_field($form, $field_number );
+                    $long_text = RGFormsModel::get_field_value_long($lead, $field_number, $form, false);
                     $field_value = !empty($long_text) ? $long_text : $field_value;
                 }
 
-                $lead[$result->field_number] = $field_value;
+                $lead[$field_number] = $field_value;
                 $prev_lead_id = $result->id;
             }
         }
@@ -3547,7 +3585,7 @@ class GFFormsModel {
     public static function get_label($field, $input_id = 0, $input_only = false){
         $field_label = (IS_ADMIN || RG_CURRENT_PAGE == "select_columns.php" || RG_CURRENT_PAGE == "print-entry.php" || rgget("gf_page", $_GET) == "select_columns" || rgget("gf_page", $_GET) == "print-entry") && !rgempty("adminLabel", $field) ? rgar($field,"adminLabel") : rgar($field,"label");
         $input = self::get_input($field, $input_id);
-        if(rgget("type", $field) == "checkbox" && $input != null)
+        if( self::get_input_type($field) == "checkbox" && $input != null)
             return $input["label"];
         else if($input != null)
             return $input_only ? $input["label"] : $field_label . ' (' . $input["label"] . ')';
@@ -3835,8 +3873,8 @@ class GFFormsModel {
 
         $where = self::get_search_where($form_id, $search_criteria);
 
-        $field_number_min = $sort_field_number - 0.001;
-        $field_number_max = $sort_field_number + 0.001;
+        $field_number_min = $sort_field_number - 0.0001;
+        $field_number_max = $sort_field_number + 0.0001;
 
         $sql = "
             SELECT filtered.sort, l.*, d.field_number, d.value
@@ -4064,28 +4102,43 @@ class GFFormsModel {
 
             switch ($search_type) {
                 case "field":
-                    $upper_field_number_limit = (string)(int)$key === $key ? (float)$key + 0.9999 : (float)$key + 0.0001;
+                    $is_number_field = false;
+                    if ( $operator != 'like' && ! is_array( $form_id ) && $form_id > 0 ) {
+                        $form               = GFAPI::get_form( $form_id );
+                        $field              = self::get_field( $form, $key );
+                        if (  self::get_input_type( $field ) == 'number' ){
+                            $is_number_field = true;
+                        }
+                    }
+
+                    $search_term_format = rgar( $search, 'is_numeric' ) || $is_number_field ? '%f' : '%s';
+
+                    $upper_field_number_limit = (string) (int) $key === $key ? (float) $key + 0.9999 : (float) $key + 0.0001;
                     /* doesn't support "<>" for checkboxes */
-                    $field_query = $wpdb->prepare("
+                    $field_query = $wpdb->prepare(
+                        "
                         l.id IN
                         (
                         SELECT
                         lead_id
-                        from $lead_details_table_name
-                        WHERE (field_number BETWEEN %s AND %s AND value $operator %s)
-                        $form_id_where
-                        )", (float)$key - 0.0001, $upper_field_number_limit, $search_term);
-                    if(empty($val) || "%%" === $val || "<>" === $operator){
-                        $skipped_field_query = $wpdb->prepare("
+                        from {$lead_details_table_name}
+                        WHERE (field_number BETWEEN %s AND %s AND value {$operator} {$search_term_format})
+                        {$form_id_where}
+                        )", (float) $key - 0.0001, $upper_field_number_limit, $search_term
+                    );
+                    if ( empty( $val ) || '%%' === $val || '<>' === $operator ) {
+                        $skipped_field_query = $wpdb->prepare(
+                            "
                             l.id NOT IN
                             (
                             SELECT
                             lead_id
-                            from $lead_details_table_name
+                            from {$lead_details_table_name}
                             WHERE (field_number BETWEEN %s AND %s)
-                            $form_id_where
-                            )", (float)$key - 0.0001, $upper_field_number_limit, $search_term);
-                        $field_query = "(" . $field_query . " OR " . $skipped_field_query . ")";
+                            {$form_id_where}
+                            )", (float) $key - 0.0001, $upper_field_number_limit, $search_term
+                        );
+                        $field_query = '(' . $field_query . ' OR ' . $skipped_field_query . ')';
                     }
 
                     $sql_array[] = $field_query;
@@ -4129,7 +4182,7 @@ class GFFormsModel {
 								$choice_texts_clauses_for_field = array();
 								if ( isset( $field['choices'] ) && is_array( $field['choices'] ) ) {
 									foreach ( $field['choices'] as $choice ) {
-										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
+										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && ! empty( $val ) && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
 											if ( rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ){
 												$choice_value =  '%' . $choice['value'] . '%' ;
 												$choice_search_operator = 'like';
@@ -4465,15 +4518,47 @@ class GFFormsModel {
     }
 
 	public static function delete_password( $entry, $form ) {
-		$password_fields = GFCommon::get_fields_by_type( $form, array( 'password' ) );
-		if ( is_array( $password_fields ) ) {
-			foreach ( $password_fields as $password_field ) {
-				$entry[$password_field['id']] = '';
-			}
-		}
-		GFAPI::update_entry( $entry );
 
-		return $entry;
+		$password_fields = GFCommon::get_fields_by_type( $form, array( 'password' ) );
+		if ( empty( $password_fields ) ){
+			return;
+		}
+
+		$field_ids = array();
+		foreach ( $password_fields as $password_field ) {
+			$field_ids[] = $password_field['id'];
+		}
+		$field_id_list = implode( ',', $field_ids );
+
+		global $wpdb;
+		$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}rg_lead_detail
+									 WHERE lead_id = %d AND form_id = %d
+									 AND CAST(field_number as DECIMAL(4,2)) IN ($field_id_list)", $entry['id'], $form['id'] ) );
+	}
+
+	/**
+	 * @param $field
+	 * @param $value
+	 * @param $input_type
+	 * @param $form_id
+	 *
+	 * @return string
+	 */
+	public static function sanitize_entry_value( $field, $value, $input_type, $form_id ) {
+		//allow HTML for certain field types
+		$allow_html     = in_array( $field["type"], array( "post_custom_field", "post_title", "post_content", "post_excerpt", "post_tags" ) ) || in_array( $input_type, array( "checkbox", "radio" ) ) ? true : false;
+		$allowable_tags = apply_filters( "gform_allowable_tags_{$form_id}", apply_filters( "gform_allowable_tags", $allow_html, $field, $form_id ), $field, $form_id );
+
+		if ( $allowable_tags !== true ) {
+			$value = strip_tags( $value, $allowable_tags );
+
+			return $value;
+		} else {
+			//removing script tags from value if $allowable_tags variable is not specified.
+			$value = self::strip_script_tag( $value );
+
+			return $value;
+		}
 	}
 }
 

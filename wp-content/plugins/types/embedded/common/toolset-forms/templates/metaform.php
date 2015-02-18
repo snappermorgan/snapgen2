@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/templates/metaform.php $
- * $LastChangedDate: 2014-08-18 23:18:52 +0800 (Mon, 18 Aug 2014) $
- * $LastChangedRevision: 26059 $
- * $LastChangedBy: riccardo $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/templates/metaform.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -19,7 +19,7 @@ if ( is_admin() ) {
 		include 'metaform-item.php';
 	endforeach; ?>
     <?php if ( @$cfg['repetitive'] ): ?>
-        <a href="#" class="js-wpt-repadd wpt-repadd button button-small button-primary-toolset" data-wpt-type="<?php echo $cfg['type']; ?>" data-wpt-id="<?php echo $cfg['id']; ?>"><?php printf(__('Add new %s', 'wpv-views'), $cfg['title']); ?></a>
+        <a href="#" class="js-wpt-repadd wpt-repadd button button-small button-primary-toolset" data-wpt-type="<?php echo $cfg['type']; ?>" data-wpt-id="<?php echo $cfg['id']; ?>"><?php echo apply_filters( 'toolset_button_add_repetition_text', sprintf(__('Add new %s', 'wpv-views'), $cfg['title']), $cfg); ?></a>
 	<?php endif; ?>
 		</div>
 	</div>
@@ -60,7 +60,7 @@ if ( is_admin() ) {
     }
 	if ( $cfg['repetitive'] ) {
 		echo '<input type="button" class="js-wpt-repadd wpt-repadd' . $button_extra_classnames . '" data-wpt-type="' . $cfg['type'] . '" data-wpt-id="' . $cfg['id'] . '" value="';
-		echo esc_attr( sprintf( __( 'Add new %s', 'wpv-views' ), $cfg['title'] ) );
+		echo apply_filters( 'toolset_button_add_repetition_text', esc_attr( sprintf( __( 'Add new %s', 'wpv-views' ), $cfg['title'] ) ), $cfg );
 		echo '" />';
 	}
 	if ( $needs_wrapper) {

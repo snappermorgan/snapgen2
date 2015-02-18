@@ -4,8 +4,8 @@ Donate link: http://wp-types.com
 Tags: CMS, custom field, custom fields, custom post type, custom post types, post, post type, post types, cck, taxonomy, fields
 License: GPLv2
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 1.6.3
+Tested up to: 4.1
+Stable tag: 1.6.4
 
 The complete and reliable plugin for managing custom post types, custom taxonomy and custom fields.
 
@@ -13,7 +13,7 @@ The complete and reliable plugin for managing custom post types, custom taxonomy
 
 Types let's you customize the WordPress admin by adding content types, custom fields and taxonomy. You will be able to craft the WordPress admin and turn it into your very own content management system.
 
-[vimeo http://vimeo.com/43104695]
+[vimeo http://vimeo.com/112053938]
 
 = POWERFUL PHP API, SIMPLE GUI FOR NON-CODERS =
 If you're an experienced PHP developer, you'll appreciate Types comprehensive [PHP API](http://wp-types.com/documentation/functions/) and [documentation](http://wp-types.com/documentation/user-guides/).
@@ -85,7 +85,7 @@ Types is the only custom fields and post types plugin that's built multilingual-
 
 = BUILT FOR STABILITY =
 
-Types is part of a family of plugins, including WPML and Toolset, developed and maintained by [OnTheGoSystems](http://www.onthegosystems.com). Our plugins power over 100,000 commercial sites, using WordPress as a complete CMS. While we love features, we know that stability, performance, usability and security are critical. All our plugins go through comprehensive testing, QA and security analysis before every release.
+Types is part of a family of plugins, including WPML and Toolset, developed and maintained by [OnTheGoSystems](http://www.onthegosystems.com). Our plugins power over 500,000 commercial sites, using WordPress as a complete CMS. While we love features, we know that stability, performance, usability and security are critical. All our plugins go through comprehensive testing, QA and security analysis before every release.
 
 == Installation ==
 
@@ -151,6 +151,28 @@ Additionally, Types is the only plugin that lets you define parent/child relatio
 
 == Changelog ==
 
+= 1.6.4 =
+
+* Fixed an issue with dependency between custom taxonomy and custom posts when importing data from the "Custom Post Type UI" plugin.
+* Fixed an issue with editing checkboxes with the option "save 0 to the database" selected, created for Custom Posts. http://wp-types.com/forums/topic/checkbox-custom-field-doesnt-save-value-since-upgrade-to-version-1-6-2/ http://wp-types.com/forums/topic/types-checkbox-field-not-saving-after-save-0-to-the-database/
+* Fixed an issue with PHP notices being thrown when relative URLs to images were used. http://wp-types.com/forums/topic/php-notice-undefined-index-host-in-image-php/
+* Fixed the example file which adds the Google Map field to Types and allows users to enter coordinates to display a map on the front-end.
+* Added the "wpcf_delete_relation_meta" filter which allows deletion of all post relationships when deleting a custom post type.
+* Fixed an issue with the file name being changed when the file was uploaded. https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/189560556/comments http://wp-types.com/forums/topic/types-1-6-update-breaks-layout-that-worked-in-types-1-5-7/
+* Fixed a problem with duplicate slugs on "Edit Group" screen. https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/187118123/comments http://wp-types.com/forums/topic/cant-add-more-custom-fields/
+* Fixed a problem with default description not disappearing for non-English placeholders. https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/189787190/comments
+* Fixed a problem with Custom Taxonomy metaboxes still appearing on the Custom Post editing page even after removing a Custom Taxonomy from a Custom Post Type.
+* Fixed embedding OTGS CSS for the admin area. https://wordpress.org/support/topic/four-stylesheets-being-loaded-at-frontend
+* Fixed a problem with Checkbox field value not being saved. https://wp-types.com/forums/topic/checkbox-value-not-saved/
+* Added the option to select posts with the "Private" post status as parents in a parent-child Custom Post Types relationships. http://wp-types.com/forums/topic/cred-child-form-not-working-with-private-ctp/
+* Fixed a problem with the date-picker.  https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/191190651/comments
+* Fixed a problem with label menu in wp-admin for child posts.
+* Fixed a problem with child table when edit parent post and children do not have title.
+* Prevent to chose repetitive field in child table on edit parent screen. http://wp-types.com/forums/topic/wp-types-select-child-fields-to-be-displayed-specific-fields-not-working/
+* Added a dynamic "posted x minutes/hours ago" for Types fields. https://wp-types.com/forums/topic/adding-a-dynamic-posted-x-minuteshours-ago-in-a-view/
+* Improved post relation table by using more precise labels. http://wp-types.com/forums/topic/displaying-the-best-names-of-cpts-in-applicable-contexts/
+* Fixed a problem with display checkbox value from database if checkbox is empty.
+
 = 1.6.3 =
 
 * Added the message to ask users to answer a short survey for feedback on their work using the Types plugin.
@@ -168,6 +190,7 @@ Additionally, Types is the only plugin that lets you define parent/child relatio
 * Fixed a problem where the parent-child relations between custom post types persisted after deleting and re-creating a custom post type.
 
 * Fixed a problem where date picker scripts were being enqueued in the front end. https://wordpress.org/support/topic/datepicker-css-enqueued-on-public
+
 
 = 1.6.2 =
 

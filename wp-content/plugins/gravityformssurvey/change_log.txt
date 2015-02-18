@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------
+Version 2.4
+	- Added function gf_survey to easily get a Survey instance
+	- Added text domain/path to header
+	- Added support for Gravity Forms 1.9 form editor drag and drop.
+	- Updated protected functions to be public
+	- Updated to have the file class-gf-survey.php and organized code into this file and survey.php
+	- Updated version to use a variable
+
+---------------------------------------------------------------------
 Version 2.3
 	- Adding tabbing support for likert fields
 	- Updated the ratings field UI in the form editor to display the choices in the more natural order of worst at the top to best at the bottom instead of the reverse. The front-end UI is not affected.

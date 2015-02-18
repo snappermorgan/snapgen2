@@ -1,10 +1,10 @@
 /*
  * Repetitive JS.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/js/repetitive.js $
- * $LastChangedDate: 2014-08-06 22:48:27 +0800 (Wed, 06 Aug 2014) $
- * $LastChangedRevision: 25705 $
- * $LastChangedBy: juan $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/js/repetitive.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 var wptRep = (function($) {

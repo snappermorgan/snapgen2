@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/templates/metaform-item.php $
- * $LastChangedDate: 2014-08-06 00:49:11 +0800 (Wed, 06 Aug 2014) $
- * $LastChangedRevision: 25660 $
- * $LastChangedBy: juan $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/templates/metaform-item.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 if ( is_admin() ) {
@@ -14,7 +14,7 @@ if ( is_admin() ) {
     <?php if ( @$cfg['repetitive'] ): ?>
         <div class="wpt-repctl">
             <div class="js-wpt-repdrag wpt-repdrag">&nbsp;</div>
-            <a class="js-wpt-repdelete button button-small" data-wpt-type="<?php echo $cfg['type']; ?>" data-wpt-id="<?php echo $cfg['id']; ?>"><?php printf(__('Delete %s', 'wpv-views'), strtolower( $cfg['title'])); ?></a>
+            <a class="js-wpt-repdelete button button-small" data-wpt-type="<?php echo $cfg['type']; ?>" data-wpt-id="<?php echo $cfg['id']; ?>"><?php apply_filters( 'toolset_button_delete_repetition_text', printf(__('Delete %s', 'wpv-views'), strtolower( $cfg['title'])), $cfg); ?></a>
         </div>
     <?php endif; ?>
 </div>
@@ -33,7 +33,7 @@ if ( is_admin() ) {
 			$button_extra_classnames = ' btn btn-default btn-sm';
 		}
 		echo '<input type="button" href="#" class="js-wpt-repdelete wpt-repdelete' . $button_extra_classnames . '" value="';
-        echo esc_attr( sprintf( __( 'Delete %s repetition', 'wpv-views' ), $cfg['title'] ) );
+        echo apply_filters( 'toolset_button_delete_repetition_text', esc_attr( sprintf( __( 'Delete %s repetition', 'wpv-views' ), $cfg['title'] ) ), $cfg );
         echo '" />';
         echo '</div>';
     }

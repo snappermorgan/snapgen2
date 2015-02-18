@@ -3,10 +3,10 @@
  *
  * Custom types form
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/includes/custom-types-form.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/custom-types-form.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -55,6 +55,26 @@ function wpcf_admin_custom_types_form() {
             '#value' => $id,
             '#name' => 'ct[wpcf-post-type]',
         );
+        /**
+         * update taxonomy too
+         */
+        $custom_taxonomies = get_option( 'wpcf-custom-taxonomies', array() );
+        foreach( $custom_taxonomies as $slug => $data ) {
+            if ( !array_key_exists('supports', $data)) {
+                continue;
+            }
+            if ( !array_key_exists($id, $data['supports']) ) {
+                continue;
+            }
+            if (
+                array_key_exists('taxonomies', $ct)
+                && array_key_exists($slug, $ct['taxonomies'])
+            ) {
+                continue;
+            }
+            unset($custom_taxonomies[$slug]['supports'][$id]);
+        }
+        update_option( 'wpcf-custom-taxonomies', $custom_taxonomies);
     }
 
     $form['table-1-open'] = array(
@@ -615,8 +635,7 @@ function wpcf_admin_custom_types_form() {
     );
     $form['table-6-open'] = array(
         '#type' => 'markup',
-        '#markup' => '<table id="wpcf-types-form-supports-table" class="wpcf-types-form-table widefat"><thead><tr><th>' . __( 'Advanced',
-                'wpcf' ) . '</th></tr></thead><tbody><tr><td>',
+        '#markup' => '<table id="wpcf-types-form-supports-table" class="wpcf-types-form-table widefat"><thead><tr><th>' . __( 'Options', 'wpcf' ) . '</th></tr></thead><tbody><tr><td>',
     );
     $form['rewrite-enabled'] = array(
         '#type' => 'checkbox',

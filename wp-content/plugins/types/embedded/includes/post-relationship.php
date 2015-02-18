@@ -2,10 +2,10 @@
 /*
  * Post relationship code.
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/includes/post-relationship.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/includes/post-relationship.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once WPCF_EMBEDDED_INC_ABSPATH . '/editor-support/post-relationship-editor-support.php';
@@ -240,8 +240,13 @@ function wpcf_pr_admin_post_meta_box_output( $post, $args )
             );
         }
         if ( !empty( $output_temp ) ) {
-            $output .= '<div style="margin: 20px 0 10px 0">' . sprintf( __( 'This %s belongs to:',
-                                    'wpcf' ), $current_post_type ) . '</div>' . $output_temp;
+            $types_existing = get_option( 'wpcf-custom-types', array() );
+            $output .= '<div style="margin: 20px 0 10px 0">';
+            $output .= sprintf(
+                __( 'This <i>%s</i> belongs to:', 'wpcf' ),
+                $types_existing[$current_post_type]['labels']['singular_name']
+            );
+            $output .= '</div>' . $output_temp;
         }
     }
     return $output;
@@ -284,7 +289,7 @@ function wpcf_pr_admin_post_meta_box_belongs_form( $post, $type, $belongs )
         'numberposts' => -1,
         'orderby' => 'title',
         'order' => 'ASC',
-        'post_status' => apply_filters( 'wpcf_pr_belongs_post_status', array( 'publish' ) ),
+        'post_status' => apply_filters( 'wpcf_pr_belongs_post_status', array( 'publish', 'private' ) ),
         'post_type' => $type,
         'suppress_filters' => 0,
     );
@@ -310,12 +315,13 @@ function wpcf_pr_admin_post_meta_box_belongs_form( $post, $type, $belongs )
         );
     }
 
+
     $form[$type] = array(
         '#type' => 'select',
         '#name' => 'wpcf_pr_belongs[' . $post->ID . '][' . $type . ']',
         '#default_value' => isset( $belongs['belongs'][$type] ) ? $belongs['belongs'][$type] : 0,
         '#options' => $options,
-        '#prefix' => $temp_type->label . '&nbsp;',
+        '#prefix' => $temp_type->labels->singular_name . '&nbsp;',
         '#suffix' => '&nbsp;<a href="'
         . admin_url( 'admin-ajax.php?action=wpcf_ajax'
                 . '&amp;wpcf_action=pr-update-belongs&amp;_wpnonce='
@@ -339,17 +345,23 @@ function wpcf_pr_admin_update_belongs( $post_id, $data ) {
     $errors = array();
     $post = get_post( intval( $post_id ) );
     if ( empty( $post->ID ) ) {
-        return new WP_Error( 'wpcf_update_belongs',
-                sprintf( __( 'Missing child post ID %d', 'wpcf' ),
-                        intval( $post_id ) ) );
+        return new WP_Error(
+            'wpcf_update_belongs',
+            sprintf(
+                __( 'Missing child post ID %d', 'wpcf' ),
+                intval( $post_id )
+            )
+        );
     }
 
     foreach ( $data as $post_type => $post_owner_id ) {
         // Check if relationship exists
         if ( !wpcf_relationship_is_parent( $post_type, $post->post_type ) ) {
-            $errors[] = sprintf( __( 'Relationship do not exist %s -> %s',
-                            'wpcf' ), strval( $post_type ),
-                    strval( $post->post_type ) );
+            $errors[] = sprintf(
+                __( 'Relationship do not exist %s -> %s', 'wpcf' ),
+                strval( $post_type ),
+                strval( $post->post_type )
+            );
             continue;
         }
         if ( $post_owner_id == '0' ) {
@@ -359,15 +371,16 @@ function wpcf_pr_admin_update_belongs( $post_id, $data ) {
         $post_owner = get_post( intval( $post_owner_id ) );
         // Check if owner post exists
         if ( empty( $post_owner->ID ) ) {
-            $errors[] = sprintf( __( 'Missing parent post ID %d', 'wpcf' ),
-                    intval( $post_owner_id ) );
+            $errors[] = sprintf( __( 'Missing parent post ID %d', 'wpcf' ), intval( $post_owner_id ) );
             continue;
         }
         // Check if owner post type matches required
         if ( $post_owner->post_type != $post_type ) {
-            $errors[] = sprintf( __( 'Parent post ID %d is not type of %s',
-                            'wpcf' ), intval( $post_owner_id ),
-                    strval( $post_type ) );
+            $errors[] = sprintf(
+                __( 'Parent post ID %d is not type of %s', 'wpcf' ),
+                intval( $post_owner_id ),
+                strval( $post_type )
+            );
             continue;
         }
         update_post_meta( $post_id, "_wpcf_belongs_{$post_type}_id", $post_owner->ID );
@@ -406,45 +419,59 @@ function wpcf_pr_admin_has_pagination( $post, $post_type, $page, $prev, $next,
     if ( isset( $_GET['post_type_sort_parent'] ) ) {
         $add .= '&post_type_sort_parent=' . $_GET['post_type_sort_parent'];
     }
+
+    /**
+     * default for next
+     */
+    $url_params = array(
+        'action' => 'wpcf_ajax',
+        'wpcf_action' => 'pr_pagination',
+        'page' => $page + 1,
+        'dir' => 'next',
+        'post_id' => $post->ID,
+        'post_type' => $post_type,
+        $wpcf->relationship->items_per_page_option_name => $wpcf->relationship->items_per_page,
+        '_wpnonce' => wp_create_nonce( 'pr_pagination' ) . $add,
+    );
+    $url = admin_url('admin-ajax.php');
+
+
     if ( $prev ) {
-        $link .= '<a class="button-secondary wpcf-pr-pagination-link wpcf-pr-prev" href="'
-                . admin_url( 'admin-ajax.php?action=wpcf_ajax&amp;wpcf_action=pr_pagination&amp;page='
-                        . ($page - 1) . '&amp;dir=prev&amp;post_id=' . $post->ID . '&amp;post_type='
-                        . $post_type
-                        . '&amp;' . $wpcf->relationship->items_per_page_option_name
-                        . '=' . $wpcf->relationship->items_per_page
-                        . '&amp;_wpnonce='
-                        . wp_create_nonce( 'pr_pagination' ) . $add ) . '">'
-                . __( 'Prev', 'wpcf' ) . '</a>&nbsp;&nbsp;';
+        $url_params['page'] = $page - 1;
+        $url_params['dir'] = 'prev';
+        $link .= sprintf(
+            '<a class="button-secondary wpcf-pr-pagination-link wpcf-pr-prev" href="%s" data-pagination-name="%s">',
+            add_query_arg( $url_params, $url),
+            esc_attr($wpcf->relationship->items_per_page_option_name)
+        );
+        $link .= __( 'Prev', 'wpcf' ) . '</a>&nbsp;&nbsp;';
     }
     if ( $per_page < $count ) {
         $total_pages = ceil( $count / $per_page );
-        $link .= '<select class="wpcf-pr-pagination-select" name="wpcf-pr-pagination-select">';
+        $link .= sprintf(
+            '<select class="wpcf-pr-pagination-select" name="wpcf-pr-pagination-select" data-pagination-name="%s">',
+            esc_attr($wpcf->relationship->items_per_page_option_name)
+        );
         for ( $index = 1; $index <= $total_pages; $index++ ) {
             $link .= '<option';
             if ( ($index) == $page ) {
                 $link .= ' selected="selected"';
             }
-            $link .= ' value="' . admin_url( 'admin-ajax.php?action=wpcf_ajax&amp;wpcf_action=pr_pagination&amp;page='
-                            . $index . '&amp;dir=next&amp;post_id=' . $post->ID . '&amp;post_type='
-                            . $post_type
-                            . '&amp;' . $wpcf->relationship->items_per_page_option_name
-                            . '=' . $wpcf->relationship->items_per_page
-                            . '&amp;_wpnonce='
-                            . wp_create_nonce( 'pr_pagination' ) . $add ) . '">' . $index . '</option>';
+            $url_params['page'] = $index;
+
+            $link .= sprintf( ' value="%s"', add_query_arg( $url_params, $url));
+            $link .= '">' . $index . '</option>';
         }
         $link .= '</select>';
     }
     if ( $next ) {
-        $link .= '<a class="button-secondary wpcf-pr-pagination-link wpcf-pr-next" href="'
-                . admin_url( 'admin-ajax.php?action=wpcf_ajax&amp;wpcf_action=pr_pagination&amp;page='
-                        . ($page + 1) . '&amp;dir=next&amp;post_id=' . $post->ID . '&amp;post_type='
-                        . $post_type
-                        . '&amp;' . $wpcf->relationship->items_per_page_option_name
-                        . '=' . $wpcf->relationship->items_per_page
-                        . '&amp;_wpnonce='
-                        . wp_create_nonce( 'pr_pagination' ) . $add ) . '">'
-                . __( 'Next', 'wpcf' ) . '</a>';
+        $url_params['page'] = $page + 1;
+        $link .= sprintf(
+            '<a class="button-secondary wpcf-pr-pagination-link wpcf-pr-next" href="%s" data-pagination-name="%s">',
+            add_query_arg( $url_params, $url),
+            esc_attr($wpcf->relationship->items_per_page_option_name)
+        );
+        $link .= __( 'Next', 'wpcf' ) . '</a>';
     }
     return !empty( $link ) ? '<div class="wpcf-pagination-top">' . $link . '</div>' : '';
 }

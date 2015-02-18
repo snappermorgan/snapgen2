@@ -318,6 +318,14 @@ function wpcf_fields_date_value_get_filter( $value, $field, $return = 'array',
          * Consider this already parsed
          * but check anyway.
          */
+        if (
+            array_key_exists('datepicker', $value)
+            && !array_key_exists('timestamp', $value)
+            && preg_match( '/^\d+$/', $value['datepicker'] )
+        ) {
+            $value['timestamp'] = $value['datepicker'];
+            unset($value['datepicker']);
+        }
         $value = wpcf_fields_date_value_check( $value );
     } else {
         $value = array(
@@ -378,6 +386,15 @@ function wpcf_fields_date_view( $params ) {
     switch ( $params['style'] ) {
         case 'calendar':
             $output .= wpcf_fields_date_get_calendar( $params, true, false );
+            break;
+
+        case 'human-time-diff':
+            $date_out = human_time_diff($params['field_value']);
+            if ( $params['field_value'] < time() ) {
+                $output .= sprintf( __('%s ago', 'wpcf'), $date_out);;
+            } else {
+                $output .= sprintf( __('%s to go', 'wpcf'), $date_out);;
+            }
             break;
 
         default:

@@ -21,7 +21,7 @@ class Forms3rdpartySnapGen {
 	/**
 	 * How long (seconds) before considering timeout
 	 */
-	const DEFAULT_TIMEOUT = 10;
+	const DEFAULT_TIMEOUT = 60;
 
 	/**
 	 * Parameter index for mapping - administrative label (reminder)
@@ -67,7 +67,18 @@ class Forms3rdpartySnapGen {
 		add_filter('init', array($this, 'vendor_post'));
 
 		$_response_message = array();
+		add_filter('http_request_timeout', array(&$this, 'snapgen_http_response_timeout'), 10, 5);
+	}
 
+	/**
+	 * Extend http timeout duration to 30 seconds
+	 *
+	 * @param int $timeout The timeout duration in seconds. Default is 5.
+	 *
+	 * @return int The filtered timeout duration in seconds.
+	 */
+	public function snapgen_http_response_timeout($timeout) {
+		return 30; // seconds
 	}
 
 	public function sg_add_admin_menu() {
@@ -133,6 +144,8 @@ settings_fields('pluginPage');
 
 		if (isset($_REQUEST['external']) && ($_REQUEST['external'] == 'yes')) {
 
+			$matched = false;
+			_log("External Vendor Posting...");
 //            echo "<pre>".print_r($_REQUEST,true)."</pre>";
 			//            exit(0);
 			//header("Content-Type:text/xml");
@@ -140,49 +153,138 @@ settings_fields('pluginPage');
 			//$boberdoo = "http://requestb.in/1hhyvit1";
 
 			if (isset($_REQUEST['Primary_Phone']) && $_REQUEST['Primary_Phone'] != "") {
-				$response = reverse_lookup($_REQUEST['Primary_Phone']);
-				_log("Incoming REQUEST:" . print_r($_REQUEST, true));
-				$number = "";
-				$zip = "";
 
-				if ($response) {
+				//let's first see if they passed an address
+				$whitepages = true;
+				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['ZipCode']) && $_REQUEST['ZipCode'] != "")) {
 
+<<<<<<< HEAD
 					if ($response->house) {
 						$number = $response->house;
 					}
+=======
+					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
+					//_log("Response from briteverify." . print_r($response, true));
+					if ($response['response']['code'] != "200") {
+						_log("Submitted Address was not valid,using whitepages pro ");
 
-					if ($response->apt_number) {
-						$number = $response->apt_number;
-					}
-
-					if ($response->zip4) {
-						$zip = $response->postal_code . "-" . $response->zip4;
-
+						$whitepages = true;
 					} else {
-						$zip = $response->postal_code;
-					}
-					$address = $number . " " . $response->street_name . " " . $response->street_type;
-					$test_address = str_replace(' ', '', $address);
-					if ($test_address != "") {
 
-						$_REQUEST['Address'] = $address;
-						$_REQUEST['SRC'] = $_REQUEST['SRC'] . "match";
-						$_REQUEST['City'] = $response->city;
-						$_REQUEST['State'] = $response->state_code;
-						$_REQUEST['ZipCode'] = $zip;
+						$body = json_decode($response['body']);
+						if ($body->status == "valid") {
+
+							$whitepages = false;
+							$_REQUEST['SRC'] .= "match";
+							$matched = true;
+							_log("Submitted Address was valid, skipping Whitepages");
+						} else {
+							_log("Submitted Address was invalid: " . $body->error);
+							$whitepages = true;
+						}
+>>>>>>> master
+
+					}
+
+				}
+
+				if ($whitepages) {
+					$response = reverse_lookup($_REQUEST['Primary_Phone']);
+					//_log("Response from whitepages." . print_r($response, true));
+					//_log("Incoming REQUEST:" . print_r($_REQUEST, true));
+					$number = "";
+					$zip = "";
+
+					if ($response) {
+						if (isset($response->standard_address_line1) && $response->standard_address_line1 != "") {
+							$address = $response->standard_address_line1;
+							$rest = explode(" ", $response->standard_address_location);
+							$response_brite = validate_address($address, "", end($rest));
+							if ($response_brite['response']['code'] == "200") {
+								$body = json_decode($response_brite['body']);
+								if ($body->status == "valid") {
+									$city = $body->city;
+									$state = $body->state_code;
+									$zip = $body->zip;
+								}
+
+							}
+
+						} else {
+							if ($response->house) {
+								$number = $response->house;
+							}
+
+							if ($response->apt_number) {
+								$number = $response->apt_number;
+							}
+
+							if ($response->zip4) {
+								$zip = $response->postal_code . "-" . $response->zip4;
+
+							} else {
+								$zip = $response->postal_code;
+							}
+							$address = $number . " " . $response->street_name . " " . $response->street_type;
+							$city = $response->city;
+							$state = $response->state_code;
+						}
+						$test_address = str_replace(' ', '', $address);
+						//_log("Test Address: {" . $test_address . "}");
+						if ($test_address != "") {
+							//_log("SRC: {" . $_REQUEST['SRC'] . "}");
+
+							if ($response->is_deliverable && !is_null($response->is_deliverable)) {
+								$matched = true;
+								$_REQUEST['SRC'] .= "match";
+								$_REQUEST['Address'] = $address;
+								$_REQUEST['City'] = $city;
+								$_REQUEST['State'] = $state;
+								$_REQUEST['ZipCode'] = $zip;
+							} else {
+
+								// $_REQUEST['Address'] = "123 Main St";
+								// $_REQUEST['City'] = "Atlanta";
+								// $_REQUEST['State'] = "GA";
+								// $_REQUEST['ZipCode'] = "30306";
+							}
+
+						}
+					} else {
+						// $_REQUEST['Address'] = "123 Main St";
+						// $_REQUEST['City'] = "Atlanta";
+						// $_REQUEST['State'] = "GA";
+						// $_REQUEST['ZipCode'] = "30306";
 					}
 				}
 			}
 			$post_args = array(
+<<<<<<< HEAD
 				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
 			_log("Post Args to boberdoo" . print_r($post_args, true));
+=======
+				'timeout' => 60, 'body' => $_REQUEST, 'method' => 'POST');
+			_log("Post Args to Boberdoo" . print_r($post_args, true));
+>>>>>>> master
 			$response = wp_remote_post($boberdoo, $post_args);
-			//echo "<pre>".print_r($response,true)."</pre>";
 
+			_log("Post Response from Boberdoo" . print_r($response, true));
+			/* $response = array('body' => '<?xml version="1.0" encoding="UTF-8"?><response><status>Matched</status></response>'); */
 			//exit(0);
 
+			$xml = simplexml_load_string(trim($response['body']));
+			if (!$matched) {
+				if ($xml->status != "Error") {
+					$echo_str = '<?xml version="1.0" encoding="UTF-8"?><response><status>Unmatched</status></response>';
+				} else {
+					$echo_str = trim($response['body']);
+				}
+
+			} else {
+				$echo_str = trim($response['body']);
+			}
 			ob_start();
-			echo trim($response['body']);
+			echo $echo_str;
 			//echo print_r($_REQUEST,true);
 			ob_end_flush();
 			exit(0);
@@ -235,7 +337,88 @@ settings_fields('pluginPage');
 	}
 
 	public function post_filter($service, $submission = false) {
+	    $matched=false;
+	    $input = "";
+        if (isset($service['mapping'])) {
+            $mapping = $service['mapping'];
+            foreach ($mapping as $map) {
+                if ($map['3rd'] == 'SRC') {
+                    $input = $map['src'];
+                }
+            }
+        }
+		if (isset($service['address_validation']) && !empty($service['address_validation'])) {
+			if ((isset($service['validation-address-field']) && !empty($service['validation-address-field'])) && (isset($service['validation-city-field']) && !empty($service['validation-city-field']))
+				&& (isset($service['validation-state-field']) && !empty($service['validation-state-field'])) && (isset($service['validation-zip-field']) && !empty($service['validation-zip-field']))) {
 
+				_log("Address Validation with Briteverify!");
+				$address = $submission[trim(strtolower($service['validation-address-field']))];
+				$address2 = $submission[trim(strtolower($service['validation-address2-field']))];
+				$zipcode = $submission[trim(strtolower($service['validation-zip-field']))];
+				$city = $submission[trim(strtolower($service['validation-city-field']))];
+				$state = $submission[trim(strtolower($service['validation-state-field']))];
+
+				$validated = validate_address($address, $address2, $zipcode);
+				_log("Returned from Briteverify" . print_r($validated, true));
+				$response = json_decode($validated['body']);
+				if ($response && $response->status == "valid") {
+					if ($response->corrected == true) {
+					    $matched=true;
+						$address = $response->street;
+						if ($response->unit) {
+							$address2 = $response->unit;
+						}
+						$city = $response->city;
+						$state = $response->state_code;
+						$zipcode = $response->zip;
+					}
+				}else{
+				    if($city==""){
+				        $city = "Atlanta";
+				    }
+				    if($address==""){
+				        $address="123 Main St";
+				    }
+				    if($zipcode==""){
+				        $zipcode="30309";
+				    }
+				    if($state==""){
+				        $state="GA";
+				    }
+				}
+
+				foreach ($submission as $field => &$value) {
+					////_log("field: " . print_r($field, true));
+					if (trim(strtolower($service['validation-address-field'])) == trim(strtolower($field))) {
+						$value = $address;
+
+					}
+					if (trim(strtolower($service['validation-address2-field'])) == trim(strtolower($field))) {
+						$value = $address2;
+
+					}
+					if (trim(strtolower($service['validation-city-field'])) == trim(strtolower($field))) {
+						$value = $city;
+
+					}
+					if (trim(strtolower($service['validation-state-field'])) == trim(strtolower($field))) {
+						$value = $state;
+
+					}
+					if (trim(strtolower($service['validation-zip-field'])) == trim(strtolower($field))) {
+						$value = $zipcode;
+
+					}
+				}
+
+<<<<<<< HEAD
+=======
+				_log("New Submission after validation: " . print_r($submission, true));
+
+			}
+		}
+                    
+>>>>>>> master
 		//_log("ALTER SUBMISSION TRIGGERED");
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
@@ -246,47 +429,90 @@ settings_fields('pluginPage');
 
 				$response = reverse_lookup($phone);
 
-//                $address = "150 Sweetwood Way";
-				//                $city = "Roswell";
-				//                $state = "GA";
-				//                $zip = "30076";
-				_log("submission passed: " . print_r($submission, true));
-				foreach ($submission as $field => &$value) {
-					//_log("field: " . print_r($field, true));
-					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
-						if ($response->house) {
-							$number = $response->house;
-						}
+				$address = "";
+				$number = "";
+				$zip = "";
 
-						if ($response->apt_number) {
-							$number = $response->apt_number;
+				
+                
+				_log("Response from Reverse Lookup: " . print_r($response, true));
+                
+				foreach ($submission as $field => &$value) {
+<<<<<<< HEAD
+					//_log("field: " . print_r($field, true));
+=======
+					////_log("field: " . print_r($field, true));
+>>>>>>> master
+					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
+
+						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+                            $matched=true;
+							if ($response->house) {
+								$number = $response->house;
+							}
+
+							if ($response->apt_number) {
+								$number = $response->apt_number;
+							}
+							$value = $number . " " . $response->street_name . " " . $response->street_type;
+						} else {
+							$value = "123 Main St";
 						}
-						$value = $number . " " . $response->street_name . " " . $response->street_type;
-						_log("address=" . $address . "\n");
+						//_log("address=" . $address . "\n");
 					}
 					if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
-						$value = $response->city;
-						_log("city=" . $city . "\n");
+						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+							$value = $response->city;
+						} else {
+							$value = "Atlanta";
+						}
+						//_log("city=" . $city . "\n");
 					}
 					if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
-						$value = $response->state_code;
-						_log("state=" . $state . "\n");
+						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+							$value = $response->state_code;
+							//_log("state=" . $state . "\n");
+						} else {
+							$value = "GA";
+						}
 					}
 					if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
-						if ($response->zip4) {
-							$zip = $response->postal_code . "-" . $response->zip4;
 
+						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+							if ($response->zip4) {
+								$zip = $response->postal_code . "-" . $response->zip4;
+
+							} else {
+								$zip = $response->postal_code;
+							}
+							$value = $zip;
 						} else {
-							$zip = $response->postal_code;
+							$value = "30306";
 						}
+						////_log("zip=".$zip."\n");
+					}
+					if (trim(strtolower($input)) == trim(strtolower($field))) {
+						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
+						    $matched=true;
+						}
+<<<<<<< HEAD
 						$value = $zip;
 						//_log("zip=".$zip."\n");
+=======
+
+>>>>>>> master
 					}
 
 				}
+
 			}
 		}
-		_log("post transformed and returned: " . print_r($post, true));
+		
+		if($matched){
+		    $submission[$input] .= "match";
+		    $submission['matchonly']=true;
+		}
+		//_log("post transformed and returned: " . print_r($post, true));
 		return $submission;
 	}
 
@@ -298,7 +524,7 @@ settings_fields('pluginPage');
 	}
 	public function adjust_response($body, $refs, $sid, $submission, $service) {
 
-		_log("refs that are passed: " . print_r($refs, true));
+		//_log("refs that are passed: " . print_r($refs, true));
 
 		//$refs['attach'] = 'custom message in email';
 		if (isset($service['confirmation']) && !empty($service['confirmation'])) {
@@ -308,17 +534,17 @@ settings_fields('pluginPage');
 			}
 			$submission_str .= "</div>";
 			$_response_message[] = $submission_str;
-			_log("showing submission");
+			//_log("showing submission");
 		}
 		if (isset($service['success-results']) && !empty($service['success-results'])) {
 			$str = "<div class='service-title'>Service: " . $service['name'] . "</div><div class='submissions'>";
 
-			_log("parse format: " . print_r($service['success-parsed-format'], true));
+			//_log("parse format: " . print_r($service['success-parsed-format'], true));
 
 			switch ($service['success-parsed-format'][0]) {
 				case 'XML':
 
-					_log("parsing xml response");
+					//_log("parsing xml response");
 					$xmldoc = new DOMDocument();
 					$xmldoc->loadXML($body);
 
@@ -338,12 +564,12 @@ settings_fields('pluginPage');
 
 			$str .= "</div>";
 			$_response_message[] = $str;
-			_log("showing results");
+			//_log("showing results");
 		}
 		$new_message = implode("\n", $_response_message);
 		$combined_message = $refs['message'] . $new_message;
 		$refs['message'] = $combined_message;
-		_log("refs are now: " . print_r($refs, true));
+		//_log("refs are now: " . print_r($refs, true));
 	}
 
 	public function use_form($result, $form, $service_id, $service_forms) {
@@ -363,20 +589,20 @@ settings_fields('pluginPage');
 			'timeout' => empty($service['timeout']) ? self::DEFAULT_TIMEOUT : $service['timeout']
 			, 'body' => $args['body']);
 
-		_log("bypass_args" . print_r($args['body'], true));
+		//_log("bypass_args" . print_r($args['body'], true));
 		if (isset($service['conditional']) && !empty($service['conditional'])) {
-			_log("conditional triggered");
+			//_log("conditional triggered");
 			if (isset($service['conditional-field']) && !empty($service['conditional-field'])) {
-				_log("conditional field present: " . $service['conditional-field'] . " " . $submission[$service['conditional-field']]);
+				//_log("conditional field present: " . $service['conditional-field'] . " " . $submission[$service['conditional-field']]);
 				if (isset($service['conditional-match']) && !empty($service['conditional-match'])) {
-					_log("conditional match present:" . $service['conditional-match']);
-					_log("submission: " . print_r($submission, true));
+					//_log("conditional match present:" . $service['conditional-match']);
+					//_log("submission: " . print_r($submission, true));
 					if (trim(strtolower($service['conditional-match'])) !== trim(strtolower($submission[$service['conditional-field']]))) {
-						_log("NO MATCH");
+						//_log("NO MATCH");
 						$response = array('headers' => array(), 'body' => '', 'response' => array('code' => 200, 'message' => 'OK'), 'cookies' => array(), 'response_bypass' => 'Conditional Rule not triggered. %s = %s ');
 						return $response;
 					} else {
-						_log("MATCH");
+						//_log("MATCH");
 
 						return $post_args;
 					}
@@ -396,9 +622,18 @@ settings_fields('pluginPage');
             <div class="inside">
 <?php $field = 'trigger';?>
                 <div class="field">
-                    <label for="<?php echo $field, '-', $eid?>"><?php _e('Trigger remote posting on Success?', $P);?></label>
+                    <label for="<?php echo $field . '-', $eid?>"><?php _e('Trigger remote posting on Success?', $P);?></label>
                     <input id="<?php echo $field, '-', $eid?>" type="checkbox" class="checkbox" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="yes"<?php echo isset($entity[$field]) ? ' checked="checked"' : ''?> />
                     <em class="description"><?php _e('If the success string validates, do you want to trigger another 3rd Party service posting? If checked, please select the service(s) you wish to trigger.', $P);?></em>
+                </div>
+<?php $field = 'trigger-method';?>
+                <div class="field">
+                    <label for="<?php echo $field, '-', $eid?>"><?php _e('Trigger Method', $P);?></label>
+                    <select id="<?php echo $field, '-', $eid?>" name="<?php echo $P, '[', $eid, '][', $field, ']">';?>
+                    <option value="GET" <?php if ($entity && $entity['trigger-method'] == 'GET'): ?>selected="selected" <?php endif;?>>GET</option>
+                    <option value="POST" <?php if ($entity && $entity['trigger-method'] == 'POST'): ?>selected="selected" <?php endif;?>>POST</option>
+                    </select
+                    <em class="description"><?php _e('Select the posting method, either GET or POST.', $P);?></em>
                 </div>
 <?php $field = 'triggered-services';?>
                 <div class="field">
@@ -413,7 +648,7 @@ foreach ($services as $sid => $s) {
 					$triggered = array();
 				}
 				?>
-                                <option <?php if ($entity && in_array($sid, $triggered)):?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
+                                <option <?php if ($entity && in_array($sid, $triggered)): ?>selected="selected" <?php endif;?>value="<?php echo esc_attr($sid);?>"><?php echo esc_html($s['name']);?></option>
 <?php
 }
 		}//	foreach
@@ -516,6 +751,67 @@ foreach ($services as $sid => $s) {
                 </div>
             </div>
         </fieldset>
+
+        <fieldset><legend><span><?php _e('Address Validation', $P);?></span></legend>
+            <div class="field">
+<?php $field = 'address_validation';?>
+                <label for="<?php echo $field, '-', $eid?>"><?php _e('Validate Address?', $P);?></label>
+                <input id="<?php echo $field, '-', $eid?>" type="checkbox" data-actn="toggle-sibling" data-after=".conditional-field-match" data-rel=".postbox" class="checkbox " name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="yes"<?php echo isset($entity[$field]) ? ' checked="checked"' : ''?> />
+                <em class="description"><?php _e('Submit address for validation', $P);?></em>
+            </div>
+
+             <div class="validation-address-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-address-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Address Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+          <div class="validation-address2-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-address2-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Address2 Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+             <div class="validation-city-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-city-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('City Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+            <div class="validation-state-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-state-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('State Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+
+             <div class="validation-zip-field">
+                <div class="inside">
+                    <div class="field">
+<?php $field = 'validation-zip-field';?>
+                        <label for="<?php echo $field, '-', $eid?>"><?php _e('Zip Field Name', $P);?></label>
+                        <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
         <fieldset><legend><span><?php _e('Confirmation Page', $P);?></span></legend>
             <div class="field">
 <?php $field = 'confirmation';?>
@@ -534,9 +830,9 @@ foreach ($services as $sid => $s) {
 <?php $field = 'success-parsed-format';?>
                     <label for="<?php echo $field, '-', $eid?>"><?php _e('Response Format', $P);?></label>
                     <select class="single" id="<?php echo $field, '-', $eid?>" name="<?php echo $P;?>[<?php echo $eid?>][success-parsed-format][]">
-                        <option <?php if ($entity && $entity[$field] == 'XML'):?>selected="selected" <?php endif;?>value="XML">XML</option>
-                        <option <?php if ($entity && $entity[$field] == 'JSON'):?>selected="selected" <?php endif;?>value="JSON">JSON</option>
-                        <option <?php if ($entity && $entity[$field] == 'RAW'):?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
+                        <option <?php if ($entity && $entity[$field] == 'XML'): ?>selected="selected" <?php endif;?>value="XML">XML</option>
+                        <option <?php if ($entity && $entity[$field] == 'JSON'): ?>selected="selected" <?php endif;?>value="JSON">JSON</option>
+                        <option <?php if ($entity && $entity[$field] == 'RAW'): ?>selected="selected" <?php endif;?>value="RAW">Raw Text</option>
                     </select>
                 </div>
             </div>
@@ -552,9 +848,9 @@ foreach ($services as $sid => $s) {
 <?php
 }
 
-	function remote_success($form, $callback_results, $service, $submission) {
+	function remote_success($form, $callback_results, $service, $submission,$success=true) {
 
-		_log("let's check for triggered services: " . print_r($service, true));
+		//_log("let's check for triggered services: " . print_r($service, true));
 		$first_form = $form;
 		if (isset($service['conditional']) && !empty($service['conditional'])) {
 			return $form;
@@ -563,22 +859,23 @@ foreach ($services as $sid => $s) {
 			if (isset($service['trigger']) && !empty($service['trigger'])) {
 				if (isset($service['triggered-services']) && is_array($service['triggered-services'])) {
 					$services = $this->get_services();
-					_log("all services" . print_r($services, true));
-					foreach ($service['triggered-services'] as $t => $sid) {
-						_log("let's send the triggered post");
-						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
-
-						_log("calling send submission with " . print_r($submission, true));
-					}
-
-					_log("Success Received. Triggering service for post: " . print_r($submission, true));
+					//_log("all services" . print_r($services, true));
+                    if($success){
+    					foreach ($service['triggered-services'] as $t => $sid) {
+    						_log("let's send the triggered post");
+    						$this->send_submission($services[$sid], $form, $submission, $sid, $callback_results);
+                            
+    						//_log("calling send submission with " . print_r($submission, true));
+    					}
+                    }
+					//_log("Success Received. Triggering service for post: " . print_r($submission, true));
 
 					return $form;
 				} else {
 					return $form;
 				}
 			} else {
-				_log("callback results: " . print_r($callback_results, true) . "bam");
+				//_log("callback results: " . print_r($callback_results, true) . "bam");
 
 				return $first_form;
 			}
@@ -618,12 +915,12 @@ foreach ($services as $sid => $s) {
 //---	get_settings
 
 	private function send_submission($service, $form, $submission, $sid, $callback_results) {
-		_log("hey");
+		//_log("hey");
 		$debug = $this->get_settings();
 		$post = array();
 
 		$service['separator'] = $debug['separator']; // alias here for reporting
-		_log("mapping for service: " . print_r($service, true));
+		//_log("mapping for service: " . print_r($service, true));
 		//find mapping
 		foreach ($service['mapping'] as $mid => $mapping) {
 			$third = $mapping[self::PARAM_3RD];
@@ -652,7 +949,7 @@ foreach ($services as $sid => $s) {
 				$post[$third] = $input;
 			}
 		}// foreach mapping
-		_log("submission-:" . print_r($submission, true));
+		//_log("submission-:" . print_r($submission, true));
 		//extract special tags;
 		$post = apply_filters(self::N . '_service_filter_post_' . $sid, $post, $service, $form);
 		$post = apply_filters(self::N . '_service_filter_post', $post, $service, $form, $sid, $submission);
@@ -670,7 +967,7 @@ foreach ($services as $sid => $s) {
 			default:
 				// otherwise, find the arrays and implode
 				foreach ($post as $f => &$v) {
-					###_log('checking array', $f, $v, is_array($v) ? 'array' : 'notarray');
+					###//_log('checking array', $f, $v, is_array($v) ? 'array' : 'notarray');
 
 					if (is_array($v)) {
 						$v = implode($service['separator'], $v);
@@ -704,20 +1001,41 @@ foreach ($services as $sid => $s) {
 			foreach ($callback_results as $k => &$v) {
 				$param_ref[$k] = &$v;
 			}
-			$form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
+			$form = apply_filters(self::N . '_remote_success', $form, $callback_results, $service, $submission, false);
 			$can_hook = false;
 		} else {
 			//@see http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/
-			_log("sending triggered" . print_r($post_args, true));
-			$response = wp_remote_post($service['url'], $post_args);
+			
+			//_log("Submission before triggered post: ".print_r($submission,true));
+			
+			if(isset($submission['matchonly']) && $submission['matchonly']==1){
+    			if (isset($service['trigger-method']) && $service['trigger-method'] != "") {
+    				if ($service['trigger-method'] == 'GET') {
+    					$trigger_querystring = http_build_query($post_args['body']);
+    					$response = wp_remote_get($service['url'] . "?" . $trigger_querystring);
+    					_log("Sending Triggered post using GET to " . $service['url'] . "?" . $trigger_querystring);
+    					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+    				} else {
+    					$response = wp_remote_post($service['url'], $post_args);
+    					_log("Sending Triggered post using POST to " . $service['url'] . print_r($post_args, true));
+    					_log('Trigger Post Response from ' . $service['url'] . print_r($response, true));
+    				}
+    			} else {
+    				$response = wp_remote_post($service['url'], $post_args);
+    			}
+			    
+			}else{
+			    _log("Address Validation failure prevented from triggering second posting");
+			}
+
 		}
 
-		//_log(__LINE__.':'.__FILE__. '	response from '.$service['url']. print_r($response,true));
+		
 		//if something went wrong with the remote-request "physically", warn
 		if (!is_array($response)) {
 			//new occurrence of WP_Error?????
 			$response_array = array('safe_message' => 'error object', 'object' => $response);
-			$form = $Forms3rdPartyIntegration::on_response_failure($form, $debug, $service, $post_args, $response_array);
+			//$form = $Forms3rdPartyIntegration::on_response_failure($form, $debug, $service, $post_args, $response_array);
 			$can_hook = false;
 		} elseif (!$response || !isset($response['response']) || !isset($response['response']['code']) || 200 != $response['response']['code']) {
 			$response['safe_message'] = 'physical request failure';
@@ -753,7 +1071,7 @@ foreach ($services as $sid => $s) {
 		}
 
 		if ($can_hook && isset($service['hook']) && $service['hook']) {
-			//_log('performing hooks for:', self::N.'_service_'.$sid);
+			////_log('performing hooks for:', self::N.'_service_'.$sid);
 			//hack for pass-by-reference
 			//holder for callback return results
 			//$callback_results = array('success'=>false, 'errors'=>false, 'attach'=>'', 'message' => '');
@@ -773,7 +1091,7 @@ foreach ($services as $sid => $s) {
 			do_action(self::N . '_service_a' . $sid, $response['body'], $param_ref);
 			do_action(self::N . '_service', $response['body'], $param_ref, $sid, $post, $service, $submission);
 
-			###_log('after success', $form);
+			###//_log('after success', $form);
 			//check for callback errors; if none, then attach stuff to message if requested
 			if (!empty($callback_results['errors'])) {
 				$failMessage = array(
@@ -782,7 +1100,7 @@ foreach ($services as $sid => $s) {
 					, 'errors' => $callback_results['errors']);
 				$form = apply_filters(self::N . '_remote_failure', $form, $debug, $service, $post_args, $failMessage);
 			} else {
-				_log('checking for attachments on triggered submit' . print_r($callback_results, true));
+				//_log('checking for attachments on triggered submit' . print_r($callback_results, true));
 				$form = apply_filters(self::N . '_remote_success', $form, $callback_results, $service, $submission, true);
 			}
 		}// can hook
@@ -833,29 +1151,6 @@ if (!function_exists('_log')) {
 }
 new Forms3rdpartySnapGen();
 
-add_action('wp_ajax_validate_address', 'validate_address_callback');
-add_action('wp_ajax_nopriv_validate_address', 'validate_address_callback');
-
-function validate_address_callback() {
-
-	$street = (isset($_REQUEST['street']) ? $_REQUEST['street'] : false);
-	$unit = (isset($_REQUEST['unit']) ? $_REQUEST['unit'] : false);
-	$zip = (isset($_REQUEST['zip']) ? $_REQUEST['zip'] : false);
-
-	$url = "https://bpi.briteverify.com/addresses.json?";
-	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
-
-	$response = wp_remote_get($url . $qs);
-
-	if ($response['response']['code'] != "200") {
-		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
-	} else {
-
-		echo $response['body'];
-	}
-	echo die();
-}
-
 function enqueue_select2_jquery() {
 	$plugins_url = plugins_url();
 	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
@@ -867,3 +1162,222 @@ function enqueue_select2_jquery() {
 }
 
 add_action('admin_enqueue_scripts', 'enqueue_select2_jquery');
+add_action('wp_ajax_validate_address', 'validate_address_callback');
+add_action('wp_ajax_nopriv_validate_address', 'validate_address_callback');
+<<<<<<< HEAD
+=======
+add_action('wp_ajax_validate_email', 'validate_email_callback');
+add_action('wp_ajax_nopriv_validate_email', 'validate_email_callback');
+add_shortcode('email_validate', 'email_validate_shortcode');
+add_shortcode('address_validate', 'address_validate_shortcode');
+
+function validate_email_callback() {
+
+	$email = (isset($_REQUEST['email']) ? $_REQUEST['email'] : false);
+
+	$url = "https://bpi.briteverify.com/emails.json?";
+	$qs = "address=" . urlencode($email) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833";
+
+	$response = wp_remote_get($url . $qs);
+
+	if ($response['response']['code'] != "200") {
+		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
+	} else {
+
+		echo $response['body'];
+	}
+	echo die();
+}
+>>>>>>> master
+
+function validate_address_callback() {
+
+	$street = (isset($_REQUEST['street']) ? $_REQUEST['street'] : false);
+	$unit = (isset($_REQUEST['unit']) ? $_REQUEST['unit'] : false);
+	$zip = (isset($_REQUEST['zip']) ? $_REQUEST['zip'] : false);
+<<<<<<< HEAD
+=======
+
+	$response = validate_address($street, $unit, $zip);
+
+	if ($response['response']['code'] != "200") {
+		echo '{"status":"invalid","error":"Response code: ' . $response["response"]["code"] . ' -- ' . $response["response"]["message"] . '"}';
+	} else {
+
+		echo $response['body'];
+	}
+	echo die();
+}
+>>>>>>> master
+
+function validate_address($street, $unit, $zip) {
+	$url = "https://bpi.briteverify.com/addresses.json?";
+	$qs = "address[street]=" . urlencode($street) . "&address[unit]=" . urlencode($unit) . "&address[zip]=" . urlencode($zip) . "&apikey=a2d8cb8f-cae7-4b74-bd32-cd5e1fe7d833&corrected=true";
+
+	$response = wp_remote_get($url . $qs);
+
+	return $response;
+
+}
+
+<<<<<<< HEAD
+function enqueue_select2_jquery() {
+	$plugins_url = plugins_url();
+	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
+	wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
+	wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
+	wp_enqueue_style('select2css');
+	wp_enqueue_script('select2');
+	// wp_enqueue_script('snapgen2');
+}
+=======
+function email_validate_shortcode($atts) {
+	$a = shortcode_atts(array(
+		'field_selector' => '#email',
+		'form_selector' => '.gform_wrapper form',
+		'submit_selector' => 'input[type=submit]',
+		'prevent_submit' => true,
+		'submit_text' => 'Submit',
+		'disabled_text' => 'Invalid Email',
+	), $atts);
+	ob_start();
+	?>
+	<script>
+		jQuery("document").ready(function($){
+
+			jQuery("<?php echo $a['field_selector'];?>").bind("blur",  function( e ) {
+				e.preventDefault();
+				validateEmailAddress(e);
+
+			});
+
+		});
+		function validateEmailAddress(e){
+				email=jQuery("<?php echo $a['field_selector'];?>").val();
+
+
+		email_data = {
+			'action':'validate_email',
+			'email':email
+		}
+
+		jQuery.ajax({
+					url: "/wp-admin/admin-ajax.php",
+					data: email_data,
+					dataType: "JSON",
+					type: "GET",
+					success: function(response){
+
+
+					if(response.status == "invalid"){
+						alert("Email Address Error: "+response.error);
+<?php
+if ($a['prevent_submit']) {
+		?>
+							jQuery("<?php echo $a['submit_selector'];?>").prop("disabled",true);
+							jQuery("<?php echo $a['submit_selector'];?>").val("<?php echo $a['disabled_text'];?>");
+							jQuery("<?php echo $a['submit_selector'];?>").addClass("hover");
+<?php
+}?>
+}else{
+<?php
+
+	if ($a['prevent_submit']) {
+		?>
+							jQuery("<?php echo $a['submit_selector'];?>").prop("disabled",false);
+							jQuery("<?php echo $a['submit_selector'];?>").val("<?php echo $a['submit_text'];?>");
+							jQuery("<?php echo $a['submit_selector'];?>").removeClass("hover");
+<?php
+}?>
+}
+				}
+
+
+
+				});
+
+
+			}
+ 	</script>
+<?php
+
+	return ob_get_clean();
+
+}
+
+function address_validate_shortcode($atts) {
+	$a = shortcode_atts(array(
+		'form_selector' => '.gform_wrapper form',
+		'submit_selector' => 'input[type=submit]',
+		'prevent_submit' => true,
+		'submit_text' => 'Submit',
+		'disabled_text' => 'Invalid Address',
+		'address_selector' => '#address',
+		'address2_selector' => '#address2',
+		'zip_selector' => '#zip',
+		'city_selector' => '#city',
+		'state_selector' => '#state',
+	), $atts);
+	ob_start();
+	?>
+<script>
+		jQuery("document").ready(function($){
+
+			jQuery(".gform_wrapper form").bind("submit.address",  function( e ) {
+				e.preventDefault();
+				validateAddress(e);
+
+			});
+
+		});
+
+
+		function validateAddress(e){
+			form_id = jQuery("<?php echo $a['form_selector'];?>").attr("id").replace("gform_","");
+			address=jQuery("<?php echo $a['address_selector'];?>").val();
+			address2=jQuery("<?php echo $a['address2_selector'];?>").val();
+			zip = jQuery("<?php echo $a['zip_selector'];?>").val();
+
+
+			address_data = {
+				'action':'validate_address',
+				'street':address,
+				'unit':address2,
+				'zip':zip
+			}
+
+			jQuery.ajax({
+						url: "/wp-admin/admin-ajax.php",
+						data: address_data,
+						dataType: "JSON",
+						type: "GET",
+						success: function(response){
+
+
+						if(response.status == "invalid"){
+							alert("Address was not found. Message: "+response.error);
+							 submitting = "gf_submitting_"+form_id;
+							 eval(submitting + "=false");
+							e.preventDefault();
+							return false;
+						}else{
+							jQuery("<?php echo $a['city_selector'];?>").val(response.city);
+							jQuery("<?php echo $a['state_selector'];?>").val(response.state);
+							jQuery("<?php echo $a['form_selector'];?>")[0].submit();
+							return true;
+						}}
+
+
+
+			});
+
+
+		}
+ </script>
+
+<?php
+
+	return ob_get_clean();
+>>>>>>> master
+
+}

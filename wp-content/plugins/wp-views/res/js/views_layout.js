@@ -2,6 +2,7 @@ var current_index_wpv = -1;
 var current_timer_wpv = -1;
 var original_color_wpv = Array();
 var highlight_color_wpv = '#aaf8aa';
+var HTMLEditor = [];
 
 function on_delete_wpv(index) {
     index = Number(index);
@@ -73,7 +74,7 @@ function wpv_update_layout_rows() {
 		
 		var next_input = 2;
         if (Field_controls.children('div').length !== 0) {
-			// This is the select box for Content template or views.
+			// This is the select box for View template or views.
 			var id = Field_controls.children('div').attr('id');
 			id = id.substring(0, id.lastIndexOf('_') + 1);
             Field_controls.children('div').attr('id', id + row);
@@ -114,7 +115,7 @@ function on_add_field_wpv(menu, name, text) {
 	var types_field_name = '';
 	var types_field_data = '';
 
-    if (menu == 'Content template') {
+    if (menu == 'View template') {
         view_template = text;
         menu = '';
         name = 'Body';
@@ -213,7 +214,7 @@ function on_add_field_wpv(menu, name, text) {
     show_view_and_view_template_controls();
     
     if (view_template != '') {
-        // We're adding a Content template. Select in the drop down.
+        // We're adding a view template. Select in the drop down.
         select_view_template_in_dropdown(temp_index, view_template);
     }
 
@@ -249,15 +250,21 @@ function on_add_field_wpv_types_callback_action(shortcode, params) {
 }
 
 jQuery(document).ready(function($){
+    HTMLEditor['wpv_layout_meta_html_content'] = CodeMirror.fromTextArea(document.getElementById("wpv_layout_meta_html_content"), {mode: "myshortcodes", tabMode: "indent", lineWrapping: true, lineNumbers: true, autofocus:true});
+    HTMLEditor['wpv_layout_meta_html_content'].refresh();
+    HTMLEditor['wpv_layout_meta_html_content'].focus();
     
-    // Since 1.3 we're using icl_editor to handle codemirror
-    var codemirror_views = icl_editor.codemirror('wpv_layout_meta_html_content', true);
+    jQuery('#wpv_layout_meta_html_content').bind('paste', function(e){
+        if(HTMLCodeMirrorActive){
+            InsertAtCursor(this.value, 'wpv_layout_meta_html_content');
+        }
+    });
     
     show_view_and_view_template_controls();
     
     // changed for correct work with CodeMirror
     // var c = jQuery('textarea#wpv_layout_meta_html_content').val();
-    var c = codemirror_views.getValue();
+    var c = HTMLEditor['wpv_layout_meta_html_content'].getValue();
     
     if (c == '') {
 
@@ -407,17 +414,16 @@ function on_generate_wpv_layout(force) {
     
     // changed for correct work with CodeMirror
     // c = jQuery('textarea#wpv_layout_meta_html_content').val();
-    var codemirror_views = icl_editor.codemirrorGet('wpv_layout_meta_html_content');
-    c = codemirror_views.getValue();    
+    c = HTMLEditor['wpv_layout_meta_html_content'].getValue();    
     
     if (force || check_previous_layout_has_changed(c)) {
     
         c = add_wpv_layout_data_to_content(c, data);
         // changed for correct work with CodeMirror
         //jQuery('textarea#wpv_layout_meta_html_content').val(c);
-        codemirror_views.setValue(c);
-        codemirror_views.refresh();
-        codemirror_views.focus();
+        HTMLEditor['wpv_layout_meta_html_content'].setValue(c);
+        HTMLEditor['wpv_layout_meta_html_content'].refresh();
+        HTMLEditor['wpv_layout_meta_html_content'].focus();
     }
 
     // save the generated value so we can compare later.
@@ -476,6 +482,7 @@ function add_wpv_layout_data_to_content(c, data) {
 }
 
 function wpv_render_unformatted_layout(fields) {
+    
     var body = "";
     for ( var i = 0; i < fields.length; i++ ) {
         body += fields[i][0];
@@ -518,7 +525,7 @@ function wpv_render_table_layout(fields, cols) {
 }
 
 function wpv_render_table_of_fields_layout(fields) {
-    console.log(fields);
+    
     var output = "   <table width=\"100%\">\n";
 
     if (jQuery('#_wpv_layout_include_field_names').attr('checked')) {

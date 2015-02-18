@@ -3,10 +3,10 @@
  *
  * Custom taxonomies form
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/includes/custom-taxonomies-form.php $
- * $LastChangedDate: 2014-05-08 21:13:42 +0800 (Thu, 08 May 2014) $
- * $LastChangedRevision: 22156 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/custom-taxonomies-form.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -234,7 +234,7 @@ function wpcf_admin_custom_taxonomies_form() {
         'separate_items_with_commas' => array('title' => __( 'Separate %s with commas',
                     'wpcf' ), 'description' => __( "The separate item with commas text used in the taxonomy meta box. This string isn't used on hierarchical taxonomies. Default is __( 'Separate tags with commas' ), or null.",
                     'wpcf' )),
-        'add_or_remove_items' => array('title' => __( 'Add or remove %s', 'wpcf' ), 'description' => __( "the add or remove items text and used in the meta box when JavaScript is disabled. This string isn't used on hierarchical taxonomies. Default is __( 'Add or remove tags' ) or null.",
+        'add_or_remove_items' => array('title' => __( 'Add or remove %s', 'wpcf' ), 'description' => __( "the add or remove items text used in the meta box when JavaScript is disabled. This string isn't used on hierarchical taxonomies. Default is __( 'Add or remove tags' ) or null.",
                     'wpcf' )),
         'choose_from_most_used' => array('title' => __( 'Choose from the most used %s',
                     'wpcf' ), 'description' => __( "The choose from most used text used in the taxonomy meta box. This string isn't used on hierarchical taxonomies. Default is __( 'Choose from the most used tags' ) or null.",
@@ -259,8 +259,7 @@ function wpcf_admin_custom_taxonomies_form() {
     );
     $form['table-6-open'] = array(
         '#type' => 'markup',
-        '#markup' => '<table id="wpcf-types-form-supports-table" class="wpcf-types-form-table widefat"><thead><tr><th>' . __( 'Advanced',
-                'wpcf' ) . '</th></tr></thead><tbody><tr><td>',
+        '#markup' => '<table id="wpcf-types-form-supports-table" class="wpcf-types-form-table widefat"><thead><tr><th>' . __( 'Options', 'wpcf' ) . '</th></tr></thead><tbody><tr><td>',
     );
     $form['make-hierarchical'] = array(
         '#type' => 'radios',

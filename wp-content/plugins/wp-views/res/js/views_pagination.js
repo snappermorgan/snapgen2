@@ -1,20 +1,3 @@
-function wpv_check_transition_duration(){
-	jQuery('input.transition-duration').each(function(){
-		if (jQuery(this).val() == "" || jQuery(this).val() == "0" || !jQuery.isNumeric(jQuery(this).val())) {
-			jQuery(this).parent().find('.duration-error').show();
-		} else {
-			jQuery(this).parent().find('.duration-error').hide();
-		}
-	});
-	jQuery('input.transition-duration').bind('keyup change', function() {
-		if (jQuery(this).val() == "" || jQuery(this).val() == "0" || !jQuery.isNumeric(jQuery(this).val())) {
-			jQuery(this).parent().find('.duration-error').show();
-		} else {
-			jQuery(this).parent().find('.duration-error').hide();
-		}
-	});
-}
-
 function wpv_get_pagination_code() {
     var controls = ''
 
@@ -105,7 +88,6 @@ function wpv_pagination_edit() {
     preload_pages = jQuery('input[name=_wpv_settings\\[pagination\\]\\[preload_pages\\]]').attr('checked');
     ajax_pagination = jQuery('select[name=_wpv_settings\\[ajax_pagination\\]\\[\\]]:checked');
     ajax_pagination_style = jQuery('select[name=_wpv_settings\\[ajax_pagination\\]\\[style\\]]').val();
-    ajax_pagination_duration = jQuery('input[name=_wpv_settings\\[ajax_pagination\\]\\[duration\\]]').val();
     pagination_preload_images = jQuery('input[name=_wpv_settings\\[pagination\\]\\[preload_images\\]]').attr('checked');
     _wpv_settings_dummy_mode = jQuery('input[name=_wpv_settings_dummy_mode]:checked');
     spinner = jQuery('input[name=_wpv_settings\\[pagination\\]\\[spinner\\]]:checked');
@@ -113,27 +95,15 @@ function wpv_pagination_edit() {
     rollover_posts_per_page = jQuery('select[name=_wpv_settings\\[rollover\\]\\[posts_per_page\\]]').val();
     rollover_speed = jQuery('select[name=_wpv_settings\\[rollover\\]\\[speed\\]]').val();
     rollover_effect = jQuery('select[name=_wpv_settings\\[rollover\\]\\[effect\\]]').val();
-    rollover_duration = jQuery('input[name=_wpv_settings\\[rollover\\]\\[duration\\]]').val();
     rollover_include_page_selector = jQuery('input[name=_wpv_settings\\[rollover\\]\\[include_page_selector\\]]').attr('checked');
     rollover_include_prev_next_page_controls = jQuery('input[name=_wpv_settings\\[rollover\\]\\[include_prev_next_page_controls\\]]').attr('checked');
     rollover_preload_images = jQuery('input[name=_wpv_settings\\[rollover\\]\\[preload_images\\]]').attr('checked');
     
     jQuery('#wpv_pagination_admin_edit').show();
     jQuery('#wpv_pagination_admin_show').hide();
-    wpv_check_transition_duration();
 }
 
 function wpv_pagination_edit_ok() {
-	
-	var keep_edit = true;
-	
-	jQuery('input.transition-duration').each(function(){
-		if (jQuery(this).val() == "" || jQuery(this).val() == "0" || !jQuery.isNumeric(jQuery(this).val())) {
-			keep_edit = false;
-		}
-	});
-	
-	if (keep_edit) {
     
     var data = jQuery('#post').serialize();
     var add_data = '&action=wpv_pagination&wpv_nonce='+jQuery('#wpv_pagination_nonce').attr('value');
@@ -147,13 +117,10 @@ function wpv_pagination_edit_ok() {
     
     jQuery('#wpv_pagination_admin_show').show();
     jQuery('#wpv_pagination_admin_edit').hide();
-    jQuery('html,body').animate({scrollTop:jQuery('#wpv_settings').offset().top-25}, 1500);
     
     on_generate_wpv_filter(false);
     
     show_view_changed_message();
-    
-	}
 
 }
 
@@ -216,9 +183,6 @@ function wpv_pagination_edit_cancel() {
     } else {
         jQuery('input[name=_wpv_settings\\[rollover\\]\\[preload_images\\]]').removeAttr('checked');
     }
-    
-    jQuery('input[name=_wpv_settings\\[ajax_pagination\\]\\[duration\\]]').val(ajax_pagination_duration);
-    jQuery('input[name=_wpv_settings\\[rollover\\]\\[duration\\]]').val(rollover_duration);
     
     jQuery('#wpv_pagination_admin_show').show();
     jQuery('#wpv_pagination_admin_edit').hide();

@@ -2,10 +2,10 @@
 /*
  * Fields and groups form functions.
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/includes/fields-form.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/includes/fields-form.php $
+ * $LastChangedDate: 2014-10-23 10:33:39 +0000 (Thu, 23 Oct 2014) $
+ * $LastChangedRevision: 1012677 $
+ * $LastChangedBy: iworks $
  *
  */
 require_once WPCF_EMBEDDED_ABSPATH . '/classes/validate.php';
@@ -319,7 +319,8 @@ function wpcf_admin_fields_form() {
                         . '&amp;page=wpcf-edit'
                         . '&amp;field=' . $field['id'] ) . '&amp;_wpnonce='
                 . wp_create_nonce( 'fields_insert_existing' ) . '" '
-                . 'class="wpcf-fields-add-ajax-link button-secondary" onclick="jQuery(this).parent().fadeOut();">'
+                . 'class="wpcf-fields-add-ajax-link button-secondary" onclick="jQuery(this).parent().fadeOut();" '
+                . ' data-slug="' . $field['id'] . '">'
                 . htmlspecialchars( stripslashes( $field['name'] ) ) . '</a>'
                 . '<a href="' . admin_url( 'admin-ajax.php'
                         . '?action=wpcf_ajax'
@@ -768,8 +769,7 @@ function wpcf_admin_fields_form() {
     wpcf_admin_add_js_settings( 'wpcf_filters_association_all_templates',
             '\'' . __( 'any', 'wpcf' ) . '\'' );
 
-    $additional_filters = apply_filters( 'wpcf_fields_form_additional_filters',
-            array(), $update );
+    $additional_filters = apply_filters( 'wpcf_fields_form_additional_filters', array(), $update );
     $form = $form + $additional_filters;
 
     $form['supports-table-close'] = array(

@@ -3,10 +3,10 @@
  * Use this file only for scripts needed in full version.
  * Before moving from embedded JS - make sure it's needed only here.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/resources/js/basic.js $
- * $LastChangedDate: 2014-07-04 18:19:40 +0800 (Fri, 04 Jul 2014) $
- * $LastChangedRevision: 24633 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/resources/js/basic.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 jQuery(document).ready(function($){

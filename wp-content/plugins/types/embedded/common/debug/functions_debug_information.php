@@ -2,10 +2,10 @@
 /**
   * produce debug information
   *
-  * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/debug/functions_debug_information.php $
-  * $LastChangedDate: 2014-08-12 23:40:07 +0800 (Tue, 12 Aug 2014) $
-  * $LastChangedRevision: 25886 $
-  * $LastChangedBy: marcin $
+  * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/debug/functions_debug_information.php $
+  * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+  * $LastChangedRevision: 1027712 $
+  * $LastChangedBy: iworks $
   *
   */
 
@@ -132,23 +132,28 @@ class ICL_Debug_Information
 	}
 
 
-	function do_json_encode($data) {
-		$json_options = 0;
-		if (defined('JSON_HEX_TAG')) {
-			$json_options += JSON_HEX_TAG;
-		}
-		if (defined('JSON_HEX_APOS')) {
-			$json_options += JSON_HEX_APOS;
-		}
-		if (defined('JSON_HEX_QUOT')) {
-			$json_options += JSON_HEX_QUOT;
-		}
-		if (defined('JSON_HEX_AMP')) {
-			$json_options += JSON_HEX_AMP;
-		}
-		if (defined('JSON_UNESCAPED_UNICODE')) {
-			$json_options += JSON_UNESCAPED_UNICODE;
-		}
-		return json_encode($data, $json_options);
-	}
+    function do_json_encode($data)
+    {
+        if (version_compare(phpversion(), '5.3.0', '<')) {
+            return json_encode($data);
+        }
+        $json_options = 0;
+        if (defined('JSON_HEX_TAG')) {
+            $json_options += JSON_HEX_TAG;
+        }
+        if (defined('JSON_HEX_APOS')) {
+            $json_options += JSON_HEX_APOS;
+        }
+        if (defined('JSON_HEX_QUOT')) {
+            $json_options += JSON_HEX_QUOT;
+        }
+        if (defined('JSON_HEX_AMP')) {
+            $json_options += JSON_HEX_AMP;
+        }
+        if (defined('JSON_UNESCAPED_UNICODE')) {
+            $json_options += JSON_UNESCAPED_UNICODE;
+        }
+        return json_encode($data, $json_options);
+    }
+
 }

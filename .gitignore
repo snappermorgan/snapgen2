@@ -1,0 +1,7 @@
+git1422.php
+/nbproject
+/nbproject/*/**
+/wp-content/debug.log
+/wp-content/debug*.log
+/wp-content/debug.log*
+/wp-content/uploads

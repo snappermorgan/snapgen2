@@ -2,10 +2,10 @@
 
 /**
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.taxonomy.php $
- * $LastChangedDate: 2014-09-18 09:37:16 +0000 (Thu, 18 Sep 2014) $
- * $LastChangedRevision: 992466 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.taxonomy.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -104,7 +104,7 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
             '#title' => '',
             '#description' => '',
             '#name' => "new_tax_button_".$taxonomy,
-            '#value' => esc_attr( $attributes['add_text'] ),
+            '#value' => apply_filters('toolset_button_add_text', esc_attr( $attributes['add_text'] )),
             '#attributes' => array(
 				'class' => $use_bootstrap ? 'btn btn-default wpt-taxonomy-add-new js-wpt-taxonomy-add-new' : 'wpt-taxonomy-add-new js-wpt-taxonomy-add-new',
 				'data-taxonomy' => $taxonomy,
@@ -132,12 +132,12 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
 			'#title' => '',
 			'#description' => '',
 			'#name' => "sh_".$taxonomy,
-			'#value' => esc_attr( $attributes['show_popular_text'] ),
+			'#value' => apply_filters('toolset_button_show_popular_text', esc_attr( $attributes['show_popular_text'] )),
 			'#attributes' => array(
 				'class' => $use_bootstrap ? 'btn btn-default popular wpt-taxonomy-popular-show-hide js-wpt-taxonomy-popular-show-hide' : 'popular wpt-taxonomy-popular-show-hide js-wpt-taxonomy-popular-show-hide',
 				'data-taxonomy' => $this->getName(),
-				'data-show-popular-text' => esc_attr( $attributes['show_popular_text'] ),
-				'data-hide-popular-text' => esc_attr( $attributes['hide_popular_text'] ),
+				'data-show-popular-text' => apply_filters('toolset_button_show_popular_text', esc_attr( $attributes['show_popular_text'] )),
+				'data-hide-popular-text' => apply_filters('toolset_button_hide_popular_text', esc_attr( $attributes['hide_popular_text'] )),
 				'data-after-selector' => 'js-show-popular-after',
 				'style' => $show ? '' : 'display:none;'
 			),
@@ -222,14 +222,18 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
 			);
 		}
 
-        $style = '';
         foreach($terms as $term) {
+            $style = '';
             if ( $add_sizes ) {
-                $font_size = ( ( $term->count - $min ) * 10 ) / ( $max - $min ) + 5;
-                $style = sprintf( ' style="font-size:1.%dem;"', $font_size );
+                $font_size = ( ( $term->count - $min ) * 10 ) / ( $max - $min ) + 8;
+                $style = sprintf( ' style="font-size:%fem;"', $font_size/10 );
             }
+            $clases = array('wpt-taxonomy-popular-add', 'js-wpt-taxonomy-popular-add');
+            $clases[] = 'tax-'.$term->slug;
+            $clases[] = 'taxonomy-'.$this->getName().'-'.$term->term_id;
             $content .= sprintf(
-                '<a href="#" class="wpt-taxonomy-popular-add js-wpt-taxonomy-popular-add" data-slug="%s" data-name="%s" data-taxonomy="%s"%s>%s</a> ',
+                '<a href="#" class="%s" data-slug="%s" data-name="%s" data-taxonomy="%s"%s>%s</a> ',
+                implode(' ', $clases ),
                 $term->slug,
                 $term->name,
                 $this->getName(),

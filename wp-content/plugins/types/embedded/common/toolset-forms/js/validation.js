@@ -7,10 +7,10 @@
  *
  * @see class WPToolset_Validation
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/js/validation.js $
- * $LastChangedDate: 2014-09-12 17:57:24 +0800 (Fri, 12 Sep 2014) $
- * $LastChangedRevision: 27017 $
- * $LastChangedBy: francesco $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/js/validation.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 //var wptValidationData = {};

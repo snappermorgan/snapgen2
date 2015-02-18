@@ -2,10 +2,10 @@
 /*
  * Repetitive controller
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/common/tags/Views-1.6.4-CRED-1.3.2-Types-1.6.4-Acces-1.2.3/toolset-forms/classes/class.repetitive.php $
- * $LastChangedDate: 2014-07-03 15:27:50 +0800 (Thu, 03 Jul 2014) $
- * $LastChangedRevision: 24580 $
- * $LastChangedBy: juan $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.repetitive.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  * If field is repetitive
  * - queues repetitive CSS and JS

@@ -4,10 +4,10 @@
  * For now full and embedded version use this script.
  * Before moving full-version-only code - make sure it's not needed here.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.3/embedded/resources/js/basic.js $
- * $LastChangedDate: 2014-09-11 16:36:28 +0800 (Thu, 11 Sep 2014) $
- * $LastChangedRevision: 26949 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/resources/js/basic.js $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -202,6 +202,12 @@ jQuery(document).ready(function(){
         // Check field slugs unique
         passed = true;
         checkedArr = new Array();
+        /**
+         * first fill array with defined, but unused fields
+         */
+        jQuery('#wpcf-form-groups-user-fields .wpcf-fields-add-ajax-link:visible').each(function(){
+            checkedArr.push(jQuery(this).data('slug'));
+        });
         jQuery('.wpcf-forms-field-slug').each(function(index){
             var currentValue = jQuery(this).val().toLowerCase();
             if (currentValue != ''

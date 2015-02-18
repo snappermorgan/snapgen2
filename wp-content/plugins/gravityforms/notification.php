@@ -585,10 +585,10 @@ Class GFNotification {
                 <?php
                 $to_email = rgget("toType", $notification) == "email" ? rgget("to", $notification) : "";
                 ?>
-                <input type="text" name="gform_notification_to_email" id="gform_notification_to_email" value="<?php echo esc_attr($to_email) ?>" class="fieldwidth-1" />
+                <input type="text" name="gform_notification_to_email" id="gform_notification_to_email" value="<?php echo esc_attr($to_email) ?>" class="fieldwidth-2" />
 
                 <?php if(rgpost("gform_notification_to_type") == "email" && $is_invalid_email_to){ ?>
-                    <span class="validation_message"><?php _e("Please enter a valid email address", "gravityforms") ?></span>
+                    <span class="validation_message"><?php _e("Please enter a valid email address", "gravityforms") ?>.</span>
                 <?php } ?>
             </td>
             <?php echo $subsetting_close; ?>
@@ -862,7 +862,7 @@ Class GFNotification {
         foreach($emails as $email){
             $email = trim($email);
             $invalid_email = GFCommon::is_invalid_or_empty_email( $email );
-            $invalid_variable = !preg_match('/^({[^{]*?:(\d+(\.\d+)?)(:(.*?))?},? *)+$/', $email);
+            $invalid_variable = ! preg_match('/^({[^{]*?:(\d+(\.\d+)?)(:(.*?))?},? *)+$/', $email) && $email != '{admin_email}';
 
             if($invalid_email && $invalid_variable)
                 return false;
@@ -874,7 +874,7 @@ Class GFNotification {
     private static function is_valid_notification_to(){
         $is_valid =  (rgpost('gform_notification_to_type') == "routing" && self::is_valid_routing())
                             ||
-                            (rgpost('gform_notification_to_type') == "email" && (self::is_valid_notification_email($_POST["gform_notification_to_email"])) || $_POST["gform_notification_to_email"] == "{admin_email}")
+                            (rgpost('gform_notification_to_type') == "email" && (self::is_valid_notification_email($_POST["gform_notification_to_email"])))
                             ||
                             (rgpost('gform_notification_to_type') == "field" && (!rgempty("gform_notification_to_field")));
 

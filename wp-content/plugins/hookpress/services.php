@@ -15,7 +15,7 @@ function hookpress_ajax_get_fields() {
 			else
 				$fields[] = $arg;
 		}
-	  }
+	}
 
 	header("Content-Type: text/html; charset=UTF-8");
 

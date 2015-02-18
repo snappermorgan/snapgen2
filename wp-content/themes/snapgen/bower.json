@@ -1,0 +1,27 @@
+{
+  "name": "snapgen",
+  "version": "0.0.1",
+  "homepage": "https://github.com/snappermorgan/snapgen2",
+  "authors": [
+    "Clyde Morgan <snappermorgan@gmail.com>"
+  ],
+  "description": "Snapgen Theme",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-twbs": "~3.3.3",
+    "chosen_v1.3.0": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
+    "underscore": "~1.7.0",
+    "validationEngine": "~2.6.4"
+  }
+}

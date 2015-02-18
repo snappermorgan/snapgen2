@@ -11,42 +11,76 @@
 function reverse_lookup($phone = "7704145683", $test = false) {
 
 	$lookup = remote_call(array("type" => "phone", "payload" => array("phone" => $phone)), $test);
+	if (is_array($lookup) && isset($lookup['body'])) {
 
-	$lookup_array = json_decode($lookup['body']);
-	if (isset($lookup_array->results)) {
-		foreach ($lookup_array->results as $results_val) {
-			$results_phone[] = $results_val;
-		}
-
-		//echo "<h2>Results parsed</h2>";
-		$dictionaryData = $lookup_array->dictionary;
-		$count_obj = count($dictionaryData);
-
-		//let's see if best location is really best
-
-		$results = best_location($results_phone, $dictionaryData);
-
-		if ($results) {
-			//echo "<h2>returning best location</h2>";
-			return $results;
-		} else {
-			$backup_results = belongs_to($results_phone, $dictionaryData);
-			if ($backup_results) {
-				//echo "<h2>returning backup results</h2>";
-				return $backup_results;
-			} else {
-				//echo "<h2>returning nothing</h2>";
-				return false;
+		$lookup_array = json_decode($lookup['body']);
+		if (isset($lookup_array->results)) {
+			foreach ($lookup_array->results as $results_val) {
+				$results_phone[] = $results_val;
 			}
-		}
 
+			//echo "<h2>Results parsed</h2>";
+			$dictionaryData = $lookup_array->dictionary;
+			$count_obj = count($dictionaryData);
+
+			//let's see if best location is really best
+
+			$results = best_location($results_phone, $dictionaryData);
+
+			if ($results) {
+				//echo "<h2>returning best location</h2>";
+				return $results;
+			} else {
+				$backup_results = belongs_to($results_phone, $dictionaryData);
+				if ($backup_results) {
+					//echo "<h2>returning backup results</h2>";
+					return $backup_results;
+				} else {
+					$last_ditch_results = last_ditch($results_phone, $dictionaryData);
+					if ($last_ditch_results) {
+						//echo "<h2>returning backup results</h2>";
+						return $last_ditch_results;
+					} else {
+
+						//echo "<h2>returning nothing</h2>";
+						return false;
+					}
+				}
+			}
+
+		} else {
+			//echo "<h2>returning nothing</h2>";
+			return false;
+		}
 	} else {
-		//echo "<h2>returning nothing</h2>";
 		return false;
 	}
 
 }
 
+function last_ditch($results_phone, $dictionaryData) {
+	if (count($results_phone) > 0) {
+
+		foreach ($dictionaryData as $dictionaryKey_d => $dictionaryVal_d) {
+			$arr = explode(".", $dictionaryKey_d, 2);
+			$first = $arr[0];
+			if ($first == "Location") {
+				foreach ($dictionaryVal_d as $sub_dict_keys_d => $sub_dict_vales_d) {
+
+					if ($sub_dict_keys_d == "is_deliverable" && $sub_dict_vales_d == true) {
+						return $dictionaryData[$dictionaryKey_d];
+					} else {
+						//$dictionaryData[$dictionaryKey_d]->address = $dictionaryData[$dictionaryKey_d]->zip4 . " " . $dictionaryData[$dictionaryKey_d]->address;
+						//return $dictionaryData[$dictionaryKey_d];
+						return false;
+					}
+				}
+			}
+
+		}
+
+	}
+}
 function belongs_to($results_phone, $dictionaryData) {
 	if (count($results_phone) > 0) {
 		foreach ($results_phone as $resultKey => $resultVal) {
@@ -84,7 +118,7 @@ function belongs_to($results_phone, $dictionaryData) {
 			if ($location == $dictionaryKey_c) {
 				$location_obj = $dictionaryVal_c;
 
-				if ($location_obj->standard_address_line1 != "") {
+				if ($location_obj->is_deliverable) {
 					return $location_obj;
 				} else {
 					return false;
@@ -92,6 +126,7 @@ function belongs_to($results_phone, $dictionaryData) {
 			}
 		}
 	}
+
 }
 
 function best_location($results_phone, $dictionaryData) {
@@ -118,7 +153,7 @@ function best_location($results_phone, $dictionaryData) {
 			if ($best == $dictionaryKey_c) {
 				$location_obj = $dictionaryVal_c;
 
-				if ($location_obj->standard_address_line1 != "") {
+				if ($location_obj->is_deliverable) {
 					return $location_obj;
 				} else {
 					return false;
@@ -177,17 +212,18 @@ function remote_call($data, $test = false) {
 		$curl = curl_init($service_url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$curl_response = curl_exec($curl);
-		return $curl_response;
+		echo "<pre>whitepages response: " . print_r($response, true) . "</pre>";
+		return array("body" => $curl_response);
 	} else {
 		$payload = $data['payload'];
 
 		$query = build_query($payload);
-		_log("payload: " . print_r($data, true));
+		//_log("payload: " . print_r($data, true));
 		$options = get_option('sg_settings');
 		$key = $options['sg_api_string'];
-		_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
+		//_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
 		$response = wp_remote_get($url . $path . "?" . $query . "&api_key=" . $key);
-		//_log("whitepages response: ".print_r($response,true));
+		//_log("full whitepages response: ".print_r($response,true));
 		// echo "<pre>whitepages response: ".print_r($response,true)."</pre>";
 		return $response;
 	}

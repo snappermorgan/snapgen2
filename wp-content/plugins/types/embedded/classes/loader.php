@@ -3,10 +3,10 @@
  *
  * Loader class
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/embedded/classes/loader.php $
- * $LastChangedDate: 2014-06-27 01:13:20 +0800 (Fri, 27 Jun 2014) $
- * $LastChangedRevision: 24403 $
- * $LastChangedBy: juan $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/classes/loader.php $
+ * $LastChangedDate: 2014-11-18 06:47:25 +0000 (Tue, 18 Nov 2014) $
+ * $LastChangedRevision: 1027712 $
+ * $LastChangedBy: iworks $
  *
  */
 

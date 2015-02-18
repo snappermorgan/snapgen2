@@ -27,10 +27,10 @@
  * @link http://enlimbo.net/forms
  * @author srdjan <srdjan@enlimbo.net>
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.eforms.php $
- * $LastChangedDate: 2014-09-18 09:37:16 +0000 (Thu, 18 Sep 2014) $
- * $LastChangedRevision: 992466 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.4/embedded/common/toolset-forms/classes/class.eforms.php $
+ * $LastChangedDate: 2014-10-29 15:57:36 +0000 (Wed, 29 Oct 2014) $
+ * $LastChangedRevision: 1016002 $
+ * $LastChangedBy: iworks $
  *
  */
  
@@ -406,6 +406,18 @@ class Enlimbo_Forms
                     }
                 }
             }
+            /**
+             * WPML - lock CF is has option "copy from original".
+             */
+            if ( is_admin() && function_exists('wpcf_wpml_field_is_copied') && wpcf_wpml_field_is_copied($element) ) {
+                $element['#title'] .= sprintf(
+                    '<img src="%s/images/locked.png" alt="%s" title="%s" style="position:relative;left:2px;top:2px;" />',
+                    WPCF_EMBEDDED_RES_RELPATH,
+                    __( 'This field is locked for editing because WPML will copy its value from the original language.', 'wpcf' ),
+                    __( 'This field is locked for editing because WPML will copy its value from the original language.', 'wpcf' )
+                );
+                $element['#attributes']['readonly'] = true;
+            }
             return $this->{$method}($element);
         }
     }
@@ -437,7 +449,9 @@ class Enlimbo_Forms
                 $classes[] = 'form-control';
             }
         } else {
-            $classes[] = $element['#type'];
+            if ( 'hidden' != $element['#type'] ) {
+                $classes[] = $element['#type'];
+            }
         }
 
         if ( isset( $element['#attributes'] )
@@ -452,7 +466,8 @@ class Enlimbo_Forms
 			$element['#attributes'] = array(
 				'class' => implode( ' ', $classes )
 			);
-		}
+        }
+
 			
 		foreach ($element['#attributes'] as $attribute => $value) {
 			// Prevent undesired elements
@@ -465,7 +480,7 @@ class Enlimbo_Forms
 			}
 			// Set return string
 			$attributes .= ' ' . $attribute . '="' . $value . '"';
-		}
+        }
 
         return $attributes;
     }
@@ -517,7 +532,6 @@ class Enlimbo_Forms
             $element['_render']['label'] .= stripslashes($element['#title']);
             $element['_render']['label'] .= '</label>';
         }
-
         return $element;
     }
 

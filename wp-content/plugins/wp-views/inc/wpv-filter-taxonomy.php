@@ -1,12 +1,12 @@
 <?php
 
-// I think that DEPRECATED: there is no wpv_view_settings_save action anymore
+
 add_filter('wpv_view_settings_save', 'wpv_taxonomy_defaults_save', 10, 1);
 function wpv_taxonomy_defaults_save($view_settings) {
     global $taxonomy_checkboxes_defaults;
 
     // we need to set 0 for the checkboxes that aren't checked and are missing for the $_POST.
-
+    
     $defaults = array();
     foreach($taxonomy_checkboxes_defaults as $key => $value) {
         $defaults[$key] = 0;
@@ -16,42 +16,37 @@ function wpv_taxonomy_defaults_save($view_settings) {
     return $view_settings;
 }
 
-// DEPRECATED
-// Only used in the old wpv-filter-types.php file
-
 function wpv_get_taxonomy_filter_summary($view_settings) {
-
+    
     $view_settings = wpv_taxonomy_default_settings($view_settings);
     $selected = $view_settings['taxonomy_type'];
-
+    
 	$taxonomies = get_taxonomies('', 'objects');
-
+	
 	if (isset($taxonomies[$selected[0]])) {
 		$name = $taxonomies[$selected[0]]->labels->name;
 	} else {
 		$name = $selected[0];
 	}
-    echo sprintf(__('This View selects Taxonomy of type %s', 'wpv-views'), $name);
-
+    echo sprintf(__('This View selects <strong>Taxonomy</strong> of type <strong>%s</strong>', 'wpv-views'), $name);
+            
 }
 
-// I think that DEPRECATED
-// Only used in the old wpv-filter-types.php file
 
 function wpv_taxonomy_radios($view_settings) {
 	$taxonomies = get_taxonomies('', 'objects');
-
+    
     // remove any  that don't exist any more.
     foreach($view_settings['taxonomy_type'] as $type) {
         if (!isset($taxonomies[$type])) {
             unset($view_settings['taxonomy_type'][$type]);
         }
     }
-
+    
     ?>
         <ul style="padding-left:30px;">
             <?php foreach($taxonomies as $tax):?>
-                <?php
+                <?php 
                     if (sizeof($view_settings['taxonomy_type']) == 0) {
                         $view_settings['taxonomy_type'][] = $tax->name;
                     }
@@ -63,11 +58,8 @@ function wpv_taxonomy_radios($view_settings) {
     <?php
 }
 
-// I think that DEPRECATED
-// Only used in the old wpv-filter-types.php file
-
 function wpv_taxonomy_settings($view_settings) {
-
+    
     ?>
     <strong><?php echo __('Settings:', 'wpv-views'); ?></strong>
     <ul style="padding-left:30px;">
@@ -81,15 +73,12 @@ function wpv_taxonomy_settings($view_settings) {
     <?php
 }
 
-// DEPRECATED
-// New filter in the redesign/ folder
+add_filter('wpv-view-get-content-summary', 'wpv_taxonomy_summary_filter', 5, 3);
 
-// add_filter('wpv-view-get-content-summary', 'wpv_taxonomy_summary_filter', 5, 3);
-
-function wpv_taxonomy_summary_filter( $summary, $post_id, $view_settings ) {
-	if ( isset( $view_settings['query_type'] ) && $view_settings['query_type'][0] == 'taxonomy' ) {
+function wpv_taxonomy_summary_filter($summary, $post_id, $view_settings) {
+	if(isset($view_settings['query_type']) && $view_settings['query_type'][0] == 'taxonomy') {
 		ob_start();
-		wpv_get_taxonomy_filter_summary( $view_settings );
+		wpv_get_taxonomy_filter_summary($view_settings);
 		$summary .= ob_get_contents();
 		ob_end_clean();
 	}
