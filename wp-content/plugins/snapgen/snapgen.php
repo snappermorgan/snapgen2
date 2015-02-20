@@ -158,11 +158,6 @@ settings_fields('pluginPage');
 				$whitepages = true;
 				if ((isset($_REQUEST['Address']) && $_REQUEST['Address'] != "") && (isset($_REQUEST['City']) && $_REQUEST['City'] != "") && (isset($_REQUEST['State']) && $_REQUEST['State'] != "") && (isset($_REQUEST['ZipCode']) && $_REQUEST['ZipCode'] != "")) {
 
-<<<<<<< HEAD
-					if ($response->house) {
-						$number = $response->house;
-					}
-=======
 					$response = validate_address($_REQUEST['Address'], $_REQUEST['Address_2'], $_REQUEST['ZipCode']);
 					//_log("Response from briteverify." . print_r($response, true));
 					if ($response['response']['code'] != "200") {
@@ -182,7 +177,6 @@ settings_fields('pluginPage');
 							_log("Submitted Address was invalid: " . $body->error);
 							$whitepages = true;
 						}
->>>>>>> master
 
 					}
 
@@ -259,13 +253,8 @@ settings_fields('pluginPage');
 				}
 			}
 			$post_args = array(
-<<<<<<< HEAD
-				'timeout' => self::DEFAULT_TIMEOUT, 'body' => $_REQUEST, 'method' => 'POST');
-			_log("Post Args to boberdoo" . print_r($post_args, true));
-=======
 				'timeout' => 60, 'body' => $_REQUEST, 'method' => 'POST');
 			_log("Post Args to Boberdoo" . print_r($post_args, true));
->>>>>>> master
 			$response = wp_remote_post($boberdoo, $post_args);
 
 			_log("Post Response from Boberdoo" . print_r($response, true));
@@ -411,14 +400,11 @@ settings_fields('pluginPage');
 					}
 				}
 
-<<<<<<< HEAD
-=======
 				_log("New Submission after validation: " . print_r($submission, true));
 
 			}
 		}
                     
->>>>>>> master
 		//_log("ALTER SUBMISSION TRIGGERED");
 		if (isset($service['whitepages']) && !empty($service['whitepages'])) {
 			if ((isset($service['whitepages-address-field']) && !empty($service['whitepages-address-field'])) && (isset($service['whitepages-city-field']) && !empty($service['whitepages-city-field']))
@@ -438,11 +424,7 @@ settings_fields('pluginPage');
 				_log("Response from Reverse Lookup: " . print_r($response, true));
                 
 				foreach ($submission as $field => &$value) {
-<<<<<<< HEAD
-					//_log("field: " . print_r($field, true));
-=======
 					////_log("field: " . print_r($field, true));
->>>>>>> master
 					if (trim(strtolower($service['whitepages-address-field'])) == trim(strtolower($field))) {
 
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
@@ -495,12 +477,7 @@ settings_fields('pluginPage');
 						if ($response && $response->is_deliverable && !is_null($response->is_deliverable)) {
 						    $matched=true;
 						}
-<<<<<<< HEAD
-						$value = $zip;
-						//_log("zip=".$zip."\n");
-=======
 
->>>>>>> master
 					}
 
 				}
@@ -1164,8 +1141,6 @@ function enqueue_select2_jquery() {
 add_action('admin_enqueue_scripts', 'enqueue_select2_jquery');
 add_action('wp_ajax_validate_address', 'validate_address_callback');
 add_action('wp_ajax_nopriv_validate_address', 'validate_address_callback');
-<<<<<<< HEAD
-=======
 add_action('wp_ajax_validate_email', 'validate_email_callback');
 add_action('wp_ajax_nopriv_validate_email', 'validate_email_callback');
 add_shortcode('email_validate', 'email_validate_shortcode');
@@ -1188,15 +1163,12 @@ function validate_email_callback() {
 	}
 	echo die();
 }
->>>>>>> master
 
 function validate_address_callback() {
 
 	$street = (isset($_REQUEST['street']) ? $_REQUEST['street'] : false);
 	$unit = (isset($_REQUEST['unit']) ? $_REQUEST['unit'] : false);
 	$zip = (isset($_REQUEST['zip']) ? $_REQUEST['zip'] : false);
-<<<<<<< HEAD
-=======
 
 	$response = validate_address($street, $unit, $zip);
 
@@ -1208,7 +1180,6 @@ function validate_address_callback() {
 	}
 	echo die();
 }
->>>>>>> master
 
 function validate_address($street, $unit, $zip) {
 	$url = "https://bpi.briteverify.com/addresses.json?";
@@ -1220,17 +1191,6 @@ function validate_address($street, $unit, $zip) {
 
 }
 
-<<<<<<< HEAD
-function enqueue_select2_jquery() {
-	$plugins_url = plugins_url();
-	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
-	wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
-	wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
-	wp_enqueue_style('select2css');
-	wp_enqueue_script('select2');
-	// wp_enqueue_script('snapgen2');
-}
-=======
 function email_validate_shortcode($atts) {
 	$a = shortcode_atts(array(
 		'field_selector' => '#email',
@@ -1378,6 +1338,5 @@ function address_validate_shortcode($atts) {
 <?php
 
 	return ob_get_clean();
->>>>>>> master
 
 }
