@@ -47,10 +47,14 @@ module.exports = function(grunt) {
     sync: {
       dist : {
         files: [
-          { cwd: '<%= global_vars.user_path %>/wp-content/plugins/snapgen/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/plugins/', verbose: true},
-          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/css/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/snapgen/css/', verbose: true},
-          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/js/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/snapgen/js/', verbose: true},
-          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/images/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/snapgen/images/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/plugins/snapgen/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/plugins/snapgen/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/css/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/css/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/js/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/js/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/images/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/images/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/fonts/', src: ['**/*'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/fonts/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/', src: ['functions.php'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/', src: ['**/*.php'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/', verbose: true},
+          { cwd: '<%= global_vars.user_path %>/wp-content/themes/snapgen/', src: ['style.css'], dest: '<%= global_vars.web_path %>/wp-content/themes/snapgen/', verbose: true},
          
         ]
       }
@@ -58,24 +62,32 @@ module.exports = function(grunt) {
     watch: {
       grunt: { files: ['Gruntfile.js'] },
 
-      sws: {
-        files: '<%= global_vars.user_path %>/sites/all/modules/sws_*/**',
+      snapgen: {
+        files: '<%= global_vars.user_path %>/wp-content/plugins/snapgen/**/*',
         tasks: ['sync']
       },
       templates: {
-        files: '<%= global_vars.user_path %>/sites/all/themes/swstheme/templates/**',
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/**/*.php',
         tasks: ['sync']
       },
        images: {
-        files: '<%= global_vars.user_path %>/sites/all/themes/swstheme/images/**',
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/images/**/*',
         tasks: ['sync']
       },
        css: {
-        files: '<%= global_vars.user_path %>/sites/all/themes/swstheme/css/**',
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/css/**/*',
         tasks: ['sync']
       },
        js: {
-        files: '<%= global_vars.user_path %>/sites/all/themes/swstheme/js/**',
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/js/**/*',
+        tasks: ['sync']
+      },
+      fonts: {
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/fonts/**/*',
+        tasks: ['sync']
+      },
+      wp: {
+        files: '<%= global_vars.user_path %>/wp-content/themes/snapgen/style.css',
         tasks: ['sync']
       },
       sass: {
@@ -96,7 +108,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sync');
   grunt.registerTask('build', ['copy','sass']);
  
-  grunt.registerTask('default', ['copy','sync','watch']);
+  grunt.registerTask('default', ['build','sync','watch']);
  
   
 }
