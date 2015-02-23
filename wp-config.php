@@ -73,12 +73,12 @@ define('WP_DEBUG_DISPLAY', false); // Turn forced display OFF
 define('WP_DEBUG_LOG',     true);  // Turn logging to wp-content/debug.log ON
 
 define( 'SUNRISE', 'on' );
-define( 'DOMAINMAPPING_ALLOWMULTI', 1 );
+#define( 'DOMAINMAPPING_ALLOWMULTI', 1 );
 /* Multisite */
 define( 'WP_ALLOW_MULTISITE', true );
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
-define('DOMAIN_CURRENT_SITE', 'snapgen2.metrixinteractive.com'); 
+define('DOMAIN_CURRENT_SITE', $_SERVER['SNAPGEN_WP_DOMAIN']); 
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
