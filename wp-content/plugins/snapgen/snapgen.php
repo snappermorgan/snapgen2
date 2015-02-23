@@ -1132,7 +1132,7 @@ function enqueue_select2_jquery() {
 	$plugins_url = plugins_url();
 	wp_register_style('select2css', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all');
 	wp_register_script('select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array('jquery'), '1.0', true);
-	wp_register_script('snapgen2', $plugins_urls . '/snapgen2/snapgen2.js', false, '1.0', false);
+	wp_register_script('snapgen2', $plugins_url . '/snapgen2/snapgen2.js', false, '1.0', false);
 	wp_enqueue_style('select2css');
 	wp_enqueue_script('select2');
 	// wp_enqueue_script('snapgen2');

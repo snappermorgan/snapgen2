@@ -3,3 +3,7 @@
 [23-Feb-2015 04:01:22 UTC] PHP Deprecated:  mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-includes/wp-db.php on line 1416
 [23-Feb-2015 04:01:22 UTC] PHP Warning:  mysql_connect(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-includes/wp-db.php on line 1416
 [23-Feb-2015 04:01:22 UTC] PHP Warning:  mysql_connect(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-includes/wp-db.php on line 1416
+[23-Feb-2015 04:25:25 UTC] PHP Notice:  Undefined index: pagenow in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-content/plugins/domain-mapping/classes/Domainmap/Module.php on line 177
+[23-Feb-2015 04:26:31 UTC] PHP Notice:  Undefined index: pagenow in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-content/plugins/domain-mapping/classes/Domainmap/Module.php on line 177
+[23-Feb-2015 04:27:11 UTC] PHP Notice:  Undefined index: pagenow in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-content/plugins/domain-mapping/classes/Domainmap/Module.php on line 177
+[23-Feb-2015 04:30:58 UTC] PHP Notice:  Undefined index: pagenow in /Users/snapper/Documents/dev/snapgen2.metrixinteractive.com/wp-content/plugins/domain-mapping/classes/Domainmap/Module.php on line 177
