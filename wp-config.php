@@ -16,8 +16,8 @@
 
 //let's include a php file for server values so wp-cli works and doesn't rely on APACHE vars.
 
-if (file_exists('../snapgen.inc')) {
-  require('../snapgen.inc');
+if (file_exists(dirname(__FILE__) . '/../snapgen.inc')) {
+  require(dirname(__FILE__) . '/../snapgen.inc');
 }
 
 
