@@ -361,21 +361,7 @@ settings_fields('pluginPage');
 						$state = $response->state_code;
 						$zipcode = $response->zip;
 					}
-				}else{
-				    if($city==""){
-				        $city = "Atlanta";
-				    }
-				    if($address==""){
-				        $address="123 Main St";
-				    }
-				    if($zipcode==""){
-				        $zipcode="30309";
-				    }
-				    if($state==""){
-				        $state="GA";
-				    }
 				}
-
 				foreach ($submission as $field => &$value) {
 					////_log("field: " . print_r($field, true));
 					if (trim(strtolower($service['validation-address-field'])) == trim(strtolower($field))) {
