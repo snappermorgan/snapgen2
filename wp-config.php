@@ -14,18 +14,26 @@
  * @package WordPress
  */
 
+//let's include a php file for server values so wp-cli works and doesn't rely on APACHE vars.
+
+if (file_exists('../snapgen.inc')) {
+  require('../snapgen.inc');
+}
+
+
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME',$_SERVER['SNAPGEN_WP_DB_NAME']);
+define('DB_NAME', SNAPGEN_WP_DB_NAME);
 
 /** MySQL database username */
-define('DB_USER', $_SERVER['SNAPGEN_WP_DB_USER']);
+define('DB_USER', SNAPGEN_WP_DB_USER);
 
 /** MySQL database password */
-define('DB_PASSWORD', $_SERVER['SNAPGEN_WP_DB_PASSWORD']);
+define('DB_PASSWORD', SNAPGEN_WP_DB_PASSWORD);
 
 /** MySQL hostname */
-define('DB_HOST', $_SERVER['SNAPGEN_WP_DB_HOST']);
+define('DB_HOST', SNAPGEN_WP_DB_HOST);
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -73,12 +81,12 @@ define('WP_DEBUG_DISPLAY', false); // Turn forced display OFF
 define('WP_DEBUG_LOG',     true);  // Turn logging to wp-content/debug.log ON
 
 define( 'SUNRISE', 'on' );
-define( 'DOMAINMAPPING_ALLOWMULTI', 1 );
+//define( 'DOMAINMAPPING_ALLOWMULTI', 1 );
 /* Multisite */
 define( 'WP_ALLOW_MULTISITE', true );
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
-define('DOMAIN_CURRENT_SITE', 'snapgen2.metrixinteractive.com'); 
+define('DOMAIN_CURRENT_SITE',SNAPGEN_WP_DOMAIN); 
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
