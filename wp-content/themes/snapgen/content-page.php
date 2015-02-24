@@ -20,7 +20,6 @@
 				<div class="entry-content">
 					<?php the_content(); ?>
 				
-					?>
 				</div><!-- .entry-content -->
 			
 				<?php edit_post_link( __( 'Edit', 'snapgen' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>
