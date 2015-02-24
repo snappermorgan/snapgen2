@@ -5,7 +5,7 @@ function snapgen_enqueue() {
 	global $wp_styles;
 	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Roboto:400,300,700');
 	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Raleway:300');
-	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/snapgen.js');
+	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/snapgen.js',array( 'jquery' ));
 	
 	wp_enqueue_style('font-awesome', get_stylesheet_directory_uri() . '/css/font-awesome.css');
 	wp_enqueue_style('snapgen-styles', get_stylesheet_directory_uri() . '/style.css');
