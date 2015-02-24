@@ -8,7 +8,7 @@ function snapgen_enqueue() {
 	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/snapgen.js');
 	
 	wp_enqueue_style('font-awesome', get_stylesheet_directory_uri() . '/css/font-awesome.css');
-	
+	wp_enqueue_style('snapgen-styles', get_stylesheet_directory_uri() . '/style.css');
 
 }
 add_theme_support( 'title-tag' );

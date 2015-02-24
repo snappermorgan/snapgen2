@@ -2,7 +2,7 @@
     BACK TO TOP
 ----------------------------------------*/
 
-$(document).ready(function($){
+jQuery(document).ready(function($){
      $(window).scroll(function () {
             if ($(this).scrollTop() > 50) {
                 $('#back-to-top').fadeIn();
