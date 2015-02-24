@@ -44,8 +44,10 @@ function snapgen_widgets_init() {
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
-	),
-	array(
+	)	);
+
+
+	register_sidebar(array(
 		'name'          => __( 'Hero', 'snapgen' ),
 		'id'            => 'hero',
 		'description'   => __( 'Add widgets here to appear in your hero section.', 'snapgen' ),
@@ -53,7 +55,6 @@ function snapgen_widgets_init() {
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
-	)
-	);
+	));
 }
 add_action( 'widgets_init', 'snapgen_widgets_init' );
