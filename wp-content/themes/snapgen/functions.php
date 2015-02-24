@@ -37,13 +37,23 @@ add_theme_support( 'title-tag' );
 
 function snapgen_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Widget Area', 'snapgen' ),
+		'name'          => __( 'Sidebar', 'snapgen' ),
 		'id'            => 'sidebar-1',
 		'description'   => __( 'Add widgets here to appear in your sidebar.', 'snapgen' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
-	) );
+	),
+	array(
+		'name'          => __( 'Hero', 'snapgen' ),
+		'id'            => 'hero',
+		'description'   => __( 'Add widgets here to appear in your hero section.', 'snapgen' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	)
+	);
 }
 add_action( 'widgets_init', 'snapgen_widgets_init' );

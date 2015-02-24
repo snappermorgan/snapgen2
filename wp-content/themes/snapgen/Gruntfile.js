@@ -107,7 +107,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sync');
   grunt.registerTask('build', ['copy','sass']);
- 
+  grunt.registerTask('c9', ['watch:sass']);
   grunt.registerTask('default', ['build','sync','watch']);
  
   

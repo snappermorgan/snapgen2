@@ -16,16 +16,21 @@
 
 get_header(); ?>
 
+            <section id="hero-4">
+            	<?php
+				if ( is_active_sidebar( 'hero' ) ) : ?>
+						<div id="widget-area" class="widget-area" role="complementary">
+							<?php dynamic_sidebar( 'hero' ); ?>
+						</div><!-- .widget-area -->
+					<?php endif; ?>
+            </section>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
 		<?php if ( have_posts() ) : ?>
 
-			<?php if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-			<?php endif; ?>
+		
 
 			<?php
 			// Start the loop.

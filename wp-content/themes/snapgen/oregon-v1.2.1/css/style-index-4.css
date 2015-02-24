@@ -1,0 +1,103 @@
+/*----------------------------------------
+    GENERAL
+----------------------------------------*/
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0px;
+}
+.btn-4-lg {
+    padding: 48px 20px;
+}
+.color {
+    color: #2980b9;
+}
+.section-heading {
+    margin-bottom: 50px;
+}
+.section-heading  h2 {
+    text-transform: uppercase;
+}
+
+/*----------------------------------------
+    HEADER
+----------------------------------------*/
+#header-4 {
+    background: #333;
+    padding: 25px 0px;
+}
+.header-4-logo h1 {
+    color: #fff;
+    font-weight: 300;
+}
+.header-4-social > ul > li > a {
+    background: #222;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 18px;
+    height: 45px;
+    padding-top: 10px;
+    width: 45px;
+    text-align: center;
+}
+.header-4-social > ul > li > a:hover,
+.header-4-social > ul > li > a:focus {
+    background: #111;
+}
+
+/*----------------------------------------
+    HERO
+----------------------------------------*/
+#hero-4 {
+    background: url('../img/hero-bg.jpg') no-repeat;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    padding: 100px 0px 100px;
+}
+.hero-4-intro h2 {
+    font-size: 50px;
+    text-transform: uppercase;
+}
+.hero-4-form {
+    background: #2980b9;
+    border-radius: 6px;
+    color: #fff;
+    padding: 25px;
+}
+.hero-4-form h3 {
+    border-bottom: 1px solid #fff;
+    display: inline-block;
+    font-size: 23px;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+.hero-4-form-btn {
+    font-size: 18px;
+    float: right;
+    margin-top: -140px;
+}
+.hero-4-form .form-group {
+    margin-right: 110px;
+}
+
+/*----------------------------------------
+    MEDIA QUERIES
+----------------------------------------*/
+@media (min-width: 1200px) {
+    .container {
+        width: 980px;
+    }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .header-4-logo h1 {
+        font-size: 30px;
+    }
+    #hero-4 {
+        padding: 50px 0px;
+    }
+    .hero-4-intro h2 {
+        font-size: 24px;
+    }
+}
