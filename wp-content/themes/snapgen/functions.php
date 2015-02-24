@@ -8,6 +8,7 @@ function snapgen_enqueue() {
 	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/snapgen.js',array( 'jquery' ));
 	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/vendor/jquery.easing.1.3.js',array( 'jquery' ),array(),true);	
 	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/vendor/jquery.scrollto.js',array( 'jquery' ),array(),true);	
+	wp_enqueue_script('snapgen_js', get_stylesheet_directory_uri() . '/js/vendor/bootstrap.js',array( 'jquery' ),array(),true);	
 		
 	wp_enqueue_style('font-awesome', get_stylesheet_directory_uri() . '/css/font-awesome.css');
 	wp_enqueue_style('snapgen-styles', get_stylesheet_directory_uri() . '/style.css');
