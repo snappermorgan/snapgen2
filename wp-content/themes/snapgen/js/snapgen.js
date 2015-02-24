@@ -41,7 +41,7 @@ $(window).load(function(){
 /*----------------------------------------
     RESIZE FUNCTION
 ----------------------------------------*/
-$(window).resize(function(){
+jQuery(window).resize(function(){
         scrollSpyRefresh();
         waypointsRefresh();
 });
