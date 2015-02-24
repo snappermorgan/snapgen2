@@ -5371,3 +5371,6 @@ h6 {
 .hero-4-intro h2 {
   font-size: 50px;
   text-transform: uppercase; }
+
+.skip-link {
+  display: none; }
