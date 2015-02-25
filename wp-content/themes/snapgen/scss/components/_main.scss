@@ -527,8 +527,11 @@ h6 {
 	padding: 25px 0;
 }
 #hero-4 {
-	background: url("../images/hero-bg.jpg") no-repeat;
-	background-size: cover;
+		background: url(../images/landing-banner-bg.jpg) no-repeat center center;
+	background-size:cover;
+	height:100%;
+	width:100%;
+	max-height:2000px;
 	padding: 100px 0;
 }
 .hero-4-form {
@@ -607,10 +610,6 @@ h6 {
 }
 
 .page {
-	background: url(../images/landing-banner-bg.jpg) no-repeat center center;
-	background-size:cover;
-	height:100%;
-	width:100%;
-	max-height:2000px;
+
 
 }
