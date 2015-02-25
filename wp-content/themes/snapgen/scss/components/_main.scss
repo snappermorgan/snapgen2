@@ -607,5 +607,10 @@ h6 {
 }
 
 .page {
-	background: url(../images/landing-banner-bg.jpg)
+	background: url(../images/landing-banner-bg.jpg) no-repeat center center;
+	background-size:cover;
+	height:100%;
+	width:100%;
+	max-height:2000px;
+
 }
