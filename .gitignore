@@ -6,3 +6,5 @@ git1422.php
 /wp-content/debug.log*
 /wp-content/uploads
 .DS_Store
+phpmyadmin
+php_errors.log

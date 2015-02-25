@@ -751,7 +751,7 @@ class CFDBViewShortCodeBuilder extends CFDBView {
                 var obfuscate = jQuery('#obfuscate_cntl').is(':checked')
                 if (user || pass) {
                     if (obfuscate) {
-                        var key = '3M#v$-.u';
+                        var key = 'kx82XcPjq8q8S!xafx%$&7p6';
                         exportUrlElements.push("l=" + encodeURI(printHex(des(key, user + "/" + pass, 1))));
                     } else {
                         exportUrlElements.push("user_login=" + encodeURI(user));
@@ -1258,7 +1258,7 @@ class CFDBViewShortCodeBuilder extends CFDBView {
                 <option value="!=">!=</option>
                 <option value=">">></option>
                 <option value="<"><</option>
-                <option value="<="><=</option>
+                <option value=">=">>=</option>
                 <option value="<="><=</option>
                 <option value="===">===</option>
                 <option value="!==">!==</option>
@@ -1569,7 +1569,7 @@ class CFDBViewShortCodeBuilder extends CFDBView {
                 <option value="!=">!=</option>
                 <option value=">">></option>
                 <option value="<"><</option>
-                <option value="<="><=</option>
+                <option value=">=">>=</option>
                 <option value="<="><=</option>
                 <option value="===">===</option>
                 <option value="!==">!==</option>
