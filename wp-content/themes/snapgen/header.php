@@ -50,20 +50,12 @@
 
                 	</div>
                     <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="header-4-logo">
-                                <h1><i class="fa fa-cube"></i>Ameriquote</h1>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-6 text-right">
-                            <div class="header-4-social hidden-xs">
-                                <ul class="list-inline list-unstyled">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                      if ( is_active_sidebar( 'header' ) ) : ?>
+                        <div id="widget-area" class="widget-area" role="complementary">
+                            <?php dynamic_sidebar( 'header' ); ?>
+                        </div><!-- .widget-area -->
+                    <?php endif; ?>
+                        
                     </div>
                 </div>
             </header>
