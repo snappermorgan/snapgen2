@@ -16,10 +16,9 @@
 
 //let's include a php file for server values so wp-cli works and doesn't rely on APACHE vars.
 
-if (file_exists('../snapgen.inc')) {
-  require('../snapgen.inc');
+if (file_exists(dirname(__FILE__) . '/../snapgen.inc')) {
+  require(dirname(__FILE__) . '/../snapgen.inc');
 }
-
 
 
 // ** MySQL settings - You can get this info from your web host ** //
@@ -86,11 +85,7 @@ define( 'SUNRISE', 'on' );
 define( 'WP_ALLOW_MULTISITE', true );
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
-<<<<<<< HEAD
-define('DOMAIN_CURRENT_SITE', $_SERVER['SNAPGEN_WP_DOMAIN']); 
-=======
 define('DOMAIN_CURRENT_SITE',SNAPGEN_WP_DOMAIN); 
->>>>>>> 85f4d1ca7fe4b351173a4b640987e7828132d451
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);

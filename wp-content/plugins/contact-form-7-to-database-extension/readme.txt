@@ -6,7 +6,7 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 3.2.1
 Tested up to: 4.1
-Stable tag: 2.8.22
+Stable tag: 2.8.31
 
 Saves submitted form data to the database. Export the data to a file or use short codes to display it.
 
@@ -21,6 +21,7 @@ By simply installing the plugin, it will automatically begin to capture submissi
 * Contact Form 7 (CF7) plugin
 * Fast Secure Contact Form (FSCF) plugin
 * Gravity Forms plugin
+* WR ContactForm plugin (BETA)
 
 Other form submissions can be saved with the addition of the <a href="http://cfdbplugin.com/?page_id=508">[cfdb-save-form-post]</a> short code on the target submission page.
 
@@ -80,6 +81,36 @@ You can always deactivate the plugin without loosing data.
 1. Admin Panel view of submitted form data
 
 == Changelog ==
+
+= 2.8.32 =
+* Security patch
+
+= 2.8.31 =
+* Fix to work with Gravity Forms 1.9.1.2
+
+= 2.8.30 =
+* Minor fix to short code builder page
+
+= 2.8.29 =
+* Tweak to install procedure
+
+= 2.8.28 =
+* Security patch
+
+= 2.8.27 =
+* Minor tweak to allow edit mode in short code to be set via $_GET and $_POST
+
+= 2.8.26 =
+* Encoding fix on administration page
+
+= 2.8.25 =
+* Now captures data from WR ContactForm (BETA)
+* New option to allow only Administrators to see CFDB administration screens
+* New option to send CFDB errors to a file to email
+* Bug fix to avoid rare instances of duplicate submit_time
+
+= 2.8.24 =
+* Bug fix related to displaying form names in administration panel with certain characters
 
 = 2.8.23 =
 * Bug fix for Gravity Form integration. Sometimes field value was not captured where there are multiple fields of the same name but only one shown based on conditional field definition.
