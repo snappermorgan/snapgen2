@@ -5,8 +5,7 @@
 	<h3><?php _e(' Add Some Content or Use Predefined Layouts...', 'js_composer')?></h3>
 
 	<div class="vc_buttons">
-		<a id="vc_not-empty-add-element" class="vc_add-element-not-empty-button vc_add-element-action"
-		   title="<?php _e('Add element', 'js_composer')?>"></a><a id="vc_no-content-add-element" class="vc_add-element-button vc_add-element-action vc_btn vc_btn-grace vc_btn-md vc_btn_3d" href="#" title="<?php _e('Add element', 'js_composer')?>"><?php _e('Add element', 'js_composer')?></a><a id="vc_no-content-add-text-block" class="vc_add-text-block-button vc_btn vc_btn-sky vc_btn-md vc_btn_3d" href="#" title="<?php _e('Add text block', 'js_composer')?>"><?php _e('Add text block', 'js_composer')?></a>
+		<a id="vc_not-empty-add-element" class="vc_add-element-not-empty-button vc_add-element-action" title="<?php _e('Add element', 'js_composer')?>"></a><a id="vc_no-content-add-element" class="vc_add-element-button vc_add-element-action vc_btn vc_btn-grace vc_btn-md vc_btn_3d" href="#" title="<?php _e('Add element', 'js_composer')?>"><?php _e('Add element', 'js_composer')?></a><a id="vc_no-content-add-text-block" class="vc_add-text-block-button vc_btn vc_btn-sky vc_btn-md vc_btn_3d" href="#" title="<?php _e('Add text block', 'js_composer')?>"><?php _e('Add text block', 'js_composer')?></a>
 	</div>
 	<?php
 $total_templates = visual_composer()->templatesPanelEditor()->loadDefaultTemplates();
