@@ -5308,7 +5308,7 @@ h6 {
     text-transform: uppercase; }
 
 #header-4 {
-  background: #333;
+  background: #fff;
   padding: 25px 0; }
 
 #hero-4 {
@@ -5374,3 +5374,9 @@ h6 {
 
 .skip-link {
   display: none; }
+
+.page, #page {
+  height: 100% !important; }
+
+.page {
+  background: url(../images/landing-banner-bg.jpg); }
