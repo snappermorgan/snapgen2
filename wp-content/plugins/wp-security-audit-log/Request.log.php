@@ -473,3 +473,760 @@
 [2015-02-25 21:53:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
 [2015-02-25 21:53:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
 [2015-02-25 21:53:47] GET /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+[2015-02-25 22:08:48] POST /wp-cron.php?doing_wp_cron=1424902127.2059640884399414062500 
+[2015-02-25 22:08:49] GET /wp-admin/edit.php?vc_action=vc_inline&post_id=191&post_type=landing_page 
+[2015-02-25 22:08:51] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"b44ebc2c19","post_ID":"191"}
+[2015-02-25 22:08:54] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:08:54] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:08:55] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:08:56] POST /wp-cron.php?doing_wp_cron=1424902134.0881409645080566406250 
+[2015-02-25 22:08:56] GET /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+[2015-02-25 22:09:39] GET /wp-admin/edit.php?vc_action=vc_inline&post_id=191&post_type=landing_page 
+[2015-02-25 22:09:41] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"b44ebc2c19","post_ID":"191"}
+[2015-02-25 22:09:44] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:09:44] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:09:45] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:09:46] GET /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+[2015-02-25 22:10:28] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"88bf0428-decf","string":"[vc_row full_width=\\\"\\\" bg_type=\\\"no_bg\\\" parallax_style=\\\"vcpb-default\\\" bg_image_new=\\\"\\\" layer_image=\\\"\\\" bg_image_repeat=\\\"no-repeat\\\" bg_image_size=\\\"cover\\\" bg_cstm_size=\\\"\\\" bg_img_attach=\\\"fixed\\\" parallax_sense=\\\"30\\\" bg_image_posiiton=\\\"\\\" animation_type=\\\"h\\\" horizontal_animation=\\\"left-animation\\\" vertical_animation=\\\"top-animation\\\" animation_repeat=\\\"repeat\\\" video_url=\\\"\\\" video_url_2=\\\"\\\" u_video_url=\\\"\\\" video_opts=\\\"\\\" video_poster=\\\"\\\" u_start_time=\\\"\\\" u_stop_time=\\\"\\\" viewport_vdo=\\\"\\\" enable_controls=\\\"\\\" parallax_content=\\\"\\\" parallax_content_sense=\\\"30\\\" fadeout_row=\\\"\\\" fadeout_start_effect=\\\"30\\\" disable_on_mobile=\\\"\\\" bg_override=\\\"0\\\" disable_on_mobile_img_parallax=\\\"\\\"][\/vc_row]","tag":"vc_row"},{"id":"58161ac0-16bc","string":"[vc_column width=\\\"1\/1\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:10:39] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"45b999d6-b122","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"},{"id":"92ee66ff-23fe","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:10:41] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"dfb89c11-f2da","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"},{"id":"209ba76a-f484","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:11:23] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"6d94cf17-6407","string":"[vc_single_image image=\\\"\\\" alignment=\\\"\\\" style=\\\"\\\" border_color=\\\"grey\\\" img_link_large=\\\"\\\" img_link_target=\\\"_self\\\" css_animation=\\\"\\\"][\/vc_single_image]","tag":"vc_single_image"}]}
+[2015-02-25 22:11:23] POST /wp-admin/admin-ajax.php 
+                       {"action":"vc_edit_form","tag":"vc_single_image","post_id":"191","params":{"image":"","alignment":"","style":"","border_color":"grey","img_link_large":"","img_link_target":"_self","css_animation":""}}
+[2015-02-25 22:11:28] POST /wp-admin/admin-ajax.php 
+                       {"action":"query-attachments","post_id":"191","query":{"post_mime_type":"image","orderby":"date","order":"DESC","posts_per_page":"40","paged":"1"}}
+[2015-02-25 22:13:36] POST /wp-admin/async-upload.php 
+                       {"name":"LOGOCLOUD (1).png","action":"upload-attachment","_wpnonce":"0583bf947a","post_id":"191"}
+[2015-02-25 22:13:48] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"6d94cf17-6407","string":"[vc_single_image image=\\\"194\\\" border_color=\\\"grey\\\" img_link_large=\\\"\\\" img_link_target=\\\"_self\\\"][\/vc_single_image]","tag":"vc_single_image"}]}
+[2015-02-25 22:14:02] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"6d94cf17-6407","string":"[vc_single_image image=\\\"194\\\" border_color=\\\"grey\\\" img_link_large=\\\"\\\" img_link_target=\\\"_self\\\" img_size=\\\"full\\\"][\/vc_single_image]","tag":"vc_single_image"}]}
+[2015-02-25 22:14:14] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"4010f679-0f9d","string":"[vc_column_text css_animation=\\\"\\\"]<p>I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.<\/p>[\/vc_column_text]","tag":"vc_column_text"}]}
+[2015-02-25 22:14:14] POST /wp-admin/admin-ajax.php 
+                       {"action":"vc_edit_form","tag":"vc_column_text","post_id":"191","params":{"content":"<p>I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.<\/p>","css_animation":""}}
+[2015-02-25 22:14:58] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"4010f679-0f9d","string":"[vc_column_text]<h2>Our Products<\/h2>\n<p>AT AMERIQUOTE, WE CARRY AN ARRAY OF POLICIES SO WE CAN HELP YOU FIND ONE THAT SUITES YOU.<\/p>\n<p>WE ARE PARTNERED WITH THE MOST TRUSTED NAMES IN THE LIFE INSURANCE IN ORDER TO GET YOU THE MOST AFFORDABLE, BEST POLICY FOR YOU.<\/p>\n<p>WHETHER YOU ARE INTERESTED IN A SMALL OR LARGE POLICY, OUR HELPFUL AGENTS WILL FIND THE BEST PROGRAM FOR YOU.<\/p>[\/vc_column_text]","tag":"vc_column_text"}]}
+[2015-02-25 22:15:46] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"2f9141ab-0690","string":"[vc_row full_width=\\\"\\\" bg_type=\\\"no_bg\\\" parallax_style=\\\"vcpb-default\\\" bg_image_new=\\\"\\\" layer_image=\\\"\\\" bg_image_repeat=\\\"no-repeat\\\" bg_image_size=\\\"cover\\\" bg_cstm_size=\\\"\\\" bg_img_attach=\\\"fixed\\\" parallax_sense=\\\"30\\\" bg_image_posiiton=\\\"\\\" animation_type=\\\"h\\\" horizontal_animation=\\\"left-animation\\\" vertical_animation=\\\"top-animation\\\" animation_repeat=\\\"repeat\\\" video_url=\\\"\\\" video_url_2=\\\"\\\" u_video_url=\\\"\\\" video_opts=\\\"\\\" video_poster=\\\"\\\" u_start_time=\\\"\\\" u_stop_time=\\\"\\\" viewport_vdo=\\\"\\\" enable_controls=\\\"\\\" parallax_content=\\\"\\\" parallax_content_sense=\\\"30\\\" fadeout_row=\\\"\\\" fadeout_start_effect=\\\"30\\\" disable_on_mobile=\\\"\\\" bg_override=\\\"0\\\" disable_on_mobile_img_parallax=\\\"\\\"][\/vc_row]","tag":"vc_row"},{"id":"43f1195c-2039","string":"[vc_column width=\\\"1\/1\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:16:43] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"ee25b6ed-a95a","string":"[vc_row full_width=\\\"\\\" bg_type=\\\"no_bg\\\" parallax_style=\\\"vcpb-default\\\" bg_image_new=\\\"\\\" layer_image=\\\"\\\" bg_image_repeat=\\\"no-repeat\\\" bg_image_size=\\\"cover\\\" bg_cstm_size=\\\"\\\" bg_img_attach=\\\"fixed\\\" parallax_sense=\\\"30\\\" bg_image_posiiton=\\\"\\\" animation_type=\\\"h\\\" horizontal_animation=\\\"left-animation\\\" vertical_animation=\\\"top-animation\\\" animation_repeat=\\\"repeat\\\" video_url=\\\"\\\" video_url_2=\\\"\\\" u_video_url=\\\"\\\" video_opts=\\\"\\\" video_poster=\\\"\\\" u_start_time=\\\"\\\" u_stop_time=\\\"\\\" viewport_vdo=\\\"\\\" enable_controls=\\\"\\\" parallax_content=\\\"\\\" parallax_content_sense=\\\"30\\\" fadeout_row=\\\"\\\" fadeout_start_effect=\\\"30\\\" disable_on_mobile=\\\"\\\" bg_override=\\\"0\\\" disable_on_mobile_img_parallax=\\\"\\\"][\/vc_row]","tag":"vc_row"},{"id":"92ff1229-2c0f","string":"[vc_column width=\\\"1\/1\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:18:14] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"cd43934c-4b20","string":"[vc_row full_width=\\\"\\\" bg_type=\\\"no_bg\\\" parallax_style=\\\"vcpb-default\\\" bg_image_new=\\\"\\\" layer_image=\\\"\\\" bg_image_repeat=\\\"no-repeat\\\" bg_image_size=\\\"cover\\\" bg_cstm_size=\\\"\\\" bg_img_attach=\\\"fixed\\\" parallax_sense=\\\"30\\\" bg_image_posiiton=\\\"\\\" animation_type=\\\"h\\\" horizontal_animation=\\\"left-animation\\\" vertical_animation=\\\"top-animation\\\" animation_repeat=\\\"repeat\\\" video_url=\\\"\\\" video_url_2=\\\"\\\" u_video_url=\\\"\\\" video_opts=\\\"\\\" video_poster=\\\"\\\" u_start_time=\\\"\\\" u_stop_time=\\\"\\\" viewport_vdo=\\\"\\\" enable_controls=\\\"\\\" parallax_content=\\\"\\\" parallax_content_sense=\\\"30\\\" fadeout_row=\\\"\\\" fadeout_start_effect=\\\"30\\\" disable_on_mobile=\\\"\\\" bg_override=\\\"0\\\" disable_on_mobile_img_parallax=\\\"\\\"][\/vc_row]","tag":"vc_row"},{"id":"3046f6bf-4d59","string":"[vc_column width=\\\"1\/1\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:18:31] POST /wp-admin/admin-ajax.php 
+                       {"action":"vc_edit_form","tag":"vc_row","post_id":"191","params":{"full_width":"","bg_type":"no_bg","parallax_style":"vcpb-default","bg_image_new":"","layer_image":"","bg_image_repeat":"no-repeat","bg_image_size":"cover","bg_cstm_size":"","bg_img_attach":"fixed","parallax_sense":"30","bg_image_posiiton":"","animation_type":"h","horizontal_animation":"left-animation","vertical_animation":"top-animation","animation_repeat":"repeat","video_url":"","video_url_2":"","u_video_url":"","video_opts":"","video_poster":"","u_start_time":"","u_stop_time":"","viewport_vdo":"","enable_controls":"","parallax_content":"","parallax_content_sense":"30","fadeout_row":"","fadeout_start_effect":"30","disable_on_mobile":"","bg_override":"0","disable_on_mobile_img_parallax":""}}
+[2015-02-25 22:18:41] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"d70789ea-79b4","string":"[vc_column][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:18:54] POST /?post_type=landing_page&p=191&vc_editable=true&vc_post_id=191 
+                       {"post_id":"191","vc_inline":"true","action":"vc_load_shortcode","shortcodes":[{"id":"d4d9f9d0-71ee","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"},{"id":"4cfea87c-6276","string":"[vc_column width=\\\"1\/2\\\"][\/vc_column]","tag":"vc_column"}]}
+[2015-02-25 22:20:12] GET /wp-admin/post.php?post=191&action=edit&wpb_vc_js_status=true 
+[2015-02-25 22:20:14] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"b44ebc2c19","post_ID":"191"}
+[2015-02-25 22:20:17] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:20:17] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:20:17] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:20:35] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902811:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:20:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902835:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:21:04] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902849:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:21:19] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902864:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:21:47] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902879:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:22:03] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902907:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:22:03] POST /wp-admin/post.php 
+                       {"_wpnonce":"b44ebc2c19","_wp_http_referer":"\/wp-admin\/post.php?post=191&action=edit&wpb_vc_js_status=true","user_ID":1,"action":"editpost","originalaction":"editpost","post_author":1,"post_type":"landing_page","original_post_status":"draft","referredby":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/edit.php?vc_action=vc_inline&post_id=191&post_type=landing_page","post_ID":"191","meta-box-order-nonce":"6bfdf4cc3b","closedpostboxesnonce":"556a7cfff2","post_title":"Term Life - New","samplepermalinknonce":"613900d8e8","acf_has_changed":"0","content":"","save":"Save Draft","wp-preview":"","hidden_post_status":"draft","post_status":"draft","hidden_post_password":"","hidden_post_visibility":"public","visibility":"public","post_password":"","mm":"02","jj":"25","aa":"2015","hh":"22","mn":"20","ss":"12","hidden_mm":"02","cur_mm":"02","hidden_jj":"25","cur_jj":"25","hidden_aa":"2015","cur_aa":"2015","hidden_hh":"22","cur_hh":"22","hidden_mn":"20","cur_mn":"20","original_publish":"Publish","post_category":["0"],"newcategory":"New Category Name","newcategory_parent":"-1","_ajax_nonce-add-category":"424fda1c56","tax_input":{"post_tag":""},"newtag":{"post_tag":""},"vc_teaser":{"data":"[{\\\"name\\\":\\\"title\\\",\\\"link\\\":\\\"post\\\"},{\\\"name\\\":\\\"image\\\",\\\"image\\\":\\\"featured\\\",\\\"link\\\":\\\"none\\\"},{\\\"name\\\":\\\"text\\\",\\\"mode\\\":\\\"excerpt\\\"}]","bgcolor":""},"pprredirect_noncename":"73906e2a58","pprredirect_url":"","pprredirect_type":"302","vc_js_composer_group_access_show_rule":"all","wpb_vc_js_status":"false","wpb_vc_loading":"Loading, please wait...","wpb_vc_loading_row":"Crunching...","vc_post_custom_css":"","yoast_wpseo_focuskw":"","yoast_wpseo_title":"","yoast_wpseo_metadesc":"","yoast_wpseo_meta-robots-noindex":"0","yoast_wpseo_meta-robots-nofollow":"0","yoast_wpseo_meta-robots-adv":["-"],"yoast_wpseo_sitemap-include":"-","yoast_wpseo_sitemap-prio":"-","yoast_wpseo_canonical":"","yoast_wpseo_redirect":"","yoast_wpseo_opengraph-title":"","yoast_wpseo_opengraph-description":"","yoast_wpseo_opengraph-image":"","post_name":"term-life-3","mcc_group":"","post_mime_type":"","ID":191,"post_content":"","comment_status":"closed","ping_status":"closed"}
+                       {"$newStatus":"draft","$oldStatus":"draft","$original":"draft"}
+[2015-02-25 22:22:07] GET /wp-admin/post.php?post=191&action=edit&message=10 
+[2015-02-25 22:22:09] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:22:09] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:22:09] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:22:11] GET /wp-admin/admin-ajax.php?action=oembed-cache&post=191 
+[2015-02-25 22:22:26] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902925:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:22:42] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902946:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:24:48] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424902962:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:26:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903088:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:28:50] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903209:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"b44ebc2c19"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:30:54] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903330:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:32:58] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903454:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:34:58] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903578:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"b44ebc2c19"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:36:59] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903698:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:39:05] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903818:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:41:08] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424903945:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"b44ebc2c19"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:43:15] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424904068:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-25 22:44:08] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424904195:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-25 22:44:19] POST /wp-cron.php?doing_wp_cron=1424904258.1693799495697021484375 
+[2015-02-25 22:44:19] GET /wp-admin/network/ 
+[2015-02-25 22:44:21] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"b44ebc2c19","post_ID":"191","active_post_lock":"1424904248:1"}
+[2015-02-25 22:44:23] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:44:24] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:44:24] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:44:42] GET /wp-admin/network/plugins.php 
+[2015-02-25 22:44:45] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:44:45] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:44:45] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:45:47] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"67ac66ac34","action":"heartbeat","screen_id":"plugins-network","has_focus":"false"}
+[2015-02-25 22:47:33] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"67ac66ac34","action":"heartbeat","screen_id":"plugins-network","has_focus":"true"}
+[2015-02-25 22:47:40] GET /wp-admin/network/plugins.php?action=activate&plugin=wp-editor%2Fwpeditor.php&plugin_status=all&paged=1&s&_wpnonce=ae2ab20008 
+[2015-02-25 22:47:43] GET /wp-admin/network/plugins.php?plugin_status=all&paged=1&s 
+[2015-02-25 22:47:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:47:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:47:47] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:02] GET /wp-admin/ 
+[2015-02-25 22:48:04] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:04] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:04] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:10] GET /wp-admin/admin.php?page=wpeditor_admin 
+[2015-02-25 22:48:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:48:46] POST /wp-admin/admin-ajax.php 
+                       {"action":"save_wpeditor_settings","_success":"Your post editor settings have been saved.","_tab":"posts","enable_post_editor":"1","post_editor_theme":"default","change_post_editor_font_size":"","enable_post_line_numbers":"1","enable_post_line_wrapping":"1","enable_post_active_line":"1","post_indent_unit":"2","enable_post_tab_characters":"spaces","enable_post_tab_size":"","enable_post_editor_height":"","submit":"Save Settings"}
+[2015-02-25 22:49:00] GET /wp-admin/edit.php?post_type=page 
+[2015-02-25 22:49:03] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:03] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:03] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:05] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-25 22:49:11] GET /wp-admin/post.php?post=186&action=edit 
+[2015-02-25 22:49:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:13] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:49:31] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"186","lock":"1424904549:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 22:51:31] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"186","lock":"1424904571:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 22:53:23] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"186","lock":"1424904690:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 22:53:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"186","lock":"1424904803:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 22:53:41] GET /wp-admin/widgets.php 
+[2015-02-25 22:53:42] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"ce88c33991","post_ID":"186","active_post_lock":"1424904819:1"}
+[2015-02-25 22:53:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:53:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:53:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:53:47] POST /wp-cron.php?doing_wp_cron=1424904825.7243440151214599609375 
+[2015-02-25 22:53:53] GET /wp-admin/network/plugins.php 
+[2015-02-25 22:53:56] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:53:56] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:53:56] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:06] GET /wp-admin/network/plugins.php?action=deactivate&plugin=jonradio-multiple-themes%2Fjonradio-multiple-themes.php&plugin_status=all&paged=1&s&_wpnonce=95568ba003 
+[2015-02-25 22:54:08] GET /wp-admin/network/plugins.php?plugin_status=all&paged=1&s 
+[2015-02-25 22:54:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:25] GET /wp-admin/network/plugins.php?action=activate&plugin=theme-test-drive%2Fthemedrive.php&plugin_status=all&paged=1&s&_wpnonce=785ab9b6a6 
+[2015-02-25 22:54:27] GET /wp-admin/network/plugins.php?plugin_status=all&paged=1&s 
+[2015-02-25 22:54:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:52] GET /wp-admin/ 
+[2015-02-25 22:54:55] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:55] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:54:55] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:03] GET /wp-admin/themes.php?page=themedrive_options_page 
+[2015-02-25 22:55:05] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:05] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:05] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:14] POST /wp-admin/themes.php?page=themedrive_options_page 
+                       {"_wpnonce":"9220320317","_wp_http_referer":"\/wp-admin\/themes.php?page=themedrive_options_page","td_themes":"snapgen","access_level":"10","button":"Enable Theme Drive","install_theme":""}
+[2015-02-25 22:55:16] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:17] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:17] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:18] POST /wp-cron.php?doing_wp_cron=1424904916.7604660987854003906250 
+[2015-02-25 22:55:23] GET /wp-admin/widgets.php 
+[2015-02-25 22:55:26] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:26] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:26] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:55:40] POST /wp-admin/admin-ajax.php 
+                       {"widget-text":{"4":{"title":"","text":""}},"wl":{"text-4":{"incexc":{"condition":"show"},"location":{"is_front_page":"0","is_home":"0","is_singular":"0","is_single":"0","is_page":"0","is_attachment":"0","is_search":"0","is_404":"0","is_archive":"0","is_date":"0","is_day":"0","is_month":"0","is_year":"0","is_category":"0","is_tag":"0","is_author":"0"},"custom_post_types_taxonomies":{"is_singular-landing_page":"0","is_archive-landing_page":"0","is_singular-frm_display":"0","is_tax-frm_tag":"0"},"word_count":{"check_wordcount":"0","check_wordcount_type":"less","word_count":""},"url":{"urls":""},"admin_notes":{"notes":""}}},"widget-id":[],"id_base":"text","widget-width":"400","widget-height":"350","widget_number":"2","multi_number":"4","add_new":"multi","sidebar":"header"}
+[2015-02-25 22:55:41] POST /wp-admin/admin-ajax.php 
+                       {"sidebars":{"main-sidebar":"widget-21_search-2","wp_inactive_widgets":"widget-22_text-2","sidebar-1":"","hero":"widget-23_text-3","header":"widget-20_text-4"}}
+[2015-02-25 22:56:28] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"widgets","has_focus":"true"}
+[2015-02-25 22:57:08] POST /wp-admin/admin-ajax.php 
+                       {"widget-text":{"4":{"title":"","text":"[content type=\\\"page\\\" name=\\\"header\\\"]"}},"wl":{"text-4":{"incexc":{"condition":"selected"},"location":{"is_front_page":"0","is_home":"0","is_singular":"0","is_single":"0","is_page":"0","is_attachment":"0","is_search":"0","is_404":"0","is_archive":"0","is_date":"0","is_day":"0","is_month":"0","is_year":"0","is_category":"0","is_tag":"0","is_author":"0"},"custom_post_types_taxonomies":{"is_singular-landing_page":"0","is_archive-landing_page":"0","is_singular-frm_display":"0","is_tax-frm_tag":"0"},"word_count":{"check_wordcount":"0","check_wordcount_type":"less","word_count":""},"url":{"urls":"sample-app"},"admin_notes":{"notes":""}}},"widget-id":["text-4"],"id_base":"text","widget-width":"400","widget-height":"350","widget_number":"2","multi_number":"4","add_new":"","sidebar":"header"}
+[2015-02-25 22:57:18] POST /wp-admin/admin-ajax.php 
+                       {"widget-text":{"4":{"title":"","text":"[content type=\\\"page\\\" name=\\\"header\\\"]"}},"wl":{"text-4":{"incexc":{"condition":"selected"},"location":{"is_front_page":"0","is_home":"0","is_singular":"0","is_single":"0","is_page":"0","is_attachment":"0","is_search":"0","is_404":"0","is_archive":"0","is_date":"0","is_day":"0","is_month":"0","is_year":"0","is_category":"0","is_tag":"0","is_author":"0"},"custom_post_types_taxonomies":{"is_singular-landing_page":"0","is_archive-landing_page":"0","is_singular-frm_display":"0","is_tax-frm_tag":"0"},"word_count":{"check_wordcount":"0","check_wordcount_type":"less","word_count":""},"url":{"urls":"sample-app\r\nterm-life-3"},"admin_notes":{"notes":""}}},"widget-id":["text-4"],"id_base":"text","widget-width":"400","widget-height":"350","widget_number":"2","multi_number":"4","add_new":"","sidebar":"header"}
+[2015-02-25 22:57:28] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"widgets","has_focus":"true"}
+[2015-02-25 22:57:40] GET /wp-admin/themes.php?page=themedrive_options_page 
+[2015-02-25 22:57:42] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:57:42] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:57:43] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:57:47] POST /wp-admin/themes.php?page=themedrive_options_page 
+                       {"_wpnonce":"9220320317","_wp_http_referer":"\/wp-admin\/themes.php?page=themedrive_options_page","td_themes":"snapgen","access_level":"10","button":"Disable Theme Drive","install_theme":""}
+[2015-02-25 22:57:49] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:57:49] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:57:50] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:13] GET /wp-admin/network/plugins.php 
+[2015-02-25 22:58:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:26] GET /wp-admin/network/plugins.php?action=deactivate&plugin=theme-test-drive%2Fthemedrive.php&plugin_status=all&paged=1&s&_wpnonce=7a2ae00d51 
+[2015-02-25 22:58:28] GET /wp-admin/network/plugins.php?plugin_status=all&paged=1&s 
+[2015-02-25 22:58:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:35] GET /wp-admin/network/plugins.php?action=activate&plugin=jonradio-multiple-themes%2Fjonradio-multiple-themes.php&plugin_status=all&paged=1&s&_wpnonce=2dfbe22a85 
+[2015-02-25 22:58:37] GET /wp-admin/network/plugins.php?plugin_status=all&paged=1&s 
+[2015-02-25 22:58:39] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:39] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:39] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:54] GET /wp-admin/ 
+[2015-02-25 22:58:57] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:57] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:58:57] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:04] GET /wp-admin/edit.php?post_type=page 
+[2015-02-25 22:59:06] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:06] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:06] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:08] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-25 22:59:12] GET /wp-admin/post-new.php?post_type=page 
+                       {"$newStatus":"auto-draft","$oldStatus":"new","$original":""}
+[2015-02-25 22:59:14] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:25] POST /wp-cron.php?doing_wp_cron=1424905164.0230159759521484375000 
+[2015-02-25 22:59:25] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"","excerpt":"","catslist":"","comment_status":"open","ping_status":"open","auto_draft":"1","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 22:59:26] POST /wp-admin/admin-ajax.php 
+                       {"action":"sample-permalink","post_id":"195","new_title":"header","samplepermalinknonce":"613900d8e8"}
+[2015-02-25 22:59:34] POST /wp-admin/post.php 
+                       {"_wpnonce":"19405754cb","_wp_http_referer":"\/wp-admin\/post-new.php?post_type=page","user_ID":1,"action":"editpost","originalaction":"editpost","post_author":1,"post_type":"page","original_post_status":"auto-draft","referredby":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/edit.php?post_type=page","_wp_original_http_referer":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/edit.php?post_type=page","auto_draft":"","post_ID":"195","meta-box-order-nonce":"6bfdf4cc3b","closedpostboxesnonce":"556a7cfff2","post_title":"header","samplepermalinknonce":"613900d8e8","acf_has_changed":"0","content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <h1><i class=\\\"fa fa-cube\\\"><\/i>Ameriquote<\/h1>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            <div class=\\\"header-4-social hidden-xs\\\">\r\n                                <ul class=\\\"list-inline list-unstyled\\\">\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\r\n                                <\/ul>\r\n                            <\/div>\r\n                        <\/div>","wp-preview":"","hidden_post_status":"draft","post_status":"publish","hidden_post_password":"","hidden_post_visibility":"public","visibility":"public","post_password":"","mm":"02","jj":"25","aa":"2015","hh":"22","mn":"59","ss":"10","hidden_mm":"02","cur_mm":"02","hidden_jj":"25","cur_jj":"25","hidden_aa":"2015","cur_aa":"2015","hidden_hh":"22","cur_hh":"22","hidden_mn":"59","cur_mn":"59","original_publish":"Publish","publish":"Publish","parent_id":"","page_template":"default","menu_order":"0","vc_teaser":{"data":"[{\\\"name\\\":\\\"title\\\",\\\"link\\\":\\\"post\\\"},{\\\"name\\\":\\\"image\\\",\\\"image\\\":\\\"featured\\\",\\\"link\\\":\\\"none\\\"},{\\\"name\\\":\\\"text\\\",\\\"mode\\\":\\\"excerpt\\\"}]","bgcolor":""},"pprredirect_noncename":"73906e2a58","pprredirect_url":"","pprredirect_type":"302","vc_js_composer_group_access_show_rule":"all","wpb_vc_js_status":"false","wpb_vc_loading":"Loading, please wait...","wpb_vc_loading_row":"Crunching...","vc_post_custom_css":"","yoast_wpseo_focuskw":"","yoast_wpseo_title":"","yoast_wpseo_metadesc":"","yoast_wpseo_meta-robots-noindex":"0","yoast_wpseo_meta-robots-nofollow":"0","yoast_wpseo_meta-robots-adv":["-"],"yoast_wpseo_sitemap-include":"-","yoast_wpseo_sitemap-prio":"-","yoast_wpseo_canonical":"","yoast_wpseo_redirect":"","yoast_wpseo_opengraph-title":"","yoast_wpseo_opengraph-description":"","yoast_wpseo_opengraph-image":"","excerpt":"","metakeyselect":"#NONE#","metakeyinput":"","metavalue":"","_ajax_nonce-add-meta":"6057e83693","advanced_view":"1","comment_status":"open","ping_status":"open","post_name":"","post_author_override":"1","post_mime_type":"","ID":195,"post_content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <h1><i class=\\\"fa fa-cube\\\"><\/i>Ameriquote<\/h1>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            <div class=\\\"header-4-social hidden-xs\\\">\r\n                                <ul class=\\\"list-inline list-unstyled\\\">\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\r\n                                <\/ul>\r\n                            <\/div>\r\n                        <\/div>","post_excerpt":"","post_parent":0}
+                       {"$newStatus":"publish","$oldStatus":"draft","$original":"auto-draft"}
+[2015-02-25 22:59:37] GET /wp-admin/post.php?post=195&action=edit&message=6 
+[2015-02-25 22:59:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 22:59:46] GET /sample-app/ 
+[2015-02-25 22:59:48] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424905176:1"}
+[2015-02-25 23:00:11] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905176:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:02:04] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905211:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:02:06] GET /sample-app/ 
+[2015-02-25 23:02:07] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424905323:1"}
+[2015-02-25 23:02:26] GET /wp-admin/ 
+[2015-02-25 23:02:28] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:28] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:29] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:35] GET /wp-admin/edit.php?post_type=page 
+[2015-02-25 23:02:38] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:38] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:38] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:40] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-25 23:02:47] GET /wp-admin/post.php?post=195&action=edit 
+[2015-02-25 23:02:51] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:52] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:02:52] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:10] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905365:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:03:11] GET /wp-admin/options-general.php?page=ccs_reference 
+[2015-02-25 23:03:12] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424905390:1"}
+[2015-02-25 23:03:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:15] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:16] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:16] POST /wp-cron.php?doing_wp_cron=1424905395.3313820362091064453125 
+[2015-02-25 23:03:21] GET /wp-admin/options-general.php?page=ccs_reference&tab=settings 
+[2015-02-25 23:03:24] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:24] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:24] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:45] GET /wp-admin/options-general.php?page=ccs_reference&tab=other 
+[2015-02-25 23:03:48] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:48] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:03:49] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:08] GET /wp-admin/options-general.php?page=tinymce-advanced 
+[2015-02-25 23:04:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:11] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:27] POST /wp-admin/options-general.php?page=tinymce-advanced 
+                       {"menubar":"on","tb1":["bold","italic","blockquote","bullist","numlist","alignleft","aligncenter","alignright","link","unlink","table","fullscreen","undo","redo","wp_adv"],"tb2":["formatselect","alignjustify","strikethrough","outdent","indent","pastetext","removeformat","charmap","wp_more","emoticons","forecolor","wp_help"],"tb5":["underline","styleselect","fontselect","fontsizeselect","cut","copy","paste","subscript","superscript","hr","image","print","anchor","searchreplace","visualblocks","code","insertdatetime","media","nonbreaking","ltr","rtl","backcolor","wp_page"],"advlist":"on","_wpnonce":"de0a7d0a16","_wp_http_referer":"\/wp-admin\/options-general.php?page=tinymce-advanced","tadv-save":"Save Changes"}
+[2015-02-25 23:04:29] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:29] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:30] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:40] POST /wp-cron.php?doing_wp_cron=1424905479.6120760440826416015625 
+[2015-02-25 23:04:42] GET /robots.txt 
+[2015-02-25 23:04:43] GET /wp-admin/edit.php?post_type=page 
+[2015-02-25 23:04:44] GET /sitemap_index.xml 
+[2015-02-25 23:04:45] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:48] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-25 23:04:56] GET /wp-admin/post.php?post=195&action=edit 
+[2015-02-25 23:04:58] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:58] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:04:58] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:05:16] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905492:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:05:30] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905516:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:05:46] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905530:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:06:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"<div class=\\\"col-md-4 col-sm-6\\\">\n                            <div class=\\\"header-4-logo\\\">\n                                \n                            <\/div>\n                        <\/div>\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\n                            <div class=\\\"header-4-social hidden-xs\\\">\n                                <ul class=\\\"list-inline list-unstyled\\\">\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\n                                <\/ul>\n                            <\/div>\n                        <\/div>","excerpt":"","catslist":"","post_name":"header","comment_status":"open","ping_status":"open","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195","lock":"1424905546:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:06:16] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905560:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:06:30] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905576:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:06:46] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905590:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:06:46] GET /category-sitemap.xml 
+[2015-02-25 23:07:00] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905606:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:07:11] GET /wp-admin/post.php?post=195&action=edit 
+[2015-02-25 23:07:13] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424905620:1"}
+[2015-02-25 23:07:16] GET /page-sitemap.xml 
+[2015-02-25 23:07:16] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:07:16] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:07:16] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:07:34] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905630:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:07:35] GET /frm_tag-sitemap.xml 
+[2015-02-25 23:07:42] GET /post-sitemap.xml 
+[2015-02-25 23:07:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905654:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:08:04] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905669:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:08:29] GET /post_tag-sitemap.xml 
+[2015-02-25 23:09:25] GET /landing_page-sitemap.xml 
+[2015-02-25 23:10:05] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"<div class=\\\"col-md-4 col-sm-6\\\">\n<div class=\\\"header-4-logo\\\">\n\n<\/div>\n<\/div>\n<div class=\\\"col-md-8 col-sm-6 text-right\\\">\n<div class=\\\"header-4-social hidden-xs\\\">\n<ul class=\\\"list-inline list-unstyled\\\">\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\n<\/ul>\n<\/div>\n<\/div>","excerpt":"","catslist":"","post_name":"header","comment_status":"open","ping_status":"open","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195","lock":"1424905684:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:10:28] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905805:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:10:43] GET /wp-admin/upload.php 
+[2015-02-25 23:10:44] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905828:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:10:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:10:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:10:46] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:10:49] POST /wp-admin/admin-ajax.php 
+                       {"action":"query-attachments","post_id":"0","query":{"orderby":"date","order":"DESC","posts_per_page":"40","paged":"1"}}
+[2015-02-25 23:10:58] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905844:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:11:13] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905858:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:11:22] POST /wp-admin/admin-ajax.php 
+                       {"action":"image-editor","_ajax_nonce":"ab1c0dcfe9","postid":"104","do":"open"}
+[2015-02-25 23:11:24] GET /wp-admin/admin-ajax.php?action=imgedit-preview&_ajax_nonce=ab1c0dcfe9&postid=104&rand=56521 
+[2015-02-25 23:11:43] POST /wp-admin/admin-ajax.php 
+                       {"action":"image-editor","_ajax_nonce":"ab1c0dcfe9","postid":"104","do":"scale","fwidth":"401","fheight":"91"}
+[2015-02-25 23:11:45] GET /wp-admin/admin-ajax.php?action=imgedit-preview&_ajax_nonce=ab1c0dcfe9&postid=104&rand=94630 
+[2015-02-25 23:11:45] POST /wp-admin/admin-ajax.php 
+                       {"action":"get-attachment","id":"104"}
+[2015-02-25 23:11:49] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"true"}
+[2015-02-25 23:12:08] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905873:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:12:23] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"<div class=\\\"col-md-4 col-sm-6\\\">\n<div class=\\\"header-4-logo\\\">\n<a href=\\\"\n<\/div>\n<\/div>\n<div class=\\\"col-md-8 col-sm-6 text-right\\\">\n<div class=\\\"header-4-social hidden-xs\\\">\n<ul class=\\\"list-inline list-unstyled\\\">\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\n\t<li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\n<\/ul>\n<\/div>\n<\/div>","excerpt":"","catslist":"","post_name":"header","comment_status":"open","ping_status":"open","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195","lock":"1424905928:1"},"wp-refresh-post-nonces":{"post_id":"195","post_nonce":"19405754cb"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:12:38] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905943:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:12:51] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:12:53] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905958:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:13:08] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424905973:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:13:26] GET /wp-admin/post.php?post=195&action=edit 
+[2015-02-25 23:13:29] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"<div class=\\\"col-md-4 col-sm-6\\\">\n<div class=\\\"header-4-logo\\\"><a href=\\\"http:\/\/www.ameriquote.com\\\"><img src=\\\"http:\/\/landing10dev.ameriquote.com\/wp-content\/uploads\/sites\/4\/2015\/01\/ameriquote_transparent-e1424905903125.png\\\" alt=\\\"\\\" border=\\\"0\\\" \/><\/a><\/div>\n<\/div>\n<div class=\\\"col-md-8 col-sm-6 text-right\\\"><\/div>","excerpt":"","catslist":"","post_name":"header","comment_status":"open","ping_status":"open","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195","lock":"1424905988:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:13:29] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424905988:1"}
+[2015-02-25 23:13:33] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:13:33] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:13:33] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:13:50] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906004:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:13:53] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:14:05] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906030:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:14:20] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906045:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:14:35] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp_autosave":{"post_id":"195","post_type":"page","post_author":"1","post_title":"header","content":"<div class=\\\"col-md-4 col-sm-6\\\">\n                            <div class=\\\"header-4-logo\\\">\n                                <a href=\\\"http:\/\/www.ameriquote.com\\\"\/\n                            <\/div>\n                        <\/div>\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\n                            <div class=\\\"header-4-social hidden-xs\\\">\n                                <ul class=\\\"list-inline list-unstyled\\\">\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\n                                <\/ul>\n                            <\/div>\n                        <\/div>","excerpt":"","catslist":"","post_name":"header","comment_status":"open","ping_status":"open","_wpnonce":"19405754cb"},"wp-refresh-post-lock":{"post_id":"195","lock":"1424906060:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:14:51] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906075:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:14:52] POST /wp-admin/post.php 
+                       {"_wpnonce":"19405754cb","_wp_http_referer":"\/wp-admin\/post.php?post=195&action=edit","user_ID":1,"action":"editpost","originalaction":"editpost","post_author":1,"post_type":"page","original_post_status":"publish","referredby":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/edit.php?post_type=page","_wp_original_http_referer":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/edit.php?post_type=page","post_ID":"195","meta-box-order-nonce":"6bfdf4cc3b","closedpostboxesnonce":"556a7cfff2","post_title":"header","samplepermalinknonce":"613900d8e8","acf_has_changed":"0","content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <a href=\\\"http:\/\/www.ameriquote.com\\\"\/><img src=\\\"http:\/\/landing10dev.ameriquote.com\/wp-content\/uploads\/sites\/4\/2015\/01\/ameriquote_transparent-e1424905903125.png\\\" border=\\\"0\\\"><\/a>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            <div class=\\\"header-4-social hidden-xs\\\">\r\n                                <ul class=\\\"list-inline list-unstyled\\\">\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\r\n                                <\/ul>\r\n                            <\/div>\r\n                        <\/div>","wp-preview":"","hidden_post_status":"publish","post_status":"publish","hidden_post_password":"","hidden_post_visibility":"public","visibility":"public","post_password":"","mm":"02","jj":"25","aa":"2015","hh":"22","mn":"59","ss":"33","hidden_mm":"02","cur_mm":"02","hidden_jj":"25","cur_jj":"25","hidden_aa":"2015","cur_aa":"2015","hidden_hh":"22","cur_hh":"23","hidden_mn":"59","cur_mn":"13","original_publish":"Update","save":"Update","parent_id":"","page_template":"default","menu_order":"0","vc_teaser":{"data":"[{\\\"name\\\":\\\"title\\\",\\\"link\\\":\\\"post\\\"},{\\\"name\\\":\\\"image\\\",\\\"image\\\":\\\"featured\\\",\\\"link\\\":\\\"none\\\"},{\\\"name\\\":\\\"text\\\",\\\"mode\\\":\\\"excerpt\\\"}]","bgcolor":""},"pprredirect_noncename":"73906e2a58","pprredirect_url":"","pprredirect_type":"302","vc_js_composer_group_access_show_rule":"all","wpb_vc_js_status":"false","wpb_vc_loading":"Loading, please wait...","wpb_vc_loading_row":"Crunching...","vc_post_custom_css":"","yoast_wpseo_focuskw":"","yoast_wpseo_title":"","yoast_wpseo_metadesc":"","yoast_wpseo_meta-robots-noindex":"0","yoast_wpseo_meta-robots-nofollow":"0","yoast_wpseo_meta-robots-adv":["-"],"yoast_wpseo_sitemap-include":"-","yoast_wpseo_sitemap-prio":"-","yoast_wpseo_canonical":"","yoast_wpseo_redirect":"","yoast_wpseo_opengraph-title":"","yoast_wpseo_opengraph-description":"","yoast_wpseo_opengraph-image":"","excerpt":"","metakeyselect":"#NONE#","metakeyinput":"","metavalue":"","_ajax_nonce-add-meta":"6057e83693","advanced_view":"1","comment_status":"open","ping_status":"open","add_comment_nonce":"9e599bb099","_ajax_fetch_list_nonce":"63b34fb2cd","post_name":"header","post_author_override":"1","mcc_group":"","post_mime_type":"","ID":195,"post_content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <a href=\\\"http:\/\/www.ameriquote.com\\\"\/><img src=\\\"http:\/\/landing10dev.ameriquote.com\/wp-content\/uploads\/sites\/4\/2015\/01\/ameriquote_transparent-e1424905903125.png\\\" border=\\\"0\\\"><\/a>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            <div class=\\\"header-4-social hidden-xs\\\">\r\n                                <ul class=\\\"list-inline list-unstyled\\\">\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-facebook\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-twitter\\\"><\/i><\/a><\/li>\r\n                                    <li><a href=\\\"#\\\"><i class=\\\"fa fa-google-plus\\\"><\/i><\/a><\/li>\r\n                                <\/ul>\r\n                            <\/div>\r\n                        <\/div>","post_excerpt":"","post_parent":0}
+                       {"$newStatus":"publish","$oldStatus":"publish","$original":"publish"}
+[2015-02-25 23:14:53] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"true"}
+[2015-02-25 23:14:56] GET /wp-admin/post.php?post=195&action=edit&message=1 
+[2015-02-25 23:14:57] GET /sample-app/ 
+[2015-02-25 23:14:59] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:14:59] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:15:00] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:15:17] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906094:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:15:32] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906117:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:15:34] POST /wp-admin/post.php 
+                       {"_wpnonce":"19405754cb","_wp_http_referer":"\/wp-admin\/post.php?post=195&action=edit&message=1","user_ID":1,"action":"editpost","originalaction":"editpost","post_author":1,"post_type":"page","original_post_status":"publish","referredby":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/post.php?post=195&action=edit","_wp_original_http_referer":"http:\/\/landing10dev.ameriquote.com\/wp-admin\/post.php?post=195&action=edit","post_ID":"195","meta-box-order-nonce":"6bfdf4cc3b","closedpostboxesnonce":"556a7cfff2","post_title":"header","samplepermalinknonce":"613900d8e8","acf_has_changed":"0","content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <a href=\\\"http:\/\/www.ameriquote.com\\\"\/><img src=\\\"http:\/\/landing10dev.ameriquote.com\/wp-content\/uploads\/sites\/4\/2015\/01\/ameriquote_transparent-e1424905903125.png\\\" border=\\\"0\\\"><\/a>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            &nbsp;\r\n                        <\/div>","wp-preview":"","hidden_post_status":"publish","post_status":"publish","hidden_post_password":"","hidden_post_visibility":"public","visibility":"public","post_password":"","mm":"02","jj":"25","aa":"2015","hh":"22","mn":"59","ss":"33","hidden_mm":"02","cur_mm":"02","hidden_jj":"25","cur_jj":"25","hidden_aa":"2015","cur_aa":"2015","hidden_hh":"22","cur_hh":"23","hidden_mn":"59","cur_mn":"14","original_publish":"Update","save":"Update","parent_id":"","page_template":"default","menu_order":"0","vc_teaser":{"data":"[{\\\"name\\\":\\\"title\\\",\\\"link\\\":\\\"post\\\"},{\\\"name\\\":\\\"image\\\",\\\"image\\\":\\\"featured\\\",\\\"link\\\":\\\"none\\\"},{\\\"name\\\":\\\"text\\\",\\\"mode\\\":\\\"excerpt\\\"}]","bgcolor":""},"pprredirect_noncename":"73906e2a58","pprredirect_url":"","pprredirect_type":"302","vc_js_composer_group_access_show_rule":"all","wpb_vc_js_status":"false","wpb_vc_loading":"Loading, please wait...","wpb_vc_loading_row":"Crunching...","vc_post_custom_css":"","yoast_wpseo_focuskw":"","yoast_wpseo_title":"","yoast_wpseo_metadesc":"","yoast_wpseo_meta-robots-noindex":"0","yoast_wpseo_meta-robots-nofollow":"0","yoast_wpseo_meta-robots-adv":["-"],"yoast_wpseo_sitemap-include":"-","yoast_wpseo_sitemap-prio":"-","yoast_wpseo_canonical":"","yoast_wpseo_redirect":"","yoast_wpseo_opengraph-title":"","yoast_wpseo_opengraph-description":"","yoast_wpseo_opengraph-image":"","excerpt":"","metakeyselect":"#NONE#","metakeyinput":"","metavalue":"","_ajax_nonce-add-meta":"6057e83693","advanced_view":"1","comment_status":"open","ping_status":"open","add_comment_nonce":"9e599bb099","_ajax_fetch_list_nonce":"63b34fb2cd","post_name":"header","post_author_override":"1","mcc_group":"","post_mime_type":"","ID":195,"post_content":"<div class=\\\"col-md-4 col-sm-6\\\">\r\n                            <div class=\\\"header-4-logo\\\">\r\n                                <a href=\\\"http:\/\/www.ameriquote.com\\\"\/><img src=\\\"http:\/\/landing10dev.ameriquote.com\/wp-content\/uploads\/sites\/4\/2015\/01\/ameriquote_transparent-e1424905903125.png\\\" border=\\\"0\\\"><\/a>\r\n                            <\/div>\r\n                        <\/div>\r\n                        <div class=\\\"col-md-8 col-sm-6 text-right\\\">\r\n                            &nbsp;\r\n                        <\/div>","post_excerpt":"","post_parent":0}
+                       {"$newStatus":"publish","$oldStatus":"publish","$original":"publish"}
+[2015-02-25 23:15:37] GET /wp-admin/post.php?post=195&action=edit&message=1 
+[2015-02-25 23:15:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:15:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:15:40] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:15:57] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906136:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:16:12] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906157:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:18:13] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906172:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:20:13] POST /wp-cron.php?doing_wp_cron=1424906412.5262839794158935546875 
+[2015-02-25 23:20:14] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906293:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:20:15] GET /sitemap_index.xml 
+[2015-02-25 23:22:13] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906414:1"},"wp-refresh-post-nonces":{"post_id":"195","post_nonce":"19405754cb"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"false"}
+[2015-02-25 23:23:20] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906533:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:23:36] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"195","lock":"1424906600:1"}},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"page","has_focus":"true"}
+[2015-02-25 23:23:37] GET /wp-admin/upload.php 
+[2015-02-25 23:23:39] POST /wp-admin/admin-ajax.php 
+                       {"action":"wp-remove-post-lock","_wpnonce":"19405754cb","post_ID":"195","active_post_lock":"1424906616:1"}
+[2015-02-25 23:23:41] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:23:42] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:23:42] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:23:44] POST /wp-admin/admin-ajax.php 
+                       {"action":"query-attachments","post_id":"0","query":{"orderby":"date","order":"DESC","posts_per_page":"40","paged":"1"}}
+[2015-02-25 23:24:19] POST /wp-admin/async-upload.php 
+                       {"name":"landing-banner-bg.jpg","action":"upload-attachment","_wpnonce":"0583bf947a"}
+[2015-02-25 23:24:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:26:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:27:11] GET /sample-app/ 
+[2015-02-25 23:27:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:28:57] GET /sample-app/ 
+[2015-02-25 23:29:45] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:31:16] GET /sample-app/ 
+[2015-02-25 23:31:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:33:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:35:44] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"false"}
+[2015-02-25 23:37:50] POST /wp-admin/admin-ajax.php 
+                       {"interval":"60","_nonce":"05d5429222","action":"heartbeat","screen_id":"upload","has_focus":"true"}
+[2015-02-25 23:37:56] GET /wp-admin/edit.php?post_type=page 
+[2015-02-25 23:37:59] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:37:59] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:37:59] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150201&id=1 
+[2015-02-25 23:38:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-25 23:40:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:40:32] GET /sample-app/ 
+[2015-02-25 23:41:10] GET /sample-app/ 
+[2015-02-25 23:42:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:42:29] GET /sample-app/ 
+[2015-02-25 23:43:29] GET /sample-app/ 
+[2015-02-25 23:44:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:46:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:48:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:50:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:52:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:54:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:56:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-25 23:58:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:00:04] POST /wp-cron.php?doing_wp_cron=1424908803.2924399375915527343750 
+[2015-02-26 00:00:04] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:02:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:04:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:06:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:08:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:10:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:12:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:14:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:16:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:18:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:20:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:22:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:24:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:26:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:28:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:30:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:32:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:34:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:36:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:38:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:40:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:42:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:44:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:46:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:48:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:50:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:52:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:54:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:56:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 00:58:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:00:02] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:00:02] POST /wp-cron.php?doing_wp_cron=1424912400.7767601013183593750000 
+[2015-02-26 01:02:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:04:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:06:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:08:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:10:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:12:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:14:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:16:02] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:18:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:20:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:22:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:24:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:26:02] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:28:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:30:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:32:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:34:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:36:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:38:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:40:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:42:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:44:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:46:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:48:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:50:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:52:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:54:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:56:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 01:58:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:00:02] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:00:02] POST /wp-cron.php?doing_wp_cron=1424916000.7493829727172851562500 
+[2015-02-26 02:02:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:04:02] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:06:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:08:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:10:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:12:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:14:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:16:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:18:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:20:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:22:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:24:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:26:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:28:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:30:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:32:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:34:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:36:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:38:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:40:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:42:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:44:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:46:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:48:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:50:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:52:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:54:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:56:01] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"false"}
+[2015-02-26 02:57:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-195","post-186","post-53","post-188"]},"interval":"15","_nonce":"05d5429222","action":"heartbeat","screen_id":"edit-page","has_focus":"true"}
+[2015-02-26 03:38:17] GET /robots.txt 
+[2015-02-26 03:38:18] POST /wp-cron.php?doing_wp_cron=1424921896.3675129413604736328125 
+[2015-02-26 11:00:00] GET / 
+[2015-02-26 11:00:01] POST /wp-cron.php?doing_wp_cron=1424948399.2721149921417236328125 
+[2015-02-26 11:00:02] GET /landing_page/biomed 
+[2015-02-26 11:00:03] GET /landing_page/biomed/ 
+[2015-02-26 12:17:02] POST /wp-cron.php?doing_wp_cron=1424953020.9073789119720458984375 
+[2015-02-26 12:17:02] GET /landing_page/medicare-supplement/ 
+[2015-02-26 12:18:55] GET /header/ 
+[2015-02-26 12:23:26] GET /category/uncategorized/ 
+[2015-02-26 12:25:19] GET /author/snappermorgan/ 
+[2015-02-26 12:28:36] GET /category/uncategorized/feed/ 
+[2015-02-26 12:28:52] GET /author/snappermorgan/feed/ 
+[2015-02-26 15:59:55] GET / 
+[2015-02-26 16:00:03] POST /wp-cron.php?doing_wp_cron=1424966393.6842160224914550781250 
+[2015-02-26 16:00:04] POST /wp-cron.php?doing_wp_cron=1424966402.6008319854736328125000 
+[2015-02-26 16:00:06] GET /wp-admin/ 
+[2015-02-26 16:00:09] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:09] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:10] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:11] POST /wp-cron.php?doing_wp_cron=1424966409.0536029338836669921875 
+[2015-02-26 16:00:14] GET /wp-admin/admin-ajax.php?action=dashboard-widgets&widget=dashboard_primary&pagenow=dashboard 
+[2015-02-26 16:00:19] GET /wp-admin/edit.php?post_type=landing_page 
+[2015-02-26 16:00:21] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:21] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:22] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:23] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-check-locked-posts":["post-191","post-173","post-69","post-48","post-17"]},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"edit-landing_page","has_focus":"true"}
+[2015-02-26 16:00:32] GET /wp-admin/post.php?post=191&action=edit 
+[2015-02-26 16:00:35] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:35] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:00:36] GET /400e332b2498595ae9a0ebda32f6303b.css?build=20150202&id=1 
+[2015-02-26 16:02:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424966431:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:04:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424966559:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:06:41] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424966679:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"2a8eaae8cc"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:08:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424966801:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:10:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424966919:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:12:40] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967039:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"2a8eaae8cc"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:14:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967160:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:16:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967279:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:18:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967399:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"2a8eaae8cc"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:20:39] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967519:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:22:36] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967639:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-26 16:22:52] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967756:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:24:52] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967772:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"2a8eaae8cc"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:25:51] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967892:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"true"}
+[2015-02-26 16:27:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424967950:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:29:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424968069:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:31:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424968189:1"},"wp-refresh-post-nonces":{"post_id":"191","post_nonce":"2a8eaae8cc"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:33:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424968309:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
+[2015-02-26 16:35:49] POST /wp-admin/admin-ajax.php 
+                       {"data":{"wp-refresh-post-lock":{"post_id":"191","lock":"1424968429:1"}},"interval":"15","_nonce":"229f5f6dc5","action":"heartbeat","screen_id":"landing_page","has_focus":"false"}
