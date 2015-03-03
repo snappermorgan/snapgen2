@@ -9,7 +9,7 @@ function snapgen_enqueue() {
 	wp_enqueue_script('easing', get_stylesheet_directory_uri() . '/js/vendor/jquery.easing.1.3.js', array('jquery'));
 	wp_enqueue_script('scrollto', get_stylesheet_directory_uri() . '/js/vendor/jquery.scrollto.js', array('jquery'));
 	wp_enqueue_script('bootstrap', get_stylesheet_directory_uri() . '/js/vendor/bootstrap.js', array('jquery'));
-
+    wp_enqueue_script('leanmodal', '/wp-content/plugins/snapgen/jquery.leanModal.min.js', array('jquery'));
 	wp_enqueue_style('font-awesome', get_stylesheet_directory_uri() . '/css/font-awesome.css');
 	wp_enqueue_style('snapgen-styles', get_stylesheet_directory_uri() . '/style.css');
 
@@ -70,3 +70,37 @@ function snapgen_widgets_init() {
 	));
 }
 add_action('widgets_init', 'snapgen_widgets_init');
+add_filter( 'gform_ajax_spinner_url', 'snapgen_custom_gforms_spinner' );
+/**
+ * Changes the default Gravity Forms AJAX spinner.
+ *
+ * @since 1.0.0
+ *
+ * @param string $src  The default spinner URL.
+ * @return string $src The new spinner URL.
+ */
+function snapgen_custom_gforms_spinner( $src ) {
+
+    return get_stylesheet_directory_uri() . '/images/ajax-loader.gif';
+    
+}
+
+add_filter( 'gform_date_max_year', 'set_max_year' ,10, 3  );
+function set_max_year( $max_year, $form, $field ) {
+
+	if($form['id']==4){
+	
+	    return date('Y') - 25;
+	}else{
+		return $max_year;
+	}
+}
+
+add_filter( 'gform_date_min_year', 'set_min_year', 10, 3  );
+function set_min_year( $min_year, $form, $field ) {
+	if($form['id']==4){
+	 	return date('Y') - 80;
+	}else{
+		return $min_year;
+	}
+}

@@ -38,10 +38,3 @@ $(window).load(function(){
 });
 });
 
-/*----------------------------------------
-    RESIZE FUNCTION
-----------------------------------------*/
-jQuery(window).resize(function(){
-        scrollSpyRefresh();
-        waypointsRefresh();
-});

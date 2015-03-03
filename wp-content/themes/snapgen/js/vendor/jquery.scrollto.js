@@ -6,6 +6,7 @@
  * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php).
  * 2013/02/17
  **/
+(function($) {
 $.scrollTo = $.fn.scrollTo = function(x, y, options){
     if (!(this instanceof $)) return $.fn.scrollTo.apply($('html, body'), arguments);
 
@@ -30,3 +31,4 @@ $.scrollTo = $.fn.scrollTo = function(x, y, options){
         }, options.animation);
     });
 };
+});

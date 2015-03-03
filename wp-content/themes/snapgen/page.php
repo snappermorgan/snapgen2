@@ -12,14 +12,20 @@
  */
 
 get_header(); ?>
+
  <section id="hero-4">
+ 	<div class="wrapper">
             	<?php
 				if ( is_active_sidebar( 'hero' ) ) : ?>
+				
+				<div class="container">
+                	<div class="row">
 						<div id="widget-area" class="widget-area" role="complementary">
 							<?php dynamic_sidebar( 'hero' ); ?>
 						</div><!-- .widget-area -->
+						</div>
 					<?php endif; ?>
-            </section>
+            </div></section>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 

@@ -9,6 +9,17 @@
 
 get_header(); ?>
 
+<section id="hero-4">
+            	<?php
+				if ( is_active_sidebar( 'hero' ) ) : ?>
+				<div class="container">
+                	<div class="row">
+						<div id="widget-area" class="widget-area" role="complementary">
+							<?php dynamic_sidebar( 'hero' ); ?>
+						</div><!-- .widget-area -->
+						</div></div>
+					<?php endif; ?>
+            </section>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -23,20 +34,7 @@ get_header(); ?>
 			 */
 			get_template_part( 'content', get_post_format() );
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-			// Previous/next post navigation.
-			the_post_navigation( array(
-				'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'snapgen' ) . '</span> ' .
-					'<span class="screen-reader-text">' . __( 'Next post:', 'twentyfifteen' ) . '</span> ' .
-					'<span class="post-title">%title</span>',
-				'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'snapgen' ) . '</span> ' .
-					'<span class="screen-reader-text">' . __( 'Previous post:', 'twentyfifteen' ) . '</span> ' .
-					'<span class="post-title">%title</span>',
-			) );
+		
 
 		// End the loop.
 		endwhile;
