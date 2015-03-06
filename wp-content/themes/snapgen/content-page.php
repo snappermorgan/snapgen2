@@ -7,6 +7,7 @@
  * @since Twenty Fifteen 1.0
  */
 ?>
+<!-- content-page.php -->
 <section id="features">
     <div class="container">
         <div class="row">

@@ -1,0 +1,7 @@
+.buildpath
+.project
+.settings/
+.idea/
+bower_components
+node_modules/
+atlassian-ide-plugin.xml

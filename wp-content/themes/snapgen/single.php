@@ -8,7 +8,7 @@
  */
 
 get_header(); ?>
-
+<!-- single.php -->
 <section id="hero-4">
             	<?php
 				if ( is_active_sidebar( 'hero' ) ) : ?>
@@ -17,7 +17,7 @@ get_header(); ?>
 						<div id="widget-area" class="widget-area" role="complementary">
 							<?php dynamic_sidebar( 'hero' ); ?>
 						</div><!-- .widget-area -->
-						</div></div>
+						
 					<?php endif; ?>
             </section>
 	<div id="primary" class="content-area">

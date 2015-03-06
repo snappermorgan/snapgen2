@@ -3,6 +3,8 @@
 ----------------------------------------*/
 
 jQuery(document).ready(function($){
+    
+    jQuery('body', window.parent.document).data('popunder','YES');
      $(window).scroll(function () {
             if ($(this).scrollTop() > 50) {
                 $('#back-to-top').fadeIn();

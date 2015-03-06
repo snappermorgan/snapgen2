@@ -1,0 +1,24 @@
+{
+  "name": "jquery-popunder",
+  "version": "0.2.30",
+  "main": "./dist/jquery.popunder.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hpbuniat/jquery-popunder.git"
+  },
+  "dependencies": {
+    "jquery": "<2.0",
+    "jquery.cookie": "~1.3"
+  },
+  "homepage": "https://github.com/hpbuniat/jquery-popunder",
+  "_release": "0.2.30",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.30",
+    "commit": "b235120a8c5205367258175a188d43ae6c225e1f"
+  },
+  "_source": "git://github.com/hpbuniat/jquery-popunder.git",
+  "_target": "~0.2.30",
+  "_originalSource": "jquery-popunder",
+  "_direct": true
+}

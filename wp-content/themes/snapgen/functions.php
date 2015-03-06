@@ -9,6 +9,7 @@ function snapgen_enqueue() {
 	wp_enqueue_script('easing', get_stylesheet_directory_uri() . '/js/vendor/jquery.easing.1.3.js', array('jquery'));
 	wp_enqueue_script('scrollto', get_stylesheet_directory_uri() . '/js/vendor/jquery.scrollto.js', array('jquery'));
 	wp_enqueue_script('bootstrap', get_stylesheet_directory_uri() . '/js/vendor/bootstrap.js', array('jquery'));
+	wp_enqueue_script('popunder', get_stylesheet_directory_uri() . '/js/jquery.popunder.js', array('jquery'));
     wp_enqueue_script('leanmodal', '/wp-content/plugins/snapgen/jquery.leanModal.min.js', array('jquery'));
 	wp_enqueue_style('font-awesome', get_stylesheet_directory_uri() . '/css/font-awesome.css');
 	wp_enqueue_style('snapgen-styles', get_stylesheet_directory_uri() . '/style.css');
@@ -104,3 +105,57 @@ function set_min_year( $min_year, $form, $field ) {
 		return $min_year;
 	}
 }
+
+add_filter('gform_confirmation_anchor', '__return_false');
+
+
+
+add_filter('gform_pre_render_4', 'add_jscript' );
+
+function add_jscript($form){
+	$current_page = GFFormDisplay::get_current_page( $form['id'] );
+
+	if ($current_page == 0){
+	?>
+		<script type="text/javascript">
+		var script = document.createElement("script");
+		script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_confirmation_loaded', function(){jQuery('#working').delay('2000').fadeOut({complete:function(){jQuery('#continue_app').fadeIn();}});});});";
+			window.parent.document.body.appendChild(script);
+    
+    </script>
+    <?php
+    return $form;
+	} 
+	else if($current_page == 2){
+
+        ?>
+        <script type="text/javascript">
+       var script = document.createElement("script");
+       
+        	zip = window.parent.document.getElementById("input_4_25").value;
+ 			urlToShow = "/bw-life?zip="+zip;
+ 			
+
+			script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_post_render', function(){jQuery(document).click(function(){if( jQuery('body', window.parent.document).data('popunder') == 'YES' ){jQuery('body', window.parent.document).data('popunder','NO');jQuery.popunder('"+urlToShow+"');}else{jQuery('body', window.parent.document).data('popunder','NO');}});});});";
+			window.parent.document.body.appendChild(script);
+
+        </script>
+        <?php
+        return $form;
+    }
+    else if($current_page==4){
+		?>
+		
+		<script type="text/javascript">
+		var script = document.createElement("script");
+		script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_post_render', function(){jQuery('.gform_page_footer').after(jQuery('#field_4_23'));});});";
+			window.parent.document.body.appendChild(script);
+    
+    </script>
+    <?php
+    return $form;
+	} else{
+		return $form;
+	}
+}
+
