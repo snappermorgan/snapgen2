@@ -555,8 +555,7 @@ foreach ($forms as $f) {
 					//$form = $this->on_response_failure($form, $debug, $service, $post_args, $failMessage);
 					//holder for callback return results
 
-					if ($callback_results['message'] !== '') {
-
+				if (($callback_results['message'] !== '') && (isset($service['confirmation']) && !empty($service['confirmation']))) {
 						$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message'] . $response['body']);
 					} else {
 						$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => '');
@@ -581,7 +580,7 @@ foreach ($forms as $f) {
 
 				//hack for pass-by-reference
 				//holder for callback return results
-				if ($callback_results['message'] !== '') {
+				if (($callback_results['message'] !== '') && (isset($service['confirmation']) && !empty($service['confirmation']))) {
 					$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message'] . $response['body']);
 				} else {
 

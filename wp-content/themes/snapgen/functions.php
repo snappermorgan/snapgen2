@@ -127,7 +127,7 @@ function add_jscript($form){
     return $form;
 	} 
 	else if($current_page == 2){
-
+		
         ?>
         <script type="text/javascript">
        var script = document.createElement("script");
@@ -136,12 +136,36 @@ function add_jscript($form){
  			urlToShow = "/bw-life?zip="+zip;
  			
 
-			script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_post_render', function(){jQuery(document).click(function(){if( jQuery('body', window.parent.document).data('popunder') == 'YES' ){jQuery('body', window.parent.document).data('popunder','NO');jQuery.popunder('"+urlToShow+"');}else{jQuery('body', window.parent.document).data('popunder','NO');}});});});";
-			window.parent.document.body.appendChild(script);
-
+			script.innerHTML = "jQuery('document').ready(function() {"+
+								    "jQuery(document).bind('gform_post_render', function() {"+
+								        "jQuery('input,select,button', window.parent.document).focus(function() {"+
+								            "if (jQuery.browser.mobile) {"+
+								             "if (jQuery('body', window.parent.document).data('popunder') == 'YES') {"+
+								              "jQuery('body', window.parent.document).data('popunder', 'NO');"+
+								            	"url=parent.window.document.location.href+'<?php if($_GET){echo "&";}else{echo"?";}?>m=yes&ZipCode="+zip+"';"+
+								            	"parent.window.open(url);"+
+								            	 "}"+
+								                "else {"+
+								                 "jQuery('body', window.parent.document).data('popunder', 'NO');"+
+								                "};"+
+								            "}else {"+
+								                "if (jQuery('body', window.parent.document).data('popunder') == 'YES') {"+
+								                    "jQuery('body', window.parent.document).data('popunder', 'NO');"+
+								                    "jQuery.popunder('"+urlToShow+"');"+
+								                "}"+
+								                "else {"+
+								                    "jQuery('body', window.parent.document).data('popunder', 'NO');"+
+								                "};"+
+								            "};"+
+								        "});"+
+								    "});"+
+								"});";
+			
+					window.parent.document.body.appendChild(script);
         </script>
         <?php
         return $form;
+		
     }
     else if($current_page==4){
 		?>
@@ -154,8 +178,62 @@ function add_jscript($form){
     </script>
     <?php
     return $form;
-	} else{
+	} else if($current_page==1){
+		
+		if(isset($_GET['m']) && $_GET['m']=='yes' && isset($_GET['ZipCode']) && $_GET['ZipCode'] !=''){
+				GFFormDisplay::$submission[4]['page_number'] = 2;
+				$current_page = GFFormDisplay::get_current_page( $form['id'] );
+			?>
+				<script>
+				zip = "<?php echo $_GET['ZipCode'];?>";
+ 				urlToShow = "/bw-life?zip="+zip;
+				var script = document.createElement("script");
+					script.innerHTML = "jQuery('document').ready(function(){"+
+											"jQuery(document).bind('gform_post_render', function(){"+
+											"jQuery('body', window.parent.document).data('popunder', 'NO');"+
+											"parent.window.opener.location.href='"+urlToShow+"';});"+
+					"});";
+					window.parent.document.body.appendChild(script);
+				</script>
+			
+			<?php
+		
+		return $form;
+		}else{
+			return $form;
+		}
+	}else{
 		return $form;
 	}
 }
+add_filter("gform_validation_message", "disable_popup", 10, 2);
+function disable_popup($message, $form){
+	?>
+		<script>
+			
+				var script = document.createElement("script");
+					script.innerHTML = "jQuery('document').ready(function(){"+
+											"jQuery(document).bind('gform_post_render', function(){"+
+											"jQuery('body', window.parent.document).data('popunder', 'NO');"+
+										"});"+
+					"});";
+					window.parent.document.body.appendChild(script);
+				</script>
+				<?php
+    return $message;
+}
 
+function addh_custom_options ( $options ) {
+    // These are the default options.
+    return array_merge( $options, array(
+        'add_etag_header' => true,
+        'generate_weak_etag' => false,
+        'add_last_modified_header' => false,
+        'add_expires_header' => true,
+        'add_cache_control_header' => true,
+        'cache_max_age_seconds' => 0,
+        'cache_max_age_seconds_for_search_results' => 0,
+        'cache_max_age_seconds_for_authenticated_users' => 0,
+    ) );
+}
+add_filter( 'addh_options', 'addh_custom_options', 10, 1 );

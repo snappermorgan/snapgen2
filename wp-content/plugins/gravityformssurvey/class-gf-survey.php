@@ -42,6 +42,11 @@ class GFSurvey extends GFAddOn {
 	} /* do nothing */
 
 	public function scripts() {
+		$gsurvey_js_deps = array( 'jquery', 'jquery-ui-sortable' );
+		if ( wp_is_mobile() ) {
+			$gsurvey_js_deps[] = 'jquery-touch-punch';
+		}
+
 		$scripts = array(
 			array(
 				'handle'   => 'gsurvey_form_editor_js',
@@ -57,7 +62,7 @@ class GFSurvey extends GFAddOn {
 				'handle'  => 'gsurvey_js',
 				'src'     => $this->get_base_url() . '/js/gsurvey.js',
 				'version' => $this->_version,
-				'deps'    => array( 'jquery', 'jquery-ui-sortable' ),
+				'deps'    => $gsurvey_js_deps,
 				'enqueue' => array(
 					array( 'admin_page' => array( 'form_editor', 'results', 'entry_view', 'entry_detail', 'entry_edit' ) ),
 					array( 'field_types' => array( 'survey' ) ),
@@ -279,9 +284,11 @@ class GFSurvey extends GFAddOn {
 		$input_type = GFFormsModel::get_input_type( $field );
 		if ( $input_type == 'likert' && rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ) {
 
+            //sort array by key in natural order so that email notification will display correct results
+            uksort($raw_value, array($this, 'compare_likert_values'));
 
 			//replacing value with text
-			if ( empty( $value ) ) {
+			if ( is_array( $raw_value ) ) {
 				$new_value = "<ul class='gsurvey-likert-entry'>";
 				$i         = 0;
 				foreach ( $raw_value as $v ) {
@@ -309,6 +316,10 @@ class GFSurvey extends GFAddOn {
 
 		return $new_value;
 	}
+
+    public function compare_likert_values( $likert_a, $likert_b ) {
+        return strnatcmp($likert_a,$likert_b);
+    }
 
 	public function get_survey_field_content( $content, $field, $value, $lead_id, $form_id, $lead = null ) {
 		if ( $field['type'] != 'survey' ) {
@@ -520,7 +531,10 @@ class GFSurvey extends GFAddOn {
 		// Output admin-ajax.php URL with same protocol as current page
 		$params = array(
 			'ajaxurl'   => admin_url( 'admin-ajax.php', $protocol ),
-			'imagesUrl' => $this->get_base_url() . '/images'
+			'imagesUrl' => $this->get_base_url() . '/images',
+			'strings'   => array(
+				'untitledSurveyField' => __( 'Untitled Survey Field', 'gravityformssurvey' ),
+			),
 		);
 		wp_localize_script( 'gsurvey_form_editor_js', 'gsurveyVars', $params );
 
@@ -849,10 +863,45 @@ class GFSurvey extends GFAddOn {
 		return $score;
 	}
 
+	public static function get_likert_row_score( $target_row_val , $field, $entry ){
+		$score = 0;
+
+		if ( rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ) {
+
+			foreach ( $entry as $key => $value ) {
+				if ( intval( $key ) != $field['id'] )
+					continue;
+
+				if ( false === strpos( $value, ':' ) ) {
+					continue;
+				}
+
+				list( $row_val, $col_val ) = explode( ':', $value, 2 );
+
+				foreach ( $field['gsurveyLikertRows'] as $row ) {
+					if ( $row['value'] == $row_val && $target_row_val == $row_val) {
+						foreach ( $field['choices'] as $choice ) {
+							if ( $choice['value'] == $col_val ){
+								$score = floatval( rgar( $choice, 'score' ) );
+								return $score;
+							}
+
+						}
+					}
+				}
+			}
+		} else {
+			$score =self::get_field_score($field, $entry);
+		}
+
+		return $score;
+	}
+
 	public function add_merge_tags( $form ) {
 		$survey_fields = GFCommon::get_fields_by_type( $form, array( 'survey' ) );
-		if ( empty( $survey_fields ) )
+		if ( empty( $survey_fields ) ){
 			return $form;
+		}
 
 		$scoring_enabled = false;
 		$merge_tags      = array();
@@ -862,7 +911,7 @@ class GFSurvey extends GFAddOn {
 				$scoring_enabled = true;
 				$field_id        = $field['id'];
 				$field_label     = $field['label'];
-				$group           = $field['isRequired'] ? 'required' : 'optional';
+				$group           = rgar( $field, 'isRequired' ) ? 'required' : 'optional';
 				$merge_tags[]    = array( 'group' => $group, 'label' => 'Survey Field Score: ' . $field_label, 'tag' => "{score:id={$field_id}}" );
 			}
 		}
@@ -1151,7 +1200,7 @@ class GFSurvey extends GFAddOn {
 				<div style="float:right;">
 					<input id="gsurvey-likert-enable-scoring" type="checkbox"
 						   onclick="SetFieldProperty('gsurveyLikertEnableScoring', this.checked); jQuery('#gsurvey-likert-columns-container').toggleClass('gsurvey-likert-scoring-enabled');">
-					<label class="inline gfield_value_label" for="gsurvey-likert-enable-scoring">enable scoring</label> <?php gform_tooltip( 'gsurvey_likert_enable_scoring' ) ?>
+					<label class="inline gfield_value_label" for="gsurvey-likert-enable-scoring"><?php _e( 'enable scoring', 'gravityformssurvey' ); ?></label> <?php gform_tooltip( 'gsurvey_likert_enable_scoring' ) ?>
 				</div>
 				<label for="gsurvey-likert-columns">
 					<?php _e( 'Columns', 'gravityformssurvey' ); ?>

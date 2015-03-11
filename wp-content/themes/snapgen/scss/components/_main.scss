@@ -575,7 +575,7 @@ h6 {
 	padding: 25px 0;
 }
 #hero-4 {
-		background: url(../images/landing-banner-bg.jpg) no-repeat center center;
+		background: url(http://landing10dev.ameriquote.com/wp-content/uploads/sites/4/2015/03/Girl-Bubbles2.jpg) no-repeat center center;
 	background-size:cover;
 	height:100%;
 	width:100%;
@@ -740,6 +740,13 @@ margin-bottom: 15px;
 		padding:10px 10px 10px;
 		float:left;
 	}
+	.page-id-242 .hero-4-form {
+		padding:0px;
+	}
+	
+	.page-id-242 iframe {
+		border:none;
+	}
 	.hero-4-form .gform_next_button {
 		margin-top: -5px;
 
@@ -762,6 +769,9 @@ margin-bottom: 15px;
 		float: right;
 		margin-top: 0px;
 		padding: 6px 12px;
+		}
+		#header-4 .glyphicon {
+			padding-right:0px !important;
 		}
 }
 .header-4-logo h1 {

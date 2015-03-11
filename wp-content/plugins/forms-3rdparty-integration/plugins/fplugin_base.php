@@ -246,7 +246,7 @@ abstract class Forms3rdpartyIntegration_FPLUGIN {
 		}
 		
 		//if requested, attach message to success notification
-		if( !empty($callback_results['message']) ) {
+		if( !empty($callback_results['message'])) {
 			$form = $this->SET_OKAY_MESSAGE($form, $callback_results['message'],$append);
 		}
 
