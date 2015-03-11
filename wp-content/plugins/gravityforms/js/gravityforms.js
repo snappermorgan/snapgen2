@@ -758,12 +758,21 @@ function gformInitChosenFields(fieldList, noResultsText){
     return jQuery(fieldList).each(function(){
 
         var element = jQuery( this );
+<<<<<<< HEAD
 
         // RTL support
         if( jQuery( 'html' ).attr( 'dir' ) == 'rtl' ) {
             element.addClass( 'chosen-rtl chzn-rtl' );
         }
 
+=======
+
+        // RTL support
+        if( jQuery( 'html' ).attr( 'dir' ) == 'rtl' ) {
+            element.addClass( 'chosen-rtl chzn-rtl' );
+        }
+
+>>>>>>> dev
         // only initialize once
         if( element.is(":visible") && element.siblings(".chosen-container").length == 0 ){
             var options = gform.applyFilters( 'gform_chosen_options', { no_results_text: noResultsText }, element );
@@ -1138,7 +1147,11 @@ var gform = {
     $(document).ready(function () {
         if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
             $(".gform_button_select_files").prop("disabled", true);
+<<<<<<< HEAD
         } else if (typeof adminpage !== 'undefined' && adminpage === 'forms_page_gf_entries' ){
+=======
+        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
+>>>>>>> dev
             $(".gform_fileupload_multifile").each(function(){
                 setup(this);
             });
@@ -1203,7 +1216,7 @@ var gform = {
 
             var button = typeof settings.browse_button == "string" ? $("#" + settings.browse_button) : $(settings.browse_button);
             button.prop("disabled", disabled);
-        }
+        };
 
         function addMessage(messagesID, message){
             $("#" + messagesID).prepend("<li>" + message + "</li>");
@@ -1222,7 +1235,7 @@ var gform = {
                 $.each(files, function(i, file) {
                     up.removeFile(file);
                     return;
-                })
+                });
                 return;
             }
             $.each(files, function(i, file) {
@@ -1340,11 +1353,15 @@ var gform = {
                 }
             }
 
+<<<<<<< HEAD
 
 
         });
+=======
+>>>>>>> dev
 
 
+        });
 
         function getAllFiles(){
             var selector = '#gform_uploaded_files_' + formID,

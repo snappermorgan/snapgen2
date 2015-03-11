@@ -19,6 +19,9 @@
 if (file_exists(dirname(__FILE__) . '/../snapgen.inc')) {
   require(dirname(__FILE__) . '/../snapgen.inc');
 }
+
+
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', SNAPGEN_WP_DB_NAME);

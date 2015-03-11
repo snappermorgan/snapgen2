@@ -1,6 +1,6 @@
 /*----  Survey ----*/
 function SetDefaultValues_survey(field) {
-    field.label = "Untitled Survey Field";
+    field.label = gsurveyVars.strings.untitledSurveyField;
     SetDefaultValues_likert(field);
 }
 

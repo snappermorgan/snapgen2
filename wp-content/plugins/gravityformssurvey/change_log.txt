@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------
+Version 2.5
+    - Added support on the results page for score averages by row in multi-row Likert fields. (requires Gravity Forms 1.9)
+	- Added Spanish (es_ES) translation.
+    - Updated front-end script dependency to include jquery-touch-punch on mobile devices enabling touch support for the Rank field.
+    - Updated POT file.
+    - Fixed an issue with the processing of merge tags for multi-row Likert fields which would prevent the field being included in notifications/confirmations when using Gravity Forms 1.9.
+	- Fixed two untranslatable strings in the form editor.
+	- Fixed a notice in the entry detail page for imported forms.
+    - Fixed an issue under PHP 5.2 where score for multi-row likert field was not displayed correctly in email notification if any row was not answered.
+    - Fixed an issue where score for multi-row likert field was not displayed correctly in email notification if any row was not answered
+
+---------------------------------------------------------------------
 Version 2.4
 	- Added function gf_survey to easily get a Survey instance
 	- Added text domain/path to header

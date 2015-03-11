@@ -1,0 +1,34 @@
+{
+    "name":"jquery-popunder",
+    "description":"jquery-plugin to create popunders in major browsers.",
+    "version":"0.2.30",
+    "keywords":["popunder"],
+    "author":{
+        "name":"Hans-Peter Buniat",
+        "email":"hpbuniat@googlemail.com"
+    },
+
+    "bugs":"https://github.com/hpbuniat/jquery-popunder/issues",
+    "license":{
+        "type":"BSD",
+        "url":"https://github.com/hpbuniat/jquery-popunder/blob/master/LICENSE"
+    },
+    "repositories":[
+        {
+            "type":"git",
+            "url":"git@github.com:hpbuniat/jquery-popunder.git"
+        }
+    ],
+    "dependencies":{
+    },
+    "devDependencies": {
+        "grunt-compare-size": "latest",
+        "grunt-contrib-watch": "latest",
+        "grunt-contrib-jshint": "latest",
+        "grunt-contrib-uglify": "latest",
+        "grunt-shell": "latest",
+        "grunt": "^0.4.0",
+        "bower": "latest"
+    },
+    "homepage":"https://github.com/hpbuniat/jquery-popunder"
+}

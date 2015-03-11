@@ -22,6 +22,7 @@
     "bootstrap-sass-twbs": "~3.3.3",
     "chosen_v1.3.0": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
     "underscore": "~1.7.0",
-    "validationEngine": "~2.6.4"
+    "validationEngine": "~2.6.4",
+    "jquery-popunder": "~0.2.30"
   }
 }

@@ -1,0 +1,130 @@
+/*----------------------------------------
+    GENERAL
+----------------------------------------*/
+.btn-lg {
+    padding: 25px;
+}
+.color {
+    color: #2ecc71;
+    font-weight: 300;
+}
+.img-center {
+    margin: 0px auto;
+}
+.uppercase {
+    text-transform: uppercase;
+}
+/*----------------------------------------
+    HEADER
+----------------------------------------*/
+#header-3 {
+    background: #fff;
+    padding: 25px 0px;
+}
+.header-3-logo h1 {
+    font-weight: 700;
+}
+
+/*----------------------------------------
+    HERO
+----------------------------------------*/
+#hero-3 {
+    background: url('../img/hero-bg.jpg') no-repeat;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    min-height: 450px;
+    padding: 100px 0px;
+}
+.hero-3-intro h2 {
+    font-size: 60px;
+    font-weight: 300;
+}
+.hero-3-intro-item-icon {
+    float: left;
+}
+.hero-3-intro-item-text {
+    font-size: 18px;
+    margin-left: 60px;
+}
+.hero-3-form {
+    background: #2ecc71;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+.hero-3-form-heading {
+    background: #29b765;
+    color: #fff;
+    padding: 25px;
+    text-align: center;
+}
+.hero-3-form-heading:before {
+    content: "";
+    position: absolute;
+    top: 103px;
+    right: 100px;
+    border-width: 20px 20px 0px 20px;
+    border-style: solid;
+    border-color: #29b765 transparent;
+    display: block;
+}
+.hero-3-form-heading:after {
+    content: "";
+    position: absolute;
+    border-width: 15px 15px 0px 15px;
+    border-style: solid;
+    border-color: #29b765 transparent;
+    display: block;
+}
+.hero-3-form form {
+    color: #fff;
+    padding: 10px 25px 25px;
+}
+.hero-3-form button {
+    margin-top: 25px;
+}
+.contact-form p {
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    text-transform: none;
+    padding: 25px;
+}
+
+/*----------------------------------------
+    MEDIA QUERIES
+----------------------------------------*/
+@media (min-width: 320px) and (max-width: 480px) {
+    #header-3 {
+        padding: 10px 0px;
+    }
+    .header-3-logo h1 {
+        font-size: 24px;
+    }
+    #hero-3 {
+        padding: 50px 0px;
+    }
+    .hero-3-intro {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    .hero-3-intro h2 {
+        font-size: 35px;
+    }
+    .hero-3-form-heading:before {
+        top: 116px;
+    }
+}
+@media (min-width: 600px) and (max-width: 640px) {
+    .hero-3-form-heading:before {
+        top: 83px;
+    }
+    #hero-3 {
+        padding: 50px 0px 80px;
+    }
+}
+@media (min-width: 768px) and (max-width: 980px) {
+    .hero-3-form-heading:before {
+        top: 136px;
+    }
+}
