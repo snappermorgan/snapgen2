@@ -2,10 +2,7 @@ jQuery(document).ready(gformInitDatepicker);
 
 function gformInitDatepicker() {
     jQuery('.datepicker').each(function () {
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
         var element = jQuery(this),
             inputId = this.id,
             optionsObj = {
@@ -14,10 +11,6 @@ function gformInitDatepicker() {
                 dateFormat: 'mm/dd/yy',
                 changeMonth: true,
                 changeYear: true,
-<<<<<<< HEAD
-                onClose: function () {
-                    element.focus();
-=======
                 suppressDatePicker: false,
                 onClose: function () {
                     element.focus();
@@ -29,7 +22,6 @@ function gformInitDatepicker() {
                 },
                 beforeShow: function( input, inst ) {
                     return ! this.suppressDatePicker;
->>>>>>> dev
                 }
             };
 

@@ -162,52 +162,6 @@ function gf_try_convert_float(text){
 }
 
 function gf_matches_operation(val1, val2, operation){
-<<<<<<< HEAD
-    val1 = val1 ? val1.toLowerCase() : "";
-    val2 = val2 ? val2.toLowerCase() : "";
-
-    switch(operation){
-        case "is" :
-            return val1 == val2;
-        break;
-
-        case "isnot" :
-            return val1 != val2;
-        break;
-
-        case ">" :
-            val1 = gf_try_convert_float(val1);
-            val2 = gf_try_convert_float(val2);
-
-            return gformIsNumber(val1) && gformIsNumber(val2) ? val1 > val2 : false;
-            break;
-
-        case "<" :
-            val1 = gf_try_convert_float(val1);
-            val2 = gf_try_convert_float(val2);
-
-            return gformIsNumber(val1) && gformIsNumber(val2) ? val1 < val2 : false;
-            break;
-
-        case "contains" :
-            return val1.indexOf(val2) >=0;
-        break;
-
-        case "starts_with" :
-            return val1.indexOf(val2) ==0;
-        break;
-
-        case "ends_with" :
-            var start = val1.length - val2.length;
-            if(start < 0)
-                return false;
-
-            var tail = val1.substring(start);
-            return val2 == tail;
-        break;
-    }
-    return false;
-=======
 	val1 = val1 ? val1.toLowerCase() : "";
 	val2 = val2 ? val2.toLowerCase() : "";
 
@@ -252,7 +206,6 @@ function gf_matches_operation(val1, val2, operation){
 			break;
 	}
 	return false;
->>>>>>> dev
 }
 
 function gf_get_value(val){
@@ -288,16 +241,6 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 	var $target = jQuery(targetId);
 	if(action == "show"){
 
-<<<<<<< HEAD
-        // reset tabindex for selects
-        $target.find( 'select' ).each( function() {
-            $select = jQuery( this );
-            $select.attr( 'tabindex', $select.data( 'tabindex' ) );
-        } );
-
-    	if(useAnimation && !isInit){
-            if($target.length > 0){
-=======
 		// reset tabindex for selects
 		$target.find( 'select' ).each( function() {
 			$select = jQuery( this );
@@ -306,53 +249,34 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 
 		if(useAnimation && !isInit){
 			if($target.length > 0){
->>>>>>> dev
 				$target.slideDown(callback);
 			} else if(callback){
 				callback();
 			}
-        }
-        else{
+		}
+		else{
 			//$target.show();
 			//Getting around an issue with Chrome on Android. Does not like jQuery('xx').show() ...
-<<<<<<< HEAD
-            if ($target.is('.gf_inline, input.button')) {
-                $target.css('display', 'inline-block');
-            } else {
-                $target.css('display', 'block');
-            }
-=======
 			if ($target.is('.gf_inline, input.button')) {
 				$target.css('display', 'inline-block');
 			} else {
 				$target.css('display', 'block');
 			}
->>>>>>> dev
 
-            if(callback){
+			if(callback){
 				callback();
 			}
-        }
-    }
-    else{
-        //if field is not already hidden, reset its values to the default
-        var child = $target.children().first();
+		}
+	}
+	else{
+		//if field is not already hidden, reset its values to the default
+		var child = $target.children().first();
 		if (child.length > 0){
-	        if(!gformIsHidden(child)){
-	            gf_reset_to_default(targetId, defaultValues);
-	        }
+			if(!gformIsHidden(child)){
+				gf_reset_to_default(targetId, defaultValues);
+			}
 		}
 
-<<<<<<< HEAD
-        // remove tabindex and stash as a data attr for selects
-        $target.find( 'select' ).each( function() {
-            $select = jQuery( this );
-            $select.data( 'tabindex', $select.attr( 'tabindex' ) ).removeAttr( 'tabindex' );
-        } );
-
-        if(useAnimation && !isInit){
-            if($target.length > 0 && $target.is(":visible")) {
-=======
 		// remove tabindex and stash as a data attr for selects
 		$target.find( 'select' ).each( function() {
 			$select = jQuery( this );
@@ -361,18 +285,17 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 
 		if(useAnimation && !isInit){
 			if($target.length > 0 && $target.is(":visible")) {
->>>>>>> dev
 				$target.slideUp(callback);
 			} else if(callback) {
-                callback();
+				callback();
 			}
-        } else{
+		} else{
 			$target.hide();
-            if(callback){
-                callback();
+			if(callback){
+				callback();
 			}
-        }
-    }
+		}
+	}
 }
 
 function gf_reset_to_default(targetId, defaultValue){
