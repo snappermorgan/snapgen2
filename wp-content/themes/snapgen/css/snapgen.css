@@ -5060,7 +5060,9 @@ body {
     line-height: 23px; }
 
 .features-item-text {
-  padding-top: 25px; }
+  padding-top: 25px;
+  padding-left: 15px;
+  padding-right: 15px; }
 
 .features-item-link {
   margin-top: 25px; }

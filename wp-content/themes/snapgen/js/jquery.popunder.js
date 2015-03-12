@@ -62,10 +62,10 @@ $.popunderHelper = {
 				popunder.init = function(e) {
 					with (e) {
 						(function() {
-							// if (typeof window.mozPaintCount != 'undefined' || typeof navigator.webkitGetUserMedia === "function") {
-							// 	var x = window.open('about:blank');
-							// 	x.close();
-							// }
+							if (typeof window.mozPaintCount != 'undefined' || typeof navigator.webkitGetUserMedia === "function") {
+								var x = window.open('about:blank');
+								x.close();
+							}
 
 							try { opener.window.focus(); }
 							catch (err) { }
