@@ -6,7 +6,7 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 3.2.1
 Tested up to: 4.1
-Stable tag: 2.8.31
+Stable tag: 2.8.32
 
 Saves submitted form data to the database. Export the data to a file or use short codes to display it.
 
@@ -81,6 +81,9 @@ You can always deactivate the plugin without loosing data.
 1. Admin Panel view of submitted form data
 
 == Changelog ==
+
+= 2.8.33 =
+* Fixed Delete button on Admin entry detail page
 
 = 2.8.32 =
 * Security patch

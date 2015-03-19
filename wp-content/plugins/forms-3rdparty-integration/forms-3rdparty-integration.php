@@ -408,7 +408,7 @@ foreach ($forms as $f) {
 		$services = $this->get_services();
 
 		$submission = false;
-
+		$response = "";
 		//loop services
 		foreach ($services as $sid => $service):
 			//check if we're supposed to use this service
@@ -494,8 +494,8 @@ foreach ($forms as $f) {
 
 			###_log(__LINE__.':'.__FILE__, '	sending post to '.$service['url'], $post);
 
-			// change args sent to remote post -- add headers, etc: http://codex.wordpress.org/Function_Reference/wp_remote_post
-			// optionally, return an array with 'response_bypass' set to skip the wp_remote_post in favor of whatever you did in the hook
+		//let's see if the conditional post rule is triggered. If it is triggered, then the body of the submission is returned to it can be passed on to the wp_remote call. If not, then an array is passed back with a message in the response_bypass field which 
+		//forces the logic to NOT post to wp_remote.
 			$post_args = apply_filters($this->N('service_filter_args')
 				, array(
 					'timeout' => empty($service['timeout']) ? self::DEFAULT_TIMEOUT : $service['timeout']
@@ -506,7 +506,7 @@ foreach ($forms as $f) {
 				, $submission
 			);
 			$can_hook = true;
-
+//conditional was not met, not posting
 			if (isset($post_args['response_bypass'])) {
 				$response = $post_args['response_bypass'];
 
@@ -546,42 +546,26 @@ foreach ($forms as $f) {
 			elseif (!empty($service['success'])) {
 			    _log("Checking for success string: " . $service['success'] . " in ".print_r($response['body'],true));
 				if (strpos($response['body'], $service['success']) === false) {
-					//$failMessage = array(
-					//	'reason'=>'Could not locate success clause within response'
-					//	, 'safe_message' => 'Success Clause not found'
-					//	, 'clause'=>$service['success']
-					//	, 'response'=>$response['body']
-					//);
-					//$form = $this->on_response_failure($form, $debug, $service, $post_args, $failMessage);
-					//holder for callback return results
 
-				if (($callback_results['message'] !== '') && (isset($service['confirmation']) && !empty($service['confirmation']))) {
-						$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message'] . $response['body']);
-					} else {
-						$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => '');
+	
+					if ($callback_results['message'] !== '') {
+							$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message'] );
+						} else {
+							$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => '');
+						}
+						$param_ref = array();foreach ($callback_results as $k => &$v) {$param_ref[$k] = &$v;}
+						do_action($this->N('service'), $response['body'], $param_ref, $sid, $post, $service);
+	                    _log("There was not a success match but we hit remote success routine anyway");
+					    $form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
+						$can_hook = false;
 					}
-					$param_ref = array();foreach ($callback_results as $k => &$v) {$param_ref[$k] = &$v;}
-					do_action($this->N('service'), $response['body'], $param_ref, $sid, $post, $service);
-                    _log("There was not a success match but we hit remote success routine anyway");
-				    $form = apply_filters($this->N('remote_success'), $form, $callback_results, $service, $submission, false);
-					$can_hook = false;
-				}
 			}
 
-//_log("callback:".print_r($callback_results,true));
-			//_log("paramref: ".print_r($param_ref,true));
 
-			//_log("can I hook?");
 			if ($can_hook) {
-				//_log("Yes!");
-			}
-			if ($can_hook && isset($service['hook']) && $service['hook']) {
-				//_log('performing hooks for:'. $this->N.'_service_'.$sid);
 
-				//hack for pass-by-reference
-				//holder for callback return results
-				if (($callback_results['message'] !== '') && (isset($service['confirmation']) && !empty($service['confirmation']))) {
-					$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message'] . $response['body']);
+				if ($callback_results['message'] !== '')  {
+					$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => $callback_results['message']);
 				} else {
 
 					$callback_results = array('success' => false, 'errors' => false, 'attach' => '', 'message' => '');

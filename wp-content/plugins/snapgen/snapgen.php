@@ -57,7 +57,7 @@ class Forms3rdpartySnapGen {
 		add_filter(self::N . '_service_settings', array(&$this, 'service_settings'), 10, 3);
 
 		//if success let's see if there is a trigger
-		add_filter(self::N . '_remote_success', array(&$this, 'remote_success'), 10, 5);
+		add_filter(self::N . '_remote_success', array(&$this, 'remote_success'), 10, 4);
 
 		// attach to response message
 		add_filter(self::N . '_service', array(&$this, 'adjust_response'), 10, 5);
@@ -485,10 +485,14 @@ settings_fields('pluginPage');
 		return $sig;
 
 	}
+	/**
+	 * If set in 3rd party service to show results, this will format the remote response and return it
+	 * 
+	 **/
 	public function adjust_response($body, $refs, $sid, $submission, $service) {
 
 		//_log("refs that are passed: " . print_r($refs, true));
-
+		$_response_message = array();
 		//$refs['attach'] = 'custom message in email';
 		if (isset($service['confirmation']) && !empty($service['confirmation'])) {
 			$submission_str = "<div class='service-title'>Service: " . $service['name'] . "</div><div class='submissions'>";
@@ -811,6 +815,10 @@ foreach ($services as $sid => $s) {
 <?php
 }
 
+/**
+** this will trigger another 3rd party posting if field conditional match is made
+**
+**/
 	function remote_success($form, $callback_results, $service, $submission,$success=true) {
 
 		//_log("let's check for triggered services: " . print_r($service, true));
