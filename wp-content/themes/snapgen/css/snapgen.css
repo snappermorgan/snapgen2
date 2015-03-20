@@ -5030,13 +5030,13 @@ body {
   font-family: 'Futura';
   font-size: 3em;
   line-height: 1.15;
-  color: #d5d5d5; }
+  color: #fff; }
 
 #hero-4 p {
   font-family: 'Futura';
   font-size: 2em;
   line-height: 1;
-  color: #d5d5d5; }
+  color: #fff; }
 
 .hero-intro .success-message {
   color: #777;
@@ -5060,9 +5060,7 @@ body {
     line-height: 23px; }
 
 .features-item-text {
-  padding-top: 25px;
-  padding-left: 15px;
-  padding-right: 15px; }
+  padding-top: 25px; }
 
 .features-item-link {
   margin-top: 25px; }
@@ -5358,7 +5356,7 @@ h6 {
   padding: 25px 0; }
 
 #hero-4 {
-  background: url(http://landing10dev.ameriquote.com/wp-content/uploads/sites/4/2015/03/Girl-Bubbles2.jpg) no-repeat center center;
+  background: url(/wp-content/uploads/sites/4/2015/03/Girl-Bubbles2.jpg) no-repeat center center;
   background-size: cover;
   height: 100%;
   width: 100%;
@@ -5520,7 +5518,7 @@ h6 {
   #hero-4 .wrapper .container {
     padding-left: 0px;
     padding-right: 0px; }
-  #text-5 .text-right {
+  #text-5 .text-right, #text-4 .text-right {
     text-align: center;
     margin-top: -16px;
     margin-bottom: 10px; }

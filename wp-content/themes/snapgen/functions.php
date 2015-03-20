@@ -126,6 +126,8 @@ function add_jscript($form){
     <?php
     return $form;
 	} 
+	
+	/*
 	else if($current_page == 2){
 		
         ?>
@@ -138,7 +140,7 @@ function add_jscript($form){
 
 			script.innerHTML = "jQuery('document').ready(function() {"+
 								    "jQuery(document).bind('gform_post_render', function() {"+
-								        "jQuery('input,select,button', window.parent.document).focus(function() {"+
+								        "jQuery('window', window.parent.document).bind('beforeunload',function() {"+
 								            "if (jQuery.browser.mobile) {"+
 								             "if (jQuery('body', window.parent.document).data('popunder') == 'YES') {"+
 								              "jQuery('body', window.parent.document).data('popunder', 'NO');"+
@@ -166,7 +168,7 @@ function add_jscript($form){
         <?php
         return $form;
 		
-    }
+    }*/
     else if($current_page==4){
 		?>
 		
@@ -178,7 +180,8 @@ function add_jscript($form){
     </script>
     <?php
     return $form;
-	} else if($current_page==1){
+	}
+	/*else if($current_page==1){
 		
 		if(isset($_GET['m']) && $_GET['m']=='yes' && isset($_GET['ZipCode']) && $_GET['ZipCode'] !=''){
 				GFFormDisplay::$submission[4]['page_number'] = 2;
@@ -202,7 +205,9 @@ function add_jscript($form){
 		}else{
 			return $form;
 		}
-	}else{
+	}*/
+	
+	else{
 		return $form;
 	}
 }

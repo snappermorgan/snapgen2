@@ -83,7 +83,7 @@ class Forms3rdpartyIntegration_Gf extends Forms3rdpartyIntegration_FPLUGIN {
 					}
 				}else{
 					$fields['id'] = "input_".$field['id'];
-					$fields['label']= $field['label'];
+					$fields['label']= ($field['label']!=""?$field['label']:$field['adminLabel']);
 					$arr[]=$fields;
 				}
 

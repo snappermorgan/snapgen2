@@ -206,7 +206,7 @@ function remote_call($data, $test = false) {
 	}
 
 	if ($test) {
-		$api_key = $_SERVER['SNAPGEN_WP_WHITEPAGES_KEY'];
+		$api_key = SNAPGEN_WP_WHITEPAGES_KEY;
 
 		$service_url = 'http://proapi.whitepages.com/2.0/phone.json?phone=' . urlencode($data['payload']['phone']) . '&api_key=' . $api_key;
 		$curl = curl_init($service_url);
@@ -216,12 +216,13 @@ function remote_call($data, $test = false) {
 		return array("body" => $curl_response);
 	} else {
 		$payload = $data['payload'];
-
+		$payload['phone'] = str_replace(' ', '', preg_replace("/[^0-9]/", '', $payload['phone']));
 		$query = build_query($payload);
+		
 		//_log("payload: " . print_r($data, true));
 		$options = get_option('sg_settings');
 		$key = $options['sg_api_string'];
-		//_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
+		_log("URL post:" . $url . $path . "?" . $query . "&api_key=" . $key);
 		$response = wp_remote_get($url . $path . "?" . $query . "&api_key=" . $key);
 		//_log("full whitepages response: ".print_r($response,true));
 		// echo "<pre>whitepages response: ".print_r($response,true)."</pre>";
