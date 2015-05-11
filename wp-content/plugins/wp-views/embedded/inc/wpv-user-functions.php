@@ -1,6 +1,8 @@
 <?php
 
-include_once WPV_PATH_EMBEDDED . '/common/wpv-filter-date-embedded.php';
+if (!function_exists('wpv_filter_parse_date')) {
+	include_once WPV_PATH_EMBEDDED . '/common/wpv-filter-date-embedded.php';
+}
 
 $no_parameter_found = 'WPV_NO_PARAM_FOUND';
 
@@ -22,6 +24,16 @@ function wpv_apply_user_function_url_param($value) {
             if (isset($_GET[$match[1]])) {
 				$url_param = $_GET[$match[1]];
 				if (is_array($url_param)) {
+					// TODO: an empty value inside that array should be ignored too
+					// Really? For checkboxes and multi-select, you can not pass multiple values if one is empty
+					// As when clicking the empty value, all others are unselected
+					// But just in case, this is good to have
+					// Anyhow it makes it impossible to filter by several values if one is empty
+					foreach ( $url_param as $key => $val ) {
+						if ( $val == '' ) {
+							$url_param[$key] = $no_parameter_found;
+						}
+					}
 					$url_param = implode(',', $url_param);
 				}
 				if ($url_param == '') {
@@ -31,6 +43,12 @@ function wpv_apply_user_function_url_param($value) {
 				}
             } else {
                 $url_param = $no_parameter_found;
+				 if ( isset( $_GET[$match[1] . '_fakezero'] ) ) {
+					$url_param_fakezero = $_GET[$match[1] . '_fakezero'];
+					if ( $url_param_fakezero == 'yes' ) {
+						$url_param = 0;
+					}
+				 }
             }
             $search = $match[0];
             $value = str_replace($search, $url_param, $value);
@@ -57,6 +75,7 @@ function wpv_apply_user_function_view_param($value) {
 				} else {
 					// an empty parameter should be ignored.
 					// eg. [wpv-view name="my-view" beds="2" price=""]
+					// TODO we might want to review this
 	                $view_param = $no_parameter_found;
 				}
             } else {

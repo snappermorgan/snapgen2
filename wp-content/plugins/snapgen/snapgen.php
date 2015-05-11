@@ -57,7 +57,7 @@ class Forms3rdpartySnapGen {
 		add_filter(self::N . '_service_settings', array(&$this, 'service_settings'), 10, 3);
 
 		//if success let's see if there is a trigger
-		add_filter(self::N . '_remote_success', array(&$this, 'remote_success'), 10, 4);
+		add_filter(self::N . '_remote_success', array(&$this, 'remote_success'), 10, 5);
 
 		// attach to response message
 		add_filter(self::N . '_service', array(&$this, 'adjust_response'), 10, 5);
@@ -366,28 +366,32 @@ settings_fields('pluginPage');
 					////_log("field: " . print_r($field, true));
 					if (trim(strtolower($service['validation-address-field'])) == trim(strtolower($field))) {
 						$value = $address;
+						$_POST[$service['validation-address-field']]= $address;
 
 					}
 					if (trim(strtolower($service['validation-address2-field'])) == trim(strtolower($field))) {
 						$value = $address2;
+						$_POST[$service['validation-address2-field']]= $address2;
 
 					}
 					if (trim(strtolower($service['validation-city-field'])) == trim(strtolower($field))) {
 						$value = $city;
+						$_POST[$service['validation-city-field']]= $city;
 
 					}
 					if (trim(strtolower($service['validation-state-field'])) == trim(strtolower($field))) {
 						$value = $state;
-
+							$_POST[$service['validation-state-field']]= $state;
 					}
 					if (trim(strtolower($service['validation-zip-field'])) == trim(strtolower($field))) {
 						$value = $zipcode;
+						$_POST[$service['validation-zip-field']]= $zipcode;
 
 					}
 				}
 
 				_log("New Submission after validation: " . print_r($submission, true));
-
+			
 			}
 		}
                     
@@ -426,6 +430,7 @@ settings_fields('pluginPage');
 						} else {
 							$value = "123 Main St";
 						}
+							$_POST[$service['whitepages-address-field']]= $value;
 						//_log("address=" . $address . "\n");
 					}
 					if (trim(strtolower($service['whitepages-city-field'])) == trim(strtolower($field))) {
@@ -434,6 +439,7 @@ settings_fields('pluginPage');
 						} else {
 							$value = "Atlanta";
 						}
+						$_POST[$service['whitepages-city-field']]= $value;
 						//_log("city=" . $city . "\n");
 					}
 					if (trim(strtolower($service['whitepages-state-field'])) == trim(strtolower($field))) {
@@ -443,6 +449,7 @@ settings_fields('pluginPage');
 						} else {
 							$value = "GA";
 						}
+						$_POST[$service['whitepages-state-field']]= $value;
 					}
 					if (trim(strtolower($service['whitepages-zip-field'])) == trim(strtolower($field))) {
 
@@ -455,8 +462,9 @@ settings_fields('pluginPage');
 							}
 							$value = $zip;
 						} else {
-							$value = "30306";
+							$value = $_POST[$service['whitepages-zip-field']];
 						}
+						$_POST[$service['whitepages-zip-field']]= $value;
 						////_log("zip=".$zip."\n");
 					}
 					if (trim(strtolower($input)) == trim(strtolower($field))) {
@@ -812,6 +820,26 @@ foreach ($services as $sid => $s) {
 
 
         </fieldset>
+        
+                <fieldset><legend><span><?php _e('Record Response', $P);?></span></legend>
+            <div class="field">
+<?php $field = 'response';?>
+                <label for="<?php echo $field, '-', $eid?>"><?php _e('Record Response?', $P);?></label>
+                <input id="<?php echo $field, '-', $eid?>" type="checkbox" class="checkbox" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="yes"<?php echo isset($entity[$field]) ? ' checked="checked"' : ''?>/>
+
+            </div>
+            
+            <div class="field response">
+                <div class="inside">
+<?php $field = 'response-field';?>
+                    <label for="<?php echo $field, '-', $eid?>"><?php _e('Response Field Name', $P);?></label>
+                    <input id="<?php echo $field . "-", $eid?>" style="width:200px;" type="text" class="text" name="<?php echo $P, '[', $eid, '][', $field, ']'?>" value="<?php echo esc_attr($entity[$field]);?>"?>
+                </div>
+            </div>
+           
+
+
+        </fieldset>
 <?php
 }
 
@@ -1000,8 +1028,13 @@ foreach ($services as $sid => $s) {
 			}
 
 		}
-
 		
+		if(isset($response) && isset($response['body'])){
+		if(isset($service['response']) && $service['response'] !=''){
+				if(isset($service['response-field']) && $service['response-field']!= ''){
+					$_POST[$service['response-field']].= "Response from triggered service <p>".$response['body'];
+				}
+			}}
 		//if something went wrong with the remote-request "physically", warn
 		if (!is_array($response)) {
 			//new occurrence of WP_Error?????

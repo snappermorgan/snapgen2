@@ -542,8 +542,16 @@ foreach ($forms as $f) {
 				$can_hook = false;
 				//_log("error");
 			}
+			
+			//let's catch the response in the entry
+			
+			if(isset($service['response']) && $service['response'] !=''){
+				if(isset($service['response-field']) && $service['response-field']!= ''){
+					$_POST[$service['response-field']].= "Response from service <p>".$response['body'];
+				}
+			}
 			//otherwise, check for a success "condition" if given
-			elseif (!empty($service['success'])) {
+			if (!empty($service['success'])) {
 			    _log("Checking for success string: " . $service['success'] . " in ".print_r($response['body'],true));
 				if (strpos($response['body'], $service['success']) === false) {
 
@@ -561,7 +569,7 @@ foreach ($forms as $f) {
 					}
 			}
 
-
+				
 			if ($can_hook) {
 
 				if ($callback_results['message'] !== '')  {
@@ -602,7 +610,7 @@ foreach ($forms as $f) {
 		endforeach; //-- loop services
 
 		##_log(__LINE__.':'.__FILE__, '	finished before_send', $form);
-		##_log("final form for submission: " .print_r($form,true));
+		#_log("final form for submission: " .print_r($form,true));
 		// some plugins expected usage is as filter, so return (modified?) form
 		return $form;
 	}//---	end function before_send

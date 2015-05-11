@@ -1,6 +1,6 @@
 <?php
 
-/*========================================================================
+/*---------------------------------------------
  *
  * Gallery field
  *
@@ -24,7 +24,7 @@ class CCS_Gallery_Field {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * CSS for admin
 	 *
@@ -61,6 +61,10 @@ class CCS_Gallery_Field {
 	box-shadow: none;
 }
 
+.gallery_images .attachment a.edit div {
+  vertical-align: top;
+}
+
 .gallery_images .attachment-preview .thumbnail {
 	cursor: move;
 }
@@ -88,9 +92,10 @@ ul.gallery_images {
 	cursor: move;
 }
 .gallery_images li.image img {
-	width: 100%; /*150px*/
-	height: auto;
-	}
+  position: relative;
+/*	width: 100%; */
+  height: auto;
+}
 .gallery_images a.edit {
 	text-decoration: none;
 	position: absolute;
@@ -150,7 +155,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Add meta boxes to selected post types
 	 *
@@ -169,7 +174,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Render gallery metabox
 	 *
@@ -190,7 +195,7 @@ ul.gallery_images {
 			            echo '<li class="image attachment details" data-attachment_id="'
 			            	. $attachment_id
 			            	. '"><div class="attachment-preview"><div class="thumbnail">'
-			            	. wp_get_attachment_image( $attachment_id )
+                    . wp_get_attachment_image( $attachment_id )
 			            	. '</div><a href="#" class="delete check" title="'
 			            	. 'Remove image'
 			            	. '"><div class="media-modal-icon"></div></a><a href="#" class="edit check" title="Edit image"><div class="dashicons dashicons-search"></div></a></div></li>';
@@ -228,7 +233,7 @@ ul.gallery_images {
         	$checked = $this->has_linked_images() ? checked( get_post_meta( get_the_ID(), '_custom_gallery_link_images', true ), 'on', false ) : '';
 
 
-        /*========================================================================
+        /*---------------------------------------------
          *
          * Image order and remove actions
          *
@@ -401,7 +406,7 @@ ul.gallery_images {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Metabox save function
 	 *
@@ -444,7 +449,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Settings page
 	 *
@@ -479,7 +484,7 @@ ul.gallery_images {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Register settings page
 	 *
@@ -541,7 +546,7 @@ ul.gallery_images {
 
 
 
-/*========================================================================
+/*---------------------------------------------
  *
  * Helper functions
  *
@@ -554,7 +559,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * List of post types for checkboxes on the settings page
 	 *
@@ -574,7 +579,7 @@ ul.gallery_images {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Get enabled post types from options
 	 *
@@ -595,7 +600,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Get attachment IDs from gallery field
 	 *
@@ -648,7 +653,7 @@ ul.gallery_images {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Check if a post has gallery field images
 	 *
@@ -668,7 +673,7 @@ ul.gallery_images {
 
 
 
-/*========================================================================
+/*---------------------------------------------
  *
  * Unused
  *
@@ -712,7 +717,7 @@ ul.gallery_images {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Count number of images
 	 *

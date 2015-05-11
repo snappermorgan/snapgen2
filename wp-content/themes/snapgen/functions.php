@@ -110,7 +110,7 @@ add_filter('gform_confirmation_anchor', '__return_false');
 
 
 
-add_filter('gform_pre_render_4', 'add_jscript' );
+add_filter('gform_pre_render', 'add_jscript' );
 
 function add_jscript($form){
 	$current_page = GFFormDisplay::get_current_page( $form['id'] );
@@ -174,7 +174,7 @@ function add_jscript($form){
 		
 		<script type="text/javascript">
 		var script = document.createElement("script");
-		script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_post_render', function(){jQuery('.gform_page_footer').after(jQuery('#field_4_23'));});});";
+		script.innerHTML = "jQuery('document').ready(function(){jQuery(document).bind('gform_post_render', function(){jQuery('.gform_page_footer').after(jQuery('#field_4_23,#field_5_23'));});});";
 			window.parent.document.body.appendChild(script);
     
     </script>
@@ -242,3 +242,83 @@ function addh_custom_options ( $options ) {
     ) );
 }
 add_filter( 'addh_options', 'addh_custom_options', 10, 1 );
+
+add_filter("gform_confirmation_4", "viva_confirmation", 10, 4);
+
+add_filter("gform_confirmation_5", "viva_confirmation_mortgage", 10, 4);
+add_filter("gform_confirmation_6", "viva_confirmation_withaddress", 10, 4);
+
+function viva_confirmation($confirmation, $form, $lead, $ajax) {
+	
+	if($lead[8]=="Male"){
+		$lead[8]="M";
+		
+	}else{
+		$lead[8]="F";
+	}
+	
+	$states = array("AL", "AZ", "AR", "CA", "CO", "CT", "DE", "GA", "ID", "IL", "IN", "KY", "LA", "MI", "MS", "NV", "NM", "NC", "ND", "OH", "OK", "OR", "PA", "SC", "TN", "TX", "UT", "WV", "WI");
+	if(in_array($lead[17], $states)){
+		$querystr="txtFirstName=".urlencode($lead[3])."&txtLastName=".urlencode($lead[4])."&txtBirthDate=".urlencode($lead[7])."&txtGender=".urlencode($lead[8])."&txtEmail=".urlencode($lead[5])."&txtHomePhone=".urlencode($lead[10])."&txtResAddress1=".urlencode($lead[36])."&txtResAddress2=".urlencode($lead[37])."&txtResCity=".urlencode($lead[16])."&txtResState=".urlencode($lead[17])."&txtResZip=".urlencode($lead[25]);
+		$output = '<a href="/viva-application?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE WITH <br>ONLINE APPLICATION</div></a>';		
+	}else{
+		$querystr="zip=".urlencode($lead[25]);
+		$output = '<a href="http://lifequotes.ameriquote.com?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE TO VIEW COMPETITIVE QUOTES</div></a>';
+	}
+
+	
+$new_confirmation = $confirmation . $output;
+return $new_confirmation;
+}
+
+function viva_confirmation_mortgage($confirmation, $form, $lead, $ajax) {
+	
+	if($lead[8]=="Male"){
+		$lead[8]="M";
+		
+	}else{
+		$lead[8]="F";
+	}
+	
+	$states = array("AL", "AZ", "AR", "CA", "CO", "CT", "DE", "GA", "ID", "IL", "IN", "KY", "LA", "MI", "MS", "NV", "NM", "NC", "ND", "OH", "OK", "OR", "PA", "SC", "TN", "TX", "UT", "WV", "WI");
+	if(in_array($lead[17], $states)){
+		$querystr="txtFirstName=".urlencode($lead[3])."&txtLastName=".urlencode($lead[4])."&txtBirthDate=".urlencode($lead[7])."&txtGender=".urlencode($lead[8])."&txtEmail=".urlencode($lead[5])."&txtHomePhone=".urlencode($lead[10])."&txtResAddress1=".urlencode($lead[36])."&txtResAddress2=".urlencode($lead[37])."&txtResCity=".urlencode($lead[16])."&txtResState=".urlencode($lead[17])."&txtResZip=".urlencode($lead[25]);
+		$output = '<a href="/viva-application?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE WITH <br>ONLINE APPLICATION</div></a>';		
+	}else{
+		$querystr="zip=".urlencode($lead[25]);
+		$output = '<a href="http://lifequotes.ameriquote.com?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE TO VIEW COMPETITIVE QUOTES</div></a>';
+	}
+
+	
+$new_confirmation = $confirmation . $output;
+return $new_confirmation;
+}
+
+function viva_confirmation_withaddress($confirmation, $form, $lead, $ajax) {
+	
+	if($lead[8]=="Male"){
+		$lead[8]="M";
+		
+	}else{
+		$lead[8]="F";
+	}
+	
+	$states = array("AL", "AZ", "AR", "CA", "CO", "CT", "DE", "GA", "ID", "IL", "IN", "KY", "LA", "MI", "MS", "NV", "NM", "NC", "ND", "OH", "OK", "OR", "PA", "SC", "TN", "TX", "UT", "WV", "WI");
+	if(in_array($lead[17], $states)){
+		$querystr="txtFirstName=".urlencode($lead[3])."&txtLastName=".urlencode($lead[4])."&txtBirthDate=".urlencode($lead[7])."&txtGender=".urlencode($lead[8])."&txtEmail=".urlencode($lead[5])."&txtHomePhone=".urlencode($lead[10])."&txtResAddress1=".urlencode($lead[39])."&txtResAddress2=".urlencode($lead[40])."&txtResCity=".urlencode($lead[16])."&txtResState=".urlencode($lead[17])."&txtResZip=".urlencode($lead[25]);
+		$output = '<a href="/viva-application?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE WITH <br>ONLINE APPLICATION</div></a>';		
+	}else{
+		$querystr="zip=".urlencode($lead[25]);
+		$output = '<a href="http://lifequotes.ameriquote.com?'.$querystr.'">';
+		$output .= '<div id="continue_app" class="gform_next_button button">CONTINUE TO VIEW COMPETITIVE QUOTES</div></a>';
+	}
+
+	
+$new_confirmation = $confirmation . $output;
+return $new_confirmation;
+}

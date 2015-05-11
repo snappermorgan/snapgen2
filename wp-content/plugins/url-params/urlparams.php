@@ -22,7 +22,11 @@ function urlparam($atts) {
     $atts = shortcode_atts(array(
         'param'           => '',
         'default'        => '',
-        'dateformat'	=> ''
+        'dateformat'	=> '',
+        'raw'	=> '',
+        'decode' => '',
+        'encode' => '',
+	'phone' => ''
     ), $atts);
 
     $params = preg_split('/\,\s*/',$atts['param']);
@@ -34,7 +38,15 @@ function urlparam($atts) {
             if(($atts['dateformat'] != '') && strtotime($rawtext))
             {
                 return date($atts['dateformat'], strtotime($rawtext));
-            } else {
+            }elseif ($atts['raw'] == 'true'){
+                return $rawtext;
+            }elseif ($atts['decode']=='true'){
+                    return urldecode($rawtext);
+            }elseif ($atts['encode']=='true'){
+                    return urlencode($rawtext);
+            }elseif ($atts['phone']=='true'){
+		    return format_telephone($rawtext);    
+            }else{
                 return esc_html($rawtext);
             }
         }
@@ -78,5 +90,10 @@ function ifurlparam($atts, $content) {
 
     return '';
 }
-
+function format_telephone($phone_number)
+{
+    $cleaned = preg_replace('/[^[:digit:]]/', '', $phone_number);
+    preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+    return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
+}
 ?>

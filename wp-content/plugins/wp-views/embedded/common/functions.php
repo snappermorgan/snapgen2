@@ -4,6 +4,15 @@
  */
 define( 'ICL_COMMON_FUNCTIONS', true );
 
+// for retro compatibility with WP < 3.5
+if( !function_exists('wp_normalize_path') ){
+    function wp_normalize_path( $path ) {
+        $path = str_replace( '\\', '/', $path );
+        $path = preg_replace( '|/+|','/', $path );
+        return $path;
+    }
+}
+
 /**
  * Calculates relative path for given file.
  * 
@@ -11,24 +20,28 @@ define( 'ICL_COMMON_FUNCTIONS', true );
  * @return string Relative path
  */
 function icl_get_file_relpath( $file ) {
-    $is_https = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) == 'on';
-    $http_protocol = $is_https ? 'https' : 'http';
-    $base_root = $http_protocol . '://' . $_SERVER['HTTP_HOST'];
-    $base_url = $base_root;
-    $dir = rtrim( dirname( $file ), '\/' );
-    if ( $dir ) {
-        $base_path = $dir;
-        $base_url .= $base_path;
-        $base_path .= '/';
-    } else {
-        $base_path = '/';
-    }
-    $relpath = $base_root
-            . str_replace(
-                    str_replace( '\\', '/',
-                            realpath( $_SERVER['DOCUMENT_ROOT'] ) )
-                    , '', str_replace( '\\', '/', dirname( $file ) )
-    );
+    // website url form DB
+    $url = get_option('siteurl');
+    // fix the protocol
+    $base_root = set_url_scheme( $url );
+
+    // normalise windows paths
+    $path_to_file = wp_normalize_path($file);
+    // get file directory
+    $file_dir = wp_normalize_path( dirname( $path_to_file ) );
+    // get the path to 'wp-content'
+    $from_content_dir = wp_normalize_path( realpath( WP_CONTENT_DIR ) );
+    // get wp-content dirname
+    $content_dir = wp_normalize_path( basename(WP_CONTENT_DIR) );
+
+    // remove absolute path part until 'wp-content' folder
+    $path = str_replace( $from_content_dir, '', $file_dir);
+    // add wp-content dir to path
+    $path = wp_normalize_path( $content_dir.$path );
+
+    // build url
+    $relpath = $base_root . '/' . $path;
+
     return $relpath;
 }
 
@@ -91,29 +104,46 @@ function wpv_add_time_functions( $value ) {
  * 
  * 
  */
-function wpv_condition( $atts ) {
+function wpv_condition( $atts, $post_to_check = null ) {
     extract(
             shortcode_atts( array('evaluate' => FALSE), $atts )
     );
 
-    global $post;
+    // Do not overwrite global post
+//    global $post;
 
     // if in admin, get the post from the URL
     if ( is_admin() ) {
-        // Get post
-        if ( isset( $_GET['post'] ) ) {
-            $post_id = (int) $_GET['post'];
-        } else if ( isset( $_POST['post_ID'] ) ) {
-            $post_id = (int) $_POST['post_ID'];
+        if ( empty($post_to_check->ID) ) {
+            // Get post
+            if ( isset( $_GET['post'] ) ) {
+                $post_id = (int) $_GET['post'];
+            } else if ( isset( $_POST['post_ID'] ) ) {
+                $post_id = (int) $_POST['post_ID'];
+            } else {
+                $post_id = 0;
+            }
+            if ( $post_id ) {
+                $post = get_post( $post_id );
+            }
         } else {
-            $post_id = 0;
+            $post = $post_to_check;
         }
-        if ( $post_id ) {
-            $post = get_post( $post_id );
-        }
+    }
+    if ( empty($post->ID) ) {
+        global $post;
+    }
+	$has_post = true;
+    if ( empty($post->ID) ) {
+        // Will not execute any condition that involves custom fields
+        $has_post = false;
     }
 
     global $wplogger;
+    
+	if ( $has_post ) {
+		do_action( 'wpv_condition', $post );
+	}
 
     $logging_string = "Original expression: " . $evaluate;
 
@@ -121,43 +151,49 @@ function wpv_condition( $atts ) {
     $evaluate = apply_filters( 'wpv-extra-condition-filters', $evaluate );
 
     // evaluate empty() statements for variables
-    $empties = preg_match_all( "/empty\(\s*\\$(\w+)\s*\)/", $evaluate, $matches );
+	if ( $has_post ) {
+		$empties = preg_match_all( "/empty\(\s*\\$(\w+)\s*\)/", $evaluate, $matches );
+		if ( $empties && $empties > 0 ) {
+			for ( $i = 0; $i < $empties; $i++ ) {
+				$match_var = get_post_meta( $post->ID, $atts[$matches[1][$i]], true );
+				$is_empty = '1=0';
 
-    if ( $empties && $empties > 0 ) {
-        for ( $i = 0; $i < $empties; $i++ ) {
-            $match_var = get_post_meta( $post->ID, $atts[$matches[1][$i]], true );
-            $is_empty = '1=0';
+				// mark as empty only nulls and ""  
+	//            if ( is_null( $match_var ) || strlen( $match_var ) == 0 ) {
+				if ( is_null( $match_var )
+						|| ( is_string( $match_var ) && strlen( $match_var ) == 0 )
+						|| ( is_array( $match_var ) && empty( $match_var ) ) ) {
+					$is_empty = '1=1';
+				}
 
-            // mark as empty only nulls and ""  
-            if ( is_null( $match_var ) || strlen( $match_var ) == 0 ) {
-                $is_empty = '1=1';
-            }
-
-            $evaluate = str_replace( $matches[0][$i], $is_empty, $evaluate );
-        }
-    }
-
+				$evaluate = str_replace( $matches[0][$i], $is_empty, $evaluate );
+			}
+		}
+	}
+    
     // find variables that are to be used as strings.
     // eg '$f1'
     // will replace $f1 with the actual field value
-    $strings_count = preg_match_all( '/(\'[\$\w^\']*\')/', $evaluate, $matches );
-    if ( $strings_count && $strings_count > 0 ) {
-        for ( $i = 0; $i < $strings_count; $i++ ) {
-            $string = $matches[1][$i];
-            // remove single quotes from string literals to get value only
-            $string = (strpos( $string, '\'' ) === 0) ? substr( $string, 1,
-                            strlen( $string ) - 2 ) : $string;
-            if ( strpos( $string, '$' ) === 0 ) {
-                $variable_name = substr( $string, 1 ); // omit dollar sign
-                if ( isset( $atts[$variable_name] ) ) {
-                    $string = get_post_meta( $post->ID, $atts[$variable_name],
-                            true );
-                    $evaluate = str_replace( $matches[1][$i],
-                            "'" . $string . "'", $evaluate );
-                }
-            }
-        }
-    }
+	if ( $has_post ) {
+		$strings_count = preg_match_all( '/(\'[\$\w^\']*\')/', $evaluate, $matches );
+		if ( $strings_count && $strings_count > 0 ) {
+			for ( $i = 0; $i < $strings_count; $i++ ) {
+				$string = $matches[1][$i];
+				// remove single quotes from string literals to get value only
+				$string = (strpos( $string, '\'' ) === 0) ? substr( $string, 1,
+								strlen( $string ) - 2 ) : $string;
+				if ( strpos( $string, '$' ) === 0 ) {
+					$variable_name = substr( $string, 1 ); // omit dollar sign
+					if ( isset( $atts[$variable_name] ) ) {
+						$string = get_post_meta( $post->ID, $atts[$variable_name],
+								true );
+						$evaluate = str_replace( $matches[1][$i],
+								"'" . $string . "'", $evaluate );
+					}
+				}
+			}
+		}
+	}
 
     // find string variables and evaluate
     $strings_count = preg_match_all( '/((\$\w+)|(\'[^\']*\'))\s*([\!<>\=]+)\s*((\$\w+)|(\'[^\']*\'))/',
@@ -179,7 +215,7 @@ function wpv_condition( $atts ) {
                             1, strlen( $second_string ) - 2 ) : $second_string;
 
             // replace variables with text representation
-            if ( strpos( $first_string, '$' ) === 0 ) {
+            if ( strpos( $first_string, '$' ) === 0 && $has_post ) {
                 $variable_name = substr( $first_string, 1 ); // omit dollar sign
                 if ( isset( $atts[$variable_name] ) ) {
                     $first_string = get_post_meta( $post->ID,
@@ -188,7 +224,7 @@ function wpv_condition( $atts ) {
                     $first_string = '';
                 }
             }
-            if ( strpos( $second_string, '$' ) === 0 ) {
+            if ( strpos( $second_string, '$' ) === 0 && $has_post ) {
                 $variable_name = substr( $second_string, 1 );
                 if ( isset( $atts[$variable_name] ) ) {
                     $second_string = get_post_meta( $post->ID,
@@ -235,34 +271,40 @@ function wpv_condition( $atts ) {
 
 
     // find all variable placeholders in expression
-    $count = preg_match_all( '/\$(\w+)/', $evaluate, $matches );
+	if ( $has_post ) {
+		$count = preg_match_all( '/\$(\w+)/', $evaluate, $matches );
 
-    $logging_string .= "; Variable placeholders: " . var_export( $matches[1],
-                    true );
+		$logging_string .= "; Variable placeholders: " . var_export( $matches[1],
+						true );
 
-    // replace all variables with their values listed as shortcode parameters
-    if ( $count && $count > 0 ) {
-        // sort array by length desc, fix str_replace incorrect replacement
-        $matches[1] = wpv_sort_matches_by_length( $matches[1] );
+		// replace all variables with their values listed as shortcode parameters
+		if ( $count && $count > 0 ) {
+			// sort array by length desc, fix str_replace incorrect replacement
+			$matches[1] = wpv_sort_matches_by_length( $matches[1] );
 
-        foreach ( $matches[1] as $match ) {
-            if ( isset( $atts[$match] ) ) {
-                $meta = get_post_meta( $post->ID, $atts[$match], true );
-                if ( empty( $meta ) ) {
-                    $meta = "0";
-                }
-            } else {
-                $meta = "0";
-            }
-            $evaluate = str_replace( '$' . $match, $meta, $evaluate );
-        }
-    }
+			foreach ( $matches[1] as $match ) {
+				if ( isset( $atts[$match] ) ) {
+					$meta = get_post_meta( $post->ID, $atts[$match], true );
+					if ( empty( $meta ) ) {
+						$meta = "0";
+					}
+				} else {
+					$meta = "0";
+				}
+				$evaluate = str_replace( '$' . $match, $meta, $evaluate );
+			}
+		}
+	}
 
     $logging_string .= "; End evaluated expression: " . $evaluate;
 
     $wplogger->log( $logging_string, WPLOG_DEBUG );
     // evaluate the prepared expression using the custom eval script
     $result = wpv_evaluate_expression( $evaluate );
+    
+	if ( $has_post ) {
+		do_action( 'wpv_condition_end', $post );
+	}
 
     // return true, false or error string to the conditional caller
     return $result;
@@ -495,7 +537,7 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
     global $post, $WPV_wpcf_post_relationship;
     static $related = array();
 
-    if ( isset( $post ) && function_exists( 'wpcf_pr_get_belongs' ) ) {
+    if ( !empty( $post->ID ) && function_exists( 'wpcf_pr_get_belongs' ) ) {
 
         if ( !isset( $related[$post->post_type] ) ) {
             $related[$post->post_type] = wpcf_pr_get_belongs( $post->post_type );
@@ -505,7 +547,9 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
                 $related_id = wpcf_pr_post_get_belongs( $post->ID, $post_type );
                 if ( $related_id ) {
                     $WPV_wpcf_post_relationship['$' . $post_type . '_id'] = $related_id;
-                }
+                } else {
+					$WPV_wpcf_post_relationship['$' . $post_type . '_id'] = 0;
+				}
             }
         }
     }
@@ -516,7 +560,7 @@ function WPV_wpcf_record_post_relationship_belongs( $content ) {
 
 /**
  * Form for Enlimbo calls for wpv-control shortcode calls
-
+ *
  * @param unknown_type $elements
  */
 function wpv_form_control( $elements ) {
@@ -564,7 +608,8 @@ function wpv_dismiss_message_ajax() {
     if ( isset( $_GET['message_id'] ) && isset( $_GET['_wpnonce'] )
             && wp_verify_nonce( $_GET['_wpnonce'], 'dismiss_message' ) ) {
         $dismissed_messages = get_option( 'wpv-dismissed-messages', array() );
-        $dismissed_messages[strval( $_GET['message_id'] )] = 1;
+		$dismissed_image_val = isset( $_GET['timestamp'] ) ? $_GET['timestamp'] : 1;
+        $dismissed_messages[strval( $_GET['message_id'] )] = $dismissed_image_val;
         update_option( 'wpv-dismissed-messages', $dismissed_messages );
     }
     die( 'ajax' );

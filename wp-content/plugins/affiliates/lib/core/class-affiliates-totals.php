@@ -153,9 +153,9 @@ class Affiliates_Totals {
 		$affiliates_users_table = _affiliates_get_tablename( 'affiliates_users' );
 
 		$output .= '<div class="totals">';
-		$output .= '<h2>';
+		$output .= '<h1>';
 		$output .= __( 'Totals', AFFILIATES_PLUGIN_DOMAIN );
-		$output .= '</h2>';
+		$output .= '</h1>';
 
 		$row_count = isset( $_POST['row_count'] ) ? intval( $_POST['row_count'] ) : 0;
 
@@ -342,6 +342,7 @@ class Affiliates_Totals {
 		);
 
 		$status_select = '<label class="referral-status-filter" for="referral_status">' . __('Referral Status', AFFILIATES_PLUGIN_DOMAIN ) . '</label>';
+		$status_select .= ' ';
 		$status_select .= '<select class="referral-status-filter" name="referral_status">';
 		$status_select .= '<option value="" ' . ( empty( $referral_status ) ? ' selected="selected" ' : '' ) . '>--</option>';
 		foreach ( $status_descriptions as $key => $label ) {
@@ -352,6 +353,7 @@ class Affiliates_Totals {
 
 		$currencies = $wpdb->get_results( "SELECT DISTINCT(currency_id) FROM $referrals_table WHERE currency_id IS NOT NULL" );
 		$currency_select = '<label class="currency-id-filter" for="currency_id">' . __( 'Currency', AFFILIATES_PLUGIN_DOMAIN ) . '</label>';
+		$currency_select .= ' ';
 		$currency_select .= '<select class="currency-id-filter" name="currency_id">';
 		$currency_select .= '<option value="" ' . ( empty( $currency_id ) ? ' selected="selected" ' : '' ) . '>--</option>';
 		foreach ( $currencies as $currency ) {

@@ -1,0 +1,222 @@
+#ameriquote_body {
+    font-size: 1em;
+    position: relative;
+    background: url(http://quotes.ameriquote.com/wp-content/uploads/sites/8/2015/05/superwoman_transparent.png) 59px -14px no-repeat;
+  background-size: 79%;
+  padding-top: 27px;
+}
+
+div.params {
+    clear:both;
+    margin-top:10px;
+      min-height: 460px;
+        opacity: .9;
+}
+
+
+div.params ul {
+    float:left;
+    padding-left: 0px;
+  margin-top: 20px;
+}
+
+div.params ul li {
+        list-style-type: none;
+        float:left;
+    }
+div.params ul li label {
+    margin-right:20px;
+}
+.smoker {
+    margin-bottom:10px;
+}
+.birthdate {
+    margin-left: -15px;
+}
+
+.smoker label, .gender label {
+    float:left;
+    margin-right:15px;
+}
+
+.quote {
+    font-size: 14px;
+    line-height:17px;
+    min-height: 230px;
+    text-align: left;
+    margin-bottom:10px;
+    margin-right: 10px;
+    /*margin-top: 10px;*/
+    width:100%;
+    display:none;
+}
+ .quote .title {
+     font-weight: bold;
+ }
+.results-grid .col-lg-6, .results-grid .col-md-6, .results-grid .col-sm-6 {
+    width:48%;
+}
+
+.quote label {
+    line-height: 15px;
+    font-weight: bold;
+    margin-bottom:0px;
+}
+
+.quote .logo-pic {
+    margin-bottom:10px;
+    height: 55px;
+    background-color: white;
+    box-shadow: 1px 2px 14px -8px;
+}
+
+.quote .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align:middle;
+    margin-left: 20px;
+}
+
+.quote .logo-pic img {
+    vertical-align: middle;
+    
+}
+
+#sorts {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.monthly {
+    margin-left: 15px;
+  font-size: 1.7em;
+  vertical-align: text-top;
+  float: right;
+  margin-top: 20px;
+  margin-right: 15px;
+}
+.footer-icons {
+    margin-top:15px;
+}
+.footer-icons .icon,.call-pop .icon {
+    float:left;
+    margin-right: 15px;
+    cursor: pointer;
+    color:#1abc9c;
+    text-align:center;
+}
+
+
+.apply-form {
+    display:none;
+    width:100%;
+    float:left;
+    position:relative;
+    padding-top:15px;
+    margin-top:10px;
+}
+
+.apply-form input {
+ width: 45%;
+  margin-bottom: 5px;
+  float: left;
+  margin-right: 15px;
+}
+
+.apply-form p {
+    font-size: 16px;
+    line-height: 18px;
+    margin-bottom:10px;
+}
+.quote .response {
+    display: block;
+  font-size: 1.8em;
+  line-height: 1.1em;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.company-pop .company-logo {
+    max-width:145px;
+    float:left;
+}
+
+.company-pop .company-logo img {
+    width:100%;
+}
+
+.company-pop .modal-title, .call-pop .modal-title {
+    font-size: 1.3em;
+    text-align:right;
+    
+}
+
+.company-pop .modal-header, .call-pop .modal-header {
+    padding-top: 15px;
+}
+
+.company-pop .modal-header .close, .call-pop .modal-header .close {
+    margin-top: -12px;
+    margin-right:10px !important;
+}
+.mobile-contact, .desktop-contact { display:none}
+.mobile .mobile-contact {
+    display:block;
+    
+}
+
+.desktop .desktop-contact {
+    display:block;
+}
+.call-pop .icon {
+    float:left;
+    margin-right: 15px;
+    cursor: pointer;
+    color:#1abc9c;
+    text-align:center;
+    font-size:28px;
+}
+
+.modal {
+    width: auto;
+    left: 0px;
+    margin: 0px;
+    background-color: transparent;
+}
+
+.lander {
+   
+  height: 469px;
+  width: 100%;
+  
+}
+@media (max-width: 679px){
+    .lander {
+        display:none;
+    }
+}
+@media (max-width: 480px) {
+    .monthly {
+        font-size: 1.2em;
+        margin-right: 5px;
+    }
+    .apply-form input {
+        width:100%;
+    }
+    .quote {
+        line-height:15px;
+    }
+    .footer-icons .icon, .call-pop .icon {
+        font-size: 12px;
+        margin-right:10px;
+    }
+    .quote .helper {
+        margin-left:0px;
+    }
+    
+    .btn {
+        padding:10px 8px;
+        font-size:13px;
+    }
+    
+}

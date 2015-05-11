@@ -5249,9 +5249,9 @@ body {
 
 @media (min-width: 320px) and (max-width: 768px) {
   .hero-4-form {
-    width: 100%; } }
+    width: 100% !important; } }
 
-@media (min-width: 320px) and (max-width: 640px) {
+@media (min-width: 320px) and (max-width: 680px) {
   #header {
     background: url("../images/hero-bg.jpg") 25% 30% no-repeat;
     background-size: cover;
@@ -5259,7 +5259,7 @@ body {
   #hero-4 .widget-area {
     padding: 25px 25px 50px 25px; }
   #header-4 {
-    padding: 10px 5px 0 !important; }
+    padding: 15px 5px 0 !important; }
   .hero {
     padding-top: 0;
     padding-bottom: 50px; }
@@ -5353,7 +5353,7 @@ h6 {
 
 #header-4 {
   background: #fff;
-  padding: 25px 0; }
+  padding: 15px 0; }
 
 #hero-4 {
   background: url(/wp-content/uploads/sites/4/2015/03/Girl-Bubbles2.jpg) no-repeat center center;
@@ -5366,7 +5366,19 @@ h6 {
   -ms-transition: all 600ms linear !important;
   transition: all 600ms linear !important; }
 
-.gform_next_button, .page-4 #gform_submit_button_4 {
+.page-id-315 #hero-4 {
+  background: url(/wp-content/uploads/sites/4/2015/03/shutterstock_110629535.jpg) no-repeat center 70%;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+  -webkit-transition: all 600ms linear !important;
+  -moz-transition: all 600ms linear !important;
+  -o-transition: all 600ms linear !important;
+  -ms-transition: all 600ms linear !important;
+  transition: all 600ms linear !important; }
+
+.gform_next_button, .page-4 #gform_submit_button_4, .page-4 #gform_submit_button_5, .page-4 #gform_submit_button_6 {
   background-color: #2ecc71;
   border-bottom: 3px solid #24a35a;
   border-color: #24a35a;
@@ -5409,7 +5421,7 @@ h6 {
   -ms-user-select: none;
   user-select: none; }
 
-.page-4 #gform_submit_button_4 {
+.page-4 #gform_submit_button_4, .page-4 #gform_submit_button_5 {
   float: right;
   margin-top: -84px; }
 
@@ -5447,7 +5459,7 @@ h6 {
   padding: 75px 10px;
   height: 100%;
   max-height: 2000px;
-  min-height: 600px;
+  min-height: 800px;
   background-image: linear-gradient(0deg, rgba(215, 98, 35, 0.75) 0%, rgba(81, 160, 131, 0.75) 0%, rgba(32, 99, 156, 0.75) 100%);
   background-image: -moz-linear-gradient(0deg, rgba(215, 98, 35, 0.75) 0%, rgba(81, 160, 131, 0.75) 0%, rgba(32, 99, 156, 0.75) 100%);
   background-image: -webkit-linear-gradient(0deg, rgba(215, 98, 35, 0.75) 0%, rgba(81, 160, 131, 0.75) 0%, rgba(32, 99, 156, 0.75) 100%);
@@ -5488,14 +5500,25 @@ h6 {
 .hero-4-form a:hover {
   color: yellow; }
 
+.hero-4-form iframe {
+  border: none; }
+
+.page-id-242 #iframe-wrapper {
+  height: 865px;
+  width: 100%; }
+
 @media (min-width: 1200px) {
   .container {
     width: 980px; } }
 
-@media (min-width: 320px) and (max-width: 480px) {
+@media (min-width: 320px) and (max-width: 680px) {
+  #hero-4 {
+    min-height: 600px; }
   #hero-4 h2 {
     font-size: 2em;
     line-height: 1; }
+  .page-id-315 #hero-4 {
+    background-image: none; }
   #hero-4 p {
     font-size: 1em; }
   .header-4-logo h1 {
@@ -5503,14 +5526,28 @@ h6 {
   .hero-4-intro h2 {
     font-size: 24px; }
   #hero-4 .widget-area {
-    padding: 10px; }
+    padding: 3px; }
   .hero-4-form {
-    padding: 10px 10px 10px;
+    padding: 5px;
     float: left; }
   .page-id-242 .hero-4-form {
-    padding: 0px; }
+    padding: 0px;
+    min-height: 800px; }
+  .page-id-242 #iframe-wrapper {
+    position: static;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    height: 1200px;
+    -webkit-overflow-scrolling: touch !important; }
   .page-id-242 iframe {
-    border: none; }
+    width: 100%;
+    height: 100%; }
+  .page-id-242 iframe #ctl00_ctl00_divPageFrame {
+    padding-right: 20px; }
   .hero-4-form .gform_next_button {
     margin-top: -5px; }
   #hero-4 .wrapper {
@@ -5518,16 +5555,16 @@ h6 {
   #hero-4 .wrapper .container {
     padding-left: 0px;
     padding-right: 0px; }
-  #text-5 .text-right, #text-4 .text-right {
-    text-align: center;
-    margin-top: -16px;
-    margin-bottom: 10px; }
-  .page-4 #gform_submit_button_4 {
+  #text-5 .text-right, #text-4 .text-right, #text-6 .text-right {
+    text-align: right; }
+  .page-4 #gform_submit_button_4, .page-4 #gform_submit_button_5 {
     float: right;
     margin-top: 0px;
     padding: 6px 12px; }
   #header-4 .glyphicon {
-    padding-right: 0px !important; } }
+    padding-right: 0px !important; }
+  #hero-4 .wrapper {
+    min-height: 600px; } }
 
 .header-4-logo h1 {
   color: #fff;
@@ -5535,7 +5572,7 @@ h6 {
 
 .header-4-logo img {
   width: 100%;
-  max-width: 500px;
+  max-width: 300px;
   margin-left: -7px; }
 
 .header-4-social > ul > li > a {

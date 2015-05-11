@@ -28,7 +28,7 @@ function gform_polls_cron_add_twice_hourly($schedules) {
 */
 
 // By default the percentage will round to the nearest whole number
-// This can be overridden with the gform_polls_percentage_decimals hook
+// This can be overridden with the gform_polls_percentage_precision hook
 
 /*
 add_filter('gform_polls_percentage_precision', 'gform_polls_custom_precision', 10, 2);
@@ -195,6 +195,10 @@ class GFPolls extends GFAddOn {
 		add_filter( 'gform_contacts_tabs_contact_detail', array( $this, 'add_tab_to_contact_detail' ), 10, 2 );
 		add_action( 'gform_contacts_tab_polls', array( $this, 'contacts_tab' ) );
 
+
+		// Adds the polls action to the shortcode builder UI
+		add_filter( 'gform_shortcode_builder_actions', array( $this, 'add_polls_shortcode_ui_action' ) );
+
 		parent::init_admin();
 	}
 
@@ -221,8 +225,6 @@ class GFPolls extends GFAddOn {
 		// maybe display results on confirmation
 		add_filter( 'gform_confirmation', array( $this, 'display_confirmation' ), 10, 4 );
 
-		// shortcodes
-		add_filter( 'gform_shortcode_polls', array( $this, 'poll_shortcode' ), 10, 3 );
 		add_shortcode( 'gfpolls_total', array( $this, 'poll_total_shortcode' ) );
 
 		// merge tags
@@ -238,8 +240,6 @@ class GFPolls extends GFAddOn {
 		add_action( 'gform_entry_created', array( $this, 'entry_created' ), 10, 2 );
 
 		add_action( 'gform_validation', array( $this, 'form_validation' ) );
-
-		add_filter( 'gform_pre_render', array( $this, 'pre_render' ) );
 
 		// Mailchimp Add-On integration
 		add_filter( 'gform_mailchimp_field_value', array( $this, 'display_entries_field_value' ), 10, 4 );
@@ -270,6 +270,9 @@ class GFPolls extends GFAddOn {
 		if ( ! wp_next_scheduled( 'gform_polls_cron' ) ) {
 			wp_schedule_event( time(), $this->get_cron_recurrence(), 'gform_polls_cron' );
 		}
+
+		add_filter( 'gform_shortcode_polls', array( $this, 'poll_shortcode' ), 10, 3 );
+		add_filter( 'gform_pre_render', array( $this, 'pre_render' ) );
 
 		parent::init();
 	} //end function init
@@ -649,11 +652,12 @@ class GFPolls extends GFAddOn {
 				//pass the HTML for the choices through DOMdocument to make sure we get the complete node
 				$dom     = new DOMDocument();
 				$content = '<?xml version="1.0" encoding="UTF-8"?>' . $content;
-				//allow malformed HTML inside the choice label
-				$previous_value = libxml_use_internal_errors( true );
+				$loader = libxml_disable_entity_loader( true );
+				$errors = libxml_use_internal_errors( true );
 				$dom->loadHTML( $content );
 				libxml_clear_errors();
-				libxml_use_internal_errors( $previous_value );
+				libxml_use_internal_errors( $errors );
+				libxml_disable_entity_loader( $loader );
 				$content = $dom->saveXML( $dom->documentElement );
 
 				//pick out the elements: LI for radio & checkbox, OPTION for select
@@ -1377,6 +1381,7 @@ class GFPolls extends GFAddOn {
 						$choice_index = count( $field['choices'] );
 						$choices = $field['choices'];
 						$choices[ $choice_index ]['text'] = __( 'Other', 'gravityformspolls' );
+						$choices[ $choice_index ]['value'] = 'gpoll_other';
 						$field['choices'] = $choices;
 					}
 
@@ -1487,12 +1492,12 @@ class GFPolls extends GFAddOn {
 					$choice_counter = 0;
 
 					// if the Enable 'other' choice option is selected for this field then add it as a pseudo-value
-					if ( isset( $field['enableOtherChoice'] ) && $field['enableOtherChoice'] === true ) {
-						$choice_index                             = count( $field['choices'] );
-						$choices = $field['choices'];
-						$choices[ $choice_index ]['value'] = 'gpoll_other';
-						$field['choices'] = $choices;
-					}
+//					if ( isset( $field['enableOtherChoice'] ) && $field['enableOtherChoice'] === true ) {
+//						$choice_index  = count( $field['choices'] );
+//						$choices = $field['choices'];
+//						$choices[ $choice_index ]['value'] = 'gpoll_other';
+//						$field['choices'] = $choices;
+//					}
 
 					// loop through each choice and count the responses
 					foreach ( $field['choices'] as $choice ) {
@@ -1803,7 +1808,7 @@ class GFPolls extends GFAddOn {
 			if ( $has_confirmation_wrapper )
 				$confirmation = substr( $confirmation, 0, strlen( $confirmation ) - 6 ); //remove the closing div of the wrapper
 
-			$has_confirmation_message = false !== strpos( $confirmation, 'gforms_confirmation_message' ) ? true : false;
+			$has_confirmation_message = false !== strpos( $confirmation, 'gform_confirmation_message' ) ? true : false;
 
 			if ( $has_confirmation_message )
 				$confirmation = substr( $confirmation, 0, strlen( $confirmation ) - 6 ); //remove the closing div of the message
@@ -1956,6 +1961,76 @@ class GFPolls extends GFAddOn {
 		$total  = $totals['total'];
 
 		return $total;
+	}
+
+	function add_polls_shortcode_ui_action( $actions ) {
+		$actions[] = array(
+			'polls' => array(
+				'label' => __( 'Polls', 'gravityformspolls' ),
+				'attrs' => array(
+					array(
+						'label'       => __( 'Style', 'gravityformspolls' ),
+						'attr'        => 'style',
+						'type'        => 'select',
+						'default'     => 'green',
+						'options'     => array(
+							'green'  => __( 'Green', 'gravityformspolls' ),
+							'red'    => __( 'Red', 'gravityformspolls' ),
+							'orange' => __( 'Orange', 'gravityformspolls' ),
+							'blue'   => __( 'Blue', 'gravityformspolls' ),
+						),
+						'tooltip' => __( 'The Add-On currently supports 4 built in styles: red, green, orange, blue. Defaults to "green".', 'gravityformspolls' )
+					),
+					array(
+						'label'   => __( 'Mode', 'gravityformspolls' ),
+						'attr'    => 'mode',
+						'type'    => 'select',
+						'default'     => 'poll',
+						'options' => array(
+							'poll'    => 'Poll',
+							'results' => 'Results',
+						)
+					),
+					array(
+						'label'   => __( 'Cookie', 'gravityformspolls' ),
+						'attr'    => 'cookie',
+						'type'    => 'text',
+						'tooltip' => __( 'Enables blocking of repeat voters. You enable this by passing a defined time period. Available time periods are: 1 day, 1 week, 1 month, or a specific date in the YYYY-MM-DD date format. Defaults to an empty string, which means no repeat voters are blocked.', 'gravityformspolls' )
+					),
+					array(
+						'label'       => __( 'Results link', 'gravityformspolls' ),
+						'attr'        => 'show_results_link',
+						'type'        => 'checkbox',
+						'default'     => 'true',
+						'tooltip' => __( 'Display a link to view poll results without submitting the form? Supported values are: true, false. Defaults to "true".', 'gravityformspolls' )
+					),
+					array(
+						'label'       => __( 'Display Results', 'gravityformspolls' ),
+						'attr'        => 'display_results',
+						'type'        => 'checkbox',
+						'default'     => 'true',
+						'tooltip' => __( 'Display poll results automatically when the form is submitted? Supported values are: true, false. Defaults to "true".', 'gravityformspolls' )
+					),
+					array(
+						'label'       => __( 'Display Percentages', 'gravityformspolls' ),
+						'attr'        => 'percentages',
+						'type'        => 'checkbox',
+						'default'     => 'true',
+						'tooltip' => __( 'Display results percentages as part of results? Supported values are: true, false. Defaults to "true".', 'gravityformspolls' )
+					),
+					array(
+						'label'       => __( 'Display Counts', 'gravityformspolls' ),
+						'attr'        => 'counts',
+						'type'        => 'checkbox',
+						'default'     => 'true',
+						'tooltip' => __( 'Display number of times each choice has been selected when displaying results? Supported values are: true, false. Defaults to "true".', 'gravityformspolls' )
+					),
+				),
+			)
+
+		);
+
+		return $actions;
 	}
 
 

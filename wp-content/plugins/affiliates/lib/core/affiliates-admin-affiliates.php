@@ -18,7 +18,11 @@
  * @package affiliates
  * @since affiliates 1.0.0
  */
-	
+
+if ( !defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Shows hits by affiliate
 
 define( 'AFFILIATES_AFFILIATES_PER_PAGE', 10 );
@@ -245,9 +249,9 @@ function affiliates_admin_affiliates() {
 	$output .=
 		'<div class="manage-affiliates">' .
 		'<div>' .
-			'<h2>' .
+			'<h1>' .
 				__( 'Manage Affiliates', AFFILIATES_PLUGIN_DOMAIN ) .
-			'</h2>' .
+			'</h1>' .
 		'</div>';
 				
 	$output .=
@@ -387,25 +391,25 @@ function affiliates_admin_affiliates() {
 			'<form id="setfilters" action="" method="post">' .
 				'<div class="filter-section">' .
 				'<label class="affiliate-id-filter">' .
-					__( 'Affiliate Id', AFFILIATES_PLUGIN_DOMAIN ) .
+					__( 'Id', AFFILIATES_PLUGIN_DOMAIN ) .
 					' ' .
 					'<input class="affiliate-id-filter" name="affiliate_id" type="text" value="' . esc_attr( $affiliate_id ) . '"/>' .
 				'</label>' .
 				' ' .
 				'<label class="affiliate-name-filter">' .
-				__( 'Affiliate Name', AFFILIATES_PLUGIN_DOMAIN ) .
+				__( 'Name', AFFILIATES_PLUGIN_DOMAIN ) .
 				' ' .
 				'<input class="affiliate-name-filter" name="affiliate_name" type="text" value="' . $affiliate_name . '"/>' .
 				'</label>' .
 				' ' .
 				'<label class="affiliate-email-filter">' .
-				__( 'Affiliate Email', AFFILIATES_PLUGIN_DOMAIN ) .
+				__( 'Email', AFFILIATES_PLUGIN_DOMAIN ) .
 				' ' .
 				'<input class="affiliate-email-filter" name="affiliate_email" type="text" value="' . $affiliate_email . '"/>' .
 				'</label>' .
 				' ' .
 				'<label class="affiliate-user-login-filter">' .
-				__( 'Affiliate Username', AFFILIATES_PLUGIN_DOMAIN ) .
+				__( 'Username', AFFILIATES_PLUGIN_DOMAIN ) .
 				' ' .
 				'<input class="affiliate-user-login-filter" name="affiliate_user_login" type="text" value="' . $affiliate_user_login . '" />' .
 				'</label>' .
@@ -562,7 +566,7 @@ function affiliates_admin_affiliates() {
 			$output .=
 				__( 'Link', AFFILIATES_PLUGIN_DOMAIN ) .
 				': ' .
-				'<span class="affiliate-link">' . get_bloginfo('url') . '?' . $pname . '=' . $encoded_id . '</span>' .
+				'<span class="affiliate-link">' . affiliates_get_affiliate_url( get_bloginfo('url'), $result->affiliate_id ) . '</span>' .
 				'<br/>' .
 				__( 'URL Parameter', AFFILIATES_PLUGIN_DOMAIN ) .
 				': ' .
@@ -657,4 +661,3 @@ function affiliates_admin_affiliates() {
 	echo $output;
 	affiliates_footer();
 } // function affiliates_admin_affiliates()
-?>

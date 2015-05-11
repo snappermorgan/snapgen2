@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+Version 2.3
+    - Added spanish (es_ES) translation.
+    - Added support for rendering polls in admin pages. Requires Gravity Forms 1.9.
+    - Added support for the shortcode builder.
+	- Fixed issue where "Other" choice displayed twice in front-end poll results
+	- Fixed a low severity security vulnerability.
+	- Fixed defaults for the shortcode builder
+	- Fixed issue where confirmation text wasn't getting displayed on AJAX forms.
+
+------------------------------------------------------------
 Version 2.2
 	- Added support for Gravity Forms 1.9 form editor drag and drop.
 	- Added function gf_polls to easily get a Poll instance.

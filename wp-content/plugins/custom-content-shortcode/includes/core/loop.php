@@ -1,15 +1,18 @@
 <?php
-
-/**
+/*---------------------------------------------
  *
- * [loop] - Query posts and loop through each
+ * [loop] - Query posts and loop through each one
  *
- * @filter ccs_loop_add_defaults 			Additional parameters to accept
- * @filter ccs_loop_parameters	 			Process given parameters
- * @filter ccs_loop_each_post				Each found post
- * @filter ccs_loop_each_result				Each compiled template result
- * @filter ccs_loop_all_results 			Results array
- * @filter ccs_loop_combined_result 		Final combined result 
+ * Filters:
+ * 
+ * ccs_loop_add_defaults 			Additional parameters to accept
+ * ccs_loop_parameters	 			Process given parameters
+ * ccs_loop_prepare_posts     Process found posts
+ * ccs_loop_each_post				  Each found post
+ * ccs_loop_each_result				Each compiled template result
+ * ccs_loop_each_row				  Each row (if columns option is set)
+ * ccs_loop_all_results 			Results array
+ * ccs_loop_final_result 			Final combined result 
  * 
  */
 
@@ -19,146 +22,155 @@ class CCS_Loop {
 
 	private static $original_parameters;	// Shortcode parameters
 	private static $parameters;				// After merge with default
-	private static $query;					// The query
+  private static $query;          // The query
+  public static $wp_query;          // WP_Query object for pagination
 	public static $state;					// Loop state array
+	public static $previous_state;			// For nested loop
 
 	function __construct() {
 
-
-		// Initialize global
-		$this->init();
-
-
-	/*========================================================================
-	 *
-	 * Define shortcodes
-	 *
-	 */
+		self::init();
 
 		add_shortcode( 'loop', array($this, 'the_loop_shortcode') );
-		add_shortcode( 'pass', array($this, 'pass_shortcode') );
+		add_shortcode( '-loop', array($this, 'the_loop_shortcode') );
+		add_shortcode( '--loop', array($this, 'the_loop_shortcode') );
 
 		add_shortcode( 'loop-count', array($this, 'loop_count_shortcode') );
+		add_shortcode( 'found-posts', array($this, 'found_posts_shortcode') );
+		add_shortcode( 'search-keyword', array($this, 'search_keyword_shortcode') );
 	}
 
 
-
-
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Initialize global
 	 *
 	 */
 
-	function init() {
+	public static function init() {
 
-		self::$state['is_loop'] = false;
+    self::$state['is_loop'] = false;
+    self::$state['loop_index'] = 0;
+		self::$state['is_nested_loop'] = false;
 		self::$state['is_attachment_loop'] = false;
 		self::$state['do_reset_postdata'] = false;
+		self::$previous_state = array();
+    self::$wp_query = null;
 	}
 
 
-
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Loop shortcode: main actions
 	 * 
 	 */
 
-	function the_loop_shortcode( $parameters, $template ) {
+	public static function the_loop_shortcode( $parameters, $template ) {
 
 		// Initialize loop state
-		$this->init_loop();
+		self::init_loop();
 
 			// Store original parameters
 			self::$original_parameters = $parameters;
 
 			// Merge parameters with defaults
-			$parameters = $this->merge_with_defaults( $parameters );
+			$parameters = self::merge_with_defaults( $parameters );
 			// Store merged parameters
 			self::$parameters = $parameters;
 
 
 			// Check cache - if loaded, return result
-			if ( ($result = $this->check_cache( $parameters )) !== false ) {
-				$this->close_loop();
+			if ( ($result = self::check_cache( $parameters )) !== false ) {
+				self::close_loop();
 				return $result;
 			}
 
 			// If there's already result based on parameters, return it
-			$result = $this->before_query( $parameters, $template );
+			$result = self::before_query( $parameters, $template );
 			if ( !empty( $result ) ) {
-				$this->close_loop();
+				self::close_loop();
 				return $result;
 			}
 
 
 			// Set up query based on parameters
-			$query = $this->prepare_query( $parameters );
+			$query = self::prepare_query( $parameters );
 
 			if (!empty($query)) {
 
 				// Get posts from query
-				$posts = $this->run_query( $query );
-			
+				$posts = self::run_query( $query );
+
 				// Pre-process posts
-				$posts = $this->prepare_posts( $posts );
+				$posts = self::prepare_posts( $posts );
 
 				// Loop through each post and compile shortcode template
-				$results = $this->compile_templates( $posts, $template );
+				$results = self::compile_templates( $posts, $template );
 
 				// Combine results and process to final output
-				$result = $this->process_results( $results );
-			}
+				$result = self::process_results( $results );
+			} else {
+        $results = self::compile_templates( null, $template, false );
+        $result = self::process_results( $results );
+      }
 
-		$this->close_loop();
+		self::close_loop();
 
 		return $result;
 	}
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Initialize loop state
 	 *
 	 */
 
-	function init_loop() {
+	public static function init_loop() {
 
 		$state = self::$state;
+    $state['loop_index']++; // Starts with 1
 
-		$state['is_loop'] 				= true;
+		if ( $state['is_loop'] ) {
+      self::$previous_state[]      = $state;
+      $state['is_nested_loop']     = true;
+    } else {
+      
+      $state['is_loop']            = true;
+      $state['is_nested_loop']     = false;
+    }
+      
+      $state['do_reset_postdata']  = false;
+      $state['do_cache']           = false;
+      $state['blog']               = 0;
+      
+      $state['loop_count']         = 0;
+      $state['post_count']         = 0;
+      $state['skip_ids']           = array();
+      $state['maxpage']            = 0;
 
-		$state['do_reset_postdata'] 	= false;
-		$state['do_cache'] 				= false;
-		$state['blog'] 					= 0;
-
-		$state['loop_count']			= 0;
-		$state['post_count'] 			= 0;
-		$state['skip_ids'] 				= array();
-
-		$state['current_post_id']		= 0;
-		// Store ID of post that contains the loop
-		$state['original_post_id']		= get_the_ID();
-
-		$state['comment_count']			= 0;
-		$state['is_attachment_loop']	= false;
-
-		// Support qTranslate Plus
-		$state['current_lang'] 			= null;
+      $state['current_post_id']    = 0;
+      // Store ID of post that contains the loop
+      $state['original_post_id']   = get_the_ID();
+      
+      $state['comment_count']      = 0;
+      $state['is_attachment_loop'] = false;
+      
+      // Support qTranslate Plus
+      $state['current_lang']       = null;
 
 		self::$state = $state;
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Define all parameters
 	 *
 	 */
 
-	function merge_with_defaults( $parameters ){
+	public static function merge_with_defaults( $parameters ){
 
 		$defaults = array(
 
@@ -167,7 +179,7 @@ class CCS_Loop {
 			'id' => '', 'exclude' => '',
 			'status' => '',
 			'include' => '',
-			'parent' => '0', // Exclude children by default
+			'parent' => '',
 			'count' => '', 'offset' => '',
 			'year' => '', 'month' => '', 'day' => '',
 			'author' => '', 'author_exclude' => '',
@@ -186,10 +198,15 @@ class CCS_Loop {
 			'field' => '', 'value' => '',
 			'compare' => '',
 			'start' => '', // If field value starts with
-			'in' => '', // ??
+
 			// Additional field value query
 			'field_2' => '', 'compare_2' => '', 'relation' => '',
 			'f' => '', 'v' => '', 'c' => '', 'f2' => '', 'v2' => '', 'c2' => '', 'r' => '', // Alias
+
+
+      // Published date
+      'after' => '',
+      'before' => '',
 
 			// Checkbox
 
@@ -203,6 +220,9 @@ class CCS_Loop {
 			// Format
 
 			'date_format' => '',
+			'in' => '', // in="string" - Date field stored as string
+			'acf_date' => '',
+
 			'strip_tags' => '', 'strip' => '', 'allow' => '',
 			'clean' => 'false', 'trim' => '',
 
@@ -212,7 +232,7 @@ class CCS_Loop {
 
 			// List
 
-			'list' => 'false',
+			'list' => '',
 			'list_class' => '', 'list_style' => '',
 			'item' => '',
 			'item_class' => '', 'item_style' => '',
@@ -237,9 +257,10 @@ class CCS_Loop {
 			// Timer
 			'timer' => 'false',
 
+      'paged' => '', 'maxpage' => '',
 
 			// ? Clarify purpose
-			'if' => '', 'list' => '', 'posts_separator' => '',
+			'if' => '', 'posts_separator' => '',
 			'variable' => '', 'var' => '',
 			'content_limit' => 0,
 			'thumbnail_size' => 'thumbnail',
@@ -253,26 +274,21 @@ class CCS_Loop {
 
 		$merged = shortcode_atts($defaults, $parameters, true);
 
-		// Support aliases?
-
-//		if ( !empty($tax) ) $taxonomy = $tax;
-
-
 		return $merged;
 	}
 
 
-	/*========================================================================
-	 *
-	 * Check cache based on parameters
-	 * 
-	 * If no cache, returns false
-	 * If update is true, set do_cache for end of loop, and returns false
-	 * If cache exists and update is not true, returns cached result
-	 * 
-	 */
+  /*---------------------------------------------
+   *
+   * Check cache based on parameters
+   * 
+   * If no cache, returns false
+   * If update is true, set do_cache for end of loop, and returns false
+   * If cache exists and update is not true, returns cached result
+   *
+   */
 
-	function check_cache( $parameters ) {
+	public static function check_cache( $parameters ) {
 
 		$result = false;
 
@@ -305,18 +321,18 @@ class CCS_Loop {
 		return $result;
 	}
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Action before running query
 	 * If returns not null, there is already result
 	 *
 	 */
 
-	function before_query( $parameters, $template = null ) {
+	public static function before_query( $parameters, $template = null ) {
 
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Start timer
 		 *
@@ -329,7 +345,7 @@ class CCS_Loop {
 		}
 		
 		
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * The X parameter - run loop X times, no query
 		 *
@@ -337,24 +353,31 @@ class CCS_Loop {
 		
 		if (!empty($parameters['x'])) {
 
-			$out = '';
+			$outs = array();
 
 			$x = $parameters['x'];
 			for ($i=0; $i <$x ; $i++) { 
 				self::$state['loop_count']++;
-				$out .= do_shortcode( self::render_field_tags( $template, $parameters ) );
+
+				$outs[] =
+				apply_filters('ccs_loop_each_result',
+					do_shortcode( self::render_field_tags( $template, $parameters ) ),
+				$parameters );
+
 			}
 
-			return $out;
+			if (!empty($parameters['columns'])) {
+				$out = self::render_columns( $outs, $parameters['columns'], $parameters['pad'], $parameters['between'] );
+			} else $out = implode('', $outs);
+
+			return apply_filters('ccs_loop_final_result', $out, $parameters );
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Switch to blog on multisite - restore during close_loop
 		 * 
-		 * ** Not tested **
-		 *
 		 */
 
 		if ( !empty($parameters['blog']) ) {
@@ -368,24 +391,24 @@ class CCS_Loop {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Prepare query based on parameters
 	 *
 	 */
 
-	function prepare_query( $parameters ) {
+	public static function prepare_query( $parameters ) {
 
 		$query = array();
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * field="gallery"
 		 *
 		 */
 
-		if ( ($parameters['field'] == 'gallery') && (class_exists('CCS_Gallery_Field')) ) {
+		if ( $parameters['field'] == 'gallery' && class_exists('CCS_Gallery_Field') ) {
 
 			// Gallery field
 
@@ -398,7 +421,7 @@ class CCS_Loop {
 
 		}
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Post type
 		 *
@@ -407,22 +430,22 @@ class CCS_Loop {
 		
 		if ( !empty($parameters['type']) ) {
 
-			$query['post_type'] = $this->explode_list($parameters['type']);
+			$query['post_type'] = self::explode_list($parameters['type']);
 
 		} else {
 
 			$query['post_type'] = 'any';
 		}
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
-		 * Post ID, exclude ID, name, or parent(s)
+		 * Post ID, exclude ID, name
 		 *
 		 */
 		
 		if ( !empty($parameters['id']) ) {
 
-			$id_array = $this->explode_list($parameters['id']);
+			$id_array = self::explode_list($parameters['id']);
 
 			$query['post__in'] = $id_array;
 			$query['orderby'] = 'post__in'; // Preserve ID order
@@ -435,14 +458,19 @@ class CCS_Loop {
 
 		} elseif ( !empty($parameters['exclude']) ) {
 
-			$id_array = $this->explode_list($parameters['exclude']);
-
-			// Exclude current post
+			$id_array = self::explode_list($parameters['exclude']);
 
 			foreach ($id_array as $key => $value) {
+
+        // Exclude current post
 				if ($value=='this') {
 					$id_array[$key] = self::$state['original_post_id']; // ID of post that contains the loop
-				}
+
+        // Top-level posts only
+				} elseif ($value=='children') {
+          unset($id_array[$key]);
+          $parameters['parent']='0';
+        }
 			}
 
 			$query['post__not_in'] = $id_array;
@@ -451,18 +479,36 @@ class CCS_Loop {
 
 			$query['name'] = $parameters['name'];
 
-		} elseif ( !empty($parameters['parent']) || $parameters['parent']=='0' ) {
+		}
+
+    /*---------------------------------------------
+     *
+     * Parent
+     *
+     */
+
+    if ( !empty($parameters['parent']) || $parameters['parent']=='0' ) {
 
 			$parent = $parameters['parent'];
 
 			if ( $parent=='this' ) {
 
-				// Get children of current post
-				$query['post_parent'] = get_the_ID();
-				if (!$query['post_parent'])
-					$query['post_parent'] = '-1'; // If no current post
+        // Get children of current post
 
-			} elseif ( is_numeric($parent) ) {
+        $query['post_parent'] = get_the_ID();
+        if (!$query['post_parent'])
+          $query['post_parent'] = '-1'; // If no current post
+
+      } elseif ( $parent=='same' ) {
+
+        // Get siblings of current post
+
+        $query['post_parent'] = wp_get_post_parent_id( get_the_ID() );
+
+        if (!$query['post_parent'])
+          $query['post_parent'] = '-1'; // If current post has no parent
+
+      } elseif ( is_numeric($parent) ) {
 
 				$query['post_parent'] = intval( $parent ); // Single parent ID
 
@@ -470,7 +516,7 @@ class CCS_Loop {
 
 				// Multiple IDs
 
-				$parents = $this->explode_list( $parent ); // Convert to array
+				$parents = self::explode_list( $parent ); // Convert to array
 				$parent_IDs = array();
 
 				foreach ($parents as $each_parent) {
@@ -480,7 +526,13 @@ class CCS_Loop {
 						// Get children of current post
 						$parent_IDs[] = get_the_ID();
 
-					} elseif ( is_numeric($each_parent) ) {
+					} elseif ( $parent=='same' ) {
+
+            // Get siblings of current post, if it has parent
+            $parent_ID = wp_get_post_parent_id( get_the_ID() );
+            if ($parent_ID) $parent_IDs[] = $parent_ID;
+
+          } elseif ( is_numeric($each_parent) ) {
 
 						// by ID
 						$parent_IDs[] = intval( $each_parent );
@@ -508,7 +560,7 @@ class CCS_Loop {
 		$query['ignore_sticky_posts'] = true;
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Post author
 		 *
@@ -516,7 +568,7 @@ class CCS_Loop {
 		
 		if ( !empty($parameters['author']) ) {
 
-			$authors = $this->explode_list( $parameters['author'] );
+			$authors = self::explode_list( $parameters['author'] );
 
 			foreach ($authors as $author) {
 				if (is_numeric($author)) {
@@ -526,10 +578,18 @@ class CCS_Loop {
 
 					if ( $author == 'this' ) {
 
-						// Current user ID
-						$query['author__in'][] = CCS_User::get_user_field('id');
+            // Current user ID
+            $query['author__in'][] = CCS_User::get_user_field('id');
 
-					} else {
+          } elseif ( $author == 'same' ) {
+
+            // Same author as current post
+            $current_post = get_post( get_the_ID() );
+            if ( $current_post ) {
+              $query['author__in'][] = $current_post->post_author;
+            }
+
+          } else {
 						// Get author ID from login name
 						$author_data = get_user_by('login', $author);
 						if ($author_data) {
@@ -542,7 +602,7 @@ class CCS_Loop {
 
 		if ( !empty($parameters['author_exclude']) ) {
 
-			$authors = $this->explode_list( $parameters['author_exclude'] );
+			$authors = self::explode_list( $parameters['author_exclude'] );
 
 			foreach ($authors as $author) {
 				if (is_numeric($author)) {
@@ -568,7 +628,7 @@ class CCS_Loop {
 
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Post status
 		 *
@@ -576,7 +636,7 @@ class CCS_Loop {
 
 		if ( !empty($parameters['status']) ) {
 
-			$query['post_status'] = $this->explode_list( $parameters['status'] );
+			$query['post_status'] = self::explode_list( $parameters['status'] );
 
 		} else {
 
@@ -589,42 +649,57 @@ class CCS_Loop {
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Post count and offset
 		 *
 		 */
 
 		if ( !empty($parameters['offset']) ) {
-
 			$query['offset'] = $parameters['offset'];
 		}
 
+    if ( !empty($parameters['paged']) ) {
+
+      if (class_exists('CCS_Paged')) {
+
+        if (!empty($parameters['maxpage'])) {
+          self::$state['maxpage'] = $parameters['maxpage'];
+        }
+
+        if (is_numeric($parameters['paged'])) {
+          $parameters['count'] = $parameters['paged'];
+        } else {
+          $parameters['count'] = 5;
+        }
+
+        // Get from query var
+        $query_var = CCS_Paged::$prefix;
+        if (self::$state['loop_index']>1)
+          $query_var .= self::$state['loop_index'];
+        $query['paged'] = isset($_GET[$query_var]) ? $_GET[$query_var] : 1;
+      }
+    }
+    if ( !empty($parameters['page']) ) {
+      $query['paged'] = $parameters['page']; // Manually set
+    }
+
 		if ( !empty($parameters['count']) ) {
-
 			if ($parameters['orderby']=='rand') {
-
 				$query['posts_per_page'] = '-1'; // For random, get all posts and count later
-
 			} else {
-
 				$query['posts_per_page'] = $parameters['count'];
 			}
-
 		} else {
-
-			if (!empty($query['offset']))
-
+			if (!empty($query['offset'])) {
 				$query['posts_per_page'] = '99999'; // Show all posts (to make offset work)
-
-			else
+      } else {
 				$query['posts_per_page'] = '-1'; // Show all posts (normal method)
+      }
 		}
 
 
-
-
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Date
 		 *
@@ -653,7 +728,7 @@ class CCS_Loop {
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Category
 		 *
@@ -664,7 +739,7 @@ class CCS_Loop {
 			// Category can be slug, ID, multiple
 
 			$category = $parameters['category'];
-			$categories = $this->explode_list( $category, ',+' );
+			$categories = self::explode_list( $category, ',+' );
 
 			$check_category = array_pop($categories); // Check one item
 
@@ -680,7 +755,7 @@ class CCS_Loop {
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Tag
 		 *
@@ -690,7 +765,7 @@ class CCS_Loop {
 
 			// Remove extra space in a list
 
-			$tags = $this->clean_list( $parameters['tag'] );
+			$tags = self::clean_list( $parameters['tag'] );
 			if (!empty($parameters['compare']) && strtoupper($parameters['compare'])=='AND') {
 				$tags = str_replace(',', '+', $tags);
 			}
@@ -698,19 +773,22 @@ class CCS_Loop {
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Taxonomy
-		 * @todo Refactor this somehow
 		 *
 		 */
 
+		// In a [for] loop, filter by each taxonomy term unless specified otherwise
 		if ( CCS_ForEach::$state['is_for_loop'] ) {
-			// In a [for each] loop, filter by each taxonomy term
-			// unless it's specified otherwise
 
-			$parameters['taxonomy'] = empty($parameters['taxonomy']) ? CCS_ForEach::$state['each']['taxonomy'] : $parameters['taxonomy'];
-			$parameters['term'] = empty($parameters['term']) ? CCS_ForEach::$state['each']['slug'] : $parameters['term'];
+			$parameters['taxonomy'] = empty($parameters['taxonomy']) ?
+				CCS_ForEach::$current_term[ CCS_ForEach::$index ]['taxonomy'] :
+					$parameters['taxonomy'];
+
+			$parameters['term'] = empty($parameters['term']) ?
+				CCS_ForEach::$current_term[ CCS_ForEach::$index ]['slug'] :
+					$parameters['term'];
 
 		}
 
@@ -724,20 +802,19 @@ class CCS_Loop {
 			else
 				$term = $parameters['value']; // Alias, if field value is not used
 
-			$terms = $this->explode_list($term); // Multiple terms possible
+			$terms = self::explode_list($term); // Multiple terms possible
 
 			if ( !empty($parameters['compare']) ) {
 
 				$compare = $parameters['compare'];
-
-				if ( $compare=='=' )
-					$operator = 'IN';
-				elseif ( $compare=='!=' )
-					$operator = 'NOT IN';
+				if ( $compare == '=' ) $operator = 'IN';
+				elseif ( $compare == '!=' ) $operator = 'NOT IN';
 				else {
 					$compare = strtoupper($compare);
 					if ( $compare == 'NOT' )
 						$compare = 'NOT IN';
+					if ( $compare == 'OR' )
+						$compare = ''; // It's OR by default
 					$operator = $compare;
 				}
 
@@ -763,7 +840,7 @@ class CCS_Loop {
 				$relation = !empty($relation) ? strtoupper($relation) : 'AND';
 				$query['tax_query']['relation'] = $relation;
 
-				$terms = $this->explode_list($parameters['value_2']); // Multiple terms possible
+				$terms = self::explode_list($parameters['value_2']); // Multiple terms possible
 
 				if ( !empty($parameters['compare_2']) ) {
 
@@ -793,12 +870,15 @@ class CCS_Loop {
 			}
 
 			// Additional taxonomy query
+
+			// @todo Better way to combine taxonomy_2, 3, 4..
+
 			if ( !empty($parameters['taxonomy_3']) && !empty($parameters['value_3']) ) {
 
 				$taxonomy = $parameters['taxonomy_3'];
 				if ($taxonomy == 'tag') $taxonomy = 'post_tag';
 
-				$terms = $this->explode_list($parameters['value_3']); // Multiple terms possible
+				$terms = self::explode_list($parameters['value_3']); // Multiple terms possible
 
 				if ( !empty($parameters['compare_3']) ) {
 
@@ -832,19 +912,28 @@ class CCS_Loop {
 
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Order and orderby
 		 *
 		 */
 
-		if ( !empty($parameters['order']) ) {
+    // Order by comment date
+    if ( !empty($parameters['orderby']) && $parameters['orderby']=='comment-date' ) {
+
+      // WP_Query doesn't support it, so sort after getting all posts
+      self::$parameters['orderby_comment_date'] = 'true';
+      $parameters['orderby'] = '';
+      self::$parameters['order_comment_date'] = !empty($parameters['order']) ?
+        strtoupper($parameters['order']) : 'DESC';
+
+    } elseif ( !empty($parameters['order']) ) {
 			
 			$query['order'] = $parameters['order'];
 
 		}
 
-		if ( !empty($parameters['orderby']) ) {
+    if ( !empty($parameters['orderby']) ) {
 
 			$orderby = $parameters['orderby'];
 
@@ -883,7 +972,7 @@ class CCS_Loop {
 
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Sort by series
 		 *
@@ -909,7 +998,7 @@ class CCS_Loop {
 
 			// Store posts IDs and key
 
-			self::$state['sort_posts'] = $this->explode_list($series);
+			self::$state['sort_posts'] = self::explode_list($series);
 			self::$state['sort_key'] = $parameters['key'];
 
 			// Get the posts to be sorted later
@@ -924,8 +1013,52 @@ class CCS_Loop {
 		}
 
 
+    /*---------------------------------------------
+     *
+     * Date query: before and after
+     *
+     */
+    
+    if ( !empty($parameters['before']) ) {
 
-		/*========================================================================
+      // Published date
+      if ( empty($parameters['field']) || $parameters['field']=='date') {
+
+        if ( !isset($query['date_query']) ) {
+          $query['date_query'] = array();
+        }
+        $query['date_query'][] = array(
+          'before' => $parameters['before']
+        );
+
+      } else {
+        // Other field
+        $parameters['value'] = strtotime($parameters['before']);
+        $parameters['compare'] = 'OLD';
+      }
+    } 
+
+    if (!empty( $parameters['after']) ) {
+
+      if ( empty($parameters['field']) || $parameters['field']=='date') {
+
+        if ( !isset($query['date_query']) ) {
+          $query['date_query'] = array();
+        }
+        $query['date_query'][] = array(
+          'after' => $parameters['after']
+        );
+
+      } else {
+        // Other field
+        $parameters['value'] = strtotime($parameters['after']);
+        $parameters['compare'] = 'NEW';
+      }
+    }
+
+
+
+		/*---------------------------------------------
 		 *
 		 * Field value
 		 *
@@ -933,53 +1066,84 @@ class CCS_Loop {
 
 		if( !empty($parameters['field']) &&	!empty($parameters['value']) ) {
 
+      if ( !isset($query['meta_query']) ) $query['meta_query'] = array();
+
 			$field = $parameters['field'];
 			$value = $parameters['value'];
 			$compare = $parameters['compare'];
 
-			// Support for date values
+        // Support for date values
+        switch ($value) {
+          case 'future':
+            $value = 'today';
+            $compare = empty($compare) ? '>=' : $compare;
+            break;
+          case 'future not today': // Don't include today
+            $value = 'today';
+            $compare = empty($compare) ? '>' : $compare;
+            break;
+          case 'future-time':
+            $value = 'now';
+            $compare = empty($compare) ? '>=' : $compare;
+            break;
+          case 'past':
+            $value = 'today';
+            $compare = empty($compare) ? '<' : $compare;
+            break;
+          case 'past and today': // Include today
+            $value = 'today';
+            $compare = empty($compare) ? '<=' : $compare;
+            break;
+          case 'past-time':
+            $value = 'now';
+            $compare = empty($compare) ? '<=' : $compare;
+            break;
+          default:
+            // Pass value as it is
+            break;
+        }
 
-			if ($value=='future') {
-				$value = 'now';
-				$compare = '>';
-			} elseif ($value=='past') {
-				$value = 'now';
-				$compare = '<';
-			}
-
-			if ( ($parameters['in'] == 'string') || (!empty($parameters['date_format'])) ) {
-
+			if ( $parameters['in'] == 'string' || !empty($parameters['date_format']) ) {
 				if (empty($parameters['date_format'])) {
 
 					// default date format
 					if ($value == 'today')
-						$parameters['date_format'] = 'Y-m-d'; // Y-m-d h:i A
-					if ($value == 'now')
-						$parameters['date_format'] = 'Y-m-d h:i A'; 
+						$parameters['date_format'] = 'Y-m-d'; // 2014-01-24
+					elseif ($value == 'now')
+						$parameters['date_format'] = 'Y-m-d H:i'; // 2014-01-24 13:05
 				}
-
-				if (($value == 'today') || ($value == 'now')){
+				if ( $value == 'today'  || $value == 'now' ) {
 					$value = date($parameters['date_format'],time());
 				}
 			} else {
-				if (($value == 'today') || (($value == 'now'))){
+				// It's a timestamp so today/now is the same
+				if ( $value == 'today' || $value == 'now' ) {
 					$value = time();
 				}
 			}
 
-			$compare = strtoupper($compare);
+      switch ($compare) {
+        case '':
+        case '=':
+        case 'EQUAL': $compare = '='; break;
+        case 'NOT':
+        case '!=':
+        case 'NOT EQUAL': $compare = '!='; break;
+        case 'MORE': 
+        case 'NEW': 
+        case 'NEWER':
+        case '&gt;': $compare = '>'; break;
+        case '&gt;=':
+        case '&gt;&#61;': $compare = '>='; break;
+        case 'LESS': 
+        case 'OLD': 
+        case 'OLDER':
+        case '&lt;': $compare = '<'; break;
+        case '&lt;=':
+        case '&lt;&#61;': $compare = '<='; break;
 
-			switch ($compare) {
-				case '':
-				case '=':
-				case 'EQUAL': $compare = "LIKE"; break;
-				case 'NOT':
-				case '!=':
-				case 'NOT EQUAL': $compare = 'NOT LIKE'; break;
-				case 'MORE': $compare = '>'; break;
-				case 'LESS': $compare = '<'; break;
-				default: break;
-			}
+        default: break;
+      }
 
 			$query['meta_query'][] =
 				array(
@@ -989,86 +1153,152 @@ class CCS_Loop {
 				);
 
 			if ( $compare!='EXISTS' && $compare!='NOT EXISTS') {
-				$query['meta_query']['value'] = $value;
+				$query['meta_query'][0]['value'] = $value;
 			} elseif ($compare!='NOT EXISTS') {
-				$query['meta_query']['value'] = ' '; // NOT EXISTS needs some value
+				$query['meta_query'][0]['value'] = ' '; // NOT EXISTS needs some value
+			} else {
+				// $compare=='EXISTS' then no value
 			}
+
+      if ($field == 'date') {
+        $query['meta_query'][0]['type'] = 'DATE';
+      }
 
 
 
 			// Additional query by field value
+      // 
+      // @todo Simpler way to do field_2, field_3, ...
 
 			if ( !empty($parameters['field_2']) && !empty($parameters['value_2']) ) {
 
-				$field_2 = $parameters['field_2'];
-				$value_2 = $parameters['value_2'];
-				$relation = $parameters['relation'];
-				$compare_2 = $parameters['compare_2'];
+        $relation = $parameters['relation'];
+        $relation = !empty($relation) ? strtoupper($relation) : 'AND';
+        $query['meta_query']['relation'] = $relation;
 
-				if (!empty($relation)) {
 
-					$relation = strtoupper($relation);
+				$field = $parameters['field_2'];
+				$value = $parameters['value_2'];
+        $compare = $parameters['compare_2'];
 
-					// Alias
-					switch ($relation) {
-						case '&': $relation = 'AND'; break;
-						case '|': $relation = 'OR'; break;
-					}
 
-					$query['meta_query']['relation'] = $relation;
-				}
-				else
-					$query['meta_query']['relation'] = 'AND';
+        // Support for date values
+        switch ($value) {
+          case 'future':
+            $value = 'today';
+            $compare = empty($compare) ? '>=' : $compare;
+            break;
+          case 'future not today': // Don't include today
+            $value = 'today';
+            $compare = empty($compare) ? '>' : $compare;
+            break;
+          case 'future-time':
+            $value = 'now';
+            $compare = empty($compare) ? '>=' : $compare;
+            break;
+          case 'past':
+            $value = 'today';
+            $compare = empty($compare) ? '<' : $compare;
+            break;
+          case 'past and today': // Include today
+            $value = 'today';
+            $compare = empty($compare) ? '<=' : $compare;
+            break;
+          case 'past-time':
+            $value = 'now';
+            $compare = empty($compare) ? '<=' : $compare;
+            break;
+          default:
+            // Pass value as it is
+            break;
+        }
 
-				if (!empty($compare_2)) {
 
-					$compare_2 = strtoupper($compare_2);
+        if ( $parameters['in'] == 'string' || !empty($parameters['date_format']) ) {
+          if (empty($parameters['date_format'])) {
 
-					switch ($compare_2) {
-						case '':
-						case '=':
-						case 'EQUAL': $compare_2 = 'LIKE'; break;
-						case 'NOT':
-						case '!=':
-						case 'NOT EQUAL': $compare_2 = 'NOT LIKE'; break;
-						case 'MORE': $compare_2 = '>'; break;
-						case 'LESS': $compare_2 = '<'; break;
-						default: break;
-					}					
-				}
+            // default date format
+            if ($value == 'today')
+              $parameters['date_format'] = 'Y-m-d'; // 2014-01-24
+            elseif ($value == 'now')
+              $parameters['date_format'] = 'Y-m-d H:i'; // 2014-01-24 13:05
+          }
+          if ( $value == 'today'  || $value == 'now' ) {
+            $value = date($parameters['date_format'],time());
+          }
+        } else {
+          // It's a timestamp so today/now is the same
+          if ( $value == 'today' || $value == 'now' ) {
+            $value = time();
+          }
+        }
+
+        $compare = strtoupper($compare);
+
+        switch ($compare) {
+          case '':
+          case '=':
+          case 'EQUAL': $compare = '='; break;
+          case 'NOT':
+          case '!=':
+          case 'NOT EQUAL': $compare = '!='; break;
+          case 'MORE': 
+          case 'NEW': 
+          case 'NEWER':
+          case '&gt;': $compare = '>'; break;
+          case '&gt;=':
+          case '&gt;&#61;': $compare = '>='; break;
+          case 'LESS': 
+          case 'OLD': 
+          case 'OLDER':
+          case '&lt;': $compare = '<'; break;
+          case '&lt;=':
+          case '&lt;&#61;': $compare = '<='; break;
+
+          default: break;
+        }
+
 
 
 				$query['meta_query'][] =
 					array(
-						'key' => $field_2,
-						'value' => $value_2,
-						'compare' => $compare_2
+						'key' => $field,
+						'value' => $value,
+						'compare' => $compare
 				);
+
+
 			}
-		}
+
+		} // End field value query
+
 
 		return apply_filters( 'ccs_loop_query_filter', $query );
 
 	} // End prepare query
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Run the prepared query and return posts (WP_Query object)
+   *
+   * @todo Option to use get_query to alter main loop for pagination..?
 	 *
 	 */
 
-	function run_query( $query ) {
+	public static function run_query( $query ) {
 
 		self::$query = $query; // Store query parameters
 
-		self::$state['do_reset_postdata'] = true; // Reset post data at the end of loop
+    if (!self::$state['is_nested_loop']) {
+      self::$state['do_reset_postdata'] = true; // Reset post data at the end of loop
+    }
 
-		return new WP_Query( $query );
+		return self::$wp_query = new WP_Query( $query );
 	}
 
 
-	function prepare_posts( $posts ) {
+	public static function prepare_posts( $posts ) {
 
 		$parameters = self::$parameters;
 
@@ -1077,40 +1307,44 @@ class CCS_Loop {
 		if ( !empty($parameters['series']) ) {
 
 			usort( $posts->posts, array($this, 'sort_by_series') );
-		}
 
 		// Random order
+		} elseif ( $parameters['orderby'] == 'rand' ) {
 
-		if ( $parameters['orderby'] == 'rand' ) {
 			shuffle( $posts->posts );
-		}
+
+		} elseif ( !empty($parameters['orderby_comment_date']) &&
+      $parameters['orderby_comment_date']=='true' ) {
+
+      usort( $posts->posts, array(__CLASS__, 'orderby_comment_date') );
+    }
+
+    $posts = apply_filters( 'ccs_loop_prepare_posts', $posts );
 
 		return $posts;
 	}
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Loop through each post and compile template
 	 *
 	 */
 
-	function compile_templates( $posts, $template ) {
+	public static function compile_templates( $posts, $template, $check_posts = true ) {
 
 		global $post;
 
 		$templates = array();
 
-
 		$posts = apply_filters( 'ccs_loop_posts', $posts );
 
+		$template = self::pre_process_template($template);
 
-		$template = $this->pre_process_template($template);
+		if ( $check_posts && $posts->have_posts() ) {
 
-		if ( $posts->have_posts() ) {
-
-			$posts = $this->prepare_all_posts( $posts );
+			$posts = self::prepare_all_posts( $posts );
 
 			while ( $posts->have_posts() ) {
 
@@ -1119,26 +1353,29 @@ class CCS_Loop {
 
 				self::$state['current_post_id'] = get_the_ID();
 
-				$this_post = $this->prepare_each_post( $post );
+				$this_post = self::prepare_each_post( $post );
 
 				if (!empty($this_post)) {
 
 					self::$state['loop_count']++;
 
-					$this_template = $this->prepare_each_template($template);
-					$templates[] = $this->render_template($this_template);
+					$this_template = self::prepare_each_template($template);
+					$templates[] = self::render_template($this_template);
 
 				} // End: if this post not empty
 
 			} // End: while loop through each post
 
+			if (isset(self::$state['if_empty_else'])) {
+				$this_template = self::prepare_each_template(self::$state['if_empty_else']);
+				$templates[] = self::render_template($this_template);
+			}				
 		} else {
 
 			// No post found: do [if empty]
-
 			if (!empty(self::$state['if_empty'])) {
-				$this_template = $this->prepare_each_template(self::$state['if_empty']);
-				$templates[] = $this->render_template($this_template);
+				$this_template = self::prepare_each_template(self::$state['if_empty']);
+				$templates[] = self::render_template($this_template);
 			}
 		}
 
@@ -1146,61 +1383,54 @@ class CCS_Loop {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Pre-process template: if first, last, empty
 	 *
 	 */
 
-	function pre_process_template( $template ) {
+	public static function pre_process_template( $template ) {
 
-		$state = self::$state;
+		$state =& self::$state; // Update global state
 
 		// If empty
-
-		$start = '[if empty]'; $end = '[/if]';
-		$middle = self::get_between($start, $end, $template);
-		$else = self::extract_else( $middle );
-
+		$middle = self::get_between('[if empty]', '[/if]', $template);
+    if (empty($middle)) $middle = self::get_between('[-if empty]', '[/-if]', $template);
+		$template = str_replace($middle, '', $template);
+		$else = self::extract_else( $middle ); // Remove and return what's after [else]
 		$state['if_empty'] = $middle;
 		$state['if_empty_else'] = $else;
-
-
+/*
 		// If first
-
-		$start = '[if first]'; $end = '[/if]';
-		$middle = self::get_between($start, $end, $template);
+		$middle = self::get_between('[if first]', '[/if]', $template);
+    if (empty($middle)) $middle = self::get_between('[-if first]', '[/-if]', $template);
+    $template = str_replace($middle, '', $template);
 		$else = self::extract_else( $middle );
-
 		$state['if_first'] = $middle;
 		$state['if_first_else'] = $else;
 
-
 		// If last
-
-		$start = '[if last]'; $end = '[/if]';
-		$middle = self::get_between($start, $end, $template);
-		$else = self::extract_else( $middle ); // Remove and return what's after [else]
-
+		$middle = self::get_between('[if last]', '[/if]', $template);
+    if (empty($middle)) $middle = self::get_between('[-if last]', '[/-if]', $template);
+    $template = str_replace($middle, '', $template);
+		$else = self::extract_else( $middle );
 		$state['if_last'] = $middle;
 		$state['if_last_else'] = $else;
+*/
 
-
-		self::$state = $state; // Update global state
 		return $template;
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * [if]..[else] - returns whatever is after [else] and removes it from original template
 	 *
 	 */
 
-	function extract_else( &$template ) {
+	public static function extract_else( &$template ) {
 		// Get [else] if it exists
 		$content_array = explode('[else]', $template);
-
 		if (count($content_array)>1) {
 			$after = $content_array[1]; // anything after [else]
 			$template = str_replace('[else]'.$after, '', $template);
@@ -1213,13 +1443,13 @@ class CCS_Loop {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Prepare all posts: takes and returns a WP_Query object
 	 *
 	 */
 	
-	function prepare_all_posts( $query_object ) {
+	public static function prepare_all_posts( $query_object ) {
 
 		$parameters = self::$parameters;
 		$query = self::$query;
@@ -1246,7 +1476,7 @@ class CCS_Loop {
 
 				$current_id = $post->ID;
 
-				/*========================================================================
+				/*---------------------------------------------
 				 *
 				 * If field value exists or not
 				 *
@@ -1271,7 +1501,7 @@ class CCS_Loop {
 				}
 
 
-				/*========================================================================
+				/*---------------------------------------------
 				 *
 				 * If field value starts with
 				 *
@@ -1325,7 +1555,7 @@ class CCS_Loop {
 				}		
 
 
-				/*========================================================================
+				/*---------------------------------------------
 				 *
 				 * Checkbox query
 				 *
@@ -1363,7 +1593,7 @@ class CCS_Loop {
 
 				$skip_2 = false;
 				if ( !empty($parameters['checkbox_2']) && !empty($parameters['value_2']) ) {
-					$values = $this->explode_list($parameters['value_2']);
+					$values = self::explode_list($parameters['value_2']);
 					$check_field = get_post_meta( $current_id, $parameters['checkbox_2'], $single=true );
 
 					if (!empty($parameters['compare_2'])) $compare_2 = strtolower($parameters['compare_2']);
@@ -1414,18 +1644,35 @@ class CCS_Loop {
 
 			} // End for each post
 
+/*
+      if (!empty($parameters['max'])) {
+        $i = 0;
+        $all_posts = $query_object->posts;
 
+        foreach ($all_posts as $post) {
+          $current_id = $post->ID;
+
+          if ( !in_array($current_id, $state['skip_ids']) ) {
+            $i++;
+
+            if ($i > $parameters['max']) {
+              $state['skip_ids'][] = $current_id;
+            }
+          }
+        }
+      }
+*/
 			// Subtract skipped posts from post count
 
 			$state['post_count'] = $state['post_count'] - count($state['skip_ids']);
 
-		} // End if we need to check for skipped posts
+		} // End check for skipped posts
 
 
 		return $query_object;
 	}
 
-	function prepare_each_post( $post ) {
+	public static function prepare_each_post( $post ) {
 
 		$post_id = $post->ID;
 
@@ -1441,30 +1688,29 @@ class CCS_Loop {
 	}
 
 
-	function prepare_each_template( $template ) {
+	public static function prepare_each_template( $template ) {
 
 		$state = self::$state;
 		$parameters = self::$parameters;
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Do [if first]
 		 *
-		 */
 		
 		if ( $state['loop_count'] == 1 ) {
 
-			if ($state['if_first']) {
+			if (!empty($state['if_first'])) {
 				$else = isset($state['if_first_else']) ? '[else]'.$state['if_first_else'] : null;
 				$template = str_replace('[if first]'.$state['if_first'].$else.'[/if]', $state['if_first'], $template);
 			}
 		}
+     */
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Do [if last]
 		 *
-		 */
 		
 		if ( $state['loop_count'] == $state['post_count'] ) {
 
@@ -1473,9 +1719,10 @@ class CCS_Loop {
 				$template = str_replace('[if last]'.$state['if_last'].$else.'[/if]', $state['if_last'], $template);
 			}
 		}
+     */
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Clean each template of <br> and <p>
 		 *
@@ -1499,17 +1746,17 @@ class CCS_Loop {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Render template: expand {FIELD} tags and shortcodes
 	 *
 	 */
 
-	function render_template( $template ) {
+	public static function render_template( $template ) {
 
 		$post_id = self::$state['current_post_id'];
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Expand {FIELD} tags
 		 *
@@ -1525,13 +1772,13 @@ class CCS_Loop {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Process results array to final output
 	 *
 	 */
 	
-	function process_results( $results ) {
+	public static function process_results( $results ) {
 
 		$parameters = self::$parameters;
 
@@ -1543,13 +1790,13 @@ class CCS_Loop {
 
 		$result = apply_filters('ccs_loop_preprocess_combined_result', implode('', $results) );
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Process the combined result
 	 *
 	 */
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Strip tags
 		 *
@@ -1572,7 +1819,7 @@ class CCS_Loop {
 		}		
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Trim
 		 *
@@ -1596,7 +1843,7 @@ class CCS_Loop {
 			}
 		}
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Finally, columns or list
 		 *
@@ -1612,50 +1859,63 @@ class CCS_Loop {
 			$new_results = null;
 
 			$item_tag = !empty($parameters['item']) ? $parameters['item'] : 'li';
-			$item_class = !empty($parameters['item_class']) ? ' class="'.$parameters['item_class'].'"' : null;
-			$item_style = !empty($parameters['item_style']) ? ' style="'.$parameters['item_style'].'"' : null;
-
-			foreach ($results as $result) {
-				$new_results .= '<'.$item_tag.$item_class.$item_style.'>'.$result.'</'.$item_tag.'>';
-			}
+			$item_class = !empty($parameters['item_class']) ?
+				' class="'.$parameters['item_class'].'"' : null;
+			$item_style = !empty($parameters['item_style']) ?
+				' style="'.$parameters['item_style'].'"' : null;
 
 			$list_tag = ($parameters['list']=='true') ? 'ul' : $parameters['list'];
-			$list_class = !empty($parameters['list_class']) ? ' class="'.$parameters['list_class'].'"' : null;
-			$list_style = !empty($parameters['list_style']) ? ' style="'.$parameters['list_style'].'"' : null;
-			$result = '<'.$list_tag.$list_class.$list_style.'>'.$new_results.'</'.$list_tag.'>';
+			$list_class = !empty($parameters['list_class']) ?
+				' class="'.$parameters['list_class'].'"' : null;
+			$list_style = !empty($parameters['list_style']) ?
+				' style="'.$parameters['list_style'].'"' : null;
+
+			$parameters['item_count'] = count($results);
+
+			foreach ($results as $result) {
+				$item = '<'.$item_tag.$item_class.$item_style.'>'.$result.'</'.$item_tag.'>';
+
+				if ( !empty($parameters['paginate']) )
+					$item = '<'.$list_tag.$list_class.$list_style.'>'.$item.'</'.$list_tag.'>';
+
+				$new_results .= apply_filters( 'ccs_loop_each_item', $item, $parameters );
+			}
+
+			if ( empty($parameters['paginate']) )
+				$result = '<'.$list_tag.$list_class.$list_style.'>'.$new_results.'</'.$list_tag.'>';
+			else $result = $new_results;
 		}
 
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
-		 * Cache the final result?
+		 * Cache the final result
 		 *
 		 */
 
 		if ( self::$state['do_cache'] == 'true' ) {
-
 			CCS_Cache::set_transient( self::$state['cache_name'], $result, $parameters['expire'] );
 		}
 
 
-		return apply_filters('ccs_loop_combined_result', $result );
+		return apply_filters('ccs_loop_final_result', $result, $parameters );
 	}
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Close the loop
 	 *
 	 */
 
-	function close_loop(){
+	public static function close_loop(){
 
 		$state =& self::$state;
 		$parameters = self::$parameters;
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Stop timer
 		 *
@@ -1668,7 +1928,7 @@ class CCS_Loop {
 		}
 
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Reset postdata after WP_Query
 		 *
@@ -1679,7 +1939,7 @@ class CCS_Loop {
 			self::$state['do_reset_postdata'] = false;
 		}
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * If blog was switched on multisite, retore original blog
 		 *
@@ -1689,9 +1949,14 @@ class CCS_Loop {
 			restore_current_blog();
 		}
 
-		self::$state['is_loop'] = false;
-		self::$state['is_attachment_loop'] = false;
+		// If nested, restore previous state
 
+		if ( self::$state['is_nested_loop'] ) {
+			self::$state = array_pop(self::$previous_state);
+		} else {
+			self::$state['is_loop'] = false;
+			self::$state['is_attachment_loop'] = false;
+		}
 	}
 
 
@@ -1700,58 +1965,59 @@ class CCS_Loop {
 
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Columns: takes an array of items, puts them in columns and returns string
 	 *
 	 */
 	
-	public static function render_columns( $items, $per_row, $pad = null, $between_row ) {
+	public static function render_columns( $items, $column_count, $pad = null, $between_row ) {
 
-		$column_index = 0;
+		$row_count = ceil( count($items) / (int)$column_count ); // How many rows
+		$percent = 100 / (int)$column_count; // Percentage-based width for each item
 
-		$percent = 100 / (int)$per_row; // Percentage-based width for each item
+		if ( empty($between_row) ) $between_row = '';
+		elseif ($between_row == 'true') $between_row = '<br>';
 
-		if ( empty($between_row) ) {
-			$between_row = '';
-		} elseif ($between_row == 'true') {
-			$between_row = '<br>';
+		$clear = '<div style="clear:both"></div>';
+
+		$wrap_start = '<div class="column-1_of_'.$column_count
+			.'" style="width:'.$percent.'%;float:left">';
+		$wrap_end = '</div>';
+
+		if (!empty($pad)) {
+			$wrap_start .= '<div class="column-inner" style="padding:'.$pad.'">';
+			$wrap_end .= '</div>';
 		}
-		$clear = '<div style="clear:both">'.$between_row.'</div>';
 
-		$out = null;
 
-		foreach ($items as $each_item) {
+		$out = '';
+		$index = 0;
 
-			$trimmed = trim($each_item); // Avoid empty columns
+		// Generate rows
+		for ($i=0; $i < $row_count; $i++) { 
 
-			if ( !empty( $trimmed ) ) {
+			$each_row = '';
 
-				$column_index++;
+			// Generate columns
+			for ($j=0; $j < $column_count; $j++) { 
 
-				$out .= '<div class="column-1_of_'.$per_row.'" style="width:'.$percent.'%;float:left">';
+				// Avoid empty columns
+				$trimmed = isset($items[ $index ]) ? trim($items[ $index ]) : '';
+				if ( !empty( $trimmed ) ) {
 
-				// Wrap in padding?
-				if (!empty($pad)) {
-					$out .= '<div class="column-inner" style="padding:'.$pad.'">'.$each_item.'</div>';
-				} else {
-					$out .= $each_item;
+					$each_row .= $wrap_start.$items[ $index ].$wrap_end;
+
 				}
-
-				$out .= '</div>';
-
-				if ( ($column_index % $per_row) == 0 ) {
-
-					// The row is full, then clear float
-					$out .= $clear;
-				}
+				$index++;
 			}
-		}
 
-		if ( ($column_index % $per_row) != 0 ) {
-
-			// if last row was not full
-			$out .= $clear;
+			if (!empty($each_row)) {
+				$each_row .= $clear;
+				$each_row = apply_filters('ccs_loop_each_row',
+					do_shortcode($each_row), self::$parameters);
+				$out .= $each_row;
+			}
 		}
 
 		return $out;
@@ -1759,211 +2025,17 @@ class CCS_Loop {
 
 
 
-	/*========================================================================
-	 *
-	 * Pass shortcode - pass field values
-	 *
-	 */
-
-	function pass_shortcode( $atts, $content ) {
-
-		$args = array(
-			'field' => '',
-			'fields' => '',
-			'field_loop' => '', // Field is array or comma-separated list
-
-			'acf_gallery' => '', // Pass image IDs from ACF gallery field
-
-			'taxonomy_loop' => '', // Loop through each term in taxonomy
-			'current' => '',
-			'orderby' => '',
-			'order' => '',
-			);
-
-		extract( shortcode_atts( $args , $atts, true ) );
-
-		$post_id = get_the_ID();
-
-
-		/*========================================================================
-		 *
-		 * Pass single field to {FIELD}
-		 *
-		 */
-
-		if ( !empty($field) ) {
-
-			if ($field=='gallery') $field = '_custom_gallery'; // Support CCS gallery field
-
-			if (class_exists('CCS_To_ACF') && CCS_To_ACF::$state['is_repeater_or_flex_loop']=='true') {
-				// Repeater or flexible content field: then get sub field
-				if (function_exists('get_sub_field')) {
-					$field_value = get_sub_field( $field );
-				} else $field_value = null;
-
-			} else {
-				// Get normal field
-				$field_value = get_post_meta( $post_id, $field, true );
-			}
-
-			if (is_array($field_value)) {
-
-				$field_value = implode(",", $field_value);
-
-			} else {
-
-				// Clean extra spaces if it's a list
-				$field_value = self::clean_list($field_value);
-			}
-
-			// Replace it
-
-			$content = str_replace('{FIELD}', $field_value, $content);
-
-
-		/*========================================================================
-		 *
-		 * Pass each item in a list stored in a field
-		 *
-		 */
-
-		} elseif (!empty($field_loop)) {
-
-			if ( $field_loop=='gallery' && class_exists('CCS_Gallery_Field')) {
-
-				// Support gallery field
-
-				$field_values = CCS_Gallery_Field::get_image_ids(); 
-
-			} else {
-
-				$field_values = get_post_meta( $post_id, $field_loop, true );
-			}
-
-
-			if (!empty($field_values)) {
-
-				if (!is_array($field_values))
-					$field_values = self::explode_list($field_values); // Get comma-separated list of values
-
-				$contents = null;
-
-				// Loop for the number of field values
-
-				foreach ($field_values as $field_value) {
-
-					$contents[] = str_replace('{FIELD}', $field_value, $content);
-				}
-
-				$content = implode('', $contents);
-			}
-
-		/*========================================================================
-		 *
-		 * Pass image IDs from ACF gallery
-		 *
-		 */
-
-		} elseif (!empty($acf_gallery)) {
-
-			if ( function_exists('get_field') && function_exists('get_sub_field') ) {
-				$field = $acf_gallery;
-				$images = get_field($acf_gallery, $post_id, false);
-				if (empty($field_value)) {
-					// Try sub field
-					$images = get_sub_field($acf_gallery, $post_id, false);
-				}
-				if (!empty($images)) {
-
-					$ids = array();
-					foreach ($images as $image) {
-						$ids[] = $image['id'];
-					}
-					if (is_array($ids))
-						$replace = implode(',', $ids);
-					else $replace = $ids;
-					$content = str_replace('{FIELD}', $replace, $content);
-				}
-			}
-
-
-		/*========================================================================
-		 *
-		 * Pass each taxonomy term
-		 *
-		 */
-
-		} elseif (!empty($taxonomy_loop)) {
-
-			if ($current=='true') {
-
-				$terms = get_the_terms( $post_id, $taxonomy_loop );
-
-			} else {
-				// Get all terms, not only from current post
-
-				$terms = get_terms( $taxonomy_loop, array(
-					'orderby' => $orderby,
-					'order' => $order,
-				));
-
-			}
-
-			$contents = array();
-
-			// Loop through each term
-
-			if ( !empty( $terms ) ) {
-
-				foreach ($terms as $term) {
-
-					$slug = $term->slug;
-					$id = $term->term_id;
-					$name = $term->name;
-
-					$replaced_content = str_replace('{TERM}', $slug, $content);
-					$replaced_content = str_replace('{TERM_ID}', $id, $replaced_content);
-					$replaced_content = str_replace('{TERM_NAME}', $name, $replaced_content);
-
-					$contents[] = $replaced_content;
-				}
-			}
-
-			$content = implode('', $contents);
-		}
-
-
-		if ( !empty($fields) ) {
-
-			// Replace these fields (+default)
-
-			$content = self::render_field_tags( $content, array('fields' => $fields) );
-
-		} else {
-
-			$content = self::render_default_field_tags( $content );
-
-		}
-
-		return do_shortcode( $content );
-
-	} // End pass shortcode
-
-
-
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Process {FIELD} tags
 	 *
 	 */
 
-
-
-	function render_field_tags( $template, $parameters ) {
+	public static function render_field_tags( $template, $parameters ) {
 
 		$post_id = !empty($parameters['id']) ? $parameters['id'] : get_the_ID();
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * User defined fields
 		 *
@@ -1979,7 +2051,9 @@ class CCS_Loop {
 
 				if (strpos($template, $search)!==false) {
 
-					if (class_exists('CCS_To_ACF') && CCS_To_ACF::$state['is_repeater_or_flex_loop']=='true') {
+					if ( class_exists('CCS_To_ACF') &&
+              CCS_To_ACF::$state['is_repeater_or_flex_loop']=='true' ) {
+
 						// Repeater or flexible content field: then get sub field
 						if (function_exists('get_sub_field')) {
 							$field_value = get_sub_field( $key );
@@ -2007,17 +2081,19 @@ class CCS_Loop {
 
 
 
-	function render_default_field_tags( $template ) {
+	public static function render_default_field_tags( $template ) {
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Predefined field tags
 		 *
 		 */
 
 		$keywords = array(
-			'URL', 'SLUG', 'ID', 'COUNT', 'TITLE', 'AUTHOR', 'DATE', 'THUMBNAIL', 'THUMBNAIL_URL',
-			'CONTENT', 'EXCERPT', 'COMMENT_COUNT', 'TAGS', 'IMAGE', 'IMAGE_ID', 'IMAGE_URL',
+			'URL', 'SLUG', 'ID', 'COUNT', 'TITLE', 'AUTHOR', 'DATE',
+			'CONTENT', 'EXCERPT', 'COMMENT_COUNT', 'TAGS', 'CATEGORY',
+      'THUMBNAIL', 'THUMBNAIL_URL', 'IMAGE', 'IMAGE_ID', 'IMAGE_URL',
+      'PAGED'
 		);
 
 		foreach ($keywords as $key) {
@@ -2068,9 +2144,13 @@ class CCS_Loop {
 					case 'COMMENT_COUNT':
 						$replace = get_comments_number();
 						break;
-					case 'TAGS':
-						$replace = strip_tags( get_the_tag_list('',', ','') );
-						break;
+          case 'TAGS':
+            $replace = strip_tags( get_the_tag_list('',', ','') );
+            break;
+          case 'CATEGORY':
+            $replace = do_shortcode('[taxonomy category out="slug"]');
+            $replace = str_replace(' ', ',', $replace);
+            break;
 					case 'IMAGE':
 						$replace = get_the_post_thumbnail();
 						break;
@@ -2095,7 +2175,7 @@ class CCS_Loop {
 
 
 
-/*========================================================================
+/*---------------------------------------------
  *
  * Helper functions
  *
@@ -2118,7 +2198,7 @@ class CCS_Loop {
 
 	// Explode comma-separated list and remove extra space from each item
 
-	public static function explode_list( $list, $delimiter = null ) {
+	public static function explode_list( $list, $delimiter = '' ) {
 
  		// Support multiple delimiters
 
@@ -2134,7 +2214,7 @@ class CCS_Loop {
 
 	// Explode the list, trim each item and put it back together
 
-	public static function clean_list( $list, $delimiter = null ) {
+	public static function clean_list( $list, $delimiter = '' ) {
 
 		if (empty($delimiter)) $delimiter = ',';
 		$list = self::explode_list($list, $delimiter);
@@ -2142,11 +2222,11 @@ class CCS_Loop {
 	}
 
 
-	/*============================================================================
+	/*---------------------------------------------
 	 *
 	 * Sort series
 	 *
-	 *===========================================================================*/
+	 */
 
 	public static function sort_by_series( $a, $b ) {
 
@@ -2156,38 +2236,78 @@ class CCS_Loop {
 		return ( $apos < $bpos ) ? -1 : 1;
 	}
 
+  /*---------------------------------------------
+   *
+   * Orderby comment date
+   *
+   */
+  
+  public static function orderby_comment_date( $a, $b ) {
+
+    $parameters = self::$parameters;
+    $order = self::$parameters['order_comment_date'];
+
+    $a_comment_date = self::get_comment_timestamp( $a );
+    $b_comment_date = self::get_comment_timestamp( $b );
+
+    // echo 'Compare '.$a_comment_date.' and '.$b_comment_date.'<br>';
+
+    if ($order=='ASC') {
+      return ( $a_comment_date < $b_comment_date ) ? -1 : 1;
+    } else {
+      return ( $a_comment_date > $b_comment_date ) ? -1 : 1;
+    }
+  }
+
+  public static function get_comment_timestamp( $post ) {
+    $comments = get_comments(array(
+      'post_id' => $post->ID, 'number' => 1, 'status' => 'approve'
+    ));
+
+    $comment_date = '';
+    foreach ($comments as $comment) {
+      $comment_date = $comment->comment_date;
+    }
+    return !empty($comment_date) ? strtotime($comment_date) : 0;
+  }
+
 
 	// Get post slug from ID
 
-	public static function get_the_slug( $id = null ) {
+	public static function get_the_slug( $id = '' ) {
 
 		global $post;
 
-		if ( !empty($id) ) {
-			$this_post = get_post($id);
-		} else {
-			$this_post = $post;
-		}
-
-		if (!empty($this_post)) {
-			return $this_post->post_name;
-		} else {
-			return null;
-		}
+    $this_post = !empty($id) ? get_post($id) : $post;
+    return !empty($this_post) ? $this_post->post_name : '';
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * [loop-count] - Display current loop count
 	 *
 	 */
 	
-	function loop_count_shortcode() {
+	public static function loop_count_shortcode() {
 
 		return CCS_Loop::$state['loop_count'];
 	}
 
+	public static function found_posts_shortcode() {
+		global $wp_query;
+		return !empty($wp_query) ? $wp_query->post_count : 0;
+	}
+
+	public static function search_keyword_shortcode() {
+		global $wp_query;
+
+		if (!empty($wp_query)) {
+			$vars = $wp_query->query_vars;
+			if (isset($vars['s']))
+				return $vars['s'];
+		}
+	}
 
 
 } // End CCS_Loop

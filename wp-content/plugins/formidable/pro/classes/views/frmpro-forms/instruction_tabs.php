@@ -1,1 +1,0 @@
-<li class="hide-if-no-js"><a href="#frm-dynamic-values" id="frm_dynamic_values_tab"><?php _e('Default Values', 'formidable') ?></a></li>

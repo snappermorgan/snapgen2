@@ -26,7 +26,7 @@
 
 <body <?php body_class();?>>
 <!-- Preloader -->
-            <div id="preloader"></div>
+            
             <!-- End preloader -->
 <div id="page" class="hfeed site">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e('Skip to content', 'snapgen');?></a>

@@ -1,6 +1,6 @@
 <?php
 
-/*========================================================================
+/*---------------------------------------------
  *
  * Shortcodes for Advanced Custom Fields
  *
@@ -36,8 +36,15 @@ class CCS_To_ACF {
 		// This will be called by [related] when relationship field is specified
 //		add_shortcode('related', array($this, 'loop_relationship_field'));
 
+
+		add_filter( 'ccs_loop_parameters', array($this, 'acf_date_parameters_for_loop') );
+		
+
+
+
+
 		// Legacy - to be removed in a future update
-		add_shortcode('live-edit', array($this, 'call_live_edit'));
+		// add_shortcode('live-edit', array($this, 'call_live_edit'));
 	}
 
 	public static function acf_sub_field( $atts ) {
@@ -72,7 +79,7 @@ class CCS_To_ACF {
 
 		} else {
 
-			$output = get_sub_field($field);
+			$output = do_shortcode(get_sub_field($field));
 
 			if ( ($format=='true') && ($output!='') ) {
 				$output = wpautop($output);
@@ -319,11 +326,29 @@ class CCS_To_ACF {
 	}
 
 
-	/*====================================================================================================
+	function acf_date_parameters_for_loop( $parameters ) {
+
+		// ACF date field query
+		if ( !empty($parameters['acf_date']) && !empty($parameters['value'])) {
+			$parameters['field'] = $parameters['acf_date'];
+			if ( empty($parameters['date_format']) )
+				$parameters['date_format'] = 'Ymd';
+			if ( empty($parameters['in']) )
+				$parameters['in'] = 'string';
+			unset($parameters['acf_date']);
+		}
+		return $parameters;
+	}
+
+
+
+
+
+	/*---------------------------------------------============================
 	 *
 	 * Live Edit shortcode (legacy)
 	 *
-	 *====================================================================================================*/
+	 *---------------------------------------------============================*/
 
 	public static function call_live_edit($atts, $inside_content = null) {
 		extract(shortcode_atts(array(

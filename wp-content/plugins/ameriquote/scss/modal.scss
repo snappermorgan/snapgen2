@@ -1,0 +1,33 @@
+.company-pop .company-logo {
+    max-width:145px;
+    float:left;
+}
+
+.company-pop .company-logo img {
+    width:100%;
+}
+
+.company-pop .modal-title, .call-pop .modal-title {
+    font-size: 1.3em;
+    text-align:right;
+    
+}
+
+.company-pop .modal-header, .call-pop .modal-header {
+    padding-top: 15px;
+}
+
+.company-pop .modal-header .close, .call-pop .modal-header .close {
+    margin-top: -12px;
+    margin-right:10px !important;
+}
+
+.call-pop .icon {
+    float:left;
+    margin-right: 15px;
+    cursor: pointer;
+    color:#1abc9c;
+    text-align:center;
+    font-size:28px;
+}
+

@@ -1,0 +1,31 @@
+{ 
+    "success": "true",
+    "meta": {
+        "params": {
+            "ZipCode": "$zipcode$",
+            "DoingHealth" : "ON",
+            "State": "$origstate$",
+            "Birthday": "$origday$",
+            "BirthMonth": "$origmonth$",
+            "BirthYear": "$origyear$",
+            "Health": "$orighealth$",
+            "FaceAmount": "$newface$",
+            "Sex": "$origsex$",
+            "Smoker": "$origsmoker$",
+            "NewCategory": "$origcat$",
+            "SortOverride1": "$origsortoverride1$",
+            "ModeUsed": "$origmodeused$",
+            "UserLocation": "$userlocation$",
+            "TEMPLATEFILE": "$templatefile$",
+            "HTEMPLATEFILE": "$htemplatefile$",
+            "email": "$email$",
+            "css":"$css$",
+            "InitHealth": "Health Analyzer"
+        }
+    },
+    "results": [
+        $comparisonrepeat$ 
+        $prodline=50$ 
+        {"CompanyName": "$company$","CompanyCode" : "$comp$", "Monthly":"$$premium$","ProductName": "$product$","ProductCode": "$prod$","FaceAmount": "$$newface$","HealthCode":"$rgpfpp$","ProductCategory":"$cat$","HealthCategory":"$healthcat$","NewCategory": "$origcat$"},
+        $/prodline$ 
+        $/comparisonrepeat$

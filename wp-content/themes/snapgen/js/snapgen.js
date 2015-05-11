@@ -32,9 +32,7 @@ jQuery(document).ready(function($){
         event.preventDefault();
     });
 
-$(window).load(function(){
-          $('#preloader').fadeOut('slow',function(){$(this).remove();});
-     });
+
      $('.navbar-collapse').click('li', function() {
     $('.navbar-collapse').collapse('hide');
 });

@@ -1,8 +1,11 @@
 <?php
 
-/*========================================================================
+/*---------------------------------------------
  *
- * User shortcodes: user, is/isnt, list_shortcodes, search_form, blog
+ * User shortcodes: users, user, is/isnt
+ * 
+ * @todo Move these elsewhere
+ * Other shortcodes: list_shortcodes, search_form, blog
  *
  */
 
@@ -27,7 +30,7 @@ class CCS_User {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * Users loop
 	 *
@@ -36,10 +39,28 @@ class CCS_User {
 	function users_shortcode( $atts, $content ) {
 
 		self::$state['is_users_loop'] = true;
+    self::$state['user_query'] = '';
+
+
+    /*---------------------------------------------
+     *
+     * [if empty]
+     *
+     */
+    
+
+    // If empty
+    $middle = CCS_Loop::get_between('[if empty]', '[/if]', $content);
+    $content = str_replace($middle, '', $content);
+    $else = CCS_Loop::extract_else( $middle );
+    self::$state['if_empty'] = $middle;
+    self::$state['if_empty_else'] = $else;
+
+
 
 		$outputs = array();
 
-		/*========================================================================
+		/*---------------------------------------------
 		 *
 		 * Prepare parameters
 		 *
@@ -48,7 +69,26 @@ class CCS_User {
 		$args = array();
 
 		// Just pass these
-		$pass_args = array('orderby','search','number','offset');
+		$pass_args = array('orderby','search','number','offset','meta_key');
+
+		// Order by field value
+
+		$sort_field_num = false;
+		if ( isset($atts['orderby']) && isset($atts['field'])
+			&& ( $atts['orderby']=='field' || $atts['orderby']=='field_num' ) ) {
+
+			if ( $atts['orderby']=='field' ) {
+				$atts['orderby'] = 'meta_value';
+				$atts['meta_key'] = $atts['field'];
+			} else {
+				// Sort by field value number
+				$sort_field_num = $atts['field'];
+			}
+
+			unset($atts['orderby']);
+			unset($atts['field']);
+		}
+
 
 		foreach ($pass_args as $arg) {
 			if (isset($atts[$arg]))
@@ -78,9 +118,9 @@ class CCS_User {
 			$compare = isset($atts['compare']) ? strtoupper($atts['compare']) : '=';
 
 			switch ($compare) {
-				case 'EQUAL': $compare = "="; break;
+				case 'EQUAL': $compare = '='; break;
 				case 'NOT':
-				case 'NOT EQUAL': $compare = "!="; break;
+				case 'NOT EQUAL': $compare = '!='; break;
 				case 'MORE': $compare = '>'; break;
 				case 'LESS': $compare = '<'; break;
 			}
@@ -112,28 +152,91 @@ class CCS_User {
 			}
 		}
 
+    if (isset($args['search'])) {
+      self::$state['user_query'] = $args['search'];
+      add_action( 'pre_user_query', array(__CLASS__, 'extend_search') );
+    }
+
 		$users = get_users( $args );
 
-
-		/*========================================================================
+    if (isset($args['search'])) {
+      self::$state['user_query'] = '';
+      remove_action( 'pre_user_query', array(__CLASS__, 'extend_search') );
+    }
+		
+		/*---------------------------------------------
 		 *
-		 * Custom query to filter results
+		 * Filter results
 		 *
 		 */
 		
+		// Sort by field value number
+		if ( $sort_field_num !== false ) {
+			// This is necessary because get_users doesn't do meta_value_num query
+			$new_users = array();
+
+			foreach ( $users as $user ) {
+
+				$key = $user->get( $sort_field_num );
+				$new_users[] = array(
+					'user' => $user,
+					'key' => $key
+				);
+			}
+
+			usort($new_users, array(__CLASS__, 'sortByFieldNum'));
+
+			if (isset($args['order']) && $args['order'] == 'DESC')
+				$new_users = array_reverse($new_users);
+
+			$users = array();
+			foreach ( $new_users as $user_array ) {
+				$users[] = $user_array['user'];
+			}
+			
+		}
+
+
 		// Users Loop
 		foreach ( $users as $user ) {
 			self::$state['current_user_object'] = $user;
 			$outputs[] = do_shortcode( $content );
 		}
 
+    // [if empty]..[else]..[/if]
+    if (count($users) == 0 && isset(self::$state['if_empty'])) {
+      $outputs[] = do_shortcode( self::$state['if_empty'] );
+    } elseif (isset(self::$state['if_empty_else']) && count($users) > 0) {
+      $outputs[] = do_shortcode( self::$state['if_empty_else'] );
+    } 
+
 		self::$state['is_users_loop'] = false;
 		return implode('', $outputs);
 	}
 
+	public static function sortByFieldNum($a, $b) {
+	    return intval( $a['key'] ) - intval( $b['key'] );
+	}
 
 
-	/*========================================================================
+  static function extend_search( $query ) {
+
+    global $wpdb;
+ 
+    if (!empty(self::$state['user_query'])) {
+
+      $display_name = self::$state['user_query'];
+
+      $query->query_where .= $wpdb->prepare(
+        " OR $wpdb->users.display_name LIKE %s", '%'
+        .$wpdb->esc_like($display_name).'%');
+    }
+    return $query;
+  }
+
+
+
+	/*---------------------------------------------
 	 *
 	 * [user]
 	 *
@@ -155,7 +258,8 @@ class CCS_User {
 		extract(shortcode_atts(array(
 			'field' => '',
 			'meta' => '', // Alias
-			'size' => ''
+			'size' => '',
+      'out' => ''
 		), $atts));
 
 		if(empty($current_user)) return; // no current user
@@ -197,8 +301,30 @@ class CCS_User {
 				return strval( count_user_posts( $current_user->ID ) );
 				break;
 			case 'role':
-				return rtrim(implode(',',array_map('ucwords', $current_user->roles)),',');
+        if ($out=='slug') {
+          return rtrim(implode(',', $current_user->roles),',');
+        } else {
+          return rtrim(implode(',',array_map('ucwords', $current_user->roles)),',');
+        }
 				break;
+      case 'agent':
+        return $_SERVER["HTTP_USER_AGENT"];
+        break;
+      case 'device':
+        if (class_exists('CCS_Mobile_Detect')) {
+          return CCS_Mobile_Detect::$device;
+        } else return null;
+        break;
+      case 'device-type':
+        if (class_exists('CCS_Mobile_Detect')) {
+          return CCS_Mobile_Detect::$device_type;
+        } else return null;
+        break;
+      case 'browser':
+        if (class_exists('CCS_Mobile_Detect')) {
+          return CCS_Mobile_Detect::$browser;
+        } else return null;
+        break;
 			default:
 				return get_user_meta( $current_user->ID, $field, true );
 				break;
@@ -222,7 +348,7 @@ class CCS_User {
 	}
 
 
-	/*========================================================================
+	/*---------------------------------------------
 	 *
 	 * [is]
 	 *
@@ -230,7 +356,7 @@ class CCS_User {
 
 	function is_shortcode( $atts, $content, $tag ) {
 
-		global $current_user;
+		global $post, $current_user;
 
 		extract(shortcode_atts(array(
 			'user' => '',
@@ -239,10 +365,17 @@ class CCS_User {
 			'role' => '',
 			'capable' => '',
 			'compare' => 'OR',
+      'device' => ''
 		), $atts));
 
 		$condition = false;
-		get_currentuserinfo(); // load user info to $current_user
+
+
+		// Load user info to $current_user
+
+		if ( self::$state['is_users_loop'] && isset(self::$state['current_user_object']))
+			$current_user = self::$state['current_user_object'];
+		else get_currentuserinfo();
 
 
 		// Get [else] if it exists
@@ -255,37 +388,35 @@ class CCS_User {
 			$else = null;
 		}
 
-
-
 		if (!empty($user)) {
 
-			$user_array = explode(",", $user);
+			$user_array = explode(',', $user);
 
 			foreach ($user_array as $this_user) {
 				$this_user = trim($this_user);
 
 				if ( $this_user == ($current_user->user_login) )
 					$condition = true;
-				if ( ( $this_user == ($current_user->ID) ) &&
-					is_numeric($this_user) ) // $user is a number?
+				elseif ( is_numeric($this_user) &&
+					$this_user == ($current_user->ID) ) // User ID
 						$condition = true;
 			}
 		}
 
-		if (!empty($role)) {
+		if ( !empty($role) ) {
 
 			$current_roles = $current_user->roles; // an array of roles
 			$condition = false;
 
 			// check each role
-			$check_roles = explode(",", $role);
+			$check_roles = explode(',', $role);
 			foreach ($check_roles as $check_role) {
 				$check_role = trim($check_role);
 
 				if (in_array($check_role, $current_roles)) {
 					$condition = true;
 				}
-				elseif ($compare == "AND") {
+				elseif ($compare == 'AND') {
 					$condition = false;
 				}
 			}
@@ -294,7 +425,7 @@ class CCS_User {
 
 		if (!empty($capable)) {
 
-			$capables = explode(",", $capable);
+			$capables = explode(',', $capable);
 
 			foreach ($capables as $capability) {
 
@@ -303,23 +434,47 @@ class CCS_User {
 				if (current_user_can( $check_capable )) {
 					$condition = true;
 				}
-				elseif ($compare == "AND") {
+				elseif ($compare == 'AND') {
 					$condition = false;
 				}
 			}
 		}
 
 
-		if (is_array($atts)) $atts = array_flip( $atts );
+		if (is_array($atts)) $atts = CCS_Content::get_all_atts( $atts );
 
 		if (( isset( $atts['admin'] ) && current_user_can( 'manage_options' ) ) ||
 			( isset( $atts['login'] ) && is_user_logged_in() ) ||
-			( isset( $atts['logout'] ) && !is_user_logged_in() )) {
+			( isset( $atts['logout'] ) && !is_user_logged_in() ) ) {
 
 			$condition = true;
 		}
 
-		if ( ($tag=="isnt") || (isset($atts['not'])) )
+		if ( isset( $atts['author'] ) ) {
+			// If user is the author of current post
+			if (!empty($post)) {
+
+				if ($post->post_author == $current_user->ID)
+					$condition = true;
+			}
+		}
+
+    if (class_exists('CCS_Mobile_Detect')) {
+      if ( !empty($device) ) {
+        $condition = (strtolower(CCS_Mobile_Detect::$device) == strtolower($device));
+      } elseif ( isset( $atts['mobile'] ) ) {
+        $condition = CCS_Mobile_Detect::$is_mobile;
+      } elseif ( isset( $atts['phone'] ) ) {
+        $condition = (CCS_Mobile_Detect::$device_type == 'phone');
+      } elseif ( isset( $atts['tablet'] ) ) {
+        $condition = (CCS_Mobile_Detect::$device_type == 'tablet');
+      } elseif ( isset( $atts['computer'] ) ) {
+        $condition = (CCS_Mobile_Detect::$device_type == 'computer');
+      }
+    }
+
+
+		if ( ($tag=='isnt') || (isset($atts['not'])) )
 			$condition = !$condition;
 
 		if ( !$condition ) {
@@ -335,12 +490,12 @@ class CCS_User {
 	}
 
 
-	/*========================================================================
-	 *
-	 * [blog]
-	 *
-	 */
-
+  /*---------------------------------------------
+   *
+   * [blog]
+   *
+   */
+  
 	function blog_shortcode( $atts, $content ){
 
 		extract(shortcode_atts(array(
@@ -360,11 +515,11 @@ class CCS_User {
 	}
 
 
-	/*========================================================================
-	 *
-	 * [list_shortcodes]
-	 *
-	 */
+  /*---------------------------------------------
+   *
+   * [list_shortcodes]
+   *
+   */
 
 	function list_shortcodes( ) {
 		global $shortcode_tags;
@@ -383,24 +538,43 @@ class CCS_User {
 	}
 
 
-	/*========================================================================
-	 *
-	 * [search_form]
-	 *
-	 */
+  /*---------------------------------------------
+   *
+   * [search_form]
+   *
+   * @param type Search only this post type
+   *
+   */
+  
 
-	function search_form_shortcode() {
+	function search_form_shortcode( $atts, $content ) {
 
-		ob_start();
-		get_search_form(true);
-		$out = ob_get_contents();
-		ob_end_clean();
-		
+		extract( shortcode_atts( array(
+			'type' => '',
+		), $atts ) );
+
+		$out = get_search_form(false);
+
+		if ( !empty($type) ) {
+
+			$filter = '<input type="hidden" value="'.$type.'" name="post_type" id="post_type" />';
+			$end = '</form>';
+
+			// Insert it before the end of form
+			$out = str_replace($end, $filter.$end, $out);
+		}
+
 		return $out;
 	}
 
 }
 
+
+/*---------------------------------------------
+ *
+ * Utility
+ *
+ */
 
 if ( ! function_exists( 'blog_exists' ) ) {
 
