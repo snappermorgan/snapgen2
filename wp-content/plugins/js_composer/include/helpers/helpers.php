@@ -73,7 +73,7 @@ function wpb_getImageBySize(
 			$p_img = wpb_resize( $attach_id, null, $thumb_size[0], $thumb_size[1], true );
 			$alt = trim( strip_tags( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) ) );
 			$attachment = get_post( $attach_id );
-			if(!empty($attachment)) {
+			if ( ! empty( $attachment ) ) {
 				$title = trim( strip_tags( $attachment->post_title ) );
 
 				if ( empty( $alt ) ) {
@@ -102,12 +102,16 @@ function wpb_getImageBySize(
 /**
  * @param $width
  *
+ * @deprecated since 4.5
  * @since 4.2
  * @return string
  */
 function wpb_getColumnControls( $width ) {
 	switch ( $width ) {
 		case "vc_col-md-2" :
+			$w = "1/6";
+			break;
+		case "vc_col-sm-2" :
 			$w = "1/6";
 			break;
 		case "vc_col-sm-3" :
@@ -169,7 +173,7 @@ function wpb_translateColumnWidthToFractional( $width ) {
 			break;
 
 		default :
-			$w = $width;
+			$w = is_string( $width ) ? $width : '1/1';
 	}
 
 	return $w;
@@ -179,6 +183,8 @@ function wpb_translateColumnWidthToFractional( $width ) {
 ---------------------------------------------------------- */
 /**
  * @param $grid_columns_count
+ *
+ * @deprecated since 4.5 and will be removed in 4.6
  *
  * @since 4.2
  * @return string
@@ -219,39 +225,19 @@ function wpb_translateColumnsCountToSpanClass( $grid_columns_count ) {
  * @return bool|string
  */
 function wpb_translateColumnWidthToSpan( $width, $front = true ) {
-	if ( preg_match( '/^(\d{1,2})\/12$/', $width, $match ) ) {
-		$w = 'vc_col-sm-' . $match[1];
-	} else {
-		$w = 'vc_col-sm-';
-		switch ( $width ) {
-			case "1/6" :
-				$w .= '2';
-				break;
-			case "1/4" :
-				$w .= '3';
-				break;
-			case "1/3" :
-				$w .= '4';
-				break;
-			case "1/2" :
-				$w .= '6';
-				break;
-			case "2/3" :
-				$w .= '8';
-				break;
-			case "3/4" :
-				$w .= '9';
-				break;
-			case "5/6" :
-				$w .= '10';
-				break;
-			case "1/1" :
-				$w .= '12';
-				break;
-			default :
-				$w = $width;
+	preg_match( '/(\d+)\/(\d+)/', $width, $matches );
+	$w = $width;
+	if ( ! empty( $matches ) ) {
+		$part_x = (int) $matches[1];
+		$part_y = (int) $matches[2];
+		if ( $part_x > 0 && $part_y > 0 ) {
+			$value = ceil( $part_x / $part_y * 12 );
+			if ( $value > 0 && $value <= 12 ) {
+				$w = 'vc_col-sm-' . $value;
+			}
 		}
 	}
+
 	$custom = $front ? get_custom_column_class( $w ) : false;
 
 	return $custom ? $custom : $w;
@@ -422,7 +408,7 @@ if ( ! function_exists( 'wpb_resize' ) ) {
 			$image_src[1] = $orig_size[0];
 			$image_src[2] = $orig_size[1];
 		}
-		if(!empty($actual_file_path)) {
+		if ( ! empty( $actual_file_path ) ) {
 			$file_info = pathinfo( $actual_file_path );
 			$extension = '.' . $file_info['extension'];
 
@@ -517,6 +503,7 @@ if ( ! function_exists( 'wpb_resize' ) ) {
 
 			return $vt_image;
 		}
+
 		return false;
 	}
 }
@@ -757,7 +744,7 @@ function wpb_vc_get_column_width_indent( $width ) {
 	} elseif ( $width == 'vc_col-sm-9' ) {
 		$identy = '34';
 	} elseif ( $width == 'vc_col-sm-2' ) {
-		$identy = '16';
+		$identy = '16'; // TODO: check why there is no "vc_col-sm-1, -5, -6, -7, -11, -12. And remove these dublicated line.
 	} elseif ( $width == 'vc_col-sm-10' ) {
 		$identy = '56';
 	}
@@ -778,6 +765,7 @@ function get_row_css_class() {
 /**
  * @param $class
  *
+ * @deprecated since 4.5 and will be removed in 4.6
  * @since 4.2
  * @return string
  */
@@ -866,10 +854,12 @@ function vc_hex2rgb( $color ) {
 function vc_parse_multi_attribute( $value, $default = array() ) {
 	$result = $default;
 	$params_pairs = explode( '|', $value );
-	foreach ( $params_pairs as $pair ) {
-		$param = preg_split( '/\:/', $pair );
-		if ( ! empty( $param[0] ) && isset( $param[1] ) ) {
-			$result[ $param[0] ] = rawurldecode( $param[1] );
+	if ( ! empty( $params_pairs ) ) {
+		foreach ( $params_pairs as $pair ) {
+			$param = preg_split( '/\:/', $pair );
+			if ( ! empty( $param[0] ) && isset( $param[1] ) ) {
+				$result[ $param[0] ] = rawurldecode( $param[1] );
+			}
 		}
 	}
 
@@ -1143,4 +1133,56 @@ function vc_shortcode_attribute_parse( $defaults = array(), $attributes = array(
 	$atts = $attributes + shortcode_atts( $defaults, $attributes );
 
 	return $atts;
+}
+
+function vc_get_shortcode_regex( $tagregexp = '' ) {
+	if ( 0 === strlen( $tagregexp ) ) {
+		return get_shortcode_regex();
+	}
+
+	return
+		'\\['                              // Opening bracket
+		. '(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
+		. "($tagregexp)"                     // 2: Shortcode name
+		. '(?![\\w-])'                       // Not followed by word character or hyphen
+		. '('                                // 3: Unroll the loop: Inside the opening shortcode tag
+		. '[^\\]\\/]*'                   // Not a closing bracket or forward slash
+		. '(?:'
+		. '\\/(?!\\])'               // A forward slash not followed by a closing bracket
+		. '[^\\]\\/]*'               // Not a closing bracket or forward slash
+		. ')*?'
+		. ')'
+		. '(?:'
+		. '(\\/)'                        // 4: Self closing tag ...
+		. '\\]'                          // ... and closing bracket
+		. '|'
+		. '\\]'                          // Closing bracket
+		. '(?:'
+		. '('                        // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
+		. '[^\\[]*+'             // Not an opening bracket
+		. '(?:'
+		. '\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
+		. '[^\\[]*+'         // Not an opening bracket
+		. ')*+'
+		. ')'
+		. '\\[\\/\\2\\]'             // Closing shortcode tag
+		. ')?'
+		. ')'
+		. '(\\]?)';
+}
+
+/**
+ * Used to send warning message
+ *
+ * @since 4.5
+ *
+ * @param $message
+ *
+ * @return string
+ */
+function vc_message_warning( $message ) {
+	return '<div class="vc_message_box vc_message_box-standard vc_message_box-rounded vc_color-warning">
+	<div class="vc_message_box-icon"><i class="fa fa-exclamation-triangle"></i>
+	</div><p>' . $message . '</p>
+</div>';
 }

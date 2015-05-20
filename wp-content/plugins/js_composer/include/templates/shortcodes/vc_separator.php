@@ -1,12 +1,12 @@
 <?php
 /**
- * @var string $el_width;
- * @var string $style;
- * @var string $color;
- * @var string $border_width;
- * @var string $accent_color;
- * @var string $el_class;
- * @var string $align;
+ * @var string $el_width ;
+ * @var string $style ;
+ * @var string $color ;
+ * @var string $border_width ;
+ * @var string $accent_color ;
+ * @var string $el_class ;
+ * @var string $align ;
  */
 extract( shortcode_atts( array(
 	'el_width' => '',

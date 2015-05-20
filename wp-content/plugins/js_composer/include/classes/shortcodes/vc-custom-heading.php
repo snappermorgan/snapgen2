@@ -33,6 +33,7 @@ class WPBakeryShortCode_VC_Custom_heading extends WPBakeryShortCode {
 
 	/**
 	 * Get param value by providing key
+	 *
 	 * @param $key
 	 *
 	 * @since 4.4

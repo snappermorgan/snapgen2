@@ -1,5 +1,5 @@
 <?php
-$output = $title = $el_class = $open = $css_animation = '';
+$output = $title = $el_class = $open = $css_animation = $el_id = '';
 
 $inverted = false;
 /**
@@ -21,6 +21,7 @@ extract( shortcode_atts( array(
 	'size' => '',
 	'open' => 'false',
 	'css_animation' => '',
+	'el_id' => '',
 ), $atts ) );
 
 // checking is color inverted
@@ -44,10 +45,13 @@ $elementClass = array(
 $elementClass = trim( implode( ' ', $elementClass ) );
 
 ?>
-<div class="<?php echo esc_attr( $elementClass ); ?>">
-	<div class="vc_toggle_title"><?php echo apply_filters( 'wpb_toggle_heading', '<h4>' . esc_html( $title ) . '</h4>', array(
+<div <?php echo isset( $el_id ) && ! empty( $el_id ) ? "id='" . esc_attr( $el_id ) . "'" : ""; ?>
+	class="<?php echo esc_attr( $elementClass ); ?>">
+	<div
+		class="vc_toggle_title"><?php echo apply_filters( 'wpb_toggle_heading', '<h4>' . esc_html( $title ) . '</h4>', array(
 			'title' => $title,
 			'open' => $open
 		) ); ?><i class="vc_toggle_icon"></i></div>
-	<div class="vc_toggle_content"><?php echo wpb_js_remove_wpautop( apply_filters( 'the_content', $content ), true ); ?></div>
+	<div
+		class="vc_toggle_content"><?php echo wpb_js_remove_wpautop( apply_filters( 'the_content', $content ), true ); ?></div>
 </div>

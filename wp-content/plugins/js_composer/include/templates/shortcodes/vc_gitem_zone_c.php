@@ -12,8 +12,9 @@ $atts = shortcode_atts( array(
 	'render' => '',
 ), $atts );
 extract( $atts );
-if($render === 'no') {
+if ( $render === 'no' ) {
 	echo '';
+
 	return;
 }
 $css_class = 'vc_gitem-zone'

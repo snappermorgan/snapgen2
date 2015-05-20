@@ -19,6 +19,8 @@ class Vc_Mapper {
 	 */
 	protected $init_activity = array();
 
+	protected $hasAccess = array();
+
 	/**
 	 * @since 4.2
 	 */
@@ -65,6 +67,7 @@ class Vc_Mapper {
 	 * @access public
 	 */
 	protected function callActivities() {
+		do_action( 'vc_mapper_call_activities_before' );
 		while ( $activity = each( $this->init_activity ) ) {
 			list( $object, $method, $params ) = $activity[1];
 			if ( $object == 'mapper' ) {
@@ -81,6 +84,9 @@ class Vc_Mapper {
 					case 'mutate_param':
 						WPBMap::mutateParam( $params['name'], $params['attribute'] );
 						break;
+					case 'drop_all_shortcodes':
+						WPBMap::dropAllShortcodes();
+						break;
 					case 'drop_shortcode':
 						WPBMap::dropShortcode( $params['name'] );
 						break;
@@ -90,5 +96,34 @@ class Vc_Mapper {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Does user has access to modify/clone/delete/add shortcode
+	 *
+	 * @param $shortcode
+	 *
+	 * @since 4.5
+	 * @return bool
+	 */
+	public function userHasAccess( $shortcode ) {
+		if ( isset( $this->hasAccess[ $shortcode ] ) ) {
+			return $this->hasAccess[ $shortcode ];
+		} else {
+			global $current_user;
+			get_currentuserinfo();
+			$show = true;
+
+			$settings = vc_settings()->get( 'groups_access_rules' );
+			foreach ( $current_user->roles as $role ) {
+				if ( isset( $settings[ $role ]['shortcodes'] ) && ! isset( $settings[ $role ]['shortcodes'][ $shortcode ] ) ) {
+					$show = false;
+					break;
+				}
+			}
+			$this->hasAccess[ $shortcode ] = $show;
+		}
+
+		return $this->hasAccess[ $shortcode ];
 	}
 }

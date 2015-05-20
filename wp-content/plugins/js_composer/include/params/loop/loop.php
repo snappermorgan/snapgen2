@@ -863,6 +863,7 @@ function vc_get_loop_settings_json() {
 	$loop_settings->render();
 	die();
 }
+
 add_action( 'wp_ajax_wpb_get_loop_suggestion', 'vc_get_loop_suggestion' );
 add_action( 'wp_ajax_wpb_get_loop_settings', 'vc_get_loop_settings_json' );
 
@@ -872,6 +873,7 @@ add_action( 'wp_ajax_wpb_get_loop_settings', 'vc_get_loop_settings_json' );
 function vc_loop_include_templates() {
 	require_once vc_path_dir( 'TEMPLATES_DIR', 'params/loop/templates.html' );
 }
+
 add_action( 'admin_footer', 'vc_loop_include_templates' );
 
 /**

@@ -13,22 +13,25 @@ if ( !class_exists('WPMUDEV_Dashboard_Notice3') ) {
 		var $update_count = 0;
 
 		function __construct() {
-			add_action( 'plugins_loaded', array( &$this, 'init' ) );
+			add_action( 'init', array( &$this, 'init' ) );
 		}
 
 		function init() {
 			global $wpmudev_un;
-			if ( is_admin() && current_user_can( 'install_plugins' ) ) {
-				if ( class_exists( 'WPMUDEV_Dashboard' ) || ( isset($wpmudev_un->version) && version_compare($wpmudev_un->version, '3.4', '<') ) )
-					return;
 
-				// Schedule update jobs
-				if ( !wp_next_scheduled('wpmudev_scheduled_jobs') ) {
-					wp_schedule_event(time(), 'twicedaily', 'wpmudev_scheduled_jobs');
-				}
-				add_action( 'wpmudev_scheduled_jobs', array( $this, 'updates_check') );
-				add_action( 'delete_site_transient_update_plugins', array( &$this, 'updates_check' ) ); //refresh after upgrade/install
-				add_action( 'delete_site_transient_update_themes', array( &$this, 'updates_check' ) ); //refresh after upgrade/install
+			if ( class_exists( 'WPMUDEV_Dashboard' ) || ( isset($wpmudev_un->version) && version_compare($wpmudev_un->version, '3.4', '<') ) )
+				return;
+
+			// Schedule update jobs
+			if ( !wp_next_scheduled('wpmudev_scheduled_jobs') ) {
+				wp_schedule_event(time(), 'twicedaily', 'wpmudev_scheduled_jobs');
+			}
+			add_action( 'wpmudev_scheduled_jobs', array( $this, 'updates_check') );
+			add_action( 'delete_site_transient_update_plugins', array( &$this, 'updates_check' ) ); //refresh after upgrade/install
+			add_action( 'delete_site_transient_update_themes', array( &$this, 'updates_check' ) ); //refresh after upgrade/install
+
+			if ( is_admin() && current_user_can( 'install_plugins' ) ) {
+
 				add_action( 'site_transient_update_plugins', array( &$this, 'filter_plugin_count' ) );
 				add_action( 'site_transient_update_themes', array( &$this, 'filter_theme_count' ) );
 				add_filter( 'plugins_api', array( &$this, 'filter_plugin_info' ), 20, 3 ); //run later to work with bad autoupdate plugins
@@ -478,7 +481,7 @@ if ( !class_exists('WPMUDEV_Dashboard_Notice3') ) {
 				return $res;
 			}
 
-			return false;
+			return $res;
 		}
 
 		function filter_plugin_rows() {
@@ -610,7 +613,7 @@ if ( !class_exists('WPMUDEV_Dashboard_Notice3') ) {
 
 			if ( current_user_can('update_plugins') ) {
 				echo '<tr class="plugin-update-tr"><td colspan="3" class="plugin-update colspanchange"><div class="update-message wpmu-update-row">';
-				printf( 'There is a new version of %1$s available on WPMU DEV. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">%6$s</a> to update.', $plugin_name, esc_url($info_url), esc_attr($plugin_name), $version, esc_url($action_url), $message );	 	   	  			 	
+				printf( 'There is a new version of %1$s available on WPMU DEV. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">%6$s</a> to update.', $plugin_name, esc_url($info_url), esc_attr($plugin_name), $version, esc_url($action_url), $message );
 				echo '</div></td></tr>';
 			}
 		}

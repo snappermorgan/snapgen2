@@ -15,7 +15,7 @@ extract( shortcode_atts( array(
 	'posttypes' => '',
 	'posts_in' => '',
 	'categories' => '',
-	'orderby' => NULL,
+	'orderby' => null,
 	'order' => 'DESC',
 	'el_class' => ''
 ), $atts ) );
@@ -73,8 +73,12 @@ $vc_posts_grid_exclude_id[] = get_the_ID();
 $query_args['post__not_in'] = array( get_the_ID() );
 
 // Post teasers count
-if ( $count != '' && ! is_numeric( $count ) ) $count = - 1;
-if ( $count != '' && is_numeric( $count ) ) $query_args['posts_per_page'] = $count;
+if ( $count != '' && ! is_numeric( $count ) ) {
+	$count = - 1;
+}
+if ( $count != '' && is_numeric( $count ) ) {
+	$query_args['posts_per_page'] = $count;
+}
 
 // Post types
 $pt = array();
@@ -111,7 +115,7 @@ if ( $categories != '' ) {
 }
 
 // Order posts
-if ( $orderby != NULL ) {
+if ( $orderby != null ) {
 	$query_args['orderby'] = $orderby;
 }
 $query_args['order'] = $order;
@@ -165,8 +169,8 @@ while ( $my_query->have_posts() ) {
 			}
 			$link_image_start = '<a class="link_image prettyphoto" href="' . $p_link . '" ' . $pretty_rel_random . ' title="' . the_title_attribute( 'echo=0' ) . '" >';
 		} else if ( $link == 'custom_link' ) {
-			if ( isset( $custom_links[$i] ) ) {
-				$slide_custom_link = $custom_links[$i];
+			if ( isset( $custom_links[ $i ] ) ) {
+				$slide_custom_link = $custom_links[ $i ];
 			} else {
 				$slide_custom_link = $custom_links[0];
 			}
@@ -182,7 +186,9 @@ while ( $my_query->have_posts() ) {
 	$description = '';
 	if ( $slides_content != '' && $content != '' && ( $type == ' wpb_flexslider flexslider_fade flexslider' || $type == ' wpb_flexslider flexslider_slide flexslider' ) ) {
 		$description = '<div class="flex-caption">';
-		if ( $slides_title == true ) $description .= '<h2 class="post-title">' . $link_image_start . $post_title . $link_image_end . '</h2>';
+		if ( $slides_title == true ) {
+			$description .= '<h2 class="post-title">' . $link_image_start . $post_title . $link_image_end . '</h2>';
+		}
 		$description .= $content;
 		$description .= '</div>';
 	}

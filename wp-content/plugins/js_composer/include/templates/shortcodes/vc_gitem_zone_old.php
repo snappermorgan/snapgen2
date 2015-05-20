@@ -49,7 +49,7 @@ if ( 'custom' === $height_mode ) {
 }
 if ( strlen( $link ) > 0 ) {
 	$css_class .= ' vc_gitem-is-link';
-	if ( 'custom' === $link && !empty( $url ) ) {
+	if ( 'custom' === $link && ! empty( $url ) ) {
 		$link_s = vc_build_link( $url );
 		$attr_bg = ' data-vc-link="' . esc_attr( $link_s['url'] ) . '"'
 		           . ' data-vc-target="' . esc_attr( trim( $link_s['target'] ) ) . '"'

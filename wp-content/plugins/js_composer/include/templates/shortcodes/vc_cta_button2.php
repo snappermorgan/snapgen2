@@ -52,7 +52,7 @@ $css_class .= $this->getCSSAnimation( $css_animation );
 ?>
 	<div<?php echo $inline_css; ?> class="<?php echo esc_attr( trim( $css_class ) ); ?>">
 		<?php if ( $link != '' && $position != 'bottom' ) {
-			echo do_shortcode( '[vc_button2 link="' . $link . '" title="' . $title . '" color="' . $color . '" icon="' . $icon . '" size="' . $size . '" style="' . $btn_style . '" el_class="vc_cta_btn"]' );
+			echo do_shortcode( '[vc_button2 align="' . $position . '" link="' . $link . '" title="' . $title . '" color="' . $color . '" icon="' . $icon . '" size="' . $size . '" style="' . $btn_style . '" el_class="vc_cta_btn"]' );
 		} ?>
 		<?php if ( $h2 != '' || $h4 != '' ): ?>
 			<hgroup>

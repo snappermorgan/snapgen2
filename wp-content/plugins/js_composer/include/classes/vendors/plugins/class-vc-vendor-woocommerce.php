@@ -9,6 +9,7 @@
 Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 	protected static $product_fields_list = false;
 	protected static $order_fields_list = false;
+
 	/**
 	 * @since 4.4
 	 */
@@ -35,10 +36,14 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 				&$this,
 				'enqueueJsFrontend'
 			) );
-			add_filter('vc_grid_item_shortcodes', array(
+			add_filter( 'vc_grid_item_shortcodes', array(
 				&$this,
 				'mapGridItemShortcodes'
-			));
+			) );
+			add_action( 'vc_vendor_yoastseo_filter_results', array(
+				&$this,
+				'yoastSeoCompatibility'
+			) );
 		}
 	}
 
@@ -862,7 +867,7 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 					'dependency' => array(
 						'element' => 'attribute',
 						'is_empty' => true,
-						'callback' => 'vc_woocommerce_product_attribute_filter_dependency_callback',
+						'callback' => 'vcWoocommerceProductAttributeFilterDependencyCallback',
 					),
 				),
 			)
@@ -944,12 +949,15 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 		) );
 
 	}
-	public function mapGridItemShortcodes(array $shortcodes) {
-		require_once vc_path_dir('VENDORS_DIR', 'plugins/woocommerce/class-vc-gitem-woocommerce-shortcode.php');
-		require_once vc_path_dir('VENDORS_DIR', 'plugins/woocommerce/grid-item-attributes.php');
-		$wc_shortcodes = include vc_path_dir('VENDORS_DIR', 'plugins/woocommerce/grid-item-shortcodes.php');
+
+	public function mapGridItemShortcodes( array $shortcodes ) {
+		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/woocommerce/class-vc-gitem-woocommerce-shortcode.php' );
+		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/woocommerce/grid-item-attributes.php' );
+		$wc_shortcodes = include vc_path_dir( 'VENDORS_DIR', 'plugins/woocommerce/grid-item-shortcodes.php' );
+
 		return $shortcodes + $wc_shortcodes;
 	}
+
 	/**
 	 * Defines default value for param if not provided. Takes from other param value.
 	 * @since 4.4
@@ -1066,7 +1074,7 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 	 */
 	public function productsIdsDefaultValue( $current_value, $param_settings, $map_settings, $atts ) {
 		$value = trim( $current_value );
-		if ( isset( $atts['skus'] ) && strlen( $atts['skus'] ) > 0 ) {
+		if ( strlen( trim( $value ) ) == 0 && isset( $atts['skus'] ) && strlen( $atts['skus'] ) > 0 ) {
 			$data = array();
 			$skus = $atts['skus'];
 			$skus_array = explode( ',', $skus );
@@ -1135,27 +1143,31 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 		if ( ! empty( $query ) ) {
 			// get product
 			$product_object = wc_get_product( (int) $query );
-			$product_sku = $product_object->get_sku();
-			$product_title = $product_object->get_title();
-			$product_id = $product_object->id;
+			if ( is_object( $product_object ) ) {
+				$product_sku = $product_object->get_sku();
+				$product_title = $product_object->get_title();
+				$product_id = $product_object->id;
 
-			$product_sku_display = '';
-			if ( ! empty( $product_sku ) ) {
-				$product_sku_display = ' - ' . __( 'Sku', 'js_composer' ) . ': ' . $product_sku;
+				$product_sku_display = '';
+				if ( ! empty( $product_sku ) ) {
+					$product_sku_display = ' - ' . __( 'Sku', 'js_composer' ) . ': ' . $product_sku;
+				}
+
+				$product_title_display = '';
+				if ( ! empty( $product_title ) ) {
+					$product_title_display = ' - ' . __( 'Title', 'js_composer' ) . ': ' . $product_title;
+				}
+
+				$product_id_display = __( 'Id', 'js_composer' ) . ': ' . $product_id;
+
+				$data = array();
+				$data['value'] = $product_id;
+				$data['label'] = $product_id_display . $product_title_display . $product_sku_display;
+
+				return ! empty( $data ) ? $data : false;
 			}
 
-			$product_title_display = '';
-			if ( ! empty( $product_title ) ) {
-				$product_title_display = ' - ' . __( 'Title', 'js_composer' ) . ': ' . $product_title;
-			}
-
-			$product_id_display = __( 'Id', 'js_composer' ) . ': ' . $product_id;
-
-			$data = array();
-			$data['value'] = $product_id;
-			$data['label'] = $product_id_display . $product_title_display . $product_sku_display;
-
-			return ! empty( $data ) ? $data : false;
+			return false;
 		}
 
 		return false;
@@ -1193,27 +1205,32 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 		}
 
 		$product_object = wc_get_product( $product_data );
-		$product_sku = $product_object->get_sku();
-		$product_title = $product_object->get_title();
-		$product_id = $product_object->id;
+		if ( is_object( $product_object ) ) {
 
-		$product_sku_display = '';
-		if ( ! empty( $product_sku ) ) {
-			$product_sku_display = ' - ' . __( 'Sku', 'js_composer' ) . ': ' . $product_sku;
+			$product_sku = $product_object->get_sku();
+			$product_title = $product_object->get_title();
+			$product_id = $product_object->id;
+
+			$product_sku_display = '';
+			if ( ! empty( $product_sku ) ) {
+				$product_sku_display = ' - ' . __( 'Sku', 'js_composer' ) . ': ' . $product_sku;
+			}
+
+			$product_title_display = '';
+			if ( ! empty( $product_title ) ) {
+				$product_title_display = ' - ' . __( 'Title', 'js_composer' ) . ': ' . $product_title;
+			}
+
+			$product_id_display = __( 'Id', 'js_composer' ) . ': ' . $product_id;
+
+			$data = array();
+			$data['value'] = $product_id;
+			$data['label'] = $product_id_display . $product_title_display . $product_sku_display;
+
+			return ! empty( $data ) ? $data : false;
 		}
 
-		$product_title_display = '';
-		if ( ! empty( $product_title ) ) {
-			$product_title_display = ' - ' . __( 'Title', 'js_composer' ) . ': ' . $product_title;
-		}
-
-		$product_id_display = __( 'Id', 'js_composer' ) . ': ' . $product_id;
-
-		$data = array();
-		$data['value'] = $product_id;
-		$data['label'] = $product_id_display . $product_title_display . $product_sku_display;
-
-		return ! empty( $data ) ? $data : false;
+		return false;
 	}
 
 	/**
@@ -1335,51 +1352,65 @@ Class Vc_Vendor_Woocommerce implements Vc_Vendor_Interface {
 
 		return ! empty( $data ) ? $data : false;
 	}
+
 	public static function getProductsFieldsList() {
 		return array(
-			__('SKU', 'js_composer') => 'sku',
-			__('ID', 'js_composer') => 'id',
-			__('Price', 'js_composer') => 'price',
-			__('Regular Price', 'js_composer') => 'regular_price',
-			__('Sale Price', 'js_composer') => 'sale_price',
-			__('Price html', 'js_composer') => 'price_html',
-			__('Reviews count', 'js_composer') => 'reviews_count',
-			__('Short description', 'js_composer') => 'short_description',
-			__('Dimensions', 'js_composer') => 'dimensions',
-			__('Rating count', 'js_composer') => 'rating_count',
-			__('Weight', 'js_composer') => 'weight',
-			__('Is on sale', 'js_composer') => 'on_sale',
-			__('Custom field', 'js_composer') => '_custom_',
+			__( 'SKU', 'js_composer' ) => 'sku',
+			__( 'ID', 'js_composer' ) => 'id',
+			__( 'Price', 'js_composer' ) => 'price',
+			__( 'Regular Price', 'js_composer' ) => 'regular_price',
+			__( 'Sale Price', 'js_composer' ) => 'sale_price',
+			__( 'Price html', 'js_composer' ) => 'price_html',
+			__( 'Reviews count', 'js_composer' ) => 'reviews_count',
+			__( 'Short description', 'js_composer' ) => 'short_description',
+			__( 'Dimensions', 'js_composer' ) => 'dimensions',
+			__( 'Rating count', 'js_composer' ) => 'rating_count',
+			__( 'Weight', 'js_composer' ) => 'weight',
+			__( 'Is on sale', 'js_composer' ) => 'on_sale',
+			__( 'Custom field', 'js_composer' ) => '_custom_',
 		);
 	}
-	public static function getProductFieldLabel($key) {
-		if(false === self::$product_fields_list) {
-			self::$product_fields_list = array_flip(self::getProductsFieldsList());
+
+	public static function getProductFieldLabel( $key ) {
+		if ( false === self::$product_fields_list ) {
+			self::$product_fields_list = array_flip( self::getProductsFieldsList() );
 		}
-		return isset(self::$product_fields_list[$key]) ? self::$product_fields_list[$key] : '';
+
+		return isset( self::$product_fields_list[ $key ] ) ? self::$product_fields_list[ $key ] : '';
 	}
+
 	public static function getOrderFieldsList() {
 		return array(
-			__('ID', 'js_composer') => 'id',
-			__('Order number', 'js_composer') => 'order_number',
-			__('Currency', 'js_composer') => 'order_currency',
-			__('Total', 'js_composer') => 'total',
-			__('Status', 'js_composer') => 'status',
-			__('Payment method', 'js_composer') => 'payment_method',
-			__('Billing address city', 'js_composer') => 'billing_address_city',
-			__('Billing address country', 'js_composer') => 'billing_address_country',
-			__('Shipping address city', 'js_composer') => 'shipping_address_city',
-			__('Shipping address country', 'js_composer') => 'shipping_address_country',
-			__('Customer Note', 'js_composer') => 'customer_note',
-			__('Customer API', 'js_composer') => 'customer_api',
-			__('Custom field', 'js_composer') => '_custom_',
+			__( 'ID', 'js_composer' ) => 'id',
+			__( 'Order number', 'js_composer' ) => 'order_number',
+			__( 'Currency', 'js_composer' ) => 'order_currency',
+			__( 'Total', 'js_composer' ) => 'total',
+			__( 'Status', 'js_composer' ) => 'status',
+			__( 'Payment method', 'js_composer' ) => 'payment_method',
+			__( 'Billing address city', 'js_composer' ) => 'billing_address_city',
+			__( 'Billing address country', 'js_composer' ) => 'billing_address_country',
+			__( 'Shipping address city', 'js_composer' ) => 'shipping_address_city',
+			__( 'Shipping address country', 'js_composer' ) => 'shipping_address_country',
+			__( 'Customer Note', 'js_composer' ) => 'customer_note',
+			__( 'Customer API', 'js_composer' ) => 'customer_api',
+			__( 'Custom field', 'js_composer' ) => '_custom_',
 		);
 	}
-	public static function getOrderFieldLabel($key) {
-		if(false === self::$order_fields_list) {
-			self::$order_fields_list = array_flip(self::getOrderFieldsList());
+
+	public static function getOrderFieldLabel( $key ) {
+		if ( false === self::$order_fields_list ) {
+			self::$order_fields_list = array_flip( self::getOrderFieldsList() );
 		}
-		return isset(self::$order_fields_list[$key]) ? self::$order_fields_list[$key] : '';
+
+		return isset( self::$order_fields_list[ $key ] ) ? self::$order_fields_list[ $key ] : '';
+	}
+
+	public function yoastSeoCompatibility() {
+		if ( function_exists( 'WC' ) ) {
+			// WC()->frontend_includes();
+			include_once( WC()->plugin_path() . '/includes/wc-template-functions.php' );
+			// include_once WC()->plugin_path() . '';
+		}
 	}
 }
 
@@ -1393,6 +1424,9 @@ class Vc_WooCommerce_NotEditable extends WPBakeryShortCode {
 	 * @since 4.4
 	 * @var array
 	 */
-	protected $controls_list = array( 'clone', 'delete' );
+	protected $controls_list = array(
+		'clone',
+		'delete'
+	);
 }
 

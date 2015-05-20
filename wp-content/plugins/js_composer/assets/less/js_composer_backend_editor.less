@@ -1,6 +1,7 @@
-@import "../lib/bootstrap3/less/component-animations.less";
+@import "../lib/bower/bootstrap3/less/component-animations.less"; // must be outputed
 
 @import "lib/editor.less";
+
 
 // Here comes panels
 @vc_modal_top_margin: 34px;
@@ -43,7 +44,8 @@
 // Backend controls
 @import "lib/controls.less";
 @import "lib/backend_controls.less";
-@import "lib/backend_wp_pointers.less";
+@import "lib/backend_grid_element_pointers.less";
+@import "lib/vc_pointer.less";
 // Shortcodes
 @import "backend_shortcodes/rows_columns.less";
 @import "backend_shortcodes/empty_containers.less";
@@ -51,6 +53,11 @@
 @import "backend_shortcodes/content_block.less";
 @import "backend_shortcodes/vc_accordion.less";
 @import "backend_shortcodes/vc_button.less";
+@import "shortcodes/vc_button3.less";
+@import (reference)"shortcodes/vc_icon_element.less";
+@import "backend_shortcodes/vc_button3.less"; // now let's override some margins and etc
+@import "shortcodes/vc_call_to_action3.less";
+@import "backend_shortcodes/vc_call_to_action3.less"; // now let's override some margins and etc
 @import "backend_shortcodes/vc_column_text.less";
 @import "backend_shortcodes/vc_cta_button.less";
 @import "backend_shortcodes/vc_empty_space.less";
@@ -63,7 +70,7 @@
 @import "backend_shortcodes/vc_message_old.less"; // @deprecated since 4.4 and will be removed
 @import "backend_shortcodes/vc_message_box.less";
 
-.vc_shortcode-param[data-param_name="icon_pixelicons"] {
+.vc_shortcode-param[data-param_type="iconpicker"] {
     .vc-icons-selector .selected-icon {
         line-height: 40px;
         i.vc_pixel_icon {
@@ -175,3 +182,9 @@
   }
 }
 #wpb_csseditor { border: 1px solid #BABABA; }
+
+.vc_button-settings-less {
+	&:active {
+		vertical-align: baseline;
+	}
+}

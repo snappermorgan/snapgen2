@@ -1,17 +1,22 @@
 <script type="text/html" id="vc_controls-template-default">
 	<div
-	class="vc_controls-element">
-	<div class="vc_controls-cc"><a class="vc_control-btn vc_element-name vc_element-move"><span class="vc_btn-content"
-	                                                                                            title="<?php printf( __( 'Drag to move %s', 'js_composer' ), '{{ name }}' ) ?>">{{ name }}</span></a><a
-			class="vc_control-btn vc_control-btn-edit" data-control="edit" href="#"
-			title="<?php printf( __( 'Edit %s', 'js_composer' ), '{{ name }}' ) ?>"><span class="vc_btn-content"><span
-					class="icon"></span></span></a><a class="vc_control-btn vc_control-btn-clone" data-control="clone"
-	                                                  href="#"
-	                                                  title="<?php printf( __( 'Clone %s', 'js_composer' ), '{{ name }}' ) ?>"><span
-				class="vc_btn-content"><span class="icon"></span></span></a><a
-			class="vc_control-btn vc_control-btn-delete" data-control="delete" href="#"
-			title="<?php printf( __( 'Delete %s', 'js_composer' ), '{{ name }}' ) ?>"><span class="vc_btn-content"><span
-					class="icon"></span></span></a></div></div>
+		class="vc_controls-element">
+		<div class="vc_controls-cc"><a class="vc_control-btn vc_element-name vc_element-move"><span
+					class="vc_btn-content"
+					title="<?php printf( __( 'Drag to move %s', 'js_composer' ), '{{ name }}' ) ?>">{{ name }}</span></a><a
+				class="vc_control-btn vc_control-btn-edit" data-control="edit" href="#"
+				title="<?php printf( __( 'Edit %s', 'js_composer' ), '{{ name }}' ) ?>"><span
+					class="vc_btn-content"><span
+						class="icon"></span></span></a><a class="vc_control-btn vc_control-btn-clone"
+		                                                  data-control="clone"
+		                                                  href="#"
+		                                                  title="<?php printf( __( 'Clone %s', 'js_composer' ), '{{ name }}' ) ?>"><span
+					class="vc_btn-content"><span class="icon"></span></span></a><a
+				class="vc_control-btn vc_control-btn-delete" data-control="delete" href="#"
+				title="<?php printf( __( 'Delete %s', 'js_composer' ), '{{ name }}' ) ?>"><span
+					class="vc_btn-content"><span
+						class="icon"></span></span></a></div>
+	</div>
 </script>
 <script type="text/html" id="vc_controls-template-container">
 	<div class="vc_controls-container">

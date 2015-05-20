@@ -8142,14 +8142,32 @@
   #ameriquote_wrapper #ameriquote_body {
     font-size: 1em;
     position: relative;
-    background: url(http://quotes.ameriquote.com/wp-content/uploads/sites/8/2015/05/superwoman_transparent.png) 59px -14px no-repeat;
-    background-size: 79%;
+    background: url(http://quotes.ameriquote.com/wp-content/uploads/sites/8/2015/05/superwoman_transparent-e1432049877411.png) left 30px no-repeat;
+    background-size: 90%;
     padding-top: 27px; }
   #ameriquote_wrapper div.params {
     clear: both;
     margin-top: 10px;
     min-height: 460px;
     opacity: .9; }
+  #ameriquote_wrapper #ameriquote_body > .row {
+    display: -webkit-box;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;
+    /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;
+    /* TWEENER - IE 10 */
+    display: -webkit-flex;
+    /* NEW - Chrome */
+    display: flex;
+    flex-direction: row;
+    -webkit-box-orient: horizontal; }
+  #ameriquote_wrapper #ameriquote_body .search-col {
+    order: 2;
+    -webkit-order: 2; }
+  #ameriquote_wrapper #ameriquote_body .results-col {
+    order: 1;
+    -webkit-order: 1; }
   #ameriquote_wrapper div.params ul {
     float: left;
     padding-left: 0px;
@@ -8166,7 +8184,7 @@
   #ameriquote_wrapper .smoker label, #ameriquote_wrapper .gender label {
     float: left;
     margin-right: 15px; }
-  #ameriquote_wrapper .quote {
+  #ameriquote_wrapper .quote, #ameriquote_wrapper .featured-quote {
     font-size: 14px;
     line-height: 17px;
     min-height: 230px;
@@ -8176,26 +8194,40 @@
     /*margin-top: 10px;*/
     width: 100%;
     display: none; }
-  #ameriquote_wrapper .quote .title {
+  #ameriquote_wrapper .featured-quote {
+    display: block;
+    border: 1px solid #c6c6c6;
+    background-color: #DBE1EC; }
+  #ameriquote_wrapper .featured {
+    margin-left: 25%;
+    font-size: 26px;
+    font-weight: bold;
+    color: #1abc9c; }
+  #ameriquote_wrapper .application {
+    width: 142px;
+    margin-top: 10px;
+    float: right; }
+  #ameriquote_wrapper .quote .title, #ameriquote_wrapper .featured-quote .title {
     font-weight: bold; }
   #ameriquote_wrapper .results-grid .col-lg-6, #ameriquote_wrapper .results-grid .col-md-6, #ameriquote_wrapper .results-grid .col-sm-6 {
     width: 48%; }
-  #ameriquote_wrapper .quote label {
+  #ameriquote_wrapper .quote label, #ameriquote_wrapper .featured-quote label {
     line-height: 15px;
     font-weight: bold;
     margin-bottom: 0px; }
-  #ameriquote_wrapper .quote .logo-pic {
+  #ameriquote_wrapper .quote .logo-pic, #ameriquote_wrapper .featured-quote .logo-pic {
     margin-bottom: 10px;
     height: 55px;
     background-color: white;
     box-shadow: 1px 2px 14px -8px; }
-  #ameriquote_wrapper .quote .helper {
+  #ameriquote_wrapper .quote .helper, #ameriquote_wrapper .featured-quote .helper {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
     margin-left: 20px; }
-  #ameriquote_wrapper .quote .logo-pic img {
-    vertical-align: middle; }
+  #ameriquote_wrapper .quote .logo-pic img, #ameriquote_wrapper .featured-quote .logo-pic img {
+    vertical-align: middle;
+    max-width: 165px; }
   #ameriquote_wrapper #sorts {
     margin-bottom: 10px;
     margin-top: 10px; }
@@ -8272,19 +8304,21 @@
     width: 100%; }
   @media (max-width: 679px) {
     #ameriquote_wrapper .lander {
-      display: none; } }
+      display: none; }
+    #ameriquote_wrapper #ameriquote_body > .row {
+      display: block; } }
   @media (max-width: 480px) {
     #ameriquote_wrapper .monthly {
       font-size: 1.2em;
       margin-right: 5px; }
     #ameriquote_wrapper .apply-form input {
       width: 100%; }
-    #ameriquote_wrapper .quote {
+    #ameriquote_wrapper .quote, #ameriquote_wrapper .featured-quote {
       line-height: 15px; }
     #ameriquote_wrapper .footer-icons .icon, #ameriquote_wrapper .call-pop .icon {
       font-size: 12px;
       margin-right: 10px; }
-    #ameriquote_wrapper .quote .helper {
+    #ameriquote_wrapper .quote .helper, #ameriquote_wrapper .featured-quote .helper {
       margin-left: 0px; }
     #ameriquote_wrapper .btn {
       padding: 10px 8px;

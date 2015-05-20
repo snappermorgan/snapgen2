@@ -97,6 +97,22 @@ ul.wpb_thumbnails-fluid > li,
     }
 }
 
+.vc_row {
+    &.vc_row-no-padding {
+        .wpb_column {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+	&[data-vc-full-width] {
+		.transition(opacity 0.5s ease);
+	}
+	&[data-vc-full-width-init="false"] {
+		.opacity(0);
+	}
+}
+
+@import "../lib/parallax.less";
 // @import "utils/_vc_mixins.less";
 // @import "_variables.less";
 // @import "utils/_variables_common.less";
@@ -106,7 +122,9 @@ ul.wpb_thumbnails-fluid > li,
 @import "../shortcodes/vc_toggle_faq_old.less";
 @import "../shortcodes/vc_widgetised_column.less";
 @import "../shortcodes/vc_button.less";
+@import "../shortcodes/vc_button3.less";
 @import "../shortcodes/vc_call_to_action.less";
+@import "../shortcodes/vc_call_to_action3.less";
 @import "../shortcodes/vc_google_maps.less";
 @import "../shortcodes/vc_tabs_tour_accordion.less";
 @import "../shortcodes/vc_teaser_grid.less";
@@ -127,3 +145,5 @@ ul.wpb_thumbnails-fluid > li,
 
 @import "vc_font.less";
 @import "css3_animations.less";
+
+@import "../vendor/woocommerce.less";

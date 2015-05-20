@@ -105,8 +105,8 @@ class Vc_ParamGroup {
 				$value_block = "<div class='vc_param_group-wrapper vc_clearfix'>";
 				$data = $values;
 				foreach ( $this->settings['params'] as $param ) {
+					$param_value = isset( $data[ $param['param_name'] ] ) ? $data[ $param['param_name'] ] : ( isset( $param['value'] ) ? $param['value'] : "" );
 					$param['param_name'] = $this->settings['param_name'] . '_' . $param['param_name'];
-					$param_value = isset( $data[ $param['param_name'] ]['value'] ) ? $data[ $param['param_name'] ]['value'] : "";
 					$value_block .= $edit_form->renderField( $param, $param_value );
 				}
 				$value_block .= "</div>";
@@ -121,7 +121,7 @@ class Vc_ParamGroup {
 		$content = "<div class='vc_param_group-wrapper vc_clearfix'>";
 		foreach ( $this->settings['params'] as $param ) {
 			$param['param_name'] = $this->settings['param_name'] . '_' . $param['param_name'];
-			$content .= $edit_form->renderField( $param, "" );
+			$content .= $edit_form->renderField( $param, isset( $param['value'] ) ? $param['value'] : "" );
 		}
 		$content .= "</div>";
 		$output = str_replace( '%content%', $content, $output );
@@ -194,8 +194,8 @@ function vc_param_group_clone_by_data( $tag, $params, $data ) {
 
 	$data = $data[0];
 	foreach ( $params['params'] as $param ) {
+		$param_data = isset( $data[ $param['param_name'] ] ) ? $data[ $param['param_name'] ] : ( isset( $param['value'] ) ? $param['value'] : "" );
 		$param['param_name'] = $params['param_name'] . '_' . $param['param_name'];
-		$param_data = isset( $data[ $param['param_name'] ]['value'] ) ? $data[ $param['param_name'] ]['value'] : "";
 		$value_block .= $edit_form->renderField( $param, $param_data );
 	}
 	$value_block .= "</div>";

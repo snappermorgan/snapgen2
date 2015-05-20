@@ -20,16 +20,22 @@ $style = ( $style != '' ) ? $style : '';
 $border_color = ( $border_color != '' ) ? ' vc_box_border_' . $border_color : '';
 
 $img_id = preg_replace( '/[^\d]/', '', $image );
-$img = wpb_getImageBySize( array( 'attach_id' => $img_id, 'thumb_size' => $img_size, 'class' => 'vc_single_image-img' ) );
-if ( $img == NULL ) $img['thumbnail'] = '<img class="vc_single_image-img" src="' . vc_asset_url( 'vc/no_image.png' ) . '" />'; //' <small>'.__('This is image placeholder, edit your page to replace it.', 'js_composer').'</small>';
+$img = wpb_getImageBySize( array(
+	'attach_id' => $img_id,
+	'thumb_size' => $img_size,
+	'class' => 'vc_single_image-img'
+) );
+if ( $img == null ) {
+	$img['thumbnail'] = '<img class="vc_single_image-img" src="' . vc_asset_url( 'vc/no_image.png' ) . '" />';
+} //' <small>'.__('This is image placeholder, edit your page to replace it.', 'js_composer').'</small>';
 
 $el_class = $this->getExtraClass( $el_class );
 
-$link = vc_gitem_create_link($atts);
+$link = vc_gitem_create_link( $atts );
 //to disable relative links uncomment this..
 
 $img_output = ( $style == 'vc_box_shadow_3d' ) ? '<span class="vc_box_shadow_3d_wrap">' . $img['thumbnail'] . '</span>' : $img['thumbnail'];
-$image_string = ! empty( $link ) ? '<'. $link .'><div class="vc_single_image-wrapper ' . $style . ' ' . $border_color . '">' . $img_output . '</div></a>' : '<div class="vc_single_image-wrapper ' . $style . ' ' . $border_color . '">' . $img_output . '</div>';
+$image_string = ! empty( $link ) ? '<' . $link . '><div class="vc_single_image-wrapper ' . $style . ' ' . $border_color . '">' . $img_output . '</div></a>' : '<div class="vc_single_image-wrapper ' . $style . ' ' . $border_color . '">' . $img_output . '</div>';
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, 'wpb_single_image wpb_content_element' . $el_class . vc_shortcode_custom_css_class( $css, ' ' ), $this->settings['base'], $atts );
 $css_class .= $this->getCSSAnimation( $css_animation );
 

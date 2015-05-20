@@ -26,14 +26,13 @@ $defaults = array(
 /** @var array $atts - shortcode attributes */
 $atts = vc_shortcode_attribute_parse( $defaults, $atts );
 extract( $atts );
-$link      = vc_gitem_create_link( $atts, 'vc_icon_element-link' );
-$class     = $this->getExtraClass( $el_class );
+$link = vc_gitem_create_link( $atts, 'vc_icon_element-link' );
+$class = $this->getExtraClass( $el_class );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class, $this->settings['base'], $atts );
 $css_class .= $this->getCSSAnimation( $css_animation );
 // Enqueue needed icon font.
 vc_icon_element_fonts_enqueue( $type );
 
-$url       = vc_build_link( $link );
 $has_style = false;
 if ( strlen( $background_style ) > 0 ) {
 	$has_style = true;
@@ -50,7 +49,7 @@ if ( strlen( $background_style ) > 0 ) {
 		class="vc_icon_element-inner vc_icon_element-color-<?php echo esc_attr( $color ); ?> <?php if ( $has_style ): echo 'vc_icon_element-have-style-inner'; endif; ?> vc_icon_element-size-<?php echo esc_attr( $size ); ?>  vc_icon_element-style-<?php echo esc_attr( $background_style ); ?> vc_icon_element-background-color-<?php echo esc_attr( $background_color ); ?>"><span
 			class="vc_icon_element-icon <?php echo esc_attr( ${"icon_" . $type} ); ?>" <?php echo( $color === 'custom' ? 'style="color:' . esc_attr( $custom_color ) . ' !important"' : '' ); ?>></span><?php
 		if ( strlen( $link ) > 0 ) {
-			echo '<'.$link . ' title="' . esc_attr( $url['title'] ) . '"></a>';
+			echo '<' . $link . '></a>';
 			// echo '<a class="vc_icon_element-link" href="' . esc_attr( $url['url'] ) . '" title="' . esc_attr( $url['title'] ) . '" target="' . ( strlen( $url['target'] ) > 0 ? esc_attr( $url['target'] ) : '_self' ) . '"></a>';
 		}
 		?></div>

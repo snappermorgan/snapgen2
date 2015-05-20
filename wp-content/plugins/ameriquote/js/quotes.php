@@ -2,7 +2,8 @@
 Header("content-type: text/javascript");
 ?>
 
-
+    
+    
 (function() {
     document.write('<div id="ameriquote_wrapper" style="display:none;"></div>');
         var script_tag = document.createElement('script');
@@ -59,7 +60,23 @@ Header("content-type: text/javascript");
              head.ready(document,function(){
                   head.load("http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/jquery.js",function(){
                       head.load("http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/flat-ui.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/application.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/knockout/knockout.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/jStorage/jstorage.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/isotope/isotope.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/underscore/underscore.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/query-string.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/loading-overlay.js","http://quotes.ameriquote.com/wp-content/plugins/ameriquote/js/main.js",function(){
-                   
+                        parsed = queryString.parse(location.search);
+                     
+        
+       
+        
+        if(parsed.cpa_phone){
+            ameriquote_phone = format_telephone(parsed.cpa_phone)[0];
+            
+        }
+        
+        if(parsed.aff_id){
+            ameriquote_aff_id = parsed.aff_id;
+        }
+        
+        if(parsed.ameriquote_transaction_id){
+            ameriquote_transaction_id = parsed.ameriquote_transaction_id;
+        }
                       });
                   });
              
@@ -72,15 +89,18 @@ Header("content-type: text/javascript");
               head.feature("desktop",true);
             }
             
-            
-        ameriquote_phone = format_telephone("<?php echo ($_GET['cpa_phone']?$_GET['cpa_phone']:'8883994129');?>")[0];
-    	ameriquote_aff_id = <?php echo ($_GET['aff_id']?$_GET['aff_id']:'');?>;
-    	ameriquote_transaction_id = <?php echo ($_GET['transaction_id']?$_GET['transaction_id']:'8883994129');?>;
+               ameriquote_phone = format_telephone("<?php echo ($_GET['cpa_phone']?$_GET['cpa_phone']:'8883994129');?>")[0];
+    	                ameriquote_aff_id = <?php echo ($_GET['aff_id']?$_GET['aff_id']:'');?>;
+    	                ameriquote_transaction_id = <?php echo ($_GET['transaction_id']?$_GET['transaction_id']:'8883994129');?>;
+       
+    	
+    	
             });
         });
     }
 
     })(); // We call our anonymous function immediately
+
     
     var ameriquote_phone="";
     var ameriquote_transaction_id="";

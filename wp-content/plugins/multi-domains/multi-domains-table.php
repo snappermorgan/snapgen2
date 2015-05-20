@@ -77,7 +77,7 @@ class Multidomains_Table extends WP_List_Table {
 	 * @return string The value to display.
 	 */
 	public function column_cb( $item ) {
-		return sprintf( '<input type="checkbox" class="cb" name="%1$s[]" value="%2$s">', $this->_args['plural'], $item['domain_name'] );
+		return sprintf( '<input type="checkbox" class="cb" name="%1$s[]" value="%2$s">', $this->_args['plural'], $item['domain_name'] );	 		    	  	 	 			
 	}
 
 	/**

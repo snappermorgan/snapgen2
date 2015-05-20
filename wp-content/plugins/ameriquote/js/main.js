@@ -29,7 +29,33 @@ jQuery("document").ready(function($) {
 
 
 	}
+	function featuredRecord(data) {
+		try {
+			self = this;
 
+			self.company_name = (data.company_name?data.company_name.trim():'');
+		
+			
+			self.product_name = (data.title?data.title.trim():'');
+		
+			self.company_code = (data.company_code?data.company_code:'');
+			self.face_amount = (data.face_amount?data.face_amount:'');
+			self.phone = (data.phone?data.phone:'');
+			self.aff_id = (data.aff_id?data.aff_id:'');
+			self.transaction_id = (data.transaction_id?data.transaction_id:'');
+			self.new_category = (data.term?data.term:'');
+			self.product_code = (data.product_code?data.product_code:'');
+			self.featured_image = (data.featured_image?data.featured_image:'http://quotes.ameriquote.com/wp-content/uploads/sites/8/2015/04/ameriquote.png');
+			self.application_url = (data.application_url?data.application_url:'#');
+		}
+		catch (err) {
+			console.log(err.message);
+		}
+
+
+
+
+	}
 	function companyRecord(data) {
 		try {
 
@@ -81,7 +107,9 @@ jQuery("document").ready(function($) {
 		return age;
 	}
 
-
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	function CompulifeViewModel() {
 
 		format_telephone = function(phone_number) {
@@ -103,18 +131,25 @@ jQuery("document").ready(function($) {
 		var self = this;
 
 		$.jStorage.set("quotes", []);
-
+		$.jStorage.set("featured_quotes",[]);
 		self.isActive = false;
 		self.company = ko.observable();
 		self.builtin = new Array("Viva");
 		self.call_agent = ko.observable();
-		self.quotes = ko.observableArray($.jStorage.get("quotes"));
-
-		self.quotes.subscribe = function(data) {
+		self.quotes = ko.observableArray();
+		self.featured_quotes = ko.observableArray();
+		self.quotes.subscribe(function(data) {
 			//setUpIsotope();
 			//console.log("isotope fired");
-		}
-
+		});
+		self.featured_quotes.subscribe(function(data){
+			if(typeof data !=undefined){
+				//console.log("featured quotes subscribe:");	
+				//console.log(data);
+			}
+			
+		});
+		self.featured_quotes.extend({ notify: 'change' });
 		self.results = ko.pureComputed({
 			read: function() {
 				return _.size(self.quotes()) > 0;
@@ -133,7 +168,11 @@ jQuery("document").ready(function($) {
 		}
 		self.setUpIsotope = function() {
 			try {
-
+				
+			console.log("Starting Isotope Set up. "+Date());
+			if($(".results-grid .quote.standard-quote").length > 0 && $(".results-grid .quote.featured-quote").length > 0  ){
+				console.log("Setting up Isotope");
+				
 				$(".results-grid").isotope();
 				self.appearance();
 				//console.log("Setting up Isotope");
@@ -173,11 +212,15 @@ jQuery("document").ready(function($) {
 				if (!('ontouchstart' in window)) {
 					$('[data-toggle="tooltip"]').tooltip();
 				}
+				self.isActive = !self.isActive;
+			} else {
+			console.log("both not loaded yet");
+			}
 			}
 			catch (err) {
 				console.log(err.message);
 			}
-			self.isActive = !self.isActive;
+			
 		}
 
 		self.callAgent = function(data) {
@@ -205,10 +248,22 @@ jQuery("document").ready(function($) {
 				console(err.message);
 			}
 		}
-		self.getQuotes = function(form) {
+		self.featuredAppearance = function() {
 			try {
 
 
+				$(".results-grid .featured-quote").each(function(i) {
+					$(this).delay((i++) * 100).fadeTo(300, 1);
+				})
+			}
+			catch (err) {
+				console(err.message);
+			}
+		}
+		self.getQuotes = function(form) {
+			try {
+
+			self.quotes([]);
 				var params = {
 					State: $(form.State).val(),
 					Birthday: $(form.Birthday).val(),
@@ -241,6 +296,7 @@ jQuery("document").ready(function($) {
 								}
 							}
 						);
+				
 					},
 					converters: {
 						"text json": function(resp) {
@@ -259,28 +315,28 @@ jQuery("document").ready(function($) {
 						//console.log(result);
 						if (result && result.success) {
 
-							if (self.quotes()) {
-								self.quotes([]);
-								//console.log("Emptying Self.quotes");
-							}
+							
 							for (quote in result.results) {
 								result.results[quote].phone = ameriquote_phone;
 								result.results[quote].aff_id = ameriquote_aff_id;
 								result.results[quote].transaction_id = ameriquote_transaction_id;
+								result.results[quote].FaceAmount = numberWithCommas(result.results[quote].FaceAmount);
 								quoteObj = new quoteRecord(result.results[quote]);
 
 								if (filterQuote(quoteObj)) {
 									self.quotes.push(quoteObj);
 								}
-
+							
 							}
-
+							
+							
 							$.jStorage.set("quotes", self.quotes());
+							self.getFeatured(null,self.setUpIsotope);
 						}
 						else {
 							console.log("error");
 						}
-
+						
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
 						console.log("There was an error: " + errorThrown);
@@ -288,12 +344,13 @@ jQuery("document").ready(function($) {
 						console.log(jqXHR);
 					},
 					complete: function() {
-						self.setUpIsotope();
+						console.log("Get Quotes complete:" + Date())
+						
 					}
 				});
 			}
 			catch (err) {
-				console(err.message);
+				console.log(err.message);
 			}
 
 		};
@@ -398,7 +455,7 @@ jQuery("document").ready(function($) {
 				});
 			}
 			catch (err) {
-				console(err.message);
+				console.log(err.message);
 			}
 
 
@@ -421,11 +478,25 @@ jQuery("document").ready(function($) {
 				$container.isotope("layout");
 			}
 			catch (err) {
-				console(err.message);
+				console.log(err.message);
 			}
 		}
+		self.showFeaturedForm = function(data) {
+			try {
 
-		self.setUpIsotope();
+
+				id = data.product_code;
+				//console.log(data);
+				var $container = $(".results-grid").isotope();
+
+				$("#" + id + " .apply-form").toggle();
+				$container.isotope("layout");
+			}
+			catch (err) {
+				console.log(err.message);
+			}
+		}
+		
 		self.getCompany = function(data) {
 			try {
 
@@ -464,7 +535,102 @@ jQuery("document").ready(function($) {
 				});
 			}
 			catch (err) {
-				console(err.message);
+				console.log(err.message);
+			}
+		}
+		self.getFeatured = function(data, fn) {
+			try {
+
+				self.featured_quotes([]);
+				$.ajax({
+					url: "http://quotes.ameriquote.com/wp-json/posts?type=featured-product",
+					dataType: "json",
+					method: "GET",
+					cache: false,
+					async:false,
+					success: function(result) {
+						//result = jQuery.parseJSON(result);
+
+						if (result && result.length > 0) {
+						
+							
+
+							$.each(result,function(i,quote) {
+								//console.log(result[quote]);
+									//console.log(result);
+								company_id=quote.meta.company[0];
+								company_code="ameriquote";
+								company_name="Ameriquote";
+								featured = {};
+								//console.log(featured);
+								$.ajax({
+									url: "http://quotes.ameriquote.com/wp-json/posts?type=company&filter[ID]="+company_id,
+									dataType: "json",
+									method: "GET",
+									async: false,
+									success: function(company_result){
+										if(company_result && company_result.length > 0){
+											//console.log(company_result);
+											company_code=company_result[0].meta.company_code;
+											company_name=company_result[0].title;
+										
+										
+										}else{
+											console.log("No company found");
+										}
+										//console.log(quote);
+										featured.phone = ameriquote_phone;
+										featured.aff_id = ameriquote_aff_id;
+										featured.transaction_id = ameriquote_transaction_id;
+										featured.company_name=company_name;
+										featured.company_code=company_code;
+										featured.term = quote.meta.term;
+										featured.face_amount = "$"+numberWithCommas(quote.meta.face_amount);
+										featured.title =quote.title;
+										featured.product_code = quote.ID;
+										featured.application_url = quote.meta.application_url;
+										
+										if(_.contains(quote.meta.states, $("#ameriquote_wrapper select[name='State']").val())){
+											quoteObj = new featuredRecord(featured);
+						
+										self.featured_quotes.push(quoteObj);
+										}
+										
+									},
+									complete: function(){
+											//self.setUpIsotope();
+									}
+									
+								});
+								
+							
+
+							});
+							console.log("Featured Results parsed.");
+						
+							
+						}
+
+					
+
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.log("There was an error: " + errorThrown);
+						console.log("textStatus: " + textStatus);
+						console.log(jqXHR);
+					},
+					complete: function() {
+						console.log("Featured Quotes Complete: "+ Date());
+						$.jStorage.set("featured_quotes", self.quotes());
+								if(typeof fn == "function"){
+								//	console.log("calling function"+this.toString);
+							fn.call(this, data);
+						}
+					}
+				});
+			}
+			catch (err) {
+				console.log(err.message);
 			}
 		}
 	}

@@ -22,7 +22,7 @@ $css_class = 'vc_grid-item vc_clearfix' . ( $is_end === 'true' ? ' vc_grid-last-
              . ( strlen( $el_class ) ? ' ' . $el_class : '' )
              . ' vc_col-sm-'
              . $width
-             . ( !empty( $c_zone_position ) ? ' vc_grid-item-zone-c-' . $c_zone_position : '' );
+             . ( ! empty( $c_zone_position ) ? ' vc_grid-item-zone-c-' . $c_zone_position : '' );
 $css_class_mini = 'vc_grid-item-mini vc_clearfix ' . vc_shortcode_custom_css_class( $css, ' ' );
 $css_class .= '{{ filter_terms_css_classes }}';
 $css_style = '';
@@ -37,6 +37,6 @@ if ( strlen( $height ) > 0 ) {
 $output = '<div class="' . esc_attr( $css_class ) . '"'
           . ( empty( $css_style ) ? '' : ' style="' . esc_attr( $css_style ) . '"' )
           . '><div class="' . $css_class_mini . '">' . do_shortcode( $content )
-          . '</div></div>'
+          . '</div><div class="vc_clearfix"></div></div>'
           . '';
 echo $output;

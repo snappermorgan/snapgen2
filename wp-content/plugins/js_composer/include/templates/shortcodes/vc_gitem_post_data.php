@@ -4,7 +4,7 @@ $output = $text = $google_fonts = $font_container = $el_class = $css = $google_f
 extract( $this->getAttributes( $atts ) );
 extract( $this->getStyles( $el_class, $css, $google_fonts_data, $font_container_data, $atts ) );
 $data_source = $this->getDataSource( $atts );
-if(isset($atts['link']) && $atts['link'] !== '' && $atts['link'] !== 'none') {
+if ( isset( $atts['link'] ) && $atts['link'] !== '' && $atts['link'] !== 'none' ) {
 	$link_html = vc_gitem_create_link( $atts );
 }
 $use_custom_fonts = isset( $atts['use_custom_fonts'] ) && 'yes' === $atts['use_custom_fonts'];

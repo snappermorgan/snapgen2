@@ -3,10 +3,10 @@
 Plugin Name: Multi-Domains for Multisite
 Plugin URI: http://premium.wpmudev.org/project/multi-domains/
 Description: Easily allow users to create new sites (blogs) at multiple different domains - using one install of WordPress Multisite you can support blogs at name.domain1.com, name.domain2.com etc.
-Version: 1.3.2
+Version: 1.3.4.3
 Network: true
 Text Domain: multi_domain
-Author: Incsub
+Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
 WDP ID: 154
 */
@@ -36,6 +36,7 @@ if( !is_multisite() ) {
 }
 
 require_once dirname( __FILE__ ) . '/extra/wpmudev-dash-notification.php';
+include_once dirname( __FILE__ ) . "/multi-domains-sso.php";
 
 class multi_domain {
 
@@ -49,9 +50,9 @@ class multi_domain {
 	/**
 	 * Plugin version
 	 *
-	 * @var string
+	 * @var stringget
 	 */
-	var $version = '1.3.2';
+	var $version = '1.3.4.2';
 
 	/**
 	 * Sunrise version
@@ -81,6 +82,8 @@ class multi_domain {
 	 */
 	var $domains = array();
 
+
+
 	/**
 	 * Constructor
 	 */
@@ -103,6 +106,15 @@ class multi_domain {
 		if ( is_network_admin() && is_subdomain_install() && !$skip_site_search ) {
 			add_filter( 'query', array( $this, 'subdomain_filter_site_search_query' ) );
 		}
+
+
+        /**
+         * Handle cross domain single sign on if domain mapping's single signon is not active
+         */
+        $mapping_options = get_site_option("domain_mapping");
+        if ( get_site_option( 'multi_domains_single_signon' ) === 'enabled' &&   ( !class_exists("Domainmap_Module_Cdsso") || ( class_exists("Domainmap_Module_Cdsso") && false === $mapping_options['map_crossautologin'] ) ) ) {
+            new Multidomains_Sso();
+        }
 	}
 
 	function subdomain_filter_site_search_query( $query ) {
@@ -180,15 +192,6 @@ class multi_domain {
 		add_action( 'signup_blogform', array( $this, 'extend_signup_blogform' ) ); // default and buddypress blog creation forms
 		add_action( 'bp_signup_blog_url_errors', array( $this, 'extend_signup_blogform' ) ); // buddypress signup form
 		add_action( 'admin_footer', array( $this, 'extend_admin_blogform' ) ); // admin site creation form
-		// Cross domain cookies
-		if ( get_site_option( 'multi_domains_single_signon' ) == 'enabled' ) {
-			add_action( 'wp_loaded', array( $this, 'maybe_logout_user' ) );
-			add_action( 'admin_head', array( $this, 'build_cookie' ) );
-			if ( defined( 'BP_VERSION' ) ) {
-				add_action( 'wp_head', array( $this, 'build_cookie' ) );
-			}
-			add_action( 'check_admin_referer', array( $this, 'build_logout_cookie' ) );
-		}
 
 		// modify blog columns on Super Admin > Sites page
 		add_filter( 'wpmu_blogs_columns', array( $this, 'blogs_columns' ) );
@@ -479,7 +482,7 @@ class multi_domain {
 			<?php if ( !defined( 'SUNRISE' ) ) : ?>
 				<div id="message" class="error">
 					<p><?php
-						printf( __( 'Please uncomment the line %s in the %s file.', $this->textdomain ), "<em>//define( 'SUNRISE', 'on' );</em>", ABSPATH . wp-config.php )
+						printf( __( 'Please uncomment the line %s in the %s file.', $this->textdomain ), "<em>//define( 'SUNRISE', 'on' );</em>", ABSPATH . 'wp-config.php' )
 					?></p>
 				</div>
 			<?php endif; ?>
@@ -574,7 +577,7 @@ class multi_domain {
 
 		?><h3><?php _e( 'Add Domain', $this->textdomain ) ?></h3>
 
-		<p><?php echo $description ?></p>
+		<p style="padding-right: 5px"><?php echo $description ?></p>
 
 		<form id="domain-add" method="post" action="<?php echo $submit_url ?>">
 			<table class="form-table">
@@ -722,12 +725,14 @@ class multi_domain {
 
 	/**
 	 * Restore $current_site global.
+     * @deprecated 1.3.4.1
 	 */
 	function restore_current_site() {
+        return;
 		global $current_site;
-		$current_site = $this->current_site;
-		$this->current_site = '';
-	}
+        $current_site = $this->current_site;
+        $this->current_site = '';
+    }
 
 	/**
 	 * Set $current_site and $domain globals with values chosen by the user.
@@ -813,6 +818,8 @@ class multi_domain {
 			echo '<span id="domain">', $domains[0]['domain_name'], '<input type="hidden" name="domain" value="', $domains[0]['domain_name'], '"></span>';
 		}
 	}
+
+
 
 	/**
 	* Adds domain choice to the Super Admin New Site form
@@ -952,111 +959,8 @@ class multi_domain {
 		}
 	}
 
-	/**
-	 * Log user out if value set in database.
-	 */
-	function maybe_logout_user() {
-		$dom = str_replace( '.', '', $_SERVER['HTTP_HOST'] );
-		$key = (array)get_site_option( "multi_domains_cross_domain_$dom" );
-
-		if ( is_user_logged_in() ) {
-			$user_id = get_current_user_id();
-			if ( array_key_exists( $user_id, $key ) && $key[$user_id]['action'] == 'logout' ) {
-				wp_clear_auth_cookie();
-
-				delete_transient( "multi_domains_{$dom}_{$user_id}" );
-
-				unset( $key[$user_id] );
-				update_site_option( "multi_domains_cross_domain_$dom", $key );
-
-				$referer = wp_get_referer();
-				$proto = is_ssl() ? 'https://' : 'http://';
-				$redirect = ( strpos( $_SERVER['REQUEST_URI'], '/options.php' ) && $referer ) ? $referer : $proto . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-				wp_redirect( wp_login_url( $redirect, true ) );
-				exit();
-			}
-		}
-	}
-
-	/**
-	 * Build logout cookie.
-	 */
-	function build_logout_cookie( $action ) {
-
-		$dom = str_replace( '.', '', $_SERVER[ 'HTTP_HOST' ] );
-		$key = (array)get_site_option( "multi_domains_cross_domain_$dom" );
-
-		if ( 'log-out' == $action ) {
-			$this->build_cookie( 'logout' );
-
-			$user_id = get_current_user_id();
-			unset( $key[$user_id] );
-			update_site_option( "multi_domains_cross_domain_$dom", $key );
-		}
-	}
-
-	/**
-	 * Build login cookie.
-	 */
-	function build_cookie( $action = 'login' ) {
-		$blogs = get_blogs_of_user( get_current_user_id() );
-		if ( is_array( $blogs ) ) {
-			foreach ( $blogs as $val ) {
-				$this->build_blog_cookie( $action, $val->userblog_id );
-			}
-		}
-
-	}
-
-	/**
-	 * Build login cookie.
-	 */
-	function build_blog_cookie( $action = 'login', $userblog_id = ''  ) {
-
-		global $blog_id;
-
-		if( $action == '' ) $action = 'login';
-
-		$url = false;
-
-		if ( class_exists( 'domain_map' ) && defined( 'DOMAIN_MAPPING' ) ) {
-			$domain = $this->db->get_var( "SELECT domain FROM {$this->db->dmtable} WHERE blog_id = '{$userblog_id}' ORDER BY id LIMIT 1" );
-			if($domain) {
-				$dom = str_replace( '.', '', $domain );
-				$url = 'http://' . $domain . '/';
-			}
-		} else {
-			$domains = $this->db->get_row( "SELECT domain, path FROM {$this->db->blogs} WHERE blog_id = '{$userblog_id}' LIMIT 1" );
-			$dom = str_replace( '.', '', $domains->domain );
-			$url = 'http://' . $domains->domain . $domains->path;
-		}
-
-		if( $url ) {
-			$key = get_site_option( "multi_domains_cross_domain_$dom", array() );
-
-			$user_id = get_current_user_id();
-
-			if( ! isset( $key[$user_id]['action'] ) || ( isset( $key[$user_id]['action'] ) && $key[$user_id]['action'] !== $action ) ) {
-				$key[$user_id] = array (
-					'domain'	=> $url,
-					'action'	=> $action
-				);
-
-				update_site_option( "multi_domains_cross_domain_$dom", $key );
-			}
-
-			$hash = md5( AUTH_KEY . 'multi_domains' );
-
-			if ( $blog_id !== $userblog_id && 'login' == $action /*&& get_transient( "multi_domains_{$dom}_{$user_id}" ) !== 'add'*/ ) { // Removing transient check
-				echo '<link rel="stylesheet" href="' . $url . $hash . '.css?build=' . date( "Ymd", strtotime( '-24 days' ) ) . '&id=' . $user_id .'" type="text/css" media="screen" />';
-
-				set_transient( "multi_domains_{$dom}_{$user_id}", 'add', 60 * 15 );
-			}
-		}
 
 
-	}
 
 	/**
 	 * Build stylesheet for cookie.
@@ -1096,58 +1000,93 @@ class multi_domain {
 	 * Upgrades sunrise.php file if need be.
 	 */
 	function upgrade_sunrise() {
-		// if sunrise.php has the latest version, then return
-		$defined = defined( 'MULTIDOMAINS_SUNRISE_VERSION' );
-		if ( $defined && version_compare( MULTIDOMAINS_SUNRISE_VERSION, $this->sunrise, '=' ) ) {
-			return;
-		}
+      if ( defined( 'SUNRISE' ) ) {
+        $dest = WP_CONTENT_DIR . '/sunrise.php';
+        $source = dirname( __FILE__ ) . '/sunrise.php';
 
-		$global_sunrise = WP_CONTENT_DIR . '/sunrise.php';
-		$local_sunrise = dirname( __FILE__ ) . '/sunrise.php';
+        $need_update = false;
+        $need_update |= !file_exists( $dest );
+        $need_update |= !defined( 'MULTIDOMAINS_SUNRISE_VERSION' ) || version_compare( MULTIDOMAINS_SUNRISE_VERSION, $this->sunrise, '<' );
 
-		// return if local sunrise.php file is not readable
-		if ( !is_readable( $local_sunrise ) ) {
-			return;
-		}
-
-		// copy new sunrise.php file or upgrade existing one
-		if ( file_exists( $global_sunrise ) ) {
-			// return if we can't write into sunrise.php file
-			if ( !is_writable( $global_sunrise ) ) {
-				return;
-			}
-
-			$global_content = file_get_contents( $global_sunrise );
-			$local_content = file_get_contents( $local_sunrise );
-			$pattern = sprintf( '/%s.*?%s/is', preg_quote( 'function multi_domains_sunrise()', '/' ), preg_quote( 'multi_domains_sunrise();', '/' ) );
-
-			// files is already exists, update it
-			if ( $defined ) {
-				// if version was defined but is deprecated, then replace old content on new content
-				if ( preg_match( $pattern, $local_content, $matches ) ) {
-					$global_content = preg_replace( $pattern, $matches[0], $global_content );
-				}
-			} else {
-				// version wasn't defined, so check if domain mapping was defined
-				if ( preg_match( "/\'DOMAIN_MAPPING\'/m", $global_content ) ) {
-					// check if it is old version of dm_sunrise.php file
-					if ( preg_match( "/\'md_domains\'/m", $global_content ) ) {
-						$global_content = $local_content;
-					} elseif ( preg_match( $pattern, $local_content, $matches ) ) {
-						$global_content .= PHP_EOL . PHP_EOL . $matches[0];
-					}
-				} else {
-					$global_content = $local_content;
-				}
-			}
-
-			file_put_contents( $global_sunrise, $global_content );
-
-		// copy new sunrise.php if we can write into wp-content directory
-		} elseif ( is_writable( WP_CONTENT_DIR ) ) {
-			@copy( $local_sunrise, $global_sunrise );
-		}
+        if ( $need_update && is_writable( WP_CONTENT_DIR ) && is_readable( $source ) ) {
+          @copy( $source, $dest );
+        }
+      }
 	}
+
+    /**
+     * Registers an action hook.
+     *
+     * @since 1.3.3
+     * @uses add_action() To register action hook.
+     *
+     * @access protected
+     * @param string $tag The name of the action to which the $method is hooked.
+     * @param string $method The name of the method to be called.
+     * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
+     * @param int $accepted_args optional. The number of arguments the function accept (default 1).
+     * @return $this
+     */
+    protected function _add_action( $tag, $method = '', $priority = 10, $accepted_args = 1 ) {
+        add_action( $tag, array( $this, empty( $method ) ? $tag : $method ), $priority, $accepted_args );
+        return $this;
+    }
+
+    /**
+     * Registers AJAX action hook.
+     *
+     * @since 1.3.3
+     *
+     * @access public
+     * @param string $tag The name of the AJAX action to which the $method is hooked.
+     * @param string $method Optional. The name of the method to be called. If the name of the method is not provided, tag name will be used as method name.
+     * @param boolean $private Optional. Determines if we should register hook for logged in users.
+     * @param boolean $public Optional. Determines if we should register hook for not logged in users.
+     * @return $this
+     */
+    protected function _add_ajax_action( $tag, $method = '', $private = true, $public = false ) {
+        if ( $private ) {
+            $this->_add_action( 'wp_ajax_' . $tag, $method );
+        }
+
+        if ( $public ) {
+            $this->_add_action( 'wp_ajax_nopriv_' . $tag, $method );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Registers a filter hook.
+     *
+     * @since 1.3.3
+     * @uses add_filter() To register filter hook.
+     *
+     * @access protected
+     * @param string $tag The name of the filter to hook the $method to.
+     * @param type $method The name of the method to be called when the filter is applied.
+     * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
+     * @param int $accepted_args optional. The number of arguments the function accept (default 1).
+     * @return $this
+     */
+    protected function _add_filter( $tag, $method = '', $priority = 10, $accepted_args = 1 ) {
+        add_filter( $tag, array( $this, empty( $method ) ? $tag : $method ), $priority, $accepted_args );
+        return $this;
+    }
+
+
+    /**
+     * Retrieves domains from the database
+     *
+     * @since 1.3.4
+     * @access protected
+     *
+     * @return array
+     */
+    protected function get_original_domains(){
+        global $wpdb;
+        return $wpdb->get_col("SELECT `domain` FROM " . $wpdb->site);
+    }
 
 }
 
