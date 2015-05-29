@@ -14,11 +14,12 @@ div.params {
 }
 
 #ameriquote_body>.row {
+   display: flex;
   display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;      /* TWEENER - IE 10 */
   display: -webkit-flex;     /* NEW - Chrome */
-  display: flex;
+
   
 flex-direction: row;
  -webkit-box-orient: horizontal;
@@ -68,32 +69,39 @@ div.params ul li label {
     width:100%;
     display:none;
 }
-
-.featured-quote {
+.quote.tile {
+    background-color:#EBEDED;
+}
+.featured-quote.tile {
     display:block;
       border: 1px solid rgb(198, 198, 198);
       background-color: #DBE1EC;
 }
 .featured {
-  
-  margin-left: 25%;
   font-size: 26px;
-
   font-weight: bold;
   color: #1abc9c;
+  margin-right:25px;
+}
+.featured-wrapper {
+float: right;
+  margin-top: 5px;
 }
 .application {
-    width: 142px;
-  margin-top: 10px;
-  float:right;
-};
+  width: 142px;
+  margin-top: 6px;
+  float: right;
+  line-height: 12px;
+}
  .quote .title, .featured-quote .title  {
      font-weight: bold;
  }
-.results-grid .col-lg-6, .results-grid .col-md-6, .results-grid .col-sm-6 {
+.results-grid .col-lg-6, .results-grid .col-md-6, .results-grid .col-sm-6,.comparion-results-grid .col-lg-6, .comparison-results-grid .col-md-6, .comparison-results-grid .col-sm-6 {
     width:48%;
 }
-
+.comparision-results {
+    display:none;
+}
 .quote label,.featured-quote label {
     line-height: 15px;
     font-weight: bold;
@@ -117,6 +125,7 @@ div.params ul li label {
 .quote .logo-pic img,.featured-quote .logo-pic img {
     vertical-align: middle;
     max-width:165px;
+    display:inline;
     
 }
 
@@ -132,6 +141,18 @@ div.params ul li label {
   float: right;
   margin-top: 20px;
   margin-right: 15px;
+}
+
+.saved {
+ cursor: pointer;
+  color: #1abc9c;
+  float:right; 
+}
+.return {
+    display:none;
+    float:right;
+     cursor: pointer;
+  color: #1abc9c; 
 }
 .footer-icons {
     margin-top:15px;
@@ -226,7 +247,7 @@ div.params ul li label {
    
   height: 469px;
   width: 100%;
-  
+  position: absolute;
 }
 @media (max-width: 679px){
     .lander {
@@ -235,6 +256,13 @@ div.params ul li label {
     #ameriquote_body > .row {
         display:block;
         
+    }
+    .quote .logo-pic img, .featured-quote .logo-pic img {
+        max-width:120px;
+    }
+
+    #ameriquote_body {
+        background-image: none;
     }
 }
 @media (max-width: 480px) {
@@ -262,3 +290,4 @@ div.params ul li label {
     }
     
 }
+

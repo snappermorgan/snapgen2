@@ -4,52 +4,44 @@
   font-weight: 900;
   src: url(../fonts/lato/lato-black.eot);
   src: url(../fonts/lato/lato-black.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-black.woff) format("woff"), url(../fonts/lato/lato-black.ttf) format("truetype"), url(../fonts/lato/lato-black.svg#latoblack) format("svg"); }
-
 @font-face {
   font-family: Lato;
   font-style: normal;
   font-weight: 700;
   src: url(../fonts/lato/lato-bold.eot);
   src: url(../fonts/lato/lato-bold.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-bold.woff) format("woff"), url(../fonts/lato/lato-bold.ttf) format("truetype"), url(../fonts/lato/lato-bold.svg#latobold) format("svg"); }
-
 @font-face {
   font-family: Lato;
   font-style: italic;
   font-weight: 700;
   src: url(../fonts/lato/lato-bolditalic.eot);
   src: url(../fonts/lato/lato-bolditalic.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-bolditalic.woff) format("woff"), url(../fonts/lato/lato-bolditalic.ttf) format("truetype"), url(../fonts/lato/lato-bolditalic.svg#latobold-italic) format("svg"); }
-
 @font-face {
   font-family: Lato;
   font-style: italic;
   font-weight: 400;
   src: url(../fonts/lato/lato-italic.eot);
   src: url(../fonts/lato/lato-italic.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-italic.woff) format("woff"), url(../fonts/lato/lato-italic.ttf) format("truetype"), url(../fonts/lato/lato-italic.svg#latoitalic) format("svg"); }
-
 @font-face {
   font-family: Lato;
   font-style: normal;
   font-weight: 300;
   src: url(../fonts/lato/lato-light.eot);
   src: url(../fonts/lato/lato-light.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-light.woff) format("woff"), url(../fonts/lato/lato-light.ttf) format("truetype"), url(../fonts/lato/lato-light.svg#latolight) format("svg"); }
-
 @font-face {
   font-family: Lato;
   font-style: normal;
   font-weight: 400;
   src: url(../fonts/lato/lato-regular.eot);
   src: url(../fonts/lato/lato-regular.eot?#iefix) format("embedded-opentype"), url(../fonts/lato/lato-regular.woff) format("woff"), url(../fonts/lato/lato-regular.ttf) format("truetype"), url(../fonts/lato/lato-regular.svg#latoregular) format("svg"); }
-
 @font-face {
   font-family: Flat-UI-Icons;
   src: url(../fonts/glyphicons/flat-ui-icons-regular.eot);
   src: url(../fonts/glyphicons/flat-ui-icons-regular.eot?#iefix) format("embedded-opentype"), url(../fonts/glyphicons/flat-ui-icons-regular.woff) format("woff"), url(../fonts/glyphicons/flat-ui-icons-regular.ttf) format("truetype"), url(../fonts/glyphicons/flat-ui-icons-regular.svg#flat-ui-icons-regular) format("svg"); }
-
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url(../fonts/glyphicons-halflings-regular.eot);
   src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format("embedded-opentype"), url(../fonts/glyphicons-halflings-regular.woff2) format("woff2"), url(../fonts/glyphicons-halflings-regular.woff) format("woff"), url(../fonts/glyphicons-halflings-regular.ttf) format("truetype"), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format("svg"); }
-
 #ameriquote_wrapper {
   /*!
    * Bootstrap v3.3.4 (http://getbootstrap.com)
@@ -58,72 +50,10 @@
    */
   /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
   /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
-  @-webkit-keyframes progress-bar-stripes {
-    from {
-      background-position: 40px 0; }
-
-    to {
-      background-position: 0 0; } }
-
-  @-o-keyframes progress-bar-stripes {
-    from {
-      background-position: 40px 0; }
-
-    to {
-      background-position: 0 0; } }
-
-  @keyframes progress-bar-stripes {
-    from {
-      background-position: 40px 0; }
-
-    to {
-      background-position: 0 0; } }
-
-  @-ms-viewport {
-    width: device-width; }
-
   /*!
    * Flat UI Free v2.2.2 (http://designmodo.github.io/Flat-UI/)
    * Copyright 2013-2014 Designmodo, Inc.
-   */
-  @-webkit-keyframes sharp {
-    0% {
-      background-color: #e74c3c;
-      border-radius: 10px;
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg); }
-
-    50% {
-      background-color: #ebedee;
-      border-radius: 0;
-      -webkit-transform: rotate(180deg);
-      transform: rotate(180deg); }
-
-    100% {
-      background-color: #e74c3c;
-      border-radius: 10px;
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg); } }
-
-  @keyframes sharp {
-    0% {
-      background-color: #e74c3c;
-      border-radius: 10px;
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg); }
-
-    50% {
-      background-color: #ebedee;
-      border-radius: 0;
-      -webkit-transform: rotate(180deg);
-      transform: rotate(180deg); }
-
-    100% {
-      background-color: #e74c3c;
-      border-radius: 10px;
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg); } }
- }
+   */ }
   #ameriquote_wrapper html {
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
@@ -233,7 +163,7 @@
     padding: 0; }
   @media print {
     #ameriquote_wrapper *, #ameriquote_wrapper :after, #ameriquote_wrapper :before {
-      color: black !important;
+      color: #000 !important;
       text-shadow: none !important;
       background: 0 0 !important;
       -webkit-box-shadow: none !important;
@@ -261,19 +191,19 @@
     #ameriquote_wrapper h2, #ameriquote_wrapper h3 {
       page-break-after: avoid; }
     #ameriquote_wrapper select {
-      background: white !important; }
+      background: #fff !important; }
     #ameriquote_wrapper .navbar {
       display: none; }
     #ameriquote_wrapper .btn > .caret, #ameriquote_wrapper .dropup > .btn > .caret {
-      border-top-color: black !important; }
+      border-top-color: #000 !important; }
     #ameriquote_wrapper .label {
       border: 1px solid #000; }
     #ameriquote_wrapper .table {
       border-collapse: collapse !important; }
     #ameriquote_wrapper .table td, #ameriquote_wrapper .table th {
-      background-color: white !important; }
+      background-color: #fff !important; }
     #ameriquote_wrapper .table-bordered td, #ameriquote_wrapper .table-bordered th {
-      border: 1px solid #dddddd !important; } }
+      border: 1px solid #ddd !important; } }
   #ameriquote_wrapper .glyphicon {
     position: relative;
     top: 1px;
@@ -818,7 +748,7 @@
     box-sizing: border-box; }
   #ameriquote_wrapper html {
     font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+    -webkit-tap-highlight-color: transparent; }
   #ameriquote_wrapper body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
@@ -3211,6 +3141,21 @@
     border-top-color: #e4b9c0; }
   #ameriquote_wrapper .alert-danger .alert-link {
     color: #843534; }
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0; }
+  to {
+    background-position: 0 0; } }
+@-o-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0; }
+  to {
+    background-position: 0 0; } }
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0; }
+  to {
+    background-position: 0 0; } }
   #ameriquote_wrapper .progress {
     height: 20px;
     margin-bottom: 20px;
@@ -4052,7 +3997,7 @@
     text-indent: -999px;
     cursor: pointer;
     background-color: #000 \9;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     border: 1px solid #fff;
     border-radius: 10px; }
   #ameriquote_wrapper .carousel-indicators .active {
@@ -4118,6 +4063,9 @@
     display: none !important; }
   #ameriquote_wrapper .affix {
     position: fixed; }
+@-ms-viewport {
+  #ameriquote_wrapper {
+    width: device-width; } }
   #ameriquote_wrapper .visible-lg, #ameriquote_wrapper .visible-md, #ameriquote_wrapper .visible-sm, #ameriquote_wrapper .visible-xs {
     display: none !important; }
   #ameriquote_wrapper .visible-lg-block, #ameriquote_wrapper .visible-lg-inline, #ameriquote_wrapper .visible-lg-inline-block, #ameriquote_wrapper .visible-md-block, #ameriquote_wrapper .visible-md-inline, #ameriquote_wrapper .visible-md-inline-block, #ameriquote_wrapper .visible-sm-block, #ameriquote_wrapper .visible-sm-inline, #ameriquote_wrapper .visible-sm-inline-block, #ameriquote_wrapper .visible-xs-block, #ameriquote_wrapper .visible-xs-inline, #ameriquote_wrapper .visible-xs-inline-block {
@@ -7769,6 +7717,38 @@
     border-radius: 10px;
     -webkit-animation: sharp 2s ease infinite;
     animation: sharp 2s ease infinite; }
+@-webkit-keyframes sharp {
+  0% {
+    background-color: #e74c3c;
+    border-radius: 10px;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  50% {
+    background-color: #ebedee;
+    border-radius: 0;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg); }
+  100% {
+    background-color: #e74c3c;
+    border-radius: 10px;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@keyframes sharp {
+  0% {
+    background-color: #e74c3c;
+    border-radius: 10px;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  50% {
+    background-color: #ebedee;
+    border-radius: 0;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg); }
+  100% {
+    background-color: #e74c3c;
+    border-radius: 10px;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
   #ameriquote_wrapper .todo {
     margin-bottom: 20px;
     color: #798795;
@@ -8151,6 +8131,7 @@
     min-height: 460px;
     opacity: .9; }
   #ameriquote_wrapper #ameriquote_body > .row {
+    display: flex;
     display: -webkit-box;
     /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;
@@ -8159,7 +8140,6 @@
     /* TWEENER - IE 10 */
     display: -webkit-flex;
     /* NEW - Chrome */
-    display: flex;
     flex-direction: row;
     -webkit-box-orient: horizontal; }
   #ameriquote_wrapper #ameriquote_body .search-col {
@@ -8194,23 +8174,31 @@
     /*margin-top: 10px;*/
     width: 100%;
     display: none; }
-  #ameriquote_wrapper .featured-quote {
+  #ameriquote_wrapper .quote.tile {
+    background-color: #EBEDED; }
+  #ameriquote_wrapper .featured-quote.tile {
     display: block;
     border: 1px solid #c6c6c6;
     background-color: #DBE1EC; }
   #ameriquote_wrapper .featured {
-    margin-left: 25%;
     font-size: 26px;
     font-weight: bold;
-    color: #1abc9c; }
+    color: #1abc9c;
+    margin-right: 25px; }
+  #ameriquote_wrapper .featured-wrapper {
+    float: right;
+    margin-top: 5px; }
   #ameriquote_wrapper .application {
     width: 142px;
-    margin-top: 10px;
-    float: right; }
+    margin-top: 6px;
+    float: right;
+    line-height: 12px; }
   #ameriquote_wrapper .quote .title, #ameriquote_wrapper .featured-quote .title {
     font-weight: bold; }
-  #ameriquote_wrapper .results-grid .col-lg-6, #ameriquote_wrapper .results-grid .col-md-6, #ameriquote_wrapper .results-grid .col-sm-6 {
+  #ameriquote_wrapper .results-grid .col-lg-6, #ameriquote_wrapper .results-grid .col-md-6, #ameriquote_wrapper .results-grid .col-sm-6, #ameriquote_wrapper .comparion-results-grid .col-lg-6, #ameriquote_wrapper .comparison-results-grid .col-md-6, #ameriquote_wrapper .comparison-results-grid .col-sm-6 {
     width: 48%; }
+  #ameriquote_wrapper .comparision-results {
+    display: none; }
   #ameriquote_wrapper .quote label, #ameriquote_wrapper .featured-quote label {
     line-height: 15px;
     font-weight: bold;
@@ -8227,7 +8215,8 @@
     margin-left: 20px; }
   #ameriquote_wrapper .quote .logo-pic img, #ameriquote_wrapper .featured-quote .logo-pic img {
     vertical-align: middle;
-    max-width: 165px; }
+    max-width: 165px;
+    display: inline; }
   #ameriquote_wrapper #sorts {
     margin-bottom: 10px;
     margin-top: 10px; }
@@ -8238,6 +8227,15 @@
     float: right;
     margin-top: 20px;
     margin-right: 15px; }
+  #ameriquote_wrapper .saved {
+    cursor: pointer;
+    color: #1abc9c;
+    float: right; }
+  #ameriquote_wrapper .return {
+    display: none;
+    float: right;
+    cursor: pointer;
+    color: #1abc9c; }
   #ameriquote_wrapper .footer-icons {
     margin-top: 15px; }
   #ameriquote_wrapper .footer-icons .icon, #ameriquote_wrapper .call-pop .icon {
@@ -8301,12 +8299,17 @@
     background-color: transparent; }
   #ameriquote_wrapper .lander {
     height: 469px;
-    width: 100%; }
+    width: 100%;
+    position: absolute; }
   @media (max-width: 679px) {
     #ameriquote_wrapper .lander {
       display: none; }
     #ameriquote_wrapper #ameriquote_body > .row {
-      display: block; } }
+      display: block; }
+    #ameriquote_wrapper .quote .logo-pic img, #ameriquote_wrapper .featured-quote .logo-pic img {
+      max-width: 120px; }
+    #ameriquote_wrapper #ameriquote_body {
+      background-image: none; } }
   @media (max-width: 480px) {
     #ameriquote_wrapper .monthly {
       font-size: 1.2em;
@@ -8325,8 +8328,7 @@
       font-size: 13px; } }
 
 #ameriquote_wrapper {
-  position: relative;
-  overflow: hidden; }
+  position: relative; }
 
 #ameriquote_wrapper .mobile-contact, #ameriquote_wrapper .desktop-contact {
   display: none; }
@@ -8336,3 +8338,76 @@
 
 .desktop #ameriquote_wrapper .desktop-contact {
   display: block; }
+
+@font-face {
+  font-family: "demo";
+  src: url("http://quotes.ameriquote.com/wp-content/plugins/ameriquote/fonts/icons.woff") format("woff"), url("http://quotes.ameriquote.com/wp-content/plugins/ameriquote/fonts/icons.ttf") format("truetype"); }
+@keyframes loadingStart {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@keyframes loading {
+  0% {
+    transform: rotate(0deg); }
+  50% {
+    transform: rotate(180deg); }
+  100% {
+    transform: rotate(360deg); } }
+.loading {
+  position: relative;
+  pointer-events: none; }
+
+#ameriquote_wrapper.loading .loading-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-animation: loadingStart .5s 300ms linear 1 both;
+  -moz-animation: loadingStart .5s 300ms linear 1 both;
+  -o-animation: loadingStart .5s 300ms linear 1 both;
+  animation: loadingStart .5s 300ms linear 1 both;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  z-index: 10000; }
+
+#ameriquote_wrapper.loading .loading-text {
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+  text-shadow: white 0 0 1em, white 0 0 0.5em, white 0 0 0.25em;
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  font-weight: bold; }
+
+#ameriquote_wrapper.loading .loading-text:after {
+  content: "..."; }
+
+#ameriquote_wrapper.loading .loading-spinner {
+  position: absolute;
+  top: 150px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: -3.9375rem auto 0;
+  color: #1a1d1d;
+  text-align: center; }
+
+#ameriquote_wrapper.loading .loading-icon {
+  font-size: 4.8125rem;
+  line-height: 5.25rem;
+  text-shadow: rgba(255, 255, 255, 0.75) 0 0 0.5em;
+  -webkit-animation: loading 1s steps(4) infinite;
+  -moz-animation: loading 1s steps(4) infinite;
+  -o-animation: loading 1s steps(4) infinite;
+  animation: loading 1s steps(4) infinite;
+  display: block;
+  vertical-align: middle; }
+
+#ameriquote_wrapper.loading .loading-icon:before {
+  vertical-align: middle;
+  content: "\e000";
+  font-family: "demo"; }
+
+/*# sourceMappingURL=styles.css.map */

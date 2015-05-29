@@ -365,7 +365,7 @@ form div {
 .post-edit {
 	float: right;
 }
-
+
 
 /* =Container IE Fixes (Modernizr)
 -------------------------------------------------------------- */
@@ -1597,4 +1597,39 @@ strong.search-excerpt { background: yellow; }
 	text-align:center;
 	}
 
+}
+
+/* custom rules */
+
+.page .page-header, .post-meta {
+	display:none;
+}
+
+.page .wp-caption {
+	  min-height: 185px;
+	  float:left;
+}
+
+.page-id-603 .well {
+	float:left;
+}
+
+.page-id-603 .post-entry {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+  flex-direction: row;
+ -webkit-box-orient: horizontal;
+  justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+
+#menu-right-footer {
+	margin-top:35px;
+}
+
+.footer-banner {
+	padding-top:30px;
 }

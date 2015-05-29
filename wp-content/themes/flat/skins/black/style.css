@@ -1,0 +1,51 @@
+/*  
+Skin Name: Black
+Version: 1.0
+Description: Skin for Flat
+*/
+
+#headerwrap,
+#respond #cancel-comment-reply-link,
+.post-nav span span,
+.pagenav a,
+.post .carousel-pager .selected,
+.slider .carousel-pager .selected,
+.module-slider .carousel-pager a.selected,
+.skillset li span{
+	background: #000 !important;
+}
+#main-nav ul,
+.back-top a {
+	background: #555 !important;
+}
+.back-top a:hover {
+	background: #ccc !important;
+}
+
+#main-nav ul a:hover, 
+#main-nav .current_page_item ul a:hover, 
+#main-nav ul .current_page_item a:hover, 
+#main-nav .current-menu-item ul a:hover, 
+#main-nav ul .current-menu-item a:hover {
+	color: #ccc;
+}
+.timeline .timeline-dot {
+	color: #000;
+}
+#main-nav ul:before {
+	border-bottom: 8px solid #555;
+}
+#main-nav ul ul:before {
+	border-right: 8px solid #ccc;
+}
+#main-nav a,
+#site-logo a,
+#site-description {
+	color: #fff;
+}
+#main-nav a:hover {
+	color: #ccc;
+}
+#main-nav .current_page_item a, #main-nav .current-menu-item a {
+	background: #555;
+}

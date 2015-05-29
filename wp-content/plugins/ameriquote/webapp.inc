@@ -334,24 +334,25 @@
             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 results-col">
                 <div class="lander"></div>
                  <div id="sorts" class="button-group row" data-bind="visible: results">
-                     <div class="sort col-lg-2 col-md-2 col-sm-12 col-xs-12">Sort By:</div>
-                     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                      <div class="btn btn-info btn-inverse" data-sort-by="premium">Premium</div>
+                    <div class="sort col-lg-2 col-md-2 col-sm-12 col-xs-12">Sort By:</div>
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                        <div class="btn btn-info btn-inverse" data-sort-by="premium">Premium</div>
                         <div class="btn btn-info" data-sort-by="company">Company</div>
-  
-                        <div class="btn btn-info" data-sort-by="health">Health Category</div>   
-                     </div>
-
-
-
-</div>
-                <div class="no-results" data-bind="visible: !results">Sorry. There are no results for your result. Please make changes to your search and try again.</div>
+                        <div class="fa fa-bookmark fa-3x saved" data-toggle="tooltip" data-placement="bottom" title="Saved Quotes" data-bind="click: savedQuotes"></div> 
+                        <div class="fa fa-arrow-circle-left fa-3x return" data-toggle="tooltip" data-placement="bottom" title="Return to Search Results" data-bind="click: returnResults"></div>
+                    </div>
+                </div>
+                
+                <div class="no-results" data-bind="visible: !results">Sorry. There are no results for your search. Please make changes to your search and try again.</div>
                 <div class="results">
                      <div class="results-grid">
                    <!--ko foreach:featured_quotes-->
                             <div class="quote tile featured-quote" data-bind="attr: {id: product_code}">
                                 <div class="logo-pic"><span class="helper"></span><img data-bind="attr: { src: featured_image}" align="center">
-                                <span class="featured">Featured</span><span class="application"><a data-bind="attr: {href: application_url}">Online Application Available</a></a></span>
+                               <div class="featured-wrapper">
+                                    <div class="featured">Featured</div>
+                                    <div class="application"><a data-bind="attr: {href: application_url}">Online Application Available</a></div>
+                                </div>
                                 </div>
                                 
                                 <div class="product_name"><label>Product:</label> <span data-bind="html: product_name"></span></div>
@@ -383,7 +384,7 @@
                                             <input type="hidden" name="company_name" data-bind="attr: {value: company_name}">
                                              <input type="hidden" name="product_name" data-bind="attr: {value: product_name}">
                                              <input type="hidden" name="product_code" data-bind="attr: {value: product_code}">
-
+                                             <input type="hidden" name="company_code" data-bind="attr: {value: company_code}">
                                            <button type="submit" class="btn btn-primary">Submit</button>
                                        </form>
                                        
@@ -410,6 +411,103 @@
                                    <div class="hidden-sm hidden-lg hidden-md">Call Agent</div></div>
                                    <div class="icon"><div class="fa fa-heart fa-3x save" data-bind="click: $parent.saveQuote" data-toggle="tooltip" data-placement="bottom" title="Save for Comparison Grid"></div>
                                    <div class="hidden-sm hidden-lg hidden-md">Save</div></div>
+                                   <div class="icon"><div class="fa fa-book fa-3x company" data-bind="click: $parent.getCompany" data-toggle="tooltip" data-placement="bottom" title="Read About Company"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Company Info</div></div>
+                                   <div class="icon"><div class="fa fa-user fa-3x request" data-toggle="tooltip" data-bind="click: $parent.showForm" data-placement="bottom" title="Have an Ameriquote Agent Contact You"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Apply</div></div>
+                       
+                               </div>
+                                    <div class="apply-form well">
+                                        <p>Fill out the form below and an Agent will contact you with your exclusive quote.</p>
+                                       <form data-bind="submit: $parent.postLead">
+                                           <input type="text" name="firstname" placeholder="First Name">
+                                           <input type="text" name="lastname" placeholder="Last Name">
+                                           <input type="email" name="email" placeholder="Email Address">
+                                           <input type="tel" name="phone" placeholder="Home Phone">
+                                           <input type="text" name="zipcode" placeholder="Zipcode">
+                                           <input type="hidden" name="face_amount" data-bind="attr: {value: face_amount}">
+                                           <input type="hidden" name="coverage_term" data-bind="attr: {value: new_category}">
+                                            <input type="hidden" name="company_name" data-bind="attr: {value: company_name}">
+                                             <input type="hidden" name="product_name" data-bind="attr: {value: product_name}">
+                                             <input type="hidden" name="product_code" data-bind="attr: {value: product_code}">
+                                             <input type="hidden" name="health_code" data-bind="attr: {value: health_code}">
+                                             <input type="hidden" name="company_code" data-bind="attr: {value: company_code}">
+                                           <button type="submit" class="btn btn-primary">Submit</button>
+                                       </form>
+                                       
+                                       
+                                   </div>
+                            
+                            </div>
+                        <!--/ko-->
+                    
+                    </div>
+                </div>
+                <div class="comparison-results">
+                     <div class="comparison-results-grid">
+                   <!--ko foreach:comparison_featured_quotes-->
+                            <div class="quote tile featured-quote" data-bind="attr: {id: product_code}">
+                                <div class="logo-pic"><span class="helper"></span><img data-bind="attr: { src: featured_image}" align="center">
+                               <div class="featured-wrapper">
+                                    <div class="featured">Featured</div>
+                                    <div class="application"><a data-bind="attr: {href: application_url}">Online Application Available</a></div>
+                                </div>
+                                </div>
+                                
+                                <div class="product_name"><label>Product:</label> <span data-bind="html: product_name"></span></div>
+                                <div class="company_name" ><label>Company:</label> <span data-bind="html: company_name"></span></div>
+                                  
+                                
+                                <div class="coverage"><label>Coverage:</label> <span data-bind="text: face_amount"></span></div>
+                               <div class="footer-icons">
+                                   <div class="icon"><div class="fa fa-phone-square fa-3x call" data-toggle="tooltip" data-placement="bottom" data-bind="attr: { title: 'Call Agent to Apply-(' + format_telephone(phone)[1]+')'+format_telephone(phone)[2]+'-'+format_telephone(phone)[3]}, click: $parent.callAgent"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Call Agent</div></div>
+                                   
+                                   <div class="icon"><div class="fa fa-book fa-3x company" data-bind="click: $parent.getCompany" data-toggle="tooltip" data-placement="bottom" title="Read About Company"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Company Info</div></div>
+                                   <div class="icon"><div class="fa fa-user fa-3x request" data-toggle="tooltip" data-bind="click: $parent.showFeaturedForm" data-placement="bottom" title="Have an Ameriquote Agent Contact You"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Apply</div></div>
+                       
+                               </div>
+                                    <div class="apply-form well">
+                                        <p>Fill out the form below and an Agent will contact you with your exclusive quote.</p>
+                                       <form data-bind="submit: $parent.postLead">
+                                           <input type="text" name="firstname" placeholder="First Name">
+                                           <input type="text" name="lastname" placeholder="Last Name">
+                                           <input type="email" name="email" placeholder="Email Address">
+                                           <input type="tel" name="phone" placeholder="Home Phone">
+                                           <input type="text" name="zipcode" placeholder="Zipcode">
+                                           <input type="hidden" name="face_amount" data-bind="attr: {value: face_amount}">
+                                           <input type="hidden" name="coverage_term" data-bind="attr: {value: new_category}">
+                                            <input type="hidden" name="company_name" data-bind="attr: {value: company_name}">
+                                             <input type="hidden" name="product_name" data-bind="attr: {value: product_name}">
+                                             <input type="hidden" name="product_code" data-bind="attr: {value: product_code}">
+
+                                           <button type="submit" class="btn btn-primary">Submit</button>
+                                       </form>
+                                       
+                                       
+                                   </div>
+                            
+                            </div>
+                        <!--/ko-->
+                   
+                        
+                        <!--ko foreach:comparison_quotes-->
+                            <div class="quote tile standard-quote" data-bind="attr: {id: product_code+health_code, 'data-company': company_code, 'data-premium': monthly, 'data-health': health_category}">
+                                <div class="logo-pic"><span class="helper"></span><img data-bind="attr: { src: 'http://quotes.ameriquote.com/wp-content/plugins/ameriquote/logos/'+company_code+'.gif'}" align="center">
+                                <span class="monthly"><span data-bind="text: monthly"></span>/month</span>
+                                </div>
+                                
+                                <div class="product_name"><label>Product:</label> <span data-bind="text: product_name"></span></div>
+                                <div class="company_name" ><label>Company:</label><span data-bind="text: company_name"></span></div>
+                                  <div class="health_category"><label>Health Category:</label> <span data-bind="text: health_category"></span></div>
+                                
+                                <div class="coverage"><label>Coverage:</label> <span data-bind="text: face_amount"></span></div>
+                               <div class="footer-icons">
+                                   <div class="icon"><div class="fa fa-phone-square fa-3x call" data-toggle="tooltip" data-placement="bottom" data-bind="attr: { title: 'Call Agent to Apply-(' + format_telephone(phone)[1]+')'+format_telephone(phone)[2]+'-'+format_telephone(phone)[3]}, click: $parent.callAgent"></div>
+                                   <div class="hidden-sm hidden-lg hidden-md">Call Agent</div></div>
+                                   
                                    <div class="icon"><div class="fa fa-book fa-3x company" data-bind="click: $parent.getCompany" data-toggle="tooltip" data-placement="bottom" title="Read About Company"></div>
                                    <div class="hidden-sm hidden-lg hidden-md">Company Info</div></div>
                                    <div class="icon"><div class="fa fa-user fa-3x request" data-toggle="tooltip" data-bind="click: $parent.showForm" data-placement="bottom" title="Have an Ameriquote Agent Contact You"></div>

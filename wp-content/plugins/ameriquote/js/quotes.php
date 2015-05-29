@@ -49,9 +49,14 @@ Header("content-type: text/javascript");
                 href: "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" 
             });
             
-           
+           var dev_css_link = $("<link>", { 
+                rel: "stylesheet", 
+                type: "text/css", 
+                href: "http://quotes.ameriquote.com/wp-content/plugins/ameriquote/css/dev-styles.css" 
+            });
             css_link.appendTo('head');          
             fontawesome_link.appendTo('head'); 
+            dev_css_link.appendTo('head');
             /******* Load HTML *******/
             var jsonp_url = "http://quotes.ameriquote.com/?widget=quotes&callback=?";
             $.getJSON(jsonp_url, function(data) {
@@ -90,7 +95,7 @@ Header("content-type: text/javascript");
             }
             
                ameriquote_phone = format_telephone("<?php echo ($_GET['cpa_phone']?$_GET['cpa_phone']:'8883994129');?>")[0];
-    	                ameriquote_aff_id = <?php echo ($_GET['aff_id']?$_GET['aff_id']:'');?>;
+    	                ameriquote_aff_id = <?php echo ($_GET['aff_id']?$_GET['aff_id']:'1');?>;
     	                ameriquote_transaction_id = <?php echo ($_GET['transaction_id']?$_GET['transaction_id']:'8883994129');?>;
        
     	

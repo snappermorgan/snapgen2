@@ -20,6 +20,7 @@ jQuery("document").ready(function($) {
 			self.transaction_id = (data.transaction_id?data.transaction_id:'');
 			self.health_code = (data.HealthCode?data.HealthCode.replace("+", "plus"):'');
 			self.new_category = (data.NewCategory?data.NewCategory:'');
+			self.quote_type='standard';
 		}
 		catch (err) {
 			console.log(err.message);
@@ -35,7 +36,7 @@ jQuery("document").ready(function($) {
 
 			self.company_name = (data.company_name?data.company_name.trim():'');
 		
-			
+			self.quote_type = 'featured';
 			self.product_name = (data.title?data.title.trim():'');
 		
 			self.company_code = (data.company_code?data.company_code:'');
@@ -52,10 +53,84 @@ jQuery("document").ready(function($) {
 			console.log(err.message);
 		}
 
-
-
-
 	}
+
+	function comparisonRecord(data) {
+		
+	
+			
+		try {
+			self = this;
+			self.quote_type = data.quote_type;
+			self.id = data.id;
+			
+			if(self.quote_type=='standard'){
+				standard=JSON.parse(data.quoteDataRecord);
+				//console.log(standard);
+				new_standard = {};
+				$.each(standard,function(key,val){
+					switch (key) {
+						case 'company_name':
+						new_standard.CompanyName = standard.company_name;
+							break;
+						case 'health_category':
+						new_standard.HealthCategory = standard.health_category;
+							break;		
+						case 'monthly':
+						new_standard.Monthly = standard.monthly;
+							break;	
+						case 'product_name':
+						new_standard.ProductName = standard.product_name;
+							break;	
+						case 'product_category':
+						new_standard.ProductCategory = standard.product_category;
+							break;	
+						case 'company_code':
+						new_standard.CompanyCode = standard.company_code;
+							break;	
+						case 'product_code':
+						new_standard.ProductCode = standard.product_code;
+							break;	
+						case 'face_amount':
+						new_standard.FaceAmount = standard.face_amount;
+							break;	
+						case 'phone':
+						new_standard.phone = standard.phone;
+							break;	
+						case 'aff_id':
+						new_standard.aff_id = standard.aff_id;
+							break;	
+						case 'transaction_id':
+						new_standard.transaction_id = standard.transaction_id;
+							break;	
+						case 'health_code':
+						new_standard.HealthCode = standard.health_code;
+							break;
+						case 'new_category':
+						new_standard.NewCategory = standard.new_category;
+							break;
+						case 'quote_type':
+						new_standard.quote_type = standard.quote_type;
+							break;
+					
+						default:
+							// code
+					}
+				});
+				self.quote_data_record = new_standard;
+			
+			}else{
+			self.quote_data_record = JSON.parse(data.quoteDataRecord);
+			self.quote_data_record.title = self.quote_data_record.product_name;
+				//console.log(self.quote_data_record);
+			}
+		}
+		
+		catch (err) {
+			console.log(err.message);
+		}
+	}
+
 	function companyRecord(data) {
 		try {
 
@@ -132,12 +207,15 @@ jQuery("document").ready(function($) {
 
 		$.jStorage.set("quotes", []);
 		$.jStorage.set("featured_quotes",[]);
+		$.jStorage.set("comparison_grid",[]);
 		self.isActive = false;
 		self.company = ko.observable();
 		self.builtin = new Array("Viva");
 		self.call_agent = ko.observable();
 		self.quotes = ko.observableArray();
 		self.featured_quotes = ko.observableArray();
+		self.comparison_quotes = ko.observableArray();
+		self.comparison_featured_quotes = ko.observableArray();
 		self.quotes.subscribe(function(data) {
 			//setUpIsotope();
 			//console.log("isotope fired");
@@ -163,33 +241,67 @@ jQuery("document").ready(function($) {
 
 		});
 
+
+	
+		
 		self.saveQuote = function(data) {
-			console.log(data);
-		}
-		self.setUpIsotope = function() {
+			
 			try {
 				
-			console.log("Starting Isotope Set up. "+Date());
-			if($(".results-grid .quote.standard-quote").length > 0 && $(".results-grid .quote.featured-quote").length > 0  ){
-				console.log("Setting up Isotope");
+				var quoteData = JSON.stringify(data);
+				//console.log(quoteData);
+				var quoteRow = {};
+				quoteRow.quote_type = data.quote_type;
+				if(data.quote_type=='featured'){
+					quoteRow.id = data.product_code;	
+				}else{
+					quoteRow.id = data.product_code+data.health_code;
+				}
 				
-				$(".results-grid").isotope();
-				self.appearance();
+				quoteRow.quoteDataRecord = quoteData;
+				var quote = new comparisonRecord(quoteRow);
+				var comparisons = $.jStorage.get("comparison_grid");
+				var ids = [];
+				$.each(comparisons,function(i){
+					ids.push(this.id);
+				});
+				//console.log(quoteRow);
+				//console.log(ids);
+				if(!_.contains(ids,quoteRow.id)){
+					comparisons.push(quote);
+				}
+				$.jStorage.set("comparision_grid",comparisons);
+				
+			}
+			catch (err) {
+				console.log(err);
+			}
+		}
+		self.setUpIsotope = function(section) {
+			try {
+				if(section == null){
+					section = ".results-grid";
+				}
+			//console.log("Starting Isotope Set up. "+Date());
+			if($(section+" .quote.standard-quote").length > 0 && $(section+" .quote.featured-quote").length > 0  ){
+				//console.log("Setting up Isotope");
+				
+				$(section).isotope();
+				self.appearance(section);
 				//console.log("Setting up Isotope");
 				//console.log("# of quotes:" +$(".results-grid .quote").length );
 
 				if (self.isActive) {
-					$(".results-grid").isotope("destroy");
+					$(section).isotope("destroy");
 				}
 
-				var $container = $(".results-grid").isotope({
+				var $container = $(section).isotope({
 					itemSelector: '.quote',
 					transitionDuration: '.8s',
 					layoutMode: 'masonry',
 					getSortData: {
 						company: '[data-company]',
-						premium: '[data-premium]',
-						health: '[data-health]'
+						premium: '[data-premium]'
 					},
 					sortBy: 'premium'
 				});
@@ -198,7 +310,8 @@ jQuery("document").ready(function($) {
 				// console.log($container);
 				$('#sorts').on('click', 'div.btn', function(e) {
 
-					e.preventDefault();
+				
+					
 					var sortByValue = $(this).attr('data-sort-by');
 					//console.log($(this).attr('data-sort-by'));
 					$('#sorts div').removeClass('btn-inverse');
@@ -206,6 +319,7 @@ jQuery("document").ready(function($) {
 					$container.isotope({
 						sortBy: $(this).attr('data-sort-by')
 					});
+				
 
 				});
 
@@ -214,7 +328,7 @@ jQuery("document").ready(function($) {
 				}
 				self.isActive = !self.isActive;
 			} else {
-			console.log("both not loaded yet");
+			//console.log("both not loaded yet");
 			}
 			}
 			catch (err) {
@@ -236,11 +350,11 @@ jQuery("document").ready(function($) {
 			}
 		}
 
-		self.appearance = function() {
+		self.appearance = function(section) {
 			try {
 
 
-				$(".results-grid .quote").each(function(i) {
+				$(section+" .quote").each(function(i) {
 					$(this).delay((i++) * 100).fadeTo(300, 1);
 				})
 			}
@@ -248,22 +362,62 @@ jQuery("document").ready(function($) {
 				console(err.message);
 			}
 		}
-		self.featuredAppearance = function() {
+		self.featuredAppearance = function(section) {
 			try {
 
 
-				$(".results-grid .featured-quote").each(function(i) {
+				$(section+" .featured-quote").each(function(i) {
 					$(this).delay((i++) * 100).fadeTo(300, 1);
 				})
 			}
 			catch (err) {
 				console(err.message);
 			}
+		}
+		
+		self.savedQuotes = function(){
+			
+			
+			self.comparison_quotes([]);
+			self.comparison_featured_quotes([]);
+			var comparisons = $.jStorage.get("comparison_grid");
+			$.each(comparisons,function(i){
+				if (this.quote_type=='featured'){
+					comp_featured = new featuredRecord(this.quote_data_record);
+					self.comparison_featured_quotes.push(comp_featured);
+				}
+				
+				if(this.quote_type=='standard'){
+					comp = new quoteRecord(this.quote_data_record);
+					self.comparison_quotes.push(comp);
+				}
+			});
+			
+			$(".results").fadeOut(500,function(){
+				$(".comparison-results").fadeIn();
+				self.setUpIsotope(".comparison-results-grid");
+				$(".return").show();
+				$(".saved").hide();
+			})
+			
+		}
+		
+		self.returnResults = function(data){
+				$(".comparison-results").fadeOut(500,function(){
+				$(".results").show(function(){
+						self.setUpIsotope();
+						$(".return").hide();
+						$(".saved").show();
+				});
+
+
+			})
 		}
 		self.getQuotes = function(form) {
 			try {
-
+			var target = $('#ameriquote_wrapper');
 			self.quotes([]);
+			self.featured_quotes([]);
 				var params = {
 					State: $(form.State).val(),
 					Birthday: $(form.Birthday).val(),
@@ -296,7 +450,10 @@ jQuery("document").ready(function($) {
 								}
 							}
 						);
-				
+						
+						
+					    target.loadingOverlay();
+					    				
 					},
 					converters: {
 						"text json": function(resp) {
@@ -344,8 +501,9 @@ jQuery("document").ready(function($) {
 						console.log(jqXHR);
 					},
 					complete: function() {
-						console.log("Get Quotes complete:" + Date())
-						
+						console.log("Get Quotes complete:" + Date());
+					
+						target.loadingOverlay('remove');
 					}
 				});
 			}
@@ -633,6 +791,13 @@ jQuery("document").ready(function($) {
 				console.log(err.message);
 			}
 		}
+		
+			self.setUpIsotope();
+		
+		
+		
+		
+		
 	}
 
 });

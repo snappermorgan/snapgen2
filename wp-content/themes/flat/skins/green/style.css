@@ -1,0 +1,40 @@
+/*  
+Skin Name: Green
+Version: 1.0
+Description: Skin for Flat
+*/
+
+#headerwrap,
+#respond #cancel-comment-reply-link,
+.post-nav span span,
+.pagenav a,
+.post .carousel-pager .selected,
+.slider .carousel-pager .selected,
+.module-slider .carousel-pager a.selected,
+.back-top a,
+.skillset li span{
+	background: #02daaf !important;
+}
+.back-top a:hover {
+	background: #1CF4C9 !important;
+}
+
+#main-nav ul a:hover, 
+#main-nav .current_page_item ul a:hover, 
+#main-nav ul .current_page_item a:hover, 
+#main-nav .current-menu-item ul a:hover, 
+#main-nav ul .current-menu-item a:hover,
+.timeline .timeline-dot {
+	color: #02daaf;
+}
+#main-nav ul ul:before {
+	border-right: 8px solid #02daaf;
+}
+#main-nav a,
+#site-logo a,
+#site-description {
+	color: #fff;
+}
+#main-nav a:hover {
+	color: #000;
+}
